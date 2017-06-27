@@ -1,0 +1,5 @@
+.btn-primary.selected {
+    color: #fff;
+    background-color:red;
+    border-color: red;
+}

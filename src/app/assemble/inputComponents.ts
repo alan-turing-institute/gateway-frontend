@@ -33,10 +33,10 @@ export const INPUT_COMPONENTS: InputComponent[] = [
         help: "A description of surface tension?"},
     { name: "turbulence",
         tag: ["Turbulence"],
-        type: "checkbox", 
+        type: "text", 
         label: 'Turbulence model',
         units: 'kg/m/s',
-        type_value: "boolean",
+        type_value: "float",
         min_value: "",
         max_value: "",
         options:["False"],
@@ -52,6 +52,3 @@ export const INPUT_COMPONENTS: InputComponent[] = [
         options:["0.0725"],
         help: "A description of surface tension?"}
 ];
-
-// {type:"select",label:"select1",options:["Orange","Apple", "Banana"]},
-//   {type:"text",label:"text2",options:[]},
