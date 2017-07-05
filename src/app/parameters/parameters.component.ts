@@ -5,17 +5,8 @@ import { InputComponentService } from '../assemble/inputComponent.service';
 @Component({
   selector: 'app-parameters',
   providers:[InputComponentService],
-  // templateUrl: './parameters.component.html',
   template:`
-    <!--<div *ngFor="let component of supersetComponents">
-      <div *ngIf="component.type == 'text'">
-          <label>{{component.label}}:
-          <input type=\"text\" 
-            name={{component.name}}} 
-            value={{component.options[0]}}/></label>
-      </div>
-    </div>-->
-    <div *ngFor="let component of supersetComponents">
+    <div *ngFor="let component of visibleComponents">
       <div *ngIf="component.type == 'text'">
         <label for={{component.name}}>{{component.label}}</label>
         <div class="input-group">
@@ -23,22 +14,23 @@ import { InputComponentService } from '../assemble/inputComponent.service';
           <span class="input-group-addon">{{component.units}}</span>
         </div>
       </div>
-    </div>  
+    </div>
   `,
   styleUrls: ['./parameters.component.css']
 })
+
 export class ParametersComponent implements OnInit, OnChanges {
   @Input() families:{name:string, checked: boolean} []
-  supersetComponents:InputComponent []
-
+  visibleComponents:InputComponent[]
+  
   constructor(private inputComponentService:InputComponentService) { }
 
   ngOnInit() {
-    this.supersetComponents = []
+    this.visibleComponents = []
   }
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}){
-    this.supersetComponents = this.inputComponentService.filterSelectedFamilies(changes["families"].currentValue);    
+    this.visibleComponents = this.inputComponentService.filterSelectedFamilies(changes["families"].currentValue);
   }
 
 }
