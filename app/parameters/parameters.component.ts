@@ -22,7 +22,7 @@ import { InputComponentService } from '../assemble/inputComponent.service';
 export class ParametersComponent implements OnInit, OnChanges {
   @Input() families:{name:string, checked: boolean} []
   visibleComponents:InputComponent[]
-  
+
   constructor(private inputComponentService:InputComponentService) { }
 
   ngOnInit() {

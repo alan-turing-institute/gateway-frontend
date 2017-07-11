@@ -10,13 +10,30 @@ export class InputComponentService {
       return INPUT_COMPONENTS;
   }
 
-  getFamilyTags(): {name:string, checked: boolean} [] {
+  getFamilyTagsOld(): {name:string, checked: boolean} [] {
       var tags = []
       for (var e=0; e < INPUT_COMPONENTS.length; e++) {
         tags = tags.concat(INPUT_COMPONENTS[e].tag)
       }
-      
-      var uniqueTags = tags.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
+
+      var uniqueTags = tags.filter(function(item, i, ar){
+
+        return ar.indexOf(item) === i; });
+
+      var familyTags = []
+      for (let tag of uniqueTags) {
+          familyTags.push({"name": tag, "checked": false})
+      }
+      return familyTags
+  }
+
+  getFamilyTags(components): {name:string, checked: boolean} [] {
+      var tags = []
+      for (var e=0; e < components.length; e++) {
+        tags = tags.concat(components[e].tag)
+      }
+      var uniqueTags = tags.filter(function(item, i, ar){
+        return ar.indexOf(item) === i; });
 
       var familyTags = []
       for (let tag of uniqueTags) {
@@ -28,8 +45,8 @@ export class InputComponentService {
   toggleFamilyTag(tag:string, tags:{name:string, checked: boolean} []): {name:string, checked: boolean} [] {
       let newTags = tags.slice(0)
       newTags.forEach(element => {
-          if (element.name == tag)
-              element.checked = !element.checked
+                                if (element.name === tag['name'])
+                                    element.checked = !element.checked
       });
       return newTags
   }
