@@ -7,6 +7,9 @@ import { AssembleComponent } from './assemble/assemble.component';
 import { BannerComponent } from './banner/banner.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 
+
+
+import { FormsModule } from '@angular/forms';
 import { IonRangeSliderModule } from "ng2-ion-range-slider";
 
 @NgModule({
@@ -19,9 +22,12 @@ import { IonRangeSliderModule } from "ng2-ion-range-slider";
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     IonRangeSliderModule
   ],
-  providers: [],
+  providers: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

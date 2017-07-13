@@ -3,8 +3,6 @@ import { Component, Injectable, OnInit} from '@angular/core';
 import { InputComponent } from './inputComponent';
 import { InputComponentService } from './inputComponent.service';
 
-
-
 @Component({
   selector: 'app-assemble',
   providers:[InputComponentService],
@@ -12,13 +10,18 @@ import { InputComponentService } from './inputComponent.service';
   <div>
     <div *ngFor="let tag of tags" class="btn-group" data-toggle="buttons">
       <label class="btn btn-primary"  [class.selected]="tag.checked===true">
-        <input type="checkbox" 
-              [checked]="tag.checked" 
+        <input type="checkbox"
+              [checked]="tag.checked"
               (change)="toggleFamily(tag.name)">{{tag.name}}
       </label>
     </div>
     <app-parameters [families]="tags"></app-parameters>
   </div>
+
+  <div>
+    <button (click)="test()">Test AssembleComponent</button>
+  </div>
+
   `,
   styleUrls: ['./assemble.component.css']
 })
@@ -38,5 +41,13 @@ export class AssembleComponent implements OnInit {
   toggleFamily(tag) {
     this.tags = this.inputComponentService.toggleFamilyTag(tag, this.tags)
   }
+
+  test() {
+    console.log(this.supersetComponents);
+  }
+
+  // myEventEmitter() {
+  //   console.log("received")
+  // }
 
 }
