@@ -23,6 +23,11 @@ export class JobDataService {
                     .catch(this.handleError);
   }
 
+  updateJobData(supersetComponents, componentKey, newValue) {
+     supersetComponents[componentKey].value = newValue;
+     return supersetComponents
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     console.log("making a call")
