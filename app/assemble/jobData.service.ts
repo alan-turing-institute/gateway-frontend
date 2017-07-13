@@ -22,7 +22,7 @@ export class JobDataService {
 
   private extractData(res: Response) {
     let body = res.json();
-    console.log(body.data)
+    console.log(body)
     return body.data || { };
   }
 

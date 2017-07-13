@@ -5,6 +5,7 @@ import { InputComponentService } from './inputComponent.service';
 import { JobDataService } from './jobData.service';
 
 
+
 @Component({
   selector: 'app-assemble',
   providers:[InputComponentService, JobDataService],
@@ -16,13 +17,12 @@ import { JobDataService } from './jobData.service';
               (change)="toggleFamily(tag)">{{tag.name}}
       </label>
     </div>
-    <app-parameters [families]="tags"></app-parameters>
+    <app-parameters [families]="tags" [components]="supersetComponents"></app-parameters>
   </div>
   `,
   styleUrls: ['./assemble.component.css']
 })
 
-// <!--[checked]="tag.checked"
 export class AssembleComponent implements OnInit {
 
   supersetComponents:InputComponent []
@@ -44,8 +44,7 @@ export class AssembleComponent implements OnInit {
                           supersetComponents => {
                             this.supersetComponents = supersetComponents
                             this.tags = this.inputComponentService.getFamilyTags(this.supersetComponents)
-                            console.log(this.tags)
-                            console.log(this.inputComponentService.getFamilyTagsOld())
+                            // console.log(this.tags)
                           },
                           error => {
                             this.errorMessage = <any> error
