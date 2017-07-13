@@ -21,6 +21,7 @@ import { InputComponentService } from '../assemble/inputComponent.service';
 
 export class ParametersComponent implements OnInit, OnChanges {
   @Input() families:{name:string, checked: boolean} []
+  @Input() supersetComponents:InputComponent []
   visibleComponents:InputComponent[]
 
   constructor(private inputComponentService:InputComponentService) { }
@@ -31,6 +32,17 @@ export class ParametersComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}){
     this.visibleComponents = this.inputComponentService.filterSelectedFamilies(changes["families"].currentValue);
+    console.log(this.visibleComponents)
+    console.log(this.supersetComponents)
   }
+
+  // onchange (component)
+  // {
+  //   if component.type == "sliderr"
+  //   do this
+  //   switch 
+  //   do that
+  //   updateStateService (component, newvalue)
+  // }
 
 }
