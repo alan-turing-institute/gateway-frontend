@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, Output, OnChanges, SimpleChange, EventEmitter } from '@angular/core';
 import { InputComponent } from '../assemble/inputComponent';
 import { InputComponentService } from '../assemble/inputComponent.service';
+import { JobDataService } from '../assemble/jobData.service';
 
 import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
 
 @Component({
   selector: 'app-parameters',
   providers:[],
-  // templateUrl: './parameters.component.html',
   template:`
     <div *ngFor="let component of visibleComponents">
       <div *ngIf="component.type == 'text'">
@@ -38,20 +38,32 @@ import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
   `,
   styleUrls: ['./parameters.component.css']
 })
+
 export class ParametersComponent implements OnInit, OnChanges {
   @Input() families:{name:string, checked: boolean} []
-  // @Output() myEventEmitter = new EventEmitter<boolean>();
+  visibleComponents:InputComponent[]
+  supersetComponents:InputComponent[]
+  errorMessage: string;
 
-  visibleComponents:InputComponent []
-
-  constructor(private inputComponentService:InputComponentService) { }
+  constructor(private jobDataService:JobDataService,
+    private inputComponentService:InputComponentService) { }
 
   ngOnInit() {
     this.visibleComponents = []
+    this.jobDataService.data
+                        .subscribe(
+                          supersetComponents => {
+                            this.supersetComponents = supersetComponents
+                            console.log(this.supersetComponents)
+                          },
+                          error => {
+                            this.errorMessage = <any> error
+                          });
   }
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}){
-    this.visibleComponents = this.inputComponentService.filterSelectedFamilies(changes["families"].currentValue);
+    this.visibleComponents = this.inputComponentService.filterSelectedFamilies(this.supersetComponents, changes["families"].currentValue);
+    console.log(this.visibleComponents)
   }
 
   update(component, event) {
@@ -67,10 +79,4 @@ export class ParametersComponent implements OnInit, OnChanges {
   test() {
     console.log(this.visibleComponents);
   }
-
-  // testEmit() {
-  //   console.log("sent");
-  //   this.myEventEmitter.emit(true);
-  // }
-
 }

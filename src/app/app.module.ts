@@ -1,11 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpModule, JsonpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { ParametersComponent } from './parameters/parameters.component';
 import { AssembleComponent } from './assemble/assemble.component';
 import { BannerComponent } from './banner/banner.component';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { JobDataService } from './assemble/jobData.service';
 
 
 
@@ -22,12 +24,14 @@ import { IonRangeSliderModule } from "ng2-ion-range-slider";
   ],
   imports: [
     BrowserModule,
+    HttpModule,
+    JsonpModule,
     FormsModule,
-    IonRangeSliderModule
+    IonRangeSliderModule    
   ],
-  providers: [
+  providers: [JobDataService],
+  bootstrap: [AppComponent],
+  schemas: [NO_ERRORS_SCHEMA]
 
-  ],
-  bootstrap: [AppComponent]
 })
 export class AppModule { }

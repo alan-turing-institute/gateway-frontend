@@ -44,7 +44,7 @@ export const INPUT_COMPONENTS: InputComponent[] = [
     { name: "pipe_radius",
         tag: ["Pipe Radius"],
         type: "slider",
-        label: 'Pipe Radius',
+        label: 'Pipe Radiusss',
         units: 'm',
         type_value: "float",
         min_value: "0.01",
