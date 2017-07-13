@@ -29,9 +29,10 @@ export class InputComponentService {
 
   getFamilyTags(components): {name:string, checked: boolean} [] {
       var tags = []
-      for (var e=0; e < components.length; e++) {
-        tags = tags.concat(components[e].tag)
+      for (var key in components) {
+        tags = tags.concat(components[key].tag)
       }
+      
       var uniqueTags = tags.filter(function(item, i, ar){
         return ar.indexOf(item) === i; });
 
@@ -39,6 +40,7 @@ export class InputComponentService {
       for (let tag of uniqueTags) {
           familyTags.push({"name": tag, "checked": false})
       }
+      console.log(familyTags)
       return familyTags
   }
 
@@ -56,10 +58,12 @@ export class InputComponentService {
           return tag.checked == true
       })
       let selectedComponents = []
+      console.log(allComponents)
       for (let tag of checkedTags) {
-          for (let component of allComponents){
-              if (component.tag.indexOf(tag.name) > -1){
-                  selectedComponents.push(component)
+          for (var key in allComponents){
+              console.log(key)
+              if (allComponents[key].tag.indexOf(tag.name) > -1){
+                  selectedComponents.push(allComponents[key])
               }
           }
       }

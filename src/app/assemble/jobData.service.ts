@@ -26,6 +26,7 @@ export class JobDataService {
   private extractData(res: Response) {
     let body = res.json();
     console.log("making a call")
+    console.log(body.data)
     return body.data || { };
   }
 
