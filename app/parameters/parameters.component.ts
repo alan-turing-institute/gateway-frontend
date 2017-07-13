@@ -14,7 +14,7 @@ import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
         <label for={{component.name}}>{{component.label}}</label>
         <div class="input-group">
           <input
-            [(ngModel)]="component.options[0]"
+            [(ngModel)]="component.value"
             id={{component.name}}
             type="text"
             class="form-control">
@@ -24,7 +24,7 @@ import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
       <div *ngIf="component.type == 'slider'">
         <label for={{component.name}}>{{component.label}}</label>
         <ion-range-slider id={{component.name}}
-          from={{component.options[0]}}
+          from={{component.value}}
           min={{component.min_value}}
           max={{component.max_value}}
           data-step=0.01
@@ -54,7 +54,6 @@ export class ParametersComponent implements OnInit, OnChanges {
                         .subscribe(
                           supersetComponents => {
                             this.supersetComponents = supersetComponents
-                            console.log(this.supersetComponents)
                           },
                           error => {
                             this.errorMessage = <any> error
