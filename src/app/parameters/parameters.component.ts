@@ -28,7 +28,7 @@ import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
           min={{component.min_value}}
           max={{component.max_value}}
           data-step=0.01
-          (onChange)="update(component, $event)"></ion-range-slider>
+          (onFinish)="update(component, $event)"></ion-range-slider>
       </div>
     </div>
 
@@ -66,13 +66,19 @@ export class ParametersComponent implements OnInit, OnChanges {
   }
 
   update(component, event) {
-    // console.log(component.name);
-    // console.log(event.from);
-    this.visibleComponents.forEach(element => {
-      if(element.name==component.name) {
-        // element.options[0] = event.from;
-      };
-    });
+    console.log(component.name);
+    let newValue = event.from;
+    this.supersetComponents = this.jobDataService.updateJobData(this.supersetComponents, component.name, newValue)
+    console.log(this.supersetComponents)
+    // this.jobDataService.data
+
+
+
+    // this.visibleComponents.forEach(element => {
+    //   if(element.name==component.name) {
+    //     // element.options[0] = event.from;
+    //   };
+    // });
   }
 
   test() {
