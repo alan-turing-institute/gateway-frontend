@@ -1,14 +1,14 @@
-import { ScienceGatewayInputsPage } from './app.po';
+import { CoreUIPage } from './app.po';
 
-describe('science-gateway-inputs App', () => {
-  let page: ScienceGatewayInputsPage;
+describe('core-ui App', function() {
+  let page: CoreUIPage;
 
   beforeEach(() => {
-    page = new ScienceGatewayInputsPage();
+    page = new CoreUIPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!!');
+    expect(page.getParagraphText()).toEqual('app works!');
   });
 });
