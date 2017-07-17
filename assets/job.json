@@ -41,7 +41,7 @@
     },
     "turbulence":{
         "name": "turbulence",
-        "tag": ["Turbulence"],
+        "tag": ["Turbulences"],
         "type": "text",
         "label": "Turbulence model",
         "units": "kg/m/s",
