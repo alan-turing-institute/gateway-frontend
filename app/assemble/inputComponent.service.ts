@@ -32,7 +32,7 @@ export class InputComponentService {
       for (var key in components) {
         tags = tags.concat(components[key].tag)
       }
-      
+
       var uniqueTags = tags.filter(function(item, i, ar){
         return ar.indexOf(item) === i; });
 
@@ -40,7 +40,6 @@ export class InputComponentService {
       for (let tag of uniqueTags) {
           familyTags.push({"name": tag, "checked": false})
       }
-      console.log(familyTags)
       return familyTags
   }
 
@@ -58,10 +57,8 @@ export class InputComponentService {
           return tag.checked == true
       })
       let selectedComponents = []
-      console.log(allComponents)
       for (let tag of checkedTags) {
           for (var key in allComponents){
-              console.log(key)
               if (allComponents[key].tag.indexOf(tag.name) > -1){
                   selectedComponents.push(allComponents[key])
               }

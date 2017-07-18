@@ -1,37 +1,38 @@
 {
   "data" : {
      "surface_tension":{
-        "tag": ["Surface Tension"],
+        "tag": [{"label":"Surface Tension", "id":"surface_tension"}],
         "name": "surface_tension",
         "type": "text",
-        "label": "Surface tensionsss",
-        "units": "kg/s^2",
+        "label": "Surface tensions",
+        "units": "mN/m",
         "type_value": "float",
-        "min_value": "0.05",
-        "max_value": "0.10",
-        "value":"0.0725",
+        "min_value": "1",
+        "max_value": "100",
+        "value":"72.5",
         "options":[],
-        "help": "A description of surface tension?"
+        "help": ""
     },
      "viscosity_phase_1": {
         "name": "viscosity_phase_1",
-        "tag": ["Fluid Density"],
+        "tag": [{"label":"Viscosity", "id":"viscosity"}],
         "type": "slider",
-        "label": "Viscosity (Phase 1)",
-        "units": "kg/m/s",
+        "label": "Viscosity: Phase 1",
+        "units": "Pa s",
         "type_value": "float",
         "min_value": "10",
         "max_value": "20",
         "value":"13",
         "options":[],
-        "help": "A description of surface tension?"
+        "help": ""
     },
      "viscosity_phase_2":{
         "name": "viscosity_phase_2",
-        "tag": ["Fluid Density"],
+        "tag": [{"label":"Viscosity", "id":"viscosity"}],
+        "tagid": ["viscosity"],
         "type": "slider",
-        "label": "Viscosity (Phase 2)",
-        "units": "kg/m/s",
+        "label": "Viscosity: Phase 2",
+        "units": "Pa s",
         "type_value": "float",
         "min_value": "10",
         "max_value": "20",
@@ -41,7 +42,7 @@
     },
     "turbulence":{
         "name": "turbulence",
-        "tag": ["Turbulences"],
+        "tag": [{"label":"Turbulence", "id":"turbulence"}],
         "type": "text",
         "label": "Turbulence model",
         "units": "kg/m/s",
@@ -54,7 +55,7 @@
     },
     "pipe_radius":{
         "name": "pipe_radius",
-        "tag": ["Pipe Radius"],
+        "tag": [{"label":"Geometry", "id":"geometry"}],
         "type": "text",
         "label": "Pipe Radius",
         "units": "m",
