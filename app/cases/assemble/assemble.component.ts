@@ -1,5 +1,4 @@
 import { Component, Injectable, OnInit} from '@angular/core';
-
 import { InputComponent } from './inputComponent';
 import { InputComponentService } from './inputComponent.service';
 import { JobDataService } from './jobData.service';
@@ -9,31 +8,19 @@ import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
   selector: 'case-assemble',
   providers:[InputComponentService],
   template:`
-  <!--
-  <div>
-    <div *ngFor="let tag of tags" class="btn-group" data-toggle="buttons">
-      <label class="btn btn-secondary"  [class.selected]="tag.checked===true">
-        <input type="checkbox"
-              [checked]="tag.checked"
-              (change)="toggleFamily(tag)">{{tag.name}}
-      </label>
-    </div>
-    <case-parameters [families]="tags"></case-parameters>
-  </div>-->
-
   <div>
     <div id="accordion" role="tablist">
-      <div *ngFor="let atag of tags" class="card">
-        <div class="card-header" role="tab" id="headingOne">
+      <div *ngFor="let tag of tags" class="card">
+        <div class="card-header" role="tab">
           <h5 class="mb-0">
-            <a data-toggle="collapse" href={{getTagHash(atag.tag)}} >
-              {{atag.tag.label}}
+            <a data-toggle="collapse" href={{getDataTarget(tag)}}>
+              {{tag.label}}
             </a>
           </h5>
         </div>
-        <div id={{atag.tag.id}} class="collapse show" role="tabpanel" data-parent="#accordion">
+        <div id={{tag.id}} class="collapse show" role="tabpanel" data-parent="#accordion">
           <div class="card-block">
-            <div *ngFor="let component of getVisibleComponents(atag.tag)">
+            <div *ngFor="let component of getVisibleComponents(tag)">
               <div *ngIf="component.type == 'text'">
                 <label for={{component.name}}>{{component.label}}</label>
                 <div class="input-group">
@@ -61,6 +48,7 @@ import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
       </div>
     </div>
   </div>
+
   `,
   styleUrls: ['./assemble.component.css']
 })
@@ -69,7 +57,7 @@ export class AssembleComponent implements OnInit {
 
   supersetComponents:InputComponent []
   selectedComponents:InputComponent []
-  tags:{tag:{name: string, id: string}, checked: boolean} []
+  tags:{name: string, id: string} []
   mode = 'Observable';
   errorMessage: string;
 
@@ -93,27 +81,22 @@ export class AssembleComponent implements OnInit {
                           });
   }
 
-  toggleFamily(tag) {
-    this.tags = this.inputComponentService.toggleFamilyTag(tag, this.tags)
+  // toggleFamily(tag) {
+  //   this.tags = this.inputComponentService.toggleFamilyTag(tag, this.tags)
     
-  }
+  // }
 
-  getTagHash(tag) {
-    return "#"+tag.id
+  getDataTarget(tag) {
+    return "#" + tag.id
   }
 
   getVisibleComponents(tag) {
-    // console.log(tag)
     return this.inputComponentService.getComponentsOfFamily(this.supersetComponents, tag.label);
   }
 
-  test() {
-    console.log(this.supersetComponents);
+  update(component, event) {
+    let newValue = event.from;
+    this.supersetComponents = this.jobDataService.updateJobData(this.supersetComponents, component.name, newValue)
   }
 
 }
-
-
-// <div>
-//   <button (click)="test()">Test AssembleComponent</button>
-// </div>

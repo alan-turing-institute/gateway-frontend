@@ -4,4 +4,7 @@ import { Component } from '@angular/core';
     selector: 'body',
     template: '<router-outlet></router-outlet>'
 })
-export class AppComponent { }
+export class AppComponent { 
+    constructor() {
+    }
+}
