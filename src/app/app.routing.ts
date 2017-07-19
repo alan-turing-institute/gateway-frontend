@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 //Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
+import { AppComponent } from './app.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +36,6 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  // exports: [ RouterModule ]
 })
 export class AppRoutingModule {}
