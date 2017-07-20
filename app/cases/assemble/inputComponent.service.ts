@@ -10,10 +10,10 @@ export class InputComponentService {
       return INPUT_COMPONENTS;
   }
 
-  getFamilyTags(components): {name: string, id: string} [] {
+  getFamilyTags(components): {name: string, id: string, collapse: boolean} [] {
     var tags = []
     for (var key in components) {
-    tags = tags.concat(components[key].tag)
+        tags = tags.concat(components[key].tag)
     }
 
     var flags = {};
@@ -24,7 +24,7 @@ export class InputComponentService {
         flags[tag.id] = true;
         return true;
     });
-    console.log(uniqueTags)
+    // console.log(uniqueTags)
     return uniqueTags  
   }
 
@@ -37,7 +37,7 @@ export class InputComponentService {
 //       return newTags
 //   }
 
-  getComponentsOfFamily(allComponents, tag:{name: string, id: string}): InputComponent[] {
+  getComponentsOfFamily(allComponents, tag:{name: string, id: string, collapse: boolean}): InputComponent[] {
       let components = []
       for (var key in allComponents){
             if (allComponents[key].tag[0].label.indexOf(tag) > -1){
