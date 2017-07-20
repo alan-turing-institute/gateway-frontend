@@ -1,7 +1,7 @@
 {
   "data" : {
      "surface_tension":{
-        "tag": [{"label":"Surface Tension", "id":"surface_tension", "collapse":true}],
+        "tag": [{"label":"Surface Tension", "id":"surface_tension", "collapse":false}],
         "name": "surface_tension",
         "type": "text",
         "label": "Surface tensions",
