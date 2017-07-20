@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import vtkFullScreenRenderWindow from 'vtk.js/Sources/Rendering/Misc/FullScreenRenderWindow';
-import vtkActor           from 'vtk.js/Sources/Rendering/Core/Actor';
-import vtkCalculator      from 'vtk.js/Sources/Filters/General/Calculator';
-import vtkConeSource      from 'vtk.js/Sources/Filters/Sources/ConeSource';
-import vtkMapper          from 'vtk.js/Sources/Rendering/Core/Mapper';
+import vtkActor from 'vtk.js/Sources/Rendering/Core/Actor';
+import vtkCalculator from 'vtk.js/Sources/Filters/General/Calculator';
+import vtkConeSource from 'vtk.js/Sources/Filters/Sources/ConeSource';
+import vtkMapper from 'vtk.js/Sources/Rendering/Core/Mapper';
 import { AttributeTypes } from 'vtk.js/Sources/Common/DataModel/DataSetAttributes/Constants';
 import { FieldDataTypes } from 'vtk.js/Sources/Common/DataModel/DataSet/Constants';
 
@@ -18,13 +18,16 @@ import '../assets/css/styles.css';
 })
 export class AppComponent implements OnInit {
 
-    constructor() {
+  constructor() {
 
-    }
+  }
 
   public ngOnInit(): void {
     // Set up VTK
-    const fullScreenRenderer = vtkFullScreenRenderWindow.newInstance();
+    const fullScreenRenderer = vtkFullScreenRenderWindow.newInstance({
+      rootContainer: document.getElementById('vtkDiv'),
+      containerStyle: {}
+    });
     const renderer = fullScreenRenderer.getRenderer();
     const renderWindow = fullScreenRenderer.getRenderWindow();
 
@@ -68,5 +71,6 @@ export class AppComponent implements OnInit {
     //   coneSource.setResolution(resolution);
     //   renderWindow.render();
     // });
-      }
+  }
+
 }
