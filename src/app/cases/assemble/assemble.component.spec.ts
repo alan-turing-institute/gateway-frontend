@@ -4,7 +4,6 @@ import { AssembleComponent } from './assemble.component';
 import { IonRangeSliderComponent } from 'ng2-ion-range-slider';
 import { JobDataService } from './jobData.service';
 import { HttpModule } from '@angular/http';
-import {MockBackend, MockConnection} from '@angular/http/testing';
 
 describe('AssembleComponent', () => {
   let component: AssembleComponent;
