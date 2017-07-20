@@ -1,0 +1,12 @@
+# Packages
+node_modules/
+
+# Node guff
+dist/
+package-lock.json
+
+# Temp files
+*$
+*~
+*.swo
+*.swp
