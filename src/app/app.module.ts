@@ -1,24 +1,51 @@
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 import { AppComponent } from './app.component';
-import { ParametersComponent } from './parameters/parameters.component';
-import { AssembleComponent } from './assemble/assemble.component';
-import { BannerComponent } from './banner/banner.component';
-import { FeedbackComponent } from './feedback/feedback.component';
+import { DropdownModule } from 'ng2-bootstrap/dropdown';
+import { TabsModule } from 'ng2-bootstrap/tabs';
+import { NAV_DROPDOWN_DIRECTIVES } from './shared/nav-dropdown.directive';
+
+// import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { SIDEBAR_TOGGLE_DIRECTIVES } from './shared/sidebar.directive';
+import { AsideToggleDirective } from './shared/aside.directive';
+import { BreadcrumbsComponent } from './shared/breadcrumb.component';
+
+import { AppRoutingModule } from './app.routing';
+import { FullLayoutComponent } from './layouts/full-layout.component';
+import { HttpModule, JsonpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
+import { IonRangeSliderModule } from "ng2-ion-range-slider";
+import { Routes, RouterModule } from '@angular/router';
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    DropdownModule.forRoot(),
+    TabsModule.forRoot(),
+    HttpModule,
+    JsonpModule,
+    FormsModule,
+    IonRangeSliderModule,
+    RouterModule
+  ],
   declarations: [
     AppComponent,
-    ParametersComponent,
-    AssembleComponent,
-    BannerComponent,
-    FeedbackComponent
+    FullLayoutComponent,
+    NAV_DROPDOWN_DIRECTIVES,
+    BreadcrumbsComponent,
+    SIDEBAR_TOGGLE_DIRECTIVES,
+    AsideToggleDirective
   ],
-  imports: [
-    BrowserModule
+  providers: [{
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    }
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
+  // schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  // exports:[RouterModule]
 })
 export class AppModule { }
