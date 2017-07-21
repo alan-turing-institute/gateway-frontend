@@ -29,8 +29,14 @@ declare module 'vtk.js/Sources/Filters/Sources/ConeSource' {
 }
 
 declare module 'vtk.js/Sources/Rendering/Misc/FullScreenRenderWindow' { 
-    function newInstance(args?: any): any;
+    function newInstance(args?: FullScreenRenderWindowValues): any;
     function extend(publicAPI: any, model: any, initialValues: any): any;
+
+    interface FullScreenRenderWindowValues {
+        rootContainer?: HTMLElement,
+        container?: HTMLElement,
+        containerStyle?: any
+    }
 
     export default { newInstance, extend };
 }
