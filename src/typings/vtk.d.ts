@@ -56,6 +56,22 @@ declare module 'vtk.js/Sources/Filters/General/Calculator' {
     export default { newInstance, extend };
 }
 
+declare module 'vtk.js/Sources/IO/Misc/OBJReader' {
+    function vtkOBJReader(publicAPI: any, model: any): any;
+    function newInstance(): any;
+    function extend(publicAPI: any, model: any, initialValues: any): any;
+
+    export default { newInstance, extend };
+}
+
+declare module 'vtk.js/Sources/IO/Core/HttpDataSetReader' {
+    function vtkHttpDataSetReader(publicAPI: any, model: any): any;
+    function newInstance(): any;
+    function extend(publicAPI: any, model: any, initialValues: any): any;
+
+    export default { newInstance, extend };
+}
+
 declare module 'vtk.js/Sources/Common/DataModel/DataSetAttributes/Constants' {
     export var AttributeTypes: IAttributeTypes;
     
