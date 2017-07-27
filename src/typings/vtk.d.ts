@@ -1,3 +1,8 @@
+declare interface VtkModel {
+    deleted?: boolean;
+    classHierarchy?: any;
+}
+
 declare module 'vtk.js/Sources/vtk' {
  export default function vtk(...args: any[]): any;
 }
@@ -11,11 +16,11 @@ declare module 'vtk.js/Sources/Rendering/Core/Mapper' {
 }
 
 declare module 'vtk.js/Sources/Filters/Sources/ConeSource' {
-    function vtkConeSource(publicAPI: any, model: any): void;
+    function vtkConeSource(publicAPI: any, model: ConeModel): void;
     function newInstance(model: ConeModel): any;
-    function extend(publicAPI: any, model: any, initialValues: any): any;
+    function extend(publicAPI: any, model: ConeModel, initialValues: ConeModel): any;
 
-    export interface ConeModel {
+    export interface ConeModel extends VtkModel{
         height?: number;
         radius?: number;
         resolution?: number;
@@ -66,6 +71,22 @@ declare module 'vtk.js/Sources/IO/Misc/OBJReader' {
 
 declare module 'vtk.js/Sources/IO/Core/HttpDataSetReader' {
     function vtkHttpDataSetReader(publicAPI: any, model: any): any;
+    function newInstance(): any;
+    function extend(publicAPI: any, model: any, initialValues: any): any;
+
+    export default { newInstance, extend };
+}
+
+declare module 'vtk.js/Sources/macro' {
+    export function obj(publicAPI: any, model: any): any;
+    export function setGet(publicAPI: any, model: any, fieldNames: string []): void;
+    export function setGetArray(publicAPI: any, model: any, fieldNames: string [], size: number): void;
+    export function algo(publicAPI: any, model: any, numberOfInputs: number, numberOfOutputs: number): any;
+    export function newInstance(extend: (publicAPI: any, model: any, initialValues: any) => any, className: string): any;
+    export default { obj, setGet, setGetArray, algo, newInstance };
+}
+
+declare module 'vtk.js/Sources/Common/DataModel/PolyData' {
     function newInstance(): any;
     function extend(publicAPI: any, model: any, initialValues: any): any;
 
