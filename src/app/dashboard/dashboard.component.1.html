@@ -1,50 +1,10 @@
-<div class="container">
-    <div class="card" style="width: 20rem;" >
-        <img class="img-fluid" src="./src/assets/img/generic_graph.png" alt="Card image cap">
-        <div class="card-block">
-            <h4 class="card-title">Changeover <span class="badge badge-success">Complete</span></h4>
-            <p class="card-text">Date: 1 Jan 2017 - 2 Jan 2017</p>
-            <a href="#" class="btn btn-primary">More</a>
-        </div>
-    </div>
-
-    <div class="card" style="width: 20rem;" >
-        <img class="img-fluid" src="./src/assets/img/generic_graph.png" alt="Card image cap">
-        <div class="card-block">
-            <h4 class="card-title">Changeover <span class="badge badge-success">Complete</span></h4>
-            <p class="card-text">Date: 1 Jan 2017 - 2 Jan 2017</p>
-            <a href="#" class="btn btn-primary">More</a>
-        </div>
-    </div>
-
-    <div class="card" style="width: 20rem;" >
-        <img class="img-fluid" src="./src/assets/img/generic_graph.png" alt="Card image cap">
-        <div class="card-block">
-            <h4 class="card-title">Changeover <span class="badge badge-success">Complete</span></h4>
-            <p class="card-text">Date: 1 Jan 2017 - 2 Jan 2017</p>
-            <a href="#" class="btn btn-primary">More</a>
-        </div>
-    </div>
-
-    <!--<div class="card" >
-        <img class="img-thumbnail" src="./src/assets/img/generic_graph.png" alt="Card image cap">
-        <div class="card-block">
-            <h4 class="card-title">Changeover </h4>
-            <p>Status: <span class="badge badge-warning">Error</span></p>
-            <p class="card-text">Date: 31 Jan 2017 - </p>
-            <a href="#" class="btn btn-primary">More</a>
-        </div>
-    </div>
-    
-    <div class="card" >
-        <img class="img-thumbnail" src="./src/assets/img/generic_graph.png" width="350px" alt="Card image cap">
-        <div class="card-block">
-            <h4 class="card-title">Changeover </h4>
-            <p>Status: <span class="badge badge-warning">Error</span></p>
-            <p class="card-text">Date: 31 Jan 2017 - </p>
-            <a href="#" class="btn btn-primary">More</a>
-        </div>
-    </div>-->
-           
-    
+<div *ngFor="let job of jobs" class="card" style="width: 20rem;" >
+ <img class="img-fluid" src="{{job.output}}" alt="Card image cap">
+ <div class="card-block">
+     <h4 class="card-title">{{job.job_type}}  <span class="badge badge-success">{{job.status}}</span></h4>
+     <p class="card-text">Job id: {{job.id}}</p>
+     <p class="card-text">Date: {{job.start_date}} - {{job.end_date}}</p>
+     <a href="#" class="btn btn-primary">More</a>
+     <!--<a routerLinkActive = "active" [routerLink] = "['/output/output', {id: job.id}]" class="btn btn-primary">More</a>-->
+ </div>
 </div>
