@@ -19,9 +19,12 @@ import { FormsModule } from '@angular/forms';
 import { IonRangeSliderModule } from "ng2-ion-range-slider";
 import { Routes, RouterModule } from '@angular/router';
 
+import { AccountModule } from './account/account.module';
+
 @NgModule({
   imports: [
-    BrowserModule,
+      BrowserModule,
+      AccountModule,
     AppRoutingModule,
     DropdownModule.forRoot(),
     TabsModule.forRoot(),
