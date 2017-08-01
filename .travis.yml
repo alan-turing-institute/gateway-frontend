@@ -17,7 +17,7 @@ before_install:
 - google-chrome --version
 before_script:
 - npm install
-- nom run build
+- npm run build
 script:
 - npm run test -- --single-run=true --browsers Chrome --code-coverage
 before_deploy: echo 'deploying..'
