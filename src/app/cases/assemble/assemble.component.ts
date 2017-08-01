@@ -41,6 +41,10 @@ import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
                 data-step=0.01
                 (onFinish)="update(component, $event)"></ion-range-slider>
             </div>
+            <div *ngIf="component.type == 'vtk'">
+              <label [for]=component.name>{{component.label}}</label>
+              <app-vtk></app-vtk>
+            </div>
           </div>   
         </div>
       </div>

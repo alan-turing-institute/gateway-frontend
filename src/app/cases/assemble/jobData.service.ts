@@ -11,7 +11,7 @@ import {INPUT_COMPONENTS} from './inputComponents';
 
 @Injectable()
 export class JobDataService {
-  private componentsUrl = 'assets/job.json';
+  private componentsUrl = require('../../../assets/job.json');
   constructor (private http: Http) {}
 
   data = this.getJobData()

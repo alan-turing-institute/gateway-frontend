@@ -56,7 +56,7 @@
     "pipe_radius":{
         "name": "pipe_radius",
         "tag": [{"label":"Geometry", "id":"geometry","collapse":true}],
-        "type": "text",
+        "type": "vtk",
         "label": "Pipe Radius",
         "units": "m",
         "type_value": "float",

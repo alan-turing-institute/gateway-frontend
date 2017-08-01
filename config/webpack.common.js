@@ -23,7 +23,7 @@ module.exports = {
           {
             loader: 'awesome-typescript-loader',
             options: { configFileName: helpers.root('src', 'tsconfig.json') }
-          } , 'angular2-template-loader'
+          } , 'angular2-template-loader', 'angular2-router-loader'
         ]
       },
       {
@@ -31,7 +31,7 @@ module.exports = {
         loader: 'html-loader'
       },
       {
-        test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|vtp)$/,
+        test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|vtp|json)$/,
         loader: 'file-loader?name=assets/[name].[hash].[ext]'
       },
       {
@@ -43,6 +43,16 @@ module.exports = {
         test: /\.css$/,
         include: helpers.root('src', 'app'),
         loader: 'raw-loader'
+      },
+      {
+        test: /\.scss$/,
+        use: [{
+          loader: "style-loader" // creates style nodes from JS strings
+        }, {
+          loader: "css-loader" // translates CSS into CommonJS
+        }, {
+          loader: "sass-loader" // compiles Sass to CSS
+        }]
       }
     ].concat(vtkRules)
   },

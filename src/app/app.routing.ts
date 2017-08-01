@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 //Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
 import { AppComponent } from './app.component';
+import { AccountModule } from './account/account.module';
 
 export const routes: Routes = [
   {
@@ -35,7 +36,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
+  imports: [RouterModule.forRoot(routes)],
   // exports: [ RouterModule ]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

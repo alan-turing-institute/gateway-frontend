@@ -23,8 +23,7 @@ import { AccountModule } from './account/account.module';
 
 @NgModule({
   imports: [
-      BrowserModule,
-      AccountModule,
+    BrowserModule,
     AppRoutingModule,
     DropdownModule.forRoot(),
     TabsModule.forRoot(),

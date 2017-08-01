@@ -9,7 +9,7 @@ import {JobInfo} from './jobInfoComponent';
 
 @Injectable()
 export class DashboardService {
-  private componentsUrl = 'assets/job_status.json';
+  private componentsUrl = require('../../assets/job_status.json');
   constructor (private http: Http) {}
 
   data = this.getJobData()
