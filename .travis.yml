@@ -23,9 +23,9 @@ script:
 before_deploy: echo 'deploying..'
 deploy:
   provider: azure_web_apps
+  verbose: true
   skip_cleanup: true
   local-dir: dist
   acl: public_read
-  on:
-    branch: webpack 
+  on: webpack 
 after_deploy: echo 'done deploying!'
