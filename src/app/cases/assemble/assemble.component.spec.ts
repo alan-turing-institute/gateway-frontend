@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { AssembleComponent } from './assemble.component';
 import { IonRangeSliderComponent } from 'ng2-ion-range-slider';
+import { VtkComponent } from '../../vtk/pipe/vtk.component';
 import { JobDataService } from './jobData.service';
 import { HttpModule } from '@angular/http';
 
@@ -14,7 +15,7 @@ describe('AssembleComponent', () => {
       imports: [FormsModule, HttpModule,],
       providers:[JobDataService, ],
       declarations: [ AssembleComponent, 
-      IonRangeSliderComponent]
+      IonRangeSliderComponent, VtkComponent]
     })
     .compileComponents();
   }));
