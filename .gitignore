@@ -4,6 +4,7 @@ node_modules/
 # Node guff
 dist/
 package-lock.json
+npm-debug.log
 
 # Temp files
 *$
