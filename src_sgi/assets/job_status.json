@@ -1,0 +1,27 @@
+{ "data":{
+    "1" : {
+      "id" : "1",
+      "job_type": "Changeover",
+      "start_date" : "1 Jan 2017",
+      "end_date" : "2 Jan 2017",
+      "status" : "Complete",
+      "output" : "./src/assets/img/generic_graph.png"
+    },
+    "2" : {
+      "id" : "2",
+      "job_type": "Changeover",
+      "start_date" : "2 Jan 2017",
+      "end_date" : "3 Jan 2017",
+      "status" : "Complete",
+      "output" : "./src/assets/img/generic_graph.png"
+    },
+    "3" : {
+      "id" : "3",
+      "job_type": "Stirred Tank",
+      "start_date" : "3 Jan 2017",
+      "end_date" : "4 Jan 2017",
+      "status" : "Complete",
+      "output" : "./src/assets/img/generic_graph.png"
+    }
+  }
+}
