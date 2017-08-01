@@ -22,7 +22,7 @@ script:
 - npm run test -- --single-run=true --browsers Chrome --code-coverage
 before_deploy: echo 'deploying..'
 deploy:
-- provider: azure_web_apps
+  provider: azure_web_apps
   skip_cleanup: true
   local-dir: dist
   acl: public_read
