@@ -1,3 +1,4 @@
+<div class="animated fadeIn">
 <div *ngFor="let job of jobs" class="card" style="width: 20rem;" >
  <img class="img-fluid" src="{{job.output}}" alt="Card image cap">
  <div class="card-block">
@@ -6,4 +7,5 @@
      <p class="card-text">Date: {{job.start_date}} - {{job.end_date}}</p>
      <a routerLinkActive = "active" [routerLink] = "['/output/output', {id: job.id}]" class="btn btn-primary">More</a>
  </div>
+</div>
 </div>
