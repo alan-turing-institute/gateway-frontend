@@ -42,7 +42,8 @@
                       [(ngModel)]="component.value"
                       [attr.id]="component.name"
                       type="text"
-                      class="form-control">
+                      class="form-control"
+                      readonly>
                       <span class="input-group-addon">{{component.units}}</span>
                     </div>
                   </div>
@@ -51,13 +52,13 @@
                     <label [for]=component.name>{{component.label}}</label>
                     <ion-range-slider [attr.id]=component.name
                     from={{component.value}}
+                    from_min={{component.value}}
+                    from_max={{component.value}}
                     min={{component.min_value}}
                     max={{component.max_value}}
                     postfix=" {{component.units}}"
-                    data-step=0.01
-                    (onFinish)="update(component, $event)"></ion-range-slider>
+                    data-step=0.01></ion-range-slider>
                   </div>
-
                 </div>
               </div>
             </div>

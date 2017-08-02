@@ -13,6 +13,7 @@ import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
   selector: 'output',
   providers: [OutputService],
   templateUrl: './output.component.html',
+  styleUrls: ['./output.component.css']
 })
 
 export class OutputComponent implements OnInit {
