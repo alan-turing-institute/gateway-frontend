@@ -45,7 +45,7 @@ import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
               <label [for]=component.name>{{component.label}}</label>
               <app-vtk></app-vtk>
             </div>
-          </div>   
+          </div>
         </div>
       </div>
     </div>
@@ -84,7 +84,7 @@ export class AssembleComponent implements OnInit {
 
   // toggleFamily(tag) {
   //   this.tags = this.inputComponentService.toggleFamilyTag(tag, this.tags)
-    
+
   // }
 
   getDataTarget(tag) {
