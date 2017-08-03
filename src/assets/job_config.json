@@ -1,0 +1,209 @@
+{
+  "data" : {
+    "1" : {
+       "surface_tension":{
+          "tag": [{"label":"Surface Tension", "id":"surface_tension", "collapse":false}],
+          "name": "surface_tension",
+          "type": "text",
+          "label": "Surface tensions",
+          "units": "mN/m",
+          "type_value": "float",
+          "min_value": "1",
+          "max_value": "100",
+          "value":"72.5",
+          "options":[],
+          "help": ""
+      },
+       "viscosity_phase_1": {
+          "name": "viscosity_phase_1",
+          "tag": [{"label":"Viscosity", "id":"viscosity","collapse":true}],
+          "type": "slider",
+          "label": "Viscosity: Phase 1",
+          "units": "Pa s",
+          "type_value": "float",
+          "min_value": "10",
+          "max_value": "20",
+          "value":"13",
+          "options":[],
+          "help": ""
+      },
+       "viscosity_phase_2":{
+          "name": "viscosity_phase_2",
+          "tag": [{"label":"Viscosity", "id":"viscosity","collapse":true}],
+          "tagid": ["viscosity"],
+          "type": "slider",
+          "label": "Viscosity: Phase 2",
+          "units": "Pa s",
+          "type_value": "float",
+          "min_value": "10",
+          "max_value": "20",
+          "value":"17",
+          "options":["17"],
+          "help": "A description of surface tension?"
+      },
+      "turbulence":{
+          "name": "turbulence",
+          "tag": [{"label":"Turbulence", "id":"turbulence","collapse":true}],
+          "type": "text",
+          "label": "Turbulence model",
+          "units": "kg/m/s",
+          "type_value": "float",
+          "min_value": "",
+          "max_value": "",
+          "options":["False"],
+          "value":"False",
+          "help": "A description of surface tension?"
+      },
+      "pipe_radius":{
+          "name": "pipe_radius",
+          "tag": [{"label":"Geometry", "id":"geometry","collapse":true}],
+          "type": "text",
+          "label": "Pipe Radius",
+          "units": "m",
+          "type_value": "float",
+          "min_value": "0.01",
+          "max_value": "0.10",
+          "options":["0.0725"],
+          "value":"0.0725",
+          "help": "A description of surface tension?"
+      }
+    },
+    "2" : {
+       "surface_tension":{
+          "tag": [{"label":"Surface Tension", "id":"surface_tension", "collapse":false}],
+          "name": "surface_tension",
+          "type": "text",
+          "label": "Surface tensions",
+          "units": "mN/m",
+          "type_value": "float",
+          "min_value": "1",
+          "max_value": "100",
+          "value":"72.5",
+          "options":[],
+          "help": ""
+      },
+       "viscosity_phase_1": {
+          "name": "viscosity_phase_1",
+          "tag": [{"label":"Viscosity", "id":"viscosity","collapse":true}],
+          "type": "slider",
+          "label": "Viscosity: Phase 1",
+          "units": "Pa s",
+          "type_value": "float",
+          "min_value": "10",
+          "max_value": "20",
+          "value":"13",
+          "options":[],
+          "help": ""
+      },
+       "viscosity_phase_2":{
+          "name": "viscosity_phase_2",
+          "tag": [{"label":"Viscosity", "id":"viscosity","collapse":true}],
+          "tagid": ["viscosity"],
+          "type": "slider",
+          "label": "Viscosity: Phase 2",
+          "units": "Pa s",
+          "type_value": "float",
+          "min_value": "10",
+          "max_value": "20",
+          "value":"17",
+          "options":["17"],
+          "help": "A description of surface tension?"
+      },
+      "turbulence":{
+          "name": "turbulence",
+          "tag": [{"label":"Turbulence", "id":"turbulence","collapse":true}],
+          "type": "text",
+          "label": "Turbulence model",
+          "units": "kg/m/s",
+          "type_value": "float",
+          "min_value": "",
+          "max_value": "",
+          "options":["False"],
+          "value":"False",
+          "help": "A description of surface tension?"
+      },
+      "pipe_radius":{
+          "name": "pipe_radius",
+          "tag": [{"label":"Geometry", "id":"geometry","collapse":true}],
+          "type": "text",
+          "label": "Pipe Radius",
+          "units": "m",
+          "type_value": "float",
+          "min_value": "0.01",
+          "max_value": "0.10",
+          "options":["0.0725"],
+          "value":"0.0725",
+          "help": "A description of surface tension?"
+      }
+    },
+    "3" : {
+       "surface_tension":{
+          "tag": [{"label":"Surface Tension", "id":"surface_tension", "collapse":false}],
+          "name": "surface_tension",
+          "type": "text",
+          "label": "Surface tensions",
+          "units": "mN/m",
+          "type_value": "float",
+          "min_value": "1",
+          "max_value": "100",
+          "value":"72.5",
+          "options":[],
+          "help": ""
+      },
+       "viscosity_phase_1": {
+          "name": "viscosity_phase_1",
+          "tag": [{"label":"Viscosity", "id":"viscosity","collapse":true}],
+          "type": "slider",
+          "label": "Viscosity: Phase 1",
+          "units": "Pa s",
+          "type_value": "float",
+          "min_value": "10",
+          "max_value": "20",
+          "value":"13",
+          "options":[],
+          "help": ""
+      },
+       "viscosity_phase_2":{
+          "name": "viscosity_phase_2",
+          "tag": [{"label":"Viscosity", "id":"viscosity","collapse":true}],
+          "tagid": ["viscosity"],
+          "type": "slider",
+          "label": "Viscosity: Phase 2",
+          "units": "Pa s",
+          "type_value": "float",
+          "min_value": "10",
+          "max_value": "20",
+          "value":"17",
+          "options":["17"],
+          "help": "A description of surface tension?"
+      },
+      "turbulence":{
+          "name": "turbulence",
+          "tag": [{"label":"Turbulence", "id":"turbulence","collapse":true}],
+          "type": "text",
+          "label": "Turbulence model",
+          "units": "kg/m/s",
+          "type_value": "float",
+          "min_value": "",
+          "max_value": "",
+          "options":["False"],
+          "value":"False",
+          "help": "A description of surface tension?"
+      },
+      "pipe_radius":{
+          "name": "pipe_radius",
+          "tag": [{"label":"Geometry", "id":"geometry","collapse":true}],
+          "type": "text",
+          "label": "Pipe Radius",
+          "units": "m",
+          "type_value": "float",
+          "min_value": "0.01",
+          "max_value": "0.10",
+          "options":["0.0725"],
+          "value":"0.0725",
+          "help": "A description of surface tension?"
+      }
+    }
+
+  }
+}

@@ -41,7 +41,7 @@ import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
                 data-step=0.01
                 (onFinish)="update(component, $event)"></ion-range-slider>
             </div>
-          </div>   
+          </div>
         </div>
       </div>
     </div>
@@ -80,7 +80,7 @@ export class AssembleComponent implements OnInit {
 
   // toggleFamily(tag) {
   //   this.tags = this.inputComponentService.toggleFamilyTag(tag, this.tags)
-    
+
   // }
 
   getDataTarget(tag) {
