@@ -67,11 +67,11 @@ export class AssembleComponent implements OnInit {
 
   ngOnInit() {
     this.tags = []
-    this.getJobData()
+    this.getTemplateData()
   }
 
-  getJobData () {
-    this.jobDataService.data
+  getTemplateData () {
+    this.jobDataService.template
                         .subscribe(
                           supersetComponents => {
                             this.supersetComponents = supersetComponents

@@ -129,7 +129,7 @@ describe('Job Service', () => {
         jobService = getTestBed().get(JobDataService);
         expect(jobService).toBeDefined();
 
-        jobService.getJobData().subscribe((components: InputComponent[]) => {
+        jobService.getTemplateData().subscribe((components: InputComponent[]) => {
             expect(components.length).toBeDefined();
             // expect(blogs.length).toEqual(1);
             // expect(blogs[0].id).toEqual(26);

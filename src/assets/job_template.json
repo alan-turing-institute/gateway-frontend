@@ -1,10 +1,9 @@
 {
-  "data" : {
-     "surface_tension":{
-        "tag": [{"label":"Surface Tension", "id":"surface_tension", "collapse":false}],
+  "parameters": [{
         "name": "surface_tension",
+        "tag": [{"label":"Surface Tensions", "id":"surface_tension", "collapse":false}],
         "type": "text",
-        "label": "Surface tensions",
+        "label": "Surface Tensions",
         "units": "mN/m",
         "type_value": "float",
         "min_value": "1",
@@ -13,7 +12,7 @@
         "options":[],
         "help": ""
     },
-     "viscosity_phase_1": {
+    {
         "name": "viscosity_phase_1",
         "tag": [{"label":"Viscosity", "id":"viscosity","collapse":true}],
         "type": "slider",
@@ -26,7 +25,7 @@
         "options":[],
         "help": ""
     },
-     "viscosity_phase_2":{
+    {
         "name": "viscosity_phase_2",
         "tag": [{"label":"Viscosity", "id":"viscosity","collapse":true}],
         "tagid": ["viscosity"],
@@ -40,7 +39,7 @@
         "options":["17"],
         "help": "A description of surface tension?"
     },
-    "turbulence":{
+    {
         "name": "turbulence",
         "tag": [{"label":"Turbulence", "id":"turbulence","collapse":true}],
         "type": "text",
@@ -53,7 +52,7 @@
         "value":"False",
         "help": "A description of surface tension?"
     },
-    "pipe_radius":{
+    {
         "name": "pipe_radius",
         "tag": [{"label":"Geometry", "id":"geometry","collapse":true}],
         "type": "vtk",
@@ -66,5 +65,32 @@
         "value":"0.0725",
         "help": "A description of surface tension?"
     }
+  ],
+  "inputs": [{
+    "destination_path": "project/case/",
+    "source_uri": "./resources/inputs/mesh_file.stl"
+  }],
+  "scripts": [{
+    "destination_path": "project/case/",
+    "source_uri": "./resources/scripts/run_job.sh",
+    "command": "run"
+  }],
+  "user": "lrmason",
+  "templates": [{
+    "destination_path": "project/case/",
+    "source_uri": "./resources/templates/Blue.nml"
+  }],
+  "id": "d769843b-6f37-4939-96c7-c382c3e74b46",
+  "name": "Talcum powder to flour",
+  "description": "Job description",
+  "creation_datetime": "",
+  "run_start_datetime": "",
+  "run_end_datetime": "",
+  "status": "",
+  "status_description": "",
+  "case": {
+    "id": "yy69843b-4939-6f37-96c7-c382c3e74b46",
+    "name": "PG Product changeover",
+    "description": "Case description"
   }
 }

@@ -11,15 +11,15 @@ import {INPUT_COMPONENTS} from './inputComponents';
 
 @Injectable()
 export class JobDataService {
-  private componentsUrl = require('../../../assets/job.json');
+  private getTemplateUrl = require('../../../assets/job_template.json');
   constructor (private http: Http) {}
 
-  data = this.getJobData()
+  template = this.getTemplateData()
   
-  getJobData(): Observable<InputComponent[]> {
+  getTemplateData(): Observable<InputComponent[]> {
     // console.log("reading")
-    return this.http.get(this.componentsUrl)
-                    .map(this.extractData)
+    return this.http.get(this.getTemplateUrl)
+                    .map(this.extractTemplateData)
                     .catch(this.handleError);
   }
 
@@ -28,11 +28,11 @@ export class JobDataService {
      return supersetComponents
   }
 
-  private extractData(res: Response) {
+  private extractTemplateData(res: Response) {
     let body = res.json();
     // console.log("making a call")
-    // console.log(body.data)
-    return body.data || { };
+    console.log(body.parameters)
+    return body.parameters || { };
   }
 
   private handleError (error: Response | any) {
