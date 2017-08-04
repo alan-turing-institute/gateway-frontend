@@ -20,7 +20,9 @@ before_script:
 - npm run build
 script:
 - npm run test -- --single-run=true --browsers Chrome --code-coverage
-before_deploy: rm .gitignore
+before_deploy: 
+- rm .gitignore
+- echo 'start deploying!'
 deploy:
   provider: azure_web_apps
   verbose: true
