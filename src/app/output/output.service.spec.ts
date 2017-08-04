@@ -12,7 +12,7 @@ import {
 
 import {ResponseOptions} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
-import { JobInfo } from './jobInfoComponent';
+import {JobInfo} from '../dashboard/jobInfoComponent';
 import { JobConfig } from './jobConfigComponent';
 import { OutputService } from './output.service';
 
@@ -90,7 +90,7 @@ describe('Output Service', () => {
           outputService.getJobConfig().subscribe((components: JobConfig []) => {
               expect(components).toBeDefined();
         });
-        
+
         done();
     });
   });

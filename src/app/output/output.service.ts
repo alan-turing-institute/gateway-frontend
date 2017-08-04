@@ -5,17 +5,19 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import {JobInfo} from './jobInfoComponent';
+import {JobInfo} from '../dashboard/jobInfoComponent';
 import {JobConfig} from './jobConfigComponent';
+import {JobData} from './jobDataComponent';
 
 @Injectable()
 export class OutputService {
-  private infosUrl = 'assets/job_status.json';
-  private configsUrl = 'assets/job_config.json';
+  private infosUrl = require('../../assets/job_status.json');
+  private configsUrl = require('../../assets/job_config.json');
   constructor (private http: Http) {}
 
   info = this.getJobInfo()
   config = this.getJobConfig()
+  data = this.getOutputData()
 
   getJobInfo(): Observable<JobInfo[]>{
       return this.http.get(this.infosUrl)
@@ -23,7 +25,7 @@ export class OutputService {
                       .catch(this.handleError)
   }
 
-  getJobConfig(): Observable<JobConfig[]>{
+  getOutputData(): Observable<JobData[]>{
     return this.http.get(this.configsUrl)
                     .map(this.extractData)
                     .catch(this.handleError)
@@ -32,6 +34,17 @@ export class OutputService {
   private extractData(res: Response){
     let body = res.json();
     return body.data || { };
+  }
+
+  getJobConfig(): Observable<JobConfig[]>{
+    return this.http.get(this.configsUrl)
+                    .map(this.extractParameters)
+                    .catch(this.handleError)
+  }
+
+  private extractParameters(res: Response){
+    let body = res.json();
+    return body.parameters|| { };
   }
 
   private handleError (error: Response | any) {

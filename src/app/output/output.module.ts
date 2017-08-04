@@ -9,6 +9,8 @@ import { OutputRoutingModule } from './output-routing.module';
 
 import { OutputService } from './output.service';
 
+import { VtkComponent } from '../vtk/pipe/vtk.component';
+
 @NgModule({
   imports: [
     OutputRoutingModule,
@@ -17,7 +19,8 @@ import { OutputService } from './output.service';
     IonRangeSliderModule,
     CommonModule
   ],
-  declarations: [OutputComponent],
+  declarations: [OutputComponent,
+    VtkComponent],
   providers : [OutputService]
 })
 export class OutputModule { }
