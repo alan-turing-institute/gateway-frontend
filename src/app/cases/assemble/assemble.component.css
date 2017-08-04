@@ -1,5 +1,14 @@
-.btn-secondary.selected {
-    color: #fff;
-    background-color:#20a8d8;
-    border-color:#20a8d8;
+.btn-config.selected {
+    color: white;
+    background-color:#ed5565;
+}
+
+.btn-config {
+    color: darkslategrey;
+    background-color:whitesmoke;
+    border:#ed5565;
+}
+
+.irs-line {
+    background-color: darkgray
 }

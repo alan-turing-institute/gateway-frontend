@@ -35,11 +35,11 @@ import { JobDataService } from './jobData.service';
             </div>
             
             <div *ngIf="component.type == 'radio'">
-              <button type="button" 
-                class="btn btn-primary" 
+              <button type="button" [ngClass]="{'selected':component.value}"
+                class="btn btn-config" 
                 uib-btn-checkbox 
                 (click)="update(component)">
-              {{component.label}} ({{component.units}})
+              Use {{component.label}} ({{component.units}})
               </button>
             </div>
             
@@ -66,7 +66,8 @@ import { JobDataService } from './jobData.service';
   </div>
   `,
   styles:[require('../../../../node_modules/ion-rangeslider/css/ion.rangeSlider.css').toString(),
-    require('../../../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinFlat.css').toString()]
+  require('../../../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinFlat.css').toString(),
+  require('./assemble.component.css').toString()]
 })
 
 export class AssembleComponent implements OnInit {
