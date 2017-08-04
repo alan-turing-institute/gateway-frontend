@@ -63,66 +63,22 @@ describe('Job Service', () => {
         (connection: MockConnection) => {
           connection.mockRespond(new Response(
             new ResponseOptions({
-                body: {
-                "data" : [
-                    { "name": "surface_tension",
-                        "tag": ["Surface Tension"],
-                        "type": "text",
-                        "label": "Surface tension",
-                        "units": "kg/s^2",
-                        "type_value": "float",
-                        "min_value": "0.05",
-                        "max_value": "0.10",
-                        "options":["0.0725"],
-                        "help": "A description of surface tension?"
-                    },
-                    { "name": "viscosity_phase_1",
-                        "tag": ["Fluide Densities"],
-                        "type": "text",
-                        "label": "Viscosity (Phase 1)",
-                        "units": "kg/m/s",
-                        "type_value": "float",
-                        "min_value": "1e-5",
-                        "max_value": "1e-2",
-                        "options":["1.825d-5"],
-                        "help": "A description of surface tension?"
-                    },
-                    { "name": "viscosity_phase_2",
-                        "tag": ["Fluide Density"],
-                        "type": "text",
-                        "label": "Viscosity (Phase 2)",
-                        "units": "kg/m/s",
-                        "type_value": "float",
-                        "min_value": "1e-5",
-                        "max_value": "1e-2",
-                        "options":["1.825d-5"],
-                        "help": "A description of surface tension?"
-                    },
-                    { "name": "turbulence",
-                        "tag": ["Turbulence"],
-                        "type": "text",
-                        "label": "Turbulence model",
-                        "units": "kg/m/s",
-                        "type_value": "float",
-                        "min_value": "",
-                        "max_value": "",
-                        "options":["False"],
-                        "help": "A description of surface tension?"
-                    },
-                    { "name": "pipe_radius",
-                        "tag": ["Pipe Radius"],
-                        "type": "text",
-                        "label": "Pipe Radius",
-                        "units": "m",
-                        "type_value": "float",
-                        "min_value": "0.01",
-                        "max_value": "0.10",
-                        "options":["0.0725"],
-                        "help": "A description of surface tension?"
-                    }
-                ]
-                }
+              body: {  
+                "parameters": [{
+                  "name": "surface_tension",
+                  "tag": [{"label":"Surface Tensions", "id":"surface_tension", "collapse":true}],
+                  "type": "text",
+                  "label": "Surface Tensions",
+                  "units": "mN/m",
+                  "type_value": "float",
+                  "min_value": "1",
+                  "max_value": "100",
+                  "value":"72.5",
+                  "options":[],
+                  "help": ""
+                }]
               }
+            }
             )));
         });
 

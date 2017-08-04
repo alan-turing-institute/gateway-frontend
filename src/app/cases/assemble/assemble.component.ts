@@ -45,14 +45,14 @@ import { JobDataService } from './jobData.service';
             
             <div *ngIf="component.type == 'slider'">
               <label [for]=component.name>{{component.label}}</label>
-              <ion-range-slider 
+              <ion-range-slider
                 [attr.id]=component.name
                 from={{component.value}}
                 min={{component.min_value}}
                 max={{component.max_value}}
                 postfix=" {{component.units}}"
                 data-step=0.01
-                (onFinish)="update(component)"></ion-range-slider>
+                (onFinish)="updateSlider(component, $event)"></ion-range-slider>
             </div>
 
             <div *ngIf="component.type == 'vtk'">
@@ -115,6 +115,7 @@ export class AssembleComponent implements OnInit {
     console.log(component)
     let newValue = event.from;
     this.supersetComponents = this.jobDataService.updateJobData(this.supersetComponents, component.name, newValue)
+    console.log(this.supersetComponents)
   }
 
   
