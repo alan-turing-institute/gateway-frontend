@@ -2,7 +2,7 @@ import { Component, Injectable, OnInit} from '@angular/core';
 import { InputComponent } from './inputComponent';
 import { InputComponentService } from './inputComponent.service';
 import { JobDataService } from './jobData.service';
-import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
+// import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
 
 @Component({
   selector: 'case-assemble',
@@ -20,6 +20,7 @@ import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
       <div [attr.id]=tag.id [ngClass]="{'collapse': tag.collapse }"role="tabpanel">
         <div class="card-block">
           <div *ngFor="let component of getVisibleComponents(tag)">
+            
             <div *ngIf="component.type == 'text'">
               <label [for]=component.name>{{component.label}}</label>
               <div class="input-group">
@@ -27,20 +28,33 @@ import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
                   [(ngModel)]="component.value"
                   [attr.id]="component.name"
                   type="text"
-                  class="form-control">
+                  (keyup.enter)="update(component)"
+                  (blur)="update(component)">
                 <span class="input-group-addon">{{component.units}}</span>
               </div>
             </div>
+            
+            <div *ngIf="component.type == 'radio'">
+              <button type="button" 
+                class="btn btn-primary" 
+                uib-btn-checkbox 
+                (click)="update(component)">
+              {{component.label}} ({{component.units}})
+              </button>
+            </div>
+            
             <div *ngIf="component.type == 'slider'">
               <label [for]=component.name>{{component.label}}</label>
-              <ion-range-slider [attr.id]=component.name
+              <ion-range-slider 
+                [attr.id]=component.name
                 from={{component.value}}
                 min={{component.min_value}}
                 max={{component.max_value}}
                 postfix=" {{component.units}}"
                 data-step=0.01
-                (onFinish)="update(component, $event)"></ion-range-slider>
+                (onFinish)="update(component)"></ion-range-slider>
             </div>
+
             <div *ngIf="component.type == 'vtk'">
               <label [for]=component.name>{{component.label}}</label>
               <app-vtk></app-vtk>
@@ -51,7 +65,8 @@ import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
     </div>
   </div>
   `,
-  styleUrls: ['./assemble.component.css']
+  styles:[require('../../../../node_modules/ion-rangeslider/css/ion.rangeSlider.css').toString(),
+    require('../../../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinFlat.css').toString()]
 })
 
 export class AssembleComponent implements OnInit {
@@ -95,9 +110,18 @@ export class AssembleComponent implements OnInit {
     return this.inputComponentService.getComponentsOfFamily(this.supersetComponents, tag.label);
   }
 
-  update(component, event) {
+  updateSlider(component, event) {
+    console.log(component)
     let newValue = event.from;
     this.supersetComponents = this.jobDataService.updateJobData(this.supersetComponents, component.name, newValue)
+  }
+
+  
+  update(component) {
+    if (component.type == "radio")
+      component.value = !component.value
+    this.supersetComponents = this.jobDataService.updateJobData(this.supersetComponents, component.name,  component.value)
+    console.log(this.supersetComponents)
   }
 
   toggleCollapse(tag) {
