@@ -23,9 +23,24 @@ export class JobDataService {
                     .catch(this.handleError);
   }
 
-  updateJobData(supersetComponents, componentKey, newValue) {
-     supersetComponents[componentKey].value = newValue;
-     return supersetComponents
+  private arrayObjectIndexOf(myArray, searchTerm, property) {
+    for(var i = 0, len = myArray.length; i < len; i++) {
+        if (myArray[i][property] === searchTerm) return i;
+    }
+    return -1;
+  }
+
+  
+
+  updateJobData(supersetComponents, componentKey, newValue) : InputComponent[]{
+    var index = this.arrayObjectIndexOf(supersetComponents, componentKey, 'name'); // 1
+    var componentWithNewValue = supersetComponents[index]
+    componentWithNewValue.value = newValue
+    return [
+    ...supersetComponents.slice(0, index), 
+    Object.assign({}, componentWithNewValue),
+    ...supersetComponents.slice(index + 1)
+    ];
   }
 
   private extractTemplateData(res: Response) {

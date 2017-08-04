@@ -1,7 +1,7 @@
 {
   "parameters": [{
         "name": "surface_tension",
-        "tag": [{"label":"Surface Tensions", "id":"surface_tension", "collapse":false}],
+        "tag": [{"label":"Surface Tensions", "id":"surface_tension", "collapse":true}],
         "type": "text",
         "label": "Surface Tensions",
         "units": "mN/m",
@@ -14,7 +14,7 @@
     },
     {
         "name": "viscosity_phase_1",
-        "tag": [{"label":"Viscosity", "id":"viscosity","collapse":true}],
+        "tag": [{"label":"Viscosity", "id":"viscosity","collapse":false}],
         "type": "slider",
         "label": "Viscosity: Phase 1",
         "units": "Pa s",
@@ -27,7 +27,7 @@
     },
     {
         "name": "viscosity_phase_2",
-        "tag": [{"label":"Viscosity", "id":"viscosity","collapse":true}],
+        "tag": [{"label":"Viscosity", "id":"viscosity","collapse":false}],
         "tagid": ["viscosity"],
         "type": "slider",
         "label": "Viscosity: Phase 2",
@@ -41,8 +41,8 @@
     },
     {
         "name": "turbulence",
-        "tag": [{"label":"Turbulence", "id":"turbulence","collapse":true}],
-        "type": "text",
+        "tag": [{"label":"Turbulence", "id":"turbulence","collapse":false}],
+        "type": "radio",
         "label": "Turbulence model",
         "units": "kg/m/s",
         "type_value": "float",
@@ -54,7 +54,7 @@
     },
     {
         "name": "pipe_radius",
-        "tag": [{"label":"Geometry", "id":"geometry","collapse":true}],
+        "tag": [{"label":"Geometry", "id":"geometry","collapse":false}],
         "type": "vtk",
         "label": "Pipe Radius",
         "units": "m",
