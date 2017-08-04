@@ -12,20 +12,19 @@ import { AssembleComponent } from './assemble/assemble.component';
 // import { FeedbackComponent } from './feedback/feedback.component';
 import { JobDataService } from './assemble/jobData.service';
 
-
-import { VtkComponent } from '../vtk/pipe/vtk.component';
+import { VtkModule} from '../vtk.module';
 
 @NgModule({
   imports: [
     CommonModule,
     CasesRoutingModule,
     FormsModule,
-    IonRangeSliderModule
+    IonRangeSliderModule,
+    VtkModule
   ],
   declarations: [
     ChangeoverComponent,
-    AssembleComponent,
-    VtkComponent
+    AssembleComponent
     // BannerComponent,
     // FeedbackComponent
   ],

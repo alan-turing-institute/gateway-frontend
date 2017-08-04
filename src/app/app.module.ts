@@ -19,6 +19,7 @@ import { IonRangeSliderModule } from "ng2-ion-range-slider";
 import { Routes, RouterModule } from '@angular/router';
 import { AccountModule } from './account/account.module';
 
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -29,14 +30,16 @@ import { AccountModule } from './account/account.module';
     FormsModule,
     IonRangeSliderModule,
     RouterModule
+
   ],
   declarations: [
     AppComponent,
     FullLayoutComponent,
+    //VtkComponent,
     NAV_DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
-    AsideToggleDirective,
+    AsideToggleDirective
   ],
   providers: [{
       provide: LocationStrategy,
@@ -45,6 +48,6 @@ import { AccountModule } from './account/account.module';
   ],
   bootstrap: [ AppComponent ],
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  // exports:[RouterModule]
+  //exports:[VtkComponent]
 })
 export class AppModule { }

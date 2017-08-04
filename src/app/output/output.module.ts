@@ -9,7 +9,7 @@ import { OutputRoutingModule } from './output-routing.module';
 
 import { OutputService } from './output.service';
 
-import { VtkComponent } from '../vtk/pipe/vtk.component';
+import { VtkModule} from '../vtk.module';
 
 @NgModule({
   imports: [
@@ -17,10 +17,10 @@ import { VtkComponent } from '../vtk/pipe/vtk.component';
     // ChartsModule,
     FormsModule,
     IonRangeSliderModule,
-    CommonModule
+    CommonModule,
+    VtkModule
   ],
-  declarations: [OutputComponent,
-    VtkComponent],
+  declarations: [OutputComponent],
   providers : [OutputService]
 })
 export class OutputModule { }
