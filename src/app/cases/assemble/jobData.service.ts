@@ -11,7 +11,7 @@ import {INPUT_COMPONENTS} from './inputComponents';
 
 @Injectable()
 export class JobDataService {
-  private getTemplateUrl = require('../../../dist/assets/job_template.json');
+  private getTemplateUrl = require('../../../assets/job_template.json');
   constructor (private http: Http) {}
 
   template = this.getTemplateData()
