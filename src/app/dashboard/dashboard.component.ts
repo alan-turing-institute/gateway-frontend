@@ -1,13 +1,13 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { JobInfo } from './jobInfoComponent';
-
 import { DashboardService } from './dashboard.service';
+import { JobSummaryComponent } from './jobSummary.component';
+
 
 @Component({
   providers: [DashboardService],
-  templateUrl: 'dashboard.component.1.html'
+  templateUrl: 'dashboard.component.html',
 })
 
 export class DashboardComponent implements OnInit {
