@@ -10,9 +10,9 @@ import { JobDataService } from './jobData.service';
   template:`
   <div [attr.id]="componentFamilyAccordion" role="tablist">
     <div *ngFor="let tag of tags" class="card">
-      <div class="card-header" role="tab">
+      <div class="card-header" role="tab" (click)="toggleCollapse(tag)">
         <h5 class="mb-0">
-          <a data-toggle="collapse" data-target={{getDataTarget(tag)}} data-parent="#componentFamilyAccordion" (click)="toggleCollapse(tag)">
+          <a data-toggle="collapse" data-target={{getDataTarget(tag)}} data-parent="#componentFamilyAccordion">
             {{tag.label}}
           </a>
         </h5>
