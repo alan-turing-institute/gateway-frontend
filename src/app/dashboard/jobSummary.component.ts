@@ -12,14 +12,12 @@ import { Router } from '@angular/router';
             <span class="badge" [ngClass]="getTitleClass()">
                 <i [ngClass]="getSpanIcon()"></i> 
             </span>
-            {{summary.job_type}}
+            {{summary.status}}
         </div>
         <img class="card-img-top" src="{{summary.output}}">
         <div class="card-block">
             <h4 class="card-title"> 
-                <span class="badge" [ngClass]="getTitleClass()">
-                    {{summary.status}}
-                </span>
+                {{summary.job_type}}
             </h4>
             <p class="card-text">{{summary.start_date}} - {{summary.end_date}}</p>
             
