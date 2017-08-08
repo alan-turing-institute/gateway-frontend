@@ -30,12 +30,10 @@ import { AccountModule } from './account/account.module';
     FormsModule,
     IonRangeSliderModule,
     RouterModule
-
   ],
   declarations: [
     AppComponent,
     FullLayoutComponent,
-    //VtkComponent,
     NAV_DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
@@ -46,8 +44,6 @@ import { AccountModule } from './account/account.module';
       useClass: HashLocationStrategy
     }
   ],
-  bootstrap: [ AppComponent ],
-  // schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  //exports:[VtkComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

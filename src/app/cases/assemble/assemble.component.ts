@@ -8,69 +8,69 @@ import { JobDataService } from './jobData.service';
   selector: 'case-assemble',
   providers:[InputComponentService],
   template:`
-  <div [attr.id]="componentFamilyAccordion" role="tablist">
-    <div *ngFor="let tag of tags" class="card">
-      <div class="card-header" role="tab">
-        <h5 class="mb-0">
-          <a data-toggle="collapse" data-target={{getDataTarget(tag)}} data-parent="#componentFamilyAccordion" (click)="toggleCollapse(tag)">
-            {{tag.label}}
-          </a>
-        </h5>
-      </div>
-      <div [attr.id]=tag.id [ngClass]="{'collapse': tag.collapse }"role="tabpanel">
-        <div class="card-block">
-          <div *ngFor="let component of getVisibleComponents(tag)">
+    <div [attr.id]="componentFamilyAccordion" role="tablist">
+      <div *ngFor="let tag of tags" class="card">
+        <div class="card-header" role="tab">
+          <h5 class="mb-0">
+            <a data-toggle="collapse" data-target={{getDataTarget(tag)}} data-parent="#componentFamilyAccordion" (click)="toggleCollapse(tag)">
+              {{tag.label}}
+            </a>
+          </h5>
+        </div>
+        <div [attr.id]=tag.id [ngClass]="{'collapse': tag.collapse }"role="tabpanel">
+          <div class="card-block">
+            <div *ngFor="let component of getVisibleComponents(tag)">
 
-            <div *ngIf="component.type == 'text'">
-              <label [for]=component.name>{{component.label}}</label>
-              <div class="input-group">
-                <input
-                  [(ngModel)]="component.value"
-                  [attr.id]="component.name"
-                  type="text"
-                  (keyup.enter)="update(component)"
-                  (blur)="update(component)">
-                <span class="input-group-addon">{{component.units}}</span>
+              <div *ngIf="component.type == 'text'">
+                <label [for]=component.name>{{component.label}}</label>
+                <div class="input-group">
+                  <input
+                    [(ngModel)]="component.value"
+                    [attr.id]="component.name"
+                    type="text"
+                    (keyup.enter)="update(component)"
+                    (blur)="update(component)">
+                  <span class="input-group-addon">{{component.units}}</span>
+                </div>
               </div>
-            </div>
 
-            <div *ngIf="component.type == 'radio'">
-              <!--<button type="button" [ngClass]="{'selected':component.value}"
-                class="btn btn-config"
-                uib-btn-checkbox
-                (click)="update(component)">
-              Use {{component.label}} ({{component.units}})
-              </button>-->
-              <label class="switch switch-3d switch-danger">
-                <input type="checkbox" class="switch-input" [ngModel] = "component.value" (ngModelChange)="update(component)">
-                <!--<input type="checkbox" class="switch-input" [(ngModel)] = "component.value">-->
-                <span class="switch-label"></span>
-                <span class="switch-handle"></span>
-              </label>
-              {{component.units}}
-            </div>
+              <div *ngIf="component.type == 'radio'">
+                <!--<button type="button" [ngClass]="{'selected':component.value}"
+                  class="btn btn-config"
+                  uib-btn-checkbox
+                  (click)="update(component)">
+                Use {{component.label}} ({{component.units}})
+                </button>-->
+                <label class="switch switch-3d switch-danger">
+                  <input type="checkbox" class="switch-input" [ngModel] = "component.value" (ngModelChange)="update(component)">
+                  <!--<input type="checkbox" class="switch-input" [(ngModel)] = "component.value">-->
+                  <span class="switch-label"></span>
+                  <span class="switch-handle"></span>
+                </label>
+                {{component.units}}
+              </div>
 
-            <div *ngIf="component.type == 'slider'">
-              <label [for]=component.name>{{component.label}}</label>
-              <ion-range-slider
-                [attr.id]=component.name
-                from={{component.value}}
-                min={{component.min_value}}
-                max={{component.max_value}}
-                postfix=" {{component.units}}"
-                data-step=0.01
-                (onFinish)="updateSlider(component, $event)"></ion-range-slider>
-            </div>
+              <div *ngIf="component.type == 'slider'">
+                <label [for]=component.name>{{component.label}}</label>
+                <ion-range-slider
+                  [attr.id]=component.name
+                  from={{component.value}}
+                  min={{component.min_value}}
+                  max={{component.max_value}}
+                  postfix=" {{component.units}}"
+                  data-step=0.01
+                  (onFinish)="updateSlider(component, $event)"></ion-range-slider>
+              </div>
 
-            <div *ngIf="component.type == 'vtk'">
-              <label [for]=component.name>{{component.label}}</label>
-              <app-vtk></app-vtk>
+              <div *ngIf="component.type == 'vtk'">
+                <label [for]=component.name>{{component.label}}</label>
+                <app-vtk></app-vtk>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   `,
   styles:[require('../../../../node_modules/ion-rangeslider/css/ion.rangeSlider.css').toString(),
   require('../../../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinFlat.css').toString(),
@@ -89,7 +89,11 @@ export class AssembleComponent implements OnInit {
     private inputComponentService:InputComponentService) { }
 
   ngOnInit() {
+    console.log(this.supersetComponents);
     this.tags = []
+    this.supersetComponents = []
+    this.selectedComponents = []
+    
     this.getTemplateData()
   }
 
@@ -99,6 +103,7 @@ export class AssembleComponent implements OnInit {
                           supersetComponents => {
                             this.supersetComponents = supersetComponents
                             this.tags = this.inputComponentService.getFamilyTags(this.supersetComponents)
+                            console.log(this.tags)
                           },
                           error => {
                             this.errorMessage = <any> error

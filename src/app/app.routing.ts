@@ -5,6 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { FullLayoutComponent } from './layouts/full-layout.component';
 import { AppComponent } from './app.component';
 import { AccountModule } from './account/account.module';
+import { CasesModule } from './cases/cases.module';
+// import { AssembleModule } from './cases/assemble/assemble.module';
 
 export const routes: Routes = [
   {
@@ -35,6 +37,10 @@ export const routes: Routes = [
         path: 'output',
         loadChildren: './output/output.module#OutputModule'
       }
+      // {
+      //   path: 'assemble',
+      //   loadChildren: './cases/assemble/assemble.module#AssembleModule'
+      // }
     ]
   }
 ];

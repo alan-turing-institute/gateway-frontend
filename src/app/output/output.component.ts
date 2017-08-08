@@ -2,7 +2,7 @@ import 'rxjs/add/operator/switchMap';
 import { Component, OnInit, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { JobInfo } from '../dashboard/jobInfoComponent';
+import { JobInfo } from '../dashboard/jobInfo';
 import { JobConfig } from './jobConfigComponent';
 import { JobData } from './jobDataComponent';
 

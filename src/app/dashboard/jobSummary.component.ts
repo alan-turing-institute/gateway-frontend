@@ -1,6 +1,6 @@
 import { Component, Input, OnInit} from '@angular/core';
 // import { ElementRef, HostListener} from '@angular/core';
-import { JobInfo } from './jobInfoComponent';
+import { JobInfo } from './jobInfo';
 import { Router } from '@angular/router';
 
 @Component({
