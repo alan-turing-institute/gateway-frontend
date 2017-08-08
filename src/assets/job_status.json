@@ -22,6 +22,14 @@
       "end_date" : "4 Jan 2017",
       "status" : "Error",
       "output" : "./src/assets/img/generic_graph.png"
+    },
+    "4" : {
+      "id" : "4",
+      "job_type": "Stirred Tank",
+      "start_date" : "",
+      "end_date" : "",
+      "status" : "Draft",
+      "output" : "./src/assets/img/generic_graph.png"
     }
   }
 }
