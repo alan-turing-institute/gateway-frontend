@@ -1,43 +1,5 @@
-<div class="container">
-    <div class="row">
-        <div class="col-12" >
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search For Job" />
-            </div>  
-        </div>  
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <table class="table table-responsive">
-                    <thead>
-                        <tr>
-                        <th>#</th>
-                        <th>Jobs</th>
-                        <th>Date</th>
-                        <th>Duration</th>
-                        <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="table-success">
-                        <th scope="row">1</th>
-                        <td><img class="img-thumbnail" src="./src/assets/img/generic_graph.png"></td>
-                        <td>Changeover</td>
-                        <td>4h 15 mins</td>
-                        <td><span class="badge badge-success">Success</span></td>
-                        </tr>
-                        <tr class="table-warning">
-                        <th scope="row">2</th>
-                        <td><img class="img-thumbnail" src="./src/assets/img/generic_graph.png"></td>
-                        <td>Stirred tank</td>
-                        <td>0h 10 mins</td>
-                        <td><span class="badge badge-warning">Warning</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+<div class="card-deck">
+    <div *ngFor="let job of jobs">
+        <jobSummary [summary]="job"></jobSummary>
     </div>
 </div>
-

@@ -2,9 +2,9 @@
     "1" : {
       "id" : "1",
       "job_type": "Changeover",
-      "start_date" : "1 Jan 2017",
-      "end_date" : "2 Jan 2017",
-      "status" : "Complete",
+      "start_date" : "6 Aug 2017",
+      "end_date" : "",
+      "status" : "Running",
       "output" : "./src/assets/img/generic_graph.png"
     },
     "2" : {
@@ -20,7 +20,15 @@
       "job_type": "Stirred Tank",
       "start_date" : "3 Jan 2017",
       "end_date" : "4 Jan 2017",
-      "status" : "Complete",
+      "status" : "Error",
+      "output" : "./src/assets/img/generic_graph.png"
+    },
+    "4" : {
+      "id" : "4",
+      "job_type": "Stirred Tank",
+      "start_date" : "",
+      "end_date" : "",
+      "status" : "Draft",
       "output" : "./src/assets/img/generic_graph.png"
     }
   }

@@ -1,23 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { DashboardRoutingModule } from './dashboard-routing.module';
+import { DashboardService } from './dashboard.service';
 
 import { DashboardComponent } from './dashboard.component';
-import { DashboardRoutingModule } from './dashboard-routing.module';
-
-import { DashboardService } from './dashboard.service';
+import { JobSummaryComponent } from './jobSummary.component';
 
 @NgModule({
   imports: [
     DashboardRoutingModule,
     CommonModule,
-    // ChartsModule
   ],
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    JobSummaryComponent
   ],
   providers: [
     DashboardService
-  ]
+  ],
+  exports : [JobSummaryComponent]
 })
 export class DashboardModule { }

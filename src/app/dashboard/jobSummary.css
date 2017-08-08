@@ -1,0 +1,65 @@
+.card-job {
+    margin:1% 1% 1% 1%;
+}
+
+.card-outline-running {
+    background-color: transparent;
+    /*border-color: #cfd8dc;*/
+}
+
+.card-outline-error {
+    background-color: transparent;
+    /*border-color: #a94442;*/
+}
+
+.card-outline-complete {
+    background-color: transparent;
+    /*border-color: #263238;*/
+}
+
+.badge-running {
+    background-color: #cfd8dc;    
+}
+
+.badge-error {
+    background-color: #a94442;    
+}
+
+.badge-complete {
+    background-color: #263238;    
+}
+
+.badge-draft {
+    background-color: #3a9d5d;    
+}
+
+.card-header-running {
+    /*border-bottom:1px solid  #cfd8dc;*/
+    color: #cfd8dc
+}
+
+.card-header-error {
+    /*border-bottom: 1px solid #a94442;*/
+    color: #a94442;
+}
+
+.card-header-complete {
+    /*border-bottom: 1px solid #263238;*/
+    color: #263238
+}
+
+.wrapper {
+   position: relative;
+}
+
+.wrapper i {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+}
+
+.img-job {
+    vertical-align: bottom;
+    width:100%;
+}
+
