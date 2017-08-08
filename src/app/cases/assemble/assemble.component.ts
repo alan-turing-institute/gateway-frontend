@@ -20,7 +20,7 @@ import { JobDataService } from './jobData.service';
       <div [attr.id]=tag.id [ngClass]="{'collapse': tag.collapse }"role="tabpanel">
         <div class="card-block">
           <div *ngFor="let component of getVisibleComponents(tag)">
-            
+
             <div *ngIf="component.type == 'text'">
               <label [for]=component.name>{{component.label}}</label>
               <div class="input-group">
@@ -33,16 +33,23 @@ import { JobDataService } from './jobData.service';
                 <span class="input-group-addon">{{component.units}}</span>
               </div>
             </div>
-            
+
             <div *ngIf="component.type == 'radio'">
-              <button type="button" [ngClass]="{'selected':component.value}"
-                class="btn btn-config" 
-                uib-btn-checkbox 
+              <!--<button type="button" [ngClass]="{'selected':component.value}"
+                class="btn btn-config"
+                uib-btn-checkbox
                 (click)="update(component)">
               Use {{component.label}} ({{component.units}})
-              </button>
+              </button>-->
+              <label class="switch switch-3d switch-danger">
+                <input type="checkbox" class="switch-input" [ngModel] = "component.value" (ngModelChange)="update(component)">
+                <!--<input type="checkbox" class="switch-input" [(ngModel)] = "component.value">-->
+                <span class="switch-label"></span>
+                <span class="switch-handle"></span>
+              </label>
+              {{component.units}}
             </div>
-            
+
             <div *ngIf="component.type == 'slider'">
               <label [for]=component.name>{{component.label}}</label>
               <ion-range-slider
@@ -118,7 +125,7 @@ export class AssembleComponent implements OnInit {
     console.log(this.supersetComponents)
   }
 
-  
+
   update(component) {
     if (component.type == "radio")
       component.value = !component.value
