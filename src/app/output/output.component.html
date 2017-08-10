@@ -1,9 +1,14 @@
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.0-rc.2/Chart.js"></script>
+
+</head>
+<body>
 <div class="animated fadeIn">
 
   <div class="container-fluid">
 
-      <div *ngFor="let job of jobInfo" class="card" style="width: 20rem;" >
-          <img class="img-fluid" src="{{job.output}}" alt="Card image cap">
+      <div *ngFor="let job of jobInfo" class="card"  >
+          <img class="img-fluid" src="{{job.output}}" alt="Card image cap" style="width: 20rem;">
           <div class="card-block">
             <h4 class="card-title">{{job.job_type}}  <span class="badge badge-success">{{job.status}}</span></h4>
             <p class="card-text">Job id: {{job.id}}</p>
@@ -13,16 +18,7 @@
 
   </div>
 
-  <div class='container-fluid'>
-    <div class = "card">
-      <div class="card-header">
-        Output graph
-      </div>
-      <div class="card-block">
-        <svg width = "500" height="500"></svg>
-      </div>
-    </div>
-  </div>
+  <chart></chart>
 
   <div class="container-fluid">
 
@@ -34,9 +30,9 @@
       <div class="card-block">
         <div [attr.id]="componentFamilyAccordion" role="tablist">
           <div *ngFor="let tag of tags" class="card">
-            <div class="card-header" role="tab">
+            <div class="card-header" id="section_title" role="tab" (click)="toggleCollapse(tag)">
               <h5 class="mb-0">
-                <a data-toggle="collapse" data-target={{getDataTarget(tag)}} data-parent="#componentFamilyAccordion" (click)="toggleCollapse(tag)">
+                <a data-toggle="collapse" data-target={{getDataTarget(tag)}} data-parent="#componentFamilyAccordion">
                   {{tag.label}}
                 </a>
               </h5>
@@ -86,3 +82,4 @@
   </div>
 
 </div>
+</body>
