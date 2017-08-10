@@ -1,27 +1,27 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { AssembleComponent } from './assemble.component';
+import { ConfigComponent } from './config.component';
 import { IonRangeSliderComponent } from 'ng2-ion-range-slider';
-import { VtkComponent } from '../../vtk/pipe/vtk.component';
-import { JobDataService } from './jobData.service';
+import { VtkComponent } from '../vtk/pipe/vtk.component';
+import { ConfigDataService } from './configData.service';
 import { HttpModule } from '@angular/http';
 
-describe('AssembleComponent', () => {
-  let component: AssembleComponent;
-  let fixture: ComponentFixture<AssembleComponent>;
+describe('ConfigComponent', () => {
+  let component: ConfigComponent;
+  let fixture: ComponentFixture<ConfigComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule, HttpModule,],
-      providers:[JobDataService, ],
-      declarations: [ AssembleComponent, 
+      providers:[ConfigDataService, ],
+      declarations: [ ConfigComponent, 
       IonRangeSliderComponent, VtkComponent]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AssembleComponent);
+    fixture = TestBed.createComponent(ConfigComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

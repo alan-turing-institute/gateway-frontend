@@ -17,7 +17,6 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { IonRangeSliderModule } from "ng2-ion-range-slider";
 import { Routes, RouterModule } from '@angular/router';
-import { AccountModule } from './account/account.module';
 
 
 @NgModule({

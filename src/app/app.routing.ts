@@ -6,7 +6,7 @@ import { FullLayoutComponent } from './layouts/full-layout.component';
 import { AppComponent } from './app.component';
 import { AccountModule } from './account/account.module';
 import { CasesModule } from './cases/cases.module';
-// import { AssembleModule } from './cases/assemble/assemble.module';
+import { ConfigModule } from './config/config.module';
 
 export const routes: Routes = [
   {
@@ -22,31 +22,31 @@ export const routes: Routes = [
     },
     children: [
       {
+        path: 'account',
+        loadChildren: './account/account.module#AccountModule'
+      },
+      {
         path: 'dashboard',
         loadChildren: './dashboard/dashboard.module#DashboardModule'
       },
       {
-        path: 'account',
-        loadChildren: './account/account.module#AccountModule'
+        path: 'output',
+        loadChildren: './output/output.module#OutputModule'
       },
       {
         path: 'cases',
         loadChildren: './cases/cases.module#CasesModule'
       },
       {
-        path: 'output',
-        loadChildren: './output/output.module#OutputModule'
+        path: 'config',
+        loadChildren: './config/config.module#ConfigModule'
       }
-      // {
-      //   path: 'assemble',
-      //   loadChildren: './cases/assemble/assemble.module#AssembleModule'
-      // }
     ]
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {enableTracing:true})],
   // exports: [ RouterModule ]
 })
 export class AppRoutingModule { }

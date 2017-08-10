@@ -12,7 +12,7 @@ import {
 import {ResponseOptions} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
 import { InputComponent } from './inputComponent';
-import { JobDataService } from './jobData.service';
+import { ConfigDataService } from './configData.service';
 
 describe('Job Service', () => {
   let mockBackend: MockBackend;
@@ -27,7 +27,7 @@ describe('Job Service', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
-        JobDataService,
+        ConfigDataService,
         MockBackend,
         BaseRequestOptions,
         {
@@ -56,7 +56,7 @@ describe('Job Service', () => {
 
 
   it('should get jobs', done => {
-    let jobService: JobDataService;
+    let jobService: ConfigDataService;
 
     getTestBed().compileComponents().then(() => {
       mockBackend.connections.subscribe(
@@ -82,7 +82,7 @@ describe('Job Service', () => {
             )));
         });
 
-        jobService = getTestBed().get(JobDataService);
+        jobService = getTestBed().get(ConfigDataService);
         expect(jobService).toBeDefined();
 
         jobService.getTemplateData().subscribe((components: InputComponent[]) => {

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CasesComponent } from './cases.component';
-import { ChangeoverComponent } from './changeover.component';
 
 const routes: Routes = [
   {
@@ -9,16 +8,7 @@ const routes: Routes = [
     component: CasesComponent,
     data: {
       title: 'Cases'
-    },
-    children: [
-      {
-        path: 'changeover',
-        component: ChangeoverComponent,
-        data: {
-          title: 'Changeover'
-        }
-      },
-    ]
+    }
   }
 ];
 

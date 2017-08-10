@@ -1,0 +1,123 @@
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+        Configurations
+        </div>
+        <div class="card-block">
+            <!-- <case-assemble></case-assemble> -->
+            <div [attr.id]="componentFamilyAccordion" role="tablist">
+              <div *ngFor="let tag of tags" class="card">
+                <div class="card-header" role="tab">
+                  <h5 class="mb-0">
+                    <a data-toggle="collapse" data-target={{getDataTarget(tag)}} data-parent="#componentFamilyAccordion" (click)="toggleCollapse(tag)">
+                      {{tag.label}}
+                    </a>
+                  </h5>
+                </div>
+                <div [attr.id]=tag.id [ngClass]="{'collapse': tag.collapse }"role="tabpanel">
+                  <div class="card-block">
+                    <div *ngFor="let component of getVisibleComponents(tag)">
+
+                      <div *ngIf="component.type == 'text'">
+                        <label [for]=component.name>{{component.label}}</label>
+                        <div class="input-group">
+                          <input
+                            [(ngModel)]="component.value"
+                            [attr.id]="component.name"
+                            type="text"
+                            (keyup.enter)="update(component)"
+                            (blur)="update(component)">
+                          <span class="input-group-addon">{{component.units}}</span>
+                        </div>
+                      </div>
+
+                      <div *ngIf="component.type == 'radio'">
+                        <label class="switch switch-3d switch-danger">
+                          <input type="checkbox" class="switch-input" [ngModel] = "component.value" (ngModelChange)="update(component)">
+                          <span class="switch-label"></span>
+                          <span class="switch-handle"></span>
+                        </label>
+                        {{component.units}}
+                      </div>
+
+                      <div *ngIf="component.type == 'slider'">
+                        <label [for]=component.name>{{component.label}}</label>
+                        <ion-range-slider
+                          [attr.id]=component.name
+                          from={{component.value}}
+                          min={{component.min_value}}
+                          max={{component.max_value}}
+                          postfix=" {{component.units}}"
+                          data-step=0.01
+                          (onFinish)="updateSlider(component, $event)"></ion-range-slider>
+                      </div>
+
+                      <div *ngIf="component.type == 'vtk'">
+                        <label [for]=component.name>{{component.label}}</label>
+                        <app-vtk></app-vtk>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>    
+<!-- 
+<div [attr.id]="componentFamilyAccordion" role="tablist">
+      <div *ngFor="let tag of tags" class="card">
+        <div class="card-header" role="tab">
+          <h5 class="mb-0">
+            <a data-toggle="collapse" data-target={{getDataTarget(tag)}} data-parent="#componentFamilyAccordion" (click)="toggleCollapse(tag)">
+              {{tag.label}}
+            </a>
+          </h5>
+        </div>
+        <div [attr.id]=tag.id [ngClass]="{'collapse': tag.collapse }"role="tabpanel">
+          <div class="card-block">
+            <div *ngFor="let component of getVisibleComponents(tag)">
+
+              <div *ngIf="component.type == 'text'">
+                <label [for]=component.name>{{component.label}}</label>
+                <div class="input-group">
+                  <input
+                    [(ngModel)]="component.value"
+                    [attr.id]="component.name"
+                    type="text"
+                    (keyup.enter)="update(component)"
+                    (blur)="update(component)">
+                  <span class="input-group-addon">{{component.units}}</span>
+                </div>
+              </div>
+
+              <div *ngIf="component.type == 'radio'">
+                <label class="switch switch-3d switch-danger">
+                  <input type="checkbox" class="switch-input" [ngModel] = "component.value" (ngModelChange)="update(component)">
+                  <span class="switch-label"></span>
+                  <span class="switch-handle"></span>
+                </label>
+                {{component.units}}
+              </div>
+
+              <div *ngIf="component.type == 'slider'">
+                <label [for]=component.name>{{component.label}}</label>
+                <ion-range-slider
+                  [attr.id]=component.name
+                  from={{component.value}}
+                  min={{component.min_value}}
+                  max={{component.max_value}}
+                  postfix=" {{component.units}}"
+                  data-step=0.01
+                  (onFinish)="updateSlider(component, $event)"></ion-range-slider>
+              </div>
+
+              <div *ngIf="component.type == 'vtk'">
+                <label [for]=component.name>{{component.label}}</label>
+                <app-vtk></app-vtk>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->

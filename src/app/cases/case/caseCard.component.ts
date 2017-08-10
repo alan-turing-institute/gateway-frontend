@@ -12,10 +12,9 @@ import { Router } from '@angular/router';
                 {{info.job_label}}
             </h5>
             <p class="card-text">{{info.job_short_description}}</p>
-            <a routerLinkActive = "active" 
-            [routerLink] = "['/cases/changeover']" 
-            (click) = "storeCaseType()"
-            class="btn btn-primary">More</a>
+            <p class="card-text">
+            <a routerLinkActive = "active" [routerLink] = "['/config/config']">{{info.job_short_description}}</a>
+            </p>
         </div>
     </div>
     `,
