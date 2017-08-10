@@ -5,7 +5,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NAV_DROPDOWN_DIRECTIVES } from './shared/nav-dropdown.directive';
-
+//import { DROPDOWN_DIRECTIVES } from './shared/dropdown.directive';
 
 import { SIDEBAR_TOGGLE_DIRECTIVES } from './shared/sidebar.directive';
 import { AsideToggleDirective } from './shared/aside.directive';
@@ -37,6 +37,7 @@ import { AccountModule } from './account/account.module';
     FullLayoutComponent,
     //VtkComponent,
     NAV_DROPDOWN_DIRECTIVES,
+    //DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
     AsideToggleDirective
