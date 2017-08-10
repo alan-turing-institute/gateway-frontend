@@ -12,3 +12,8 @@
 .irs-line.config {
     background-color: darkgray
 }
+
+.card-header:hover {
+  background-color: #c6c7c7;
+
+}

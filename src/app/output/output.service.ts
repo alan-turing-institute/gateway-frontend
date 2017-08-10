@@ -7,7 +7,6 @@ import 'rxjs/add/operator/map';
 
 import {JobInfo} from '../dashboard/jobInfo';
 import {JobConfig} from './jobConfigComponent';
-import {JobData} from './jobDataComponent';
 
 @Injectable()
 export class OutputService {
@@ -25,7 +24,7 @@ export class OutputService {
                       .catch(this.handleError)
   }
 
-  getOutputData(): Observable<JobData[]>{
+  getOutputData(): Observable<Array<any>>{
     return this.http.get(this.configsUrl)
                     .map(this.extractData)
                     .catch(this.handleError)
