@@ -1,8 +1,9 @@
 .card-case {
-    margin:1% 1% 1% 1%;
+    margin:2% 2% 2% 2%;
 }
 
-.img-job {
-    vertical-align: bottom;
-    width:100%;
+.img-case {
+    vertical-align: middle;
+    max-width:15rem;
+    padding:0.5rem;
 }

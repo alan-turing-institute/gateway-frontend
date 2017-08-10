@@ -1,15 +1,15 @@
 { "data":[
     {
-      "job_label": "Changeover",
-      "job_thumbnail": "./src/assets/img/generic_graph.png",
+      "job_label": "Stirred Tank",
+      "job_thumbnail": "./src/assets/img/stirred_tank.png",
       "job_short_description": "Blah",
-      "job_long_description": "Blah Blah Blah"
+      "job_long_description": "Frankfurter sausage short ribs, alcatra corned beef landjaeger ball tip sirloin venison pork belly ham andouille turducken jowl. Tail meatloaf jowl sausage. Pastrami boudin picanha pancetta spare ribs. Brisket ham ham hock ball tip tri-tip sausage turkey andouille pig shankle chicken sirloin beef ribs. Shankle flank tail biltong corned beef kielbasa doner bresaola ground round tenderloin brisket."
     },
     {
       "job_label": "Changeover",
-      "job_thumbnail": "./src/assets/img/generic_graph.png",
+      "job_thumbnail": "./src/assets/img/product_changeover.png",
       "job_short_description": "Blah",
-      "job_long_description": "Blah Blah Blah"
+      "job_long_description": "Spicy jalapeno bacon ipsum dolor amet burgdoggen tenderloin cow ribeye kielbasa boudin. Kevin salami bacon venison landjaeger capicola frankfurter jerky ham hock hamburger tenderloin kielbasa rump porchetta. Tenderloin cow short loin, jowl brisket alcatra meatball burgdoggen doner ground round. Short ribs pancetta corned beef shankle, alcatra pastrami chicken biltong meatloaf t-bone ground round sausage bresaola ham. Drumstick chuck pork burgdoggen."
     }   
   ]
 }

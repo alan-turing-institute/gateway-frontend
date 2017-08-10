@@ -6,14 +6,17 @@ import { Router } from '@angular/router';
   selector: 'caseCard',
   template: `
     <div class="card card-case">
-        <img class="card-img-top img-job" src="{{info.job_thumbnail}}">
+        <div class="card-header">
+            <span class="badge">
+                <i class="icon-puzzle"></i> 
+            </span>
+            {{info.job_label}}
+        </div>
+        <img class="card-img-top img-case" src="{{info.job_thumbnail}}">
         <div class="card-block">
-            <h5 class="card-title"> 
-                {{info.job_label}}
-            </h5>
-            <p class="card-text">{{info.job_short_description}}</p>
+            <p class="card-text">{{getShortDescription()}}</p>
             <p class="card-text">
-            <a routerLinkActive = "active" [routerLink] = "['/config/config']">{{info.job_short_description}}</a>
+            <a routerLinkActive = "active" [routerLink] = "['/config/config']">Template</a>
             </p>
         </div>
     </div>
@@ -25,7 +28,11 @@ export class CaseCardComponent {
   @Input() info: CaseInfo;
   
   storeCaseType(): void {
-    localStorage.setItem('whatever', 'something');
-    console.log(localStorage.getItem('whatever'));
+    localStorage.setItem('job_label', this.info.job_label);
+    console.log(localStorage.getItem('job_label'));
+  }
+
+  getShortDescription(): string {
+    return this.info.job_long_description.slice(0,20);
   }
 }
