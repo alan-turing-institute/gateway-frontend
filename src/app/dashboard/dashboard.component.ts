@@ -1,6 +1,6 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { JobInfo } from './jobInfoComponent';
+import { JobInfo } from './jobInfo';
 import { DashboardService } from './dashboard.service';
 import { JobSummaryComponent } from './jobSummary.component';
 
@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit {
                               for(var key in allJobs){
                                 this.jobs = this.jobs.concat(allJobs[key])
                               }
+                              console.log(this.jobs)
                             },
                             error => {
                               this.errorMessage = <any> error

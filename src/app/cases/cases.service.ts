@@ -5,16 +5,16 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import {JobInfo} from './jobInfo';
+import {CaseInfo} from './case/caseInfo';
 
 @Injectable()
-export class DashboardService {
-  private componentsUrl = require('../../assets/job_status.json');
+export class CasesService {
+  private componentsUrl = require('../../assets/case_types.json');
   constructor (private http: Http) {}
 
-  data = this.getJobData()
+  data = this.getCases()
 
-  getJobData(): Observable<JobInfo[]>{
+  getCases(): Observable<CaseInfo[]>{
     return this.http.get(this.componentsUrl)
                     .map(this.extractData)
                     .catch(this.handleError);
@@ -27,8 +27,6 @@ export class DashboardService {
   }
 
   private handleError (error: Response | any) {
-    // In a real world app, you might use a remote logging infrastructure
-    // console.log(error)
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || '';

@@ -17,7 +17,6 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { IonRangeSliderModule } from "ng2-ion-range-slider";
 import { Routes, RouterModule } from '@angular/router';
-import { AccountModule } from './account/account.module';
 
 
 @NgModule({
@@ -30,12 +29,10 @@ import { AccountModule } from './account/account.module';
     FormsModule,
     IonRangeSliderModule,
     RouterModule
-
   ],
   declarations: [
     AppComponent,
     FullLayoutComponent,
-    //VtkComponent,
     NAV_DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
@@ -46,8 +43,6 @@ import { AccountModule } from './account/account.module';
       useClass: HashLocationStrategy
     }
   ],
-  bootstrap: [ AppComponent ],
-  // schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  //exports:[VtkComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

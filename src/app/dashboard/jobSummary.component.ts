@@ -1,7 +1,5 @@
 import { Component, Input, OnInit} from '@angular/core';
-// import { ElementRef, HostListener} from '@angular/core';
-import { JobInfo } from './jobInfoComponent';
-import { Router } from '@angular/router';
+import { JobInfo } from './jobInfo';
 
 @Component({
   selector: 'jobSummary',
@@ -39,60 +37,46 @@ import { Router } from '@angular/router';
 })
 
 export class JobSummaryComponent implements OnInit{
-  @Input() summary: JobInfo;
-jobHoverHidden: boolean;
-//   constructor(private el: ElementRef) { }
+    @Input() summary: JobInfo;
+    jobHoverHidden: boolean;
 
-  testMe(): void {
-      console.log(this.summary);
-  }
+    testMe(): void {
+        console.log(this.summary);
+    }
 
-  ngOnInit(): void {
-      this.jobHoverHidden = true
-  }
+    ngOnInit(): void {
+        this.jobHoverHidden = true
+    }
 
-  setJobHoverHidden(): void {
-      this.jobHoverHidden = !this.jobHoverHidden
-  }
+    setJobHoverHidden(): void {
+        this.jobHoverHidden = !this.jobHoverHidden
+    }
 
-  getBorderClass() : string {
-    //   console.log("card-outline-"+this.summary.status.toLowerCase());
-      return "card-outline-"+this.summary.status.toLowerCase();
-  }
+    getBorderClass() : string {
+        //   console.log("card-outline-"+this.summary.status.toLowerCase());
+        return "card-outline-"+this.summary.status.toLowerCase();
+    }
 
-  getTitleClass() : string {
-    //   console.log("card-outline-"+this.summary.status.toLowerCase());
-      return "badge-"+this.summary.status.toLowerCase();
-  }
+    getTitleClass() : string {
+        //   console.log("card-outline-"+this.summary.status.toLowerCase());
+        return "badge-"+this.summary.status.toLowerCase();
+    }
 
-  getHeaderClass() : string {
-    //   console.log("card-outline-"+this.summary.status.toLowerCase());
-      return "card-header-"+this.summary.status.toLowerCase();
-  }
+    getHeaderClass() : string {
+        //   console.log("card-outline-"+this.summary.status.toLowerCase());
+        return "card-header-"+this.summary.status.toLowerCase();
+    }
 
-  getSpanIcon() : string  {
-    var icon = ""
-    if (this.summary.status == "Running")
-        icon = "fa fa-circle-o-notch fa-spin fa-lg"
-    if (this.summary.status == "Complete")
-        icon ="fa fa-line-chart fa-lg"
-    if (this.summary.status == "Error") 
-        icon ="fa fa-exclamation-triangle fa-lg"
-    if (this.summary.status == "Draft") 
-        icon ="fa fa-pencil-square fa-lg"
-    return icon    
-  }
-
-    // @HostListener('mouseenter') onMouseEnter() {
-    //     this.highlight('yellow');
-    // }
-
-    // @HostListener('mouseleave') onMouseLeave() {
-    //     this.highlight(null);
-    // }
-
-    // private highlight(color: string) {
-    //     console.log(this.summary)
-    //     this.el.nativeElement.style.backgroundColor = "red";
-    // }
+    getSpanIcon() : string  {
+        var icon = ""
+        if (this.summary.status == "Running")
+            icon = "fa fa-circle-o-notch fa-spin fa-lg"
+        if (this.summary.status == "Complete")
+            icon ="fa fa-line-chart fa-lg"
+        if (this.summary.status == "Error") 
+            icon ="fa fa-exclamation-triangle fa-lg"
+        if (this.summary.status == "Draft") 
+            icon ="fa fa-pencil-square fa-lg"
+        return icon    
+    }
 }

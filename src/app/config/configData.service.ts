@@ -10,8 +10,8 @@ import {INPUT_COMPONENTS} from './inputComponents';
 
 
 @Injectable()
-export class JobDataService {
-  private getTemplateUrl = require('../../../assets/job_template.json');
+export class ConfigDataService {
+  private getTemplateUrl = require('../../assets/job_template.json');
   constructor (private http: Http) {}
 
   template = this.getTemplateData()
@@ -29,8 +29,6 @@ export class JobDataService {
     }
     return -1;
   }
-
-  
 
   updateJobData(supersetComponents, componentKey, newValue) : InputComponent[]{
     var index = this.arrayObjectIndexOf(supersetComponents, componentKey, 'name'); // 1

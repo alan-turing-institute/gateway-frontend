@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import {JobInfo} from '../dashboard/jobInfoComponent';
+import {JobInfo} from '../dashboard/jobInfo';
 import {JobConfig} from './jobConfigComponent';
 import {JobData} from './jobDataComponent';
 

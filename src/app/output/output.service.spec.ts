@@ -12,7 +12,7 @@ import {
 
 import {ResponseOptions} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
-import {JobInfo} from '../dashboard/jobInfoComponent';
+import {JobInfo} from '../dashboard/jobInfo';
 import { JobConfig } from './jobConfigComponent';
 import { OutputService } from './output.service';
 
