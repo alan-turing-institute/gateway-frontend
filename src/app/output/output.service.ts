@@ -20,7 +20,7 @@ export class OutputService {
 
   getJobInfo(): Observable<JobInfo[]>{
       return this.http.get(this.infosUrl)
-                      .map(this.extractData)
+                      .map(this.extractJobs)
                       .catch(this.handleError)
   }
 
@@ -28,6 +28,11 @@ export class OutputService {
     return this.http.get(this.configsUrl)
                     .map(this.extractData)
                     .catch(this.handleError)
+  }
+
+  private extractJobs(res: Response){
+    let body = res.json();
+    return body.jobs || { };
   }
 
   private extractData(res: Response){
