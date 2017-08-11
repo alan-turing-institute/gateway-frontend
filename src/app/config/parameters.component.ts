@@ -1,21 +1,20 @@
 import { Component, Injectable, OnInit} from '@angular/core';
 import { InputComponent } from './inputComponent';
-import { CaseComponents } from './caseComponents';
 import { InputComponentService } from './inputComponent.service';
 import { ConfigDataService } from './configData.service';
 // import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
 
 @Component({
+    selector: 'parameters',
   providers:[InputComponentService],
-  templateUrl: './config.component.html',
+  templateUrl: './parameters.component.html',
   styles:[require('../../../node_modules/ion-rangeslider/css/ion.rangeSlider.css').toString(),
   require('../../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinFlat.css').toString(),
   require('./config.component.css').toString()]
 })
 
-export class ConfigComponent implements OnInit {
+export class ParametersComponent implements OnInit {
 
-  case:CaseComponents 
   supersetComponents:InputComponent []
   selectedComponents:InputComponent []
   tags:{name: string, id: string, collapse: boolean} []
@@ -27,21 +26,20 @@ export class ConfigComponent implements OnInit {
 
   ngOnInit() {
     this.tags = []
-    this.case = new CaseComponents
     this.supersetComponents = []
     this.selectedComponents = []
     console.log(localStorage.getItem('template_id'));
     this.getTemplateData()
+    console.log("got data")
   }
 
   getTemplateData () {
     this.configDataService.template
                         .subscribe(
-                          template => {
-                            this.supersetComponents = template['parameters']
+                          supersetComponents => {
+                            this.supersetComponents = supersetComponents
                             this.tags = this.inputComponentService.getFamilyTags(this.supersetComponents)
-                            this.case=template['case']
-                            console.log(template);
+                            console.log(this.tags)
                           },
                           error => {
                             this.errorMessage = <any> error

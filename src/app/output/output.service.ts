@@ -11,7 +11,7 @@ import {JobConfig} from './jobConfigComponent';
 @Injectable()
 export class OutputService {
   private infosUrl = require('../../assets/job_status.json');
-  private configsUrl = require('../../assets/job_config.json');
+  private configsUrl = require('../../assets/job_output.json');
   constructor (private http: Http) {}
 
   info = this.getJobInfo()

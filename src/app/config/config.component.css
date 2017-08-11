@@ -17,4 +17,10 @@
   background-color: #c6c7c7;
 }
 
+.img-thumbnail {
+    max-width: 15rem;
+    vertical-align: top;
+    margin-bottom: 1rem;
+}
+
 

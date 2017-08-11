@@ -12,6 +12,7 @@ import {INPUT_COMPONENTS} from './inputComponents';
 @Injectable()
 export class ConfigDataService {
   private getTemplateUrl = require('../../assets/job_template.json');
+  private response = {}
   constructor (private http: Http) {}
 
   template = this.getTemplateData()
@@ -43,9 +44,14 @@ export class ConfigDataService {
 
   private extractTemplateData(res: Response) {
     let body = res.json();
+    this.response = body
     // console.log("making a call")
-    console.log(body.parameters)
-    return body.parameters || { };
+    // console.log(body.parameters)
+    return body || { };
+  }
+
+  private extractDescription():string {
+    return this.response['case'].description;
   }
 
   private handleError (error: Response | any) {

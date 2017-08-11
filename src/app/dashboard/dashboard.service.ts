@@ -9,7 +9,8 @@ import {JobInfo} from './jobInfo';
 
 @Injectable()
 export class DashboardService {
-  private componentsUrl = require('../../assets/job_status.json');
+  // private componentsUrl = require('../../assets/job_status.json');
+  private componentsUrl = 'http://localhost:5000/api/job';
   constructor (private http: Http) {}
 
   data = this.getJobData()
@@ -23,6 +24,7 @@ export class DashboardService {
 
   private extractData(res: Response){
     let body = res.json();
+    console.log(body)
     return body.jobs || { };
   }
 
