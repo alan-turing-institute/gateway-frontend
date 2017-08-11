@@ -5,8 +5,7 @@ import { JobInfo } from './jobInfo';
   selector: 'jobSummary',
   template: `
     <div class="card card-job" 
-        [ngClass]="getBorderClass()"
-        (click)="testMe()">
+        [ngClass]="getBorderClass()">
         <div class="card-header" [ngClass]="getHeaderClass()">
             <span class="badge" [ngClass]="getTitleClass()">
                 <i [ngClass]="getSpanIcon()"></i> 
@@ -15,7 +14,7 @@ import { JobInfo } from './jobInfo';
         </div>
         <a routerLinkActive = "active" [routerLink] = "['/output/output', {id: summary.id}]">
             <div class="wrapper">
-                <img class="card-img-top img-job" src="{{summary.output}}" 
+                <img class="card-img-top img-job" src="{{summary.thumbnail}}" 
                     (mouseover)='setJobHoverHidden()'
                     (mouseleave)='setJobHoverHidden()'>
                 <i class="fa fa-sign-in fa-2x" [hidden]=jobHoverHidden></i> 

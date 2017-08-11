@@ -1,5 +1,6 @@
 .card-job {
     margin:2% 2% 2% 2%;
+    width: 18rem;
 }
 
 .card-outline-running {
@@ -50,6 +51,7 @@
 
 .wrapper {
    position: relative;
+   background-color: white;
 }
 
 .wrapper i {
@@ -59,7 +61,8 @@
 }
 
 .img-job {
-    vertical-align: bottom;
-    width:100%;
+    vertical-align: middle;
+    max-width:15rem;
+    max-height:15rem;
 }
 

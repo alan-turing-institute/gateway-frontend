@@ -5,7 +5,7 @@
       "start_date" : "6 Aug 2017",
       "end_date" : "",
       "status" : "Running",
-      "output" : "./src/assets/img/generic_graph.png"
+      "thumbnail" : "/src/assets/img/stirred_tank.png"
     },
     "2" : {
       "id" : "2",
@@ -13,7 +13,7 @@
       "start_date" : "2 Jan 2017",
       "end_date" : "3 Jan 2017",
       "status" : "Complete",
-      "output" : "./src/assets/img/generic_graph.png"
+      "thumbnail" : "./src/assets/img/product_changeover.png"
     },
     "3" : {
       "id" : "3",
@@ -21,7 +21,7 @@
       "start_date" : "3 Jan 2017",
       "end_date" : "4 Jan 2017",
       "status" : "Error",
-      "output" : "./src/assets/img/generic_graph.png"
+      "thumbnail" : "/src/assets/img/stirred_tank.png"
     },
     "4" : {
       "id" : "4",
@@ -29,7 +29,7 @@
       "start_date" : "",
       "end_date" : "",
       "status" : "Draft",
-      "output" : "./src/assets/img/generic_graph.png"
+      "thumbnail" : "./src/assets/img/product_changeover.png"
     }
   }
 }
