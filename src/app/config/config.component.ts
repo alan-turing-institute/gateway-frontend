@@ -27,9 +27,9 @@ export class ConfigComponent implements OnInit {
     this.tags = []
     this.supersetComponents = []
     this.selectedComponents = []
-    
+    console.log(localStorage.getItem('template_id'));
     this.getTemplateData()
-    console.log("getting data")
+    console.log("got data")
   }
 
   getTemplateData () {

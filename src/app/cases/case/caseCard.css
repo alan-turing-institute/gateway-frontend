@@ -1,8 +1,29 @@
 .card-case {
-    margin:1% 1% 1% 1%;
+    margin:2% 2% 2% 2%;  
+    width: 18rem;
 }
 
-.img-job {
-    vertical-align: bottom;
-    width:100%;
+.wrapper {
+   position: relative;
+}
+
+.wrapper i {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+}
+.img-case {
+    vertical-align: middle;
+    max-width:15rem;
+    max-height:15rem;
+}
+
+.break-word {
+    /* width:15rem; */
+    word-wrap: break-word;
+}
+
+.badge-puzzle {
+    color: #1985ac;
+    padding-right: 1%
 }

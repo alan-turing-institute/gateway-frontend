@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { CaseInfo } from './caseInfo';
 import { Router } from '@angular/router';
 
@@ -6,26 +6,54 @@ import { Router } from '@angular/router';
   selector: 'caseCard',
   template: `
     <div class="card card-case">
-        <img class="card-img-top img-job" src="{{info.job_thumbnail}}">
+        <div class="card-header">
+            <span class="badge">
+                <i class="icon-puzzle fa-2x badge-puzzle"></i> 
+            </span>
+            Template
+        
+        </div>
+        <a routerLinkActive = "active" [routerLink] = "['/config/config']">
+          <div class="wrapper">
+            <img class="card-img-top img-case" src="{{info.job_thumbnail}}"
+              (mouseover)='setCaseHoverHidden()'
+              (mouseleave)='setCaseHoverHidden()'>
+            <i class="fa fa-sign-in fa-2x" [hidden]=caseHoverHidden></i> 
+          </div>
+        </a>
         <div class="card-block">
-            <h5 class="card-title"> 
-                {{info.job_label}}
-            </h5>
-            <p class="card-text">{{info.job_short_description}}</p>
-            <p class="card-text">
-            <a routerLinkActive = "active" [routerLink] = "['/config/config']">{{info.job_short_description}}</a>
-            </p>
+          <h5 class="card-title"> 
+            <a routerLinkActive = "active" [routerLink] = "['/config/config']">{{info.job_label}}</a>
+          </h5>
+          <p class="card-text break-word">{{getShortDescription()}} 
+            <a routerLinkActive = "active" [routerLink] = "['/config/config']"
+            (click)="storeCaseType()">(...)</a>
+          </p>
         </div>
     </div>
     `,
   styleUrls: ['caseCard.css']
 })
 
-export class CaseCardComponent {
+export class CaseCardComponent implements OnInit{
   @Input() info: CaseInfo;
+  caseHoverHidden: boolean;
   
   storeCaseType(): void {
-    localStorage.setItem('whatever', 'something');
-    console.log(localStorage.getItem('whatever'));
+    localStorage.setItem('template_id', this.info.job_label);
+    console.log(localStorage.getItem('template_id'));
   }
+
+  setCaseHoverHidden(): void {
+        this.caseHoverHidden = !this.caseHoverHidden
+    }
+
+  getShortDescription(): string {
+    return this.info.job_long_description.slice(0,100);
+  }
+
+  ngOnInit(): void {
+        this.caseHoverHidden = true
+    }
+
 }
