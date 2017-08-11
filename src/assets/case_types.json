@@ -1,11 +1,13 @@
-{ "data":[
+{ "cases":[
     {
-      "job_label": "Stirred Tank",
+      "id": "d769843b-6f37-4939-96c7-c382c3e74b46",
+      "label": "Stirred Tank",
       "job_thumbnail": "./src/assets/img/stirred_tank.png",
       "job_short_description": "Blah",
       "job_long_description": "Frankfurter sausage short ribs, alcatra corned beef landjaeger ball tip sirloin venison pork belly ham andouille turducken jowl. Tail meatloaf jowl sausage. Pastrami boudin picanha pancetta spare ribs. Brisket ham ham hock ball tip tri-tip sausage turkey andouille pig shankle chicken sirloin beef ribs. Shankle flank tail biltong corned beef kielbasa doner bresaola ground round tenderloin brisket."
     },
     {
+      "id": "d769843b-6f37-96c7-4939-96c7-c382c3e74b46",
       "job_label": "Changeover",
       "job_thumbnail": "./src/assets/img/product_changeover.png",
       "job_short_description": "Blah",

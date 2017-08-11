@@ -23,7 +23,7 @@ export class CasesService {
 
   private extractData(res: Response){
     let body = res.json();
-    return body.data || { };
+    return body.cases || { };
   }
 
   private handleError (error: Response | any) {

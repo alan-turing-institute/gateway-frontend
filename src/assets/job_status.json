@@ -1,35 +1,55 @@
-{ "data":{
-    "1" : {
-      "id" : "1",
-      "job_type": "Changeover",
-      "start_date" : "6 Aug 2017",
-      "end_date" : "",
-      "status" : "Running",
-      "thumbnail" : "/src/assets/img/stirred_tank.png"
-    },
-    "2" : {
-      "id" : "2",
-      "job_type": "Changeover",
-      "start_date" : "2 Jan 2017",
-      "end_date" : "3 Jan 2017",
-      "status" : "Complete",
-      "thumbnail" : "./src/assets/img/product_changeover.png"
-    },
-    "3" : {
-      "id" : "3",
-      "job_type": "Stirred Tank",
-      "start_date" : "3 Jan 2017",
-      "end_date" : "4 Jan 2017",
-      "status" : "Error",
-      "thumbnail" : "/src/assets/img/stirred_tank.png"
-    },
-    "4" : {
-      "id" : "4",
-      "job_type": "Stirred Tank",
-      "start_date" : "",
-      "end_date" : "",
-      "status" : "Draft",
-      "thumbnail" : "./src/assets/img/product_changeover.png"
-    }
-  }
+{
+	"jobs": [{
+			"id": "47684a76-2841-4626-a3de-dfa532c1d012",
+			"uri": "https://science-gate-way-middleware.azurewebstes.net/job/47684a76-2841-4626-a3de-dfa532c1d012",
+			"case": {
+				"id": "d769843b-6f37-4939-96c7-c382c3e74b46",
+				"uri": "https://science-gate-way-middleware.azurewebstes.net/case/85b8995c-63a9-474f-8fdc-52c7582ec2ac",
+				"label": "Stirred Tank"
+			},
+			"start_datetime": "2016-08-07T14:12:33+01:00",
+			"end_datetime": "2016-08-08T10:11:25+01:00",
+			"status": "Complete",
+			"thumbnail": "./src/assets/img/stirred_tank.png"
+		},
+		{
+			"id": "a22b92f5-96ec-4190-8c8e-996b80bf8c8f",
+			"uri": "https://science-gate-way-middleware.azurewebstes.net/job/a22b92f5-96ec-4190-8c8e-996b80bf8c8f",
+			"case": {
+				"id": "85b8995c-63a9-474f-8fdc-52c7582ec2ac",
+				"uri": "https://science-gate-way-middleware.azurewebstes.net/case/85b8995c-63a9-474f-8fdc-52c7582ec2ac",
+				"label": "Changeover"
+			},
+			"start_datetime": "2017-01-02T14:12:33+01:00",
+			"end_datetime": null,
+			"status": "Running",
+			"thumbnail": "./src/assets/img/product_changeover.png"
+		},
+		{
+			"id": "60dfe8a5-9a49-4706-b950-c59fc697d8a4",
+			"uri": "https://science-gateway-middleware.azurewebsites.net/job/60dfe8a5-9a49-4706-b950-c59fc697d8a4",
+			"case": {
+				"id": "d769843b-6f37-4939-96c7-c382c3e74b46",
+				"uri": "https://science-gate-way-middleware.azurewebstes.net/case/d769843b-6f37-4939-96c7-c382c3e74b46",
+				"label": "Stirred Tank"
+			},
+			"start_datetime": "2017-02-04T01:42:47-07:00",
+			"end_datetime": "2017-02-05T08:42:49-00:00",
+			"status": "Error",
+			"thumbnail": "./src/assets/img/stirred_tank.png"
+		},
+		{
+			"id": "488fa829-1abd-4e1d-9c1c-77be2b532e51",
+			"uri": "https://science-gateway-middleware.azurewebsites.net/job/488fa829-1abd-4e1d-9c1c-77be2b532e51",
+			"case": {
+				"id": "d769843b-6f37-4939-96c7-c382c3e74b46",
+				"uri": "https://science-gate-way-middleware.azurewebstes.net/case/d769843b-6f37-4939-96c7-c382c3e74b46",
+				"label": "Stirred Tank"
+			},
+			"start_datetime": null,
+			"end_datetime": null,
+			"status": "Draft",
+			"thumbnail": "./src/assets/img/stirred_tank.png"
+		}
+	]
 }

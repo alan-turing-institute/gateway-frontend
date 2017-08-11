@@ -23,7 +23,7 @@ export class DashboardService {
 
   private extractData(res: Response){
     let body = res.json();
-    return body.data || { };
+    return body.jobs || { };
   }
 
   private handleError (error: Response | any) {
