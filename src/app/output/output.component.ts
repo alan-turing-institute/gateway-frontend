@@ -30,13 +30,13 @@ export class OutputComponent implements OnInit {
   private outputService:OutputService) {}
 
   ngOnInit() {
-        this.job_id = "47684a76-2841-4626-a3de-dfa532c1d012" //this.activatedRoute.snapshot.params["id"];
+        this.job_id = this.activatedRoute.snapshot.params["id"];
         this.tags = [];
 
         //get job status (same as in dashboard) + original configuration information
         this.getInfoData();
         this.getConfigData();
-
+        console.log(this.job_id)
       }
 
 
@@ -45,7 +45,14 @@ getInfoData(){
   this.outputService.info
                   .subscribe(
                     allJobsInfo => {
-                      this.jobInfo = allJobsInfo
+                      //get all jobs
+                      //find which job want to plot
+                      for(let job of allJobsInfo){
+                        if(job.id == this.job_id){
+                          this.jobInfo = [job]
+                        }
+                      }
+                      console.log(this.jobInfo)
                     },
                     error => {
                       this.errorMessage = <any> error
