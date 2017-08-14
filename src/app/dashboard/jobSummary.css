@@ -64,5 +64,7 @@
     vertical-align: middle;
     max-width:15rem;
     max-height:15rem;
+    left:2.5rem;
+    position: relative;
 }
 
