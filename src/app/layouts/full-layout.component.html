@@ -20,14 +20,14 @@
   </div>
 
   <!-- Main content -->
-  <main class="main">
+  <main class="main" style="overflow-y: visible; max-height:90vh">
 
     <!-- Breadcrumb -->
-    <ol class="breadcrumb">
+    <ol class="breadcrumb" style="overflow-y: visible; max-height:5vh">
       <breadcrumbs></breadcrumbs>
     </ol>
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="overflow-y: scroll; max-height:85vh" >
       <router-outlet></router-outlet>
     </div>
   </main>
