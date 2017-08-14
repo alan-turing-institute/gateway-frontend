@@ -6,7 +6,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import {InputComponent} from './inputComponent';
-import {INPUT_COMPONENTS} from './inputComponents';
 
 
 @Injectable()
@@ -14,7 +13,6 @@ export class ConfigDataService {
   private getTemplateUrl = require('../../assets/job_template.json');
   private response = {}
   constructor (private http: Http) {}
-
   template = this.getTemplateData()
   
   getTemplateData(): Observable<InputComponent[]> {

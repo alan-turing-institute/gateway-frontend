@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import {InputComponent} from './inputComponent';
-import {INPUT_COMPONENTS} from './inputComponents';
 
 
 @Injectable()
 export class InputComponentService {
-  getInputComponents(): InputComponent[] {
-      return INPUT_COMPONENTS;
-  }
 
   getFamilyTags(components): {name: string, id: string, collapse: boolean} [] {
     var tags = []

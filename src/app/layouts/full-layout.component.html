@@ -8,7 +8,7 @@
   </ul>
 </header>
 
-<div class="app-body">
+<div class="app-body" style="overflow-y: hidden; max-height:90vh">
   <div class="sidebar">
     <nav class="sidebar-nav">
       <ul class="nav">
@@ -20,20 +20,20 @@
   </div>
 
   <!-- Main content -->
-  <main class="main" style="overflow-y: visible; max-height:90vh">
+  <main class="main" style="overflow-y: visible; max-height:85vh">
 
     <!-- Breadcrumb -->
     <ol class="breadcrumb" style="overflow-y: visible; max-height:5vh">
       <breadcrumbs></breadcrumbs>
     </ol>
 
-    <div class="container-fluid" style="overflow-y: scroll; max-height:85vh" >
+    <div class="container-fluid" style="overflow-y: scroll; max-height:80vh" >
       <router-outlet></router-outlet>
     </div>
   </main>
 </div>
 
-<footer class="app-footer">
+<footer class="app-footer" style="overflow-y: hidden; max-height:5vh">
   <a href="http://coreui.io">CoreUI</a> &copy; 2017 creativeLabs.
   <span class="float-right">Powered by <a href="http://coreui.io">CoreUI</a>
     </span>

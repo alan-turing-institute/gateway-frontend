@@ -18,9 +18,14 @@
 }
 
 .img-thumbnail {
-    max-width: 15rem;
+    /* max-width: 5rem;  */
     vertical-align: top;
     margin-bottom: 1rem;
+}
+
+.case-panel {
+    vertical-align: top;    
+    margin: 1% 0% 2% 0%; 
 }
 
 

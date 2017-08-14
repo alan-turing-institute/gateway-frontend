@@ -9,4 +9,5 @@ export class InputComponent {
     max_value: string;
     options:string[];
     help: string;
+    disabled: boolean;
 }

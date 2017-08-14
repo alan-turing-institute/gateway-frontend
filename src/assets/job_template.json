@@ -1,116 +1,117 @@
 {
-	"parameters": [{
-			"name": "surface_tension",
-			"tag": [{
-				"label": "Surface Tensions",
-				"id": "surface_tension",
-				"collapse": true
-			}],
-			"type": "text",
-			"label": "Surface Tensions",
-			"units": "mN/m",
-			"type_value": "float",
-			"min_value": "1",
-			"max_value": "100",
-			"value": "72.5",
-			"options": [],
-			"help": ""
-		},
-		{
-			"name": "viscosity_phase_1",
-			"tag": [{
-				"label": "Viscosity",
-				"id": "viscosity",
-				"collapse": false
-			}],
-			"type": "slider",
-			"label": "Viscosity: Phase 1",
-			"units": "Pa s",
-			"type_value": "float",
-			"min_value": "10",
-			"max_value": "20",
-			"value": "13",
-			"options": [],
-			"help": ""
-		},
-		{
-			"name": "viscosity_phase_2",
-			"tag": [{
-				"label": "Viscosity",
-				"id": "viscosity",
-				"collapse": false
-			}],
-			"tagid": ["viscosity"],
-			"type": "slider",
-			"label": "Viscosity: Phase 2",
-			"units": "Pa s",
-			"type_value": "float",
-			"min_value": "10",
-			"max_value": "20",
-			"value": "17",
-			"options": ["17"],
-			"help": "A description of surface tension?"
-		},
-		{
-			"name": "turbulence",
-			"tag": [{
-				"label": "Turbulence",
-				"id": "turbulence",
-				"collapse": false
-			}],
-			"type": "radio",
-			"label": "Turbulence model",
-			"units": "kg/m/s",
-			"type_value": "float",
-			"min_value": "",
-			"max_value": "",
-			"options": ["False"],
-			"value": "False",
-			"help": "A description of surface tension?"
-		},
-		{
-			"name": "pipe_radius",
-			"tag": [{
-				"label": "Geometry",
-				"id": "geometry",
-				"collapse": false
-			}],
-			"type": "vtk",
-			"label": "Pipe Radius",
-			"units": "m",
-			"type_value": "float",
-			"min_value": "0.01",
-			"max_value": "0.10",
-			"options": ["0.0725"],
-			"value": "0.0725",
-			"help": "A description of surface tension?"
-		}
-	],
-	"inputs": [{
-		"destination_path": "project/case/",
-		"source_uri": "https://science-gate-way-middleware.azurewebstes.net/resources/case/Changeover/inputs/mesh_file.stl"
-	}],
-	"scripts": [{
-		"destination_path": "project/case/",
-		"source_uri": "https://science-gate-way-middleware.azurewebstes.net/resources/case/Changeover/scripts/run_job.sh",
-		"command": "run"
-	}],
-	"user": "lrmason",
-	"templates": [{
-		"destination_path": "project/case/",
-		"source_uri": "https://science-gate-way-middleware.azurewebstes.net/resources/case/Changeover/templates/Blue.nml"
-	}],
-	"id": "d769843b-6f37-4939-96c7-c382c3e74b46",
-	"name": "Talcum powder to flour",
-	"description": "Job description",
-	"creation_datetime": null,
-	"start_datetime": null,
-	"end_datetime": null,
-	"status": "Draft",
-	"case": {
-		"id": "yy69843b-4939-6f37-96c7-c382c3e74b46",
-		"uri": "./src/assets/img/product_changeover.png",
-		"label": "Changeover",
-		"description": "Spicy jalapeno bacon ipsum dolor amet burgdoggen tenderloin cow ribeye kielbasa boudin. Kevin salami bacon venison landjaeger capicola frankfurter jerky ham hock hamburger tenderloin kielbasa rump porchetta. Tenderloin cow short loin, jowl brisket alcatra meatball burgdoggen doner ground round. Short ribs pancetta corned beef shankle, alcatra pastrami chicken biltong meatloaf t-bone ground round sausage bresaola ham. Drumstick chuck pork burgdoggen."
-	}
+  "families": [{
+      "label": "Viscosity information",
+      "name": "viscosity_properties",
+      "collapse": true,
+      "parameters": [{
+          "name": "viscosity_phase_1",
+          "type": "slider",
+          "label": "Viscosity: Phase 1",
+          "units": "Pa s",
+          "type_value": "float",
+          "min_value": "10",
+          "max_value": "20",
+          "value": "13",
+          "options": [],
+          "help": "",
+          "disabled":false
+        },
+        {
+          "name": "viscosity_phase_2",
+          "type": "slider",
+          "label": "Viscosity: Phase 2",
+          "units": "Pa s",
+          "type_value": "float",
+          "min_value": "10",
+          "max_value": "20",
+          "value": "17",
+          "options": ["17"],
+          "help": "A description of surface tension?",
+           "disabled":false
+        }
+      ]
+    },
+    {
+      "label": "Surface tension information",
+      "name": "surface_tension_properties",
+      "collapse": false,
+      "parameters": [{
+        "name": "surface_tension",
+        "type": "text",
+        "label": "Surface Tension",
+        "units": "mN/m",
+        "type_value": "float",
+        "min_value": "1",
+        "max_value": "100",
+        "value": "72.5",
+        "options": [],
+        "help": "",
+        "disabled":false
+      }]
+    },
+    {
+      "label": "Turbulence information",
+      "name": "turbulence_properties",
+      "collapse": false,
+      "parameters": [{
+        "name": "turbulence",
+        "type": "radio",
+        "label": "Turbulence model",
+        "units": "kg/m/s",
+        "type_value": "float",
+        "min_value": "",
+        "max_value": "",
+        "options": ["False"],
+        "value": "False",
+        "help": "A description of surface tension?",
+        "disabled":false
+      }]
+    },
+    {
+      "label": "Geometry information",
+      "name": "geometry_properties",
+      "collapse": false,
+      "parameters": [{
+        "name": "pipe_radius",
+        "type": "vtk",
+        "label": "Pipe Radius",
+        "units": "m",
+        "type_value": "float",
+        "min_value": "0.01",
+        "max_value": "0.10",
+        "options": ["0.0725"],
+        "value": "0.0725",
+        "help": "A description of surface tension?",
+        "disabled":false
+      }]
+    }
+  ],
+  "inputs": [{
+    "destination_path": "project/case/",
+    "source_uri": "https://science-gate-way-middleware.azurewebstes.net/resources/case/Changeover/inputs/mesh_file.stl"
+  }],
+  "scripts": [{
+    "destination_path": "project/case/",
+    "source_uri": "https://science-gate-way-middleware.azurewebstes.net/resources/case/Changeover/scripts/run_job.sh",
+    "action": "RUN"
+  }],
+  "user": "lrmason",
+  "templates": [{
+    "destination_path": "project/case/",
+    "source_uri": "https://science-gate-way-middleware.azurewebstes.net/resources/case/Changeover/templates/Blue.nml"
+  }],
+  "id": "d769843b-6f37-4939-96c7-c382c3e74b46",
+  "name": "Talcum powder to flour",
+  "description": "Job description",
+  "creation_datetime": null,
+  "start_datetime": null,
+  "end_datetime": null,
+  "status": "Draft",
+  "case": {
+    "id": "yy69843b-4939-6f37-96c7-c382c3e74b46",
+    "uri": "https://science-gate-way-middleware.azurewebstes.net/case/d769843b-6f37-4939-96c7-c382c3e74b46",
+    "thumbnail": "./src/assets/img/product_changeover.png",
+    "label": "Changeover",
+    "description": "Spicy jalapeno bacon ipsum dolor amet burgdoggen tenderloin cow ribeye kielbasa boudin. Kevin salami bacon venison landjaeger capicola frankfurter jerky ham hock hamburger tenderloin kielbasa rump porchetta. Tenderloin cow short loin, jowl brisket alcatra meatball burgdoggen doner ground round. Short ribs pancetta corned beef shankle, alcatra pastrami chicken biltong meatloaf t-bone ground round sausage bresaola ham. Drumstick chuck pork burgdoggen."
+  }
 }
