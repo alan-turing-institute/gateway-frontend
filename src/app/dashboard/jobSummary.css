@@ -10,43 +10,37 @@
 
 .card-outline-error {
     background-color: transparent;
-    /*border-color: #a94442;*/
 }
 
 .card-outline-complete {
     background-color: transparent;
-    /*border-color: #263238;*/
-}
-
-.badge-running {
-    background-color: #cfd8dc;    
-}
-
-.badge-error {
-    background-color: #a94442;    
-}
-
-.badge-complete {
-    background-color: #263238;    
-}
-
-.badge-draft {
-    background-color: #3a9d5d;    
 }
 
 .card-header-running {
-    /*border-bottom:1px solid  #cfd8dc;*/
-    color: #cfd8dc
+    color: white;
+    background-color: #4dbd74;
+    font-size: medium;
 }
 
 .card-header-error {
     /*border-bottom: 1px solid #a94442;*/
-    color: #a94442;
+    color: white;
+    background-color: #f86c6b;
+    font-size: medium;
 }
 
 .card-header-complete {
     /*border-bottom: 1px solid #263238;*/
-    color: #263238
+    background-color: #20a8d8;
+    color: white;
+    font-size: medium;
+}
+
+.card-header-draft {
+    /*border-bottom: 1px solid #263238;*/
+    background-color: #f8cb00;
+    color: white;
+    font-size: medium;
 }
 
 .wrapper {
@@ -64,5 +58,7 @@
     vertical-align: middle;
     max-width:15rem;
     max-height:15rem;
+    left:2.5rem;
+    position: relative;
 }
 

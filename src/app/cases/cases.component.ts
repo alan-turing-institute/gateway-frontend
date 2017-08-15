@@ -7,6 +7,7 @@ import { CasesService } from './cases.service';
 //   selector: 'cases',
   providers: [CasesService],
   templateUrl: './cases.component.html',
+  styleUrls:['cases.css']
 })
 
 export class CasesComponent implements OnInit {

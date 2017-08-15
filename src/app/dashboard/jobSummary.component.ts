@@ -4,13 +4,12 @@ import { JobInfo } from './jobInfo';
 @Component({
   selector: 'jobSummary',
   template: `
-    <div class="card card-job" 
-        [ngClass]="getBorderClass()">
+    <div class="card card-job">
         <div class="card-header" [ngClass]="getHeaderClass()">
             <span class="badge" [ngClass]="getTitleClass()">
                 <i [ngClass]="getSpanIcon()"></i> 
             </span>
-            {{summary.status}}
+            <strong>{{summary.status}}</strong>
         </div>
         <a routerLinkActive = "active" [routerLink] = "['/output/output', {id: summary.id}]">
             <div class="wrapper">
@@ -21,15 +20,8 @@ import { JobInfo } from './jobInfo';
             </div>
         </a>
         <div class="card-block">
-            <h5 class="card-title"> 
-                <a routerLinkActive = "active" [routerLink] = "['/output/output', {id: summary.id}]">{{summary.job_type}}</a>
-            </h5>
-            <p class="card-text">
-            <span class="badge" [ngClass]="getTitleClass()">
-                <i [ngClass]="getSpanIcon()"></i> 
-            </span>    
-            {{summary.start_date}} - {{summary.end_date}}</p>
-            <small class="text-muted">Last updated 3 mins ago</small>
+            <p><button type="button" class="btn btn-primary">Details</button></p>
+            <p><small class="text-muted">Last updated 3 mins ago</small></p>
         </div>
     </div>`,
     styleUrls: ['jobSummary.css']
@@ -51,11 +43,6 @@ export class JobSummaryComponent implements OnInit{
         this.jobHoverHidden = !this.jobHoverHidden
     }
 
-    getBorderClass() : string {
-        //   console.log("card-outline-"+this.summary.status.toLowerCase());
-        return "card-outline-"+this.summary.status.toLowerCase();
-    }
-
     getTitleClass() : string {
         //   console.log("card-outline-"+this.summary.status.toLowerCase());
         return "badge-"+this.summary.status.toLowerCase();
@@ -63,7 +50,7 @@ export class JobSummaryComponent implements OnInit{
 
     getHeaderClass() : string {
         //   console.log("card-outline-"+this.summary.status.toLowerCase());
-        return "card-header-"+this.summary.status.toLowerCase();
+        return "card-header-"+this.summary.status.toLowerCase();        
     }
 
     getSpanIcon() : string  {

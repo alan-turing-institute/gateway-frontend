@@ -1,29 +1,39 @@
-  <!-- <div class="container-fluid">
-    <div class="card">
-        <div class="card-header">
-        Configurations
-        </div> 
-        <div class="card-block"> -->
- 
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-4"><img src={{case.uri}}  class="img-thumbnail"></div>
-    <div class="col-md-8">
-      <p>  {{case.description}}</p>
-    </div>
+  <div class="row case-panel">
+      <div class="col-md-4"><img src={{case.thumbnail}}  class="img-thumbnail"></div>  
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-12">
+            <h4>  {{case.label}}</h4>
+            <p>  {{case.description}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-9 col-md-push-3">
+            <button type="button" class="btn btn-primary" (click)="initNewJob()">
+              <i class="fa fa-file-text-o"> New</i>
+              </button>
+            <button type="button" class="btn btn-primary">
+              <i class="fa fa-floppy-o"> Save</i></button>
+            <button type="button" class="btn btn-primary">
+              <i class="fa fa-rocket"> Submit Job</i></button>
+          </div>
+        </div> 
+    </div> 
   </div>
+  
   <div class="row">
     <div class="col-md-12">
           <div [attr.id]="componentFamilyAccordion" role="tablist">
             <div *ngFor="let tag of tags" class="card">
-              <div class="card-header" role="tab">
+              <div class="card-header config" role="tab">
                 <h5 class="mb-0">
                   <a data-toggle="collapse" data-target={{getDataTarget(tag)}} data-parent="#componentFamilyAccordion" (click)="toggleCollapse(tag)">
                     {{tag.label}}
                   </a>
                 </h5>
               </div>
-              <div [attr.id]=tag.id [ngClass]="{'collapse': tag.collapse }"role="tabpanel">
+              <div [attr.id]=tag.name [ngClass]="{'collapse': tag.collapse }"role="tabpanel">
                 <div class="card-block">
                   <div *ngFor="let component of getVisibleComponents(tag)">
 
@@ -35,7 +45,8 @@
                           [attr.id]="component.name"
                           type="text"
                           (keyup.enter)="update(component)"
-                          (blur)="update(component)">
+                          (blur)="update(component)"
+                          [disabled]="component.disabled">
                         <span class="input-group-addon">{{component.units}}</span>
                       </div>
                     </div>
@@ -58,13 +69,24 @@
                         max={{component.max_value}}
                         postfix=" {{component.units}}"
                         data-step=0.01
-                        (onFinish)="updateSlider(component, $event)"></ion-range-slider>
+                        (onFinish)="updateSlider(component, $event)">
+                      </ion-range-slider>
                     </div>
 
-                    <div *ngIf="component.type == 'vtk'">
+                     <div *ngIf="component.type == 'vtk_slider'">
                       <label [for]=component.name>{{component.label}}</label>
-                      <app-vtk></app-vtk>
-                    </div>
+                      <ion-range-slider
+                        [attr.id]=component.name
+                        from={{component.value}}
+                        min={{component.min_value}}
+                        max={{component.max_value}}
+                        postfix=" {{component.units}}"
+                        data-step=0.01
+                        (onFinish)="updateSlider(component, $event)">
+                      </ion-range-slider>
+                      <app-vtk [anInput]=component.value></app-vtk>
+
+                    </div>  
                   </div>
                 </div>
               </div>
@@ -72,9 +94,5 @@
           </div>
     </div>
   </div> 
- </div>
+</div>
 
-<!-- <div class="container-fluid">
-  <description></description>
-  <parameters></parameters>
-</div> -->
