@@ -61,9 +61,18 @@
                         (onFinish)="updateSlider(component, $event)"></ion-range-slider>
                     </div>
 
-                    <div *ngIf="component.type == 'vtk'">
-                      <label [for]=component.name>{{component.label}}</label>
-                      <app-vtk></app-vtk>
+                      <div *ngIf="component.type == 'vtk'">
+                        <label [for]=component.name>{{component.label}}</label>
+                        <ion-range-slider
+                          [attr.id]=component.name
+                          from={{component.value}}
+                          min={{component.min_value}}
+                          max={{component.max_value}}
+                          postfix=" {{component.units}}"
+                          data-step=1
+                          (onFinish)="updateSlider(component, $event)"></ion-range-slider>
+                        <app-vtk></app-vtk>
+                      </div>
                     </div>
                   </div>
                 </div>
