@@ -22,8 +22,10 @@ import { FieldDataTypes } from 'vtk.js/Sources/Common/DataModel/DataSet/Constant
 export class VtkComponent implements OnInit, OnChanges, OnDestroy {
 
     @ViewChild('vtk') vtkRoot: ElementRef;
-    // @Input() radius: number;
-    radius: number;
+    @Input() radius: number;
+    //radius: number;
+    private cylinderSource: any;
+    private renderWindow: any;
 
     constructor() {
         this.radius = 5;
@@ -38,24 +40,26 @@ export class VtkComponent implements OnInit, OnChanges, OnDestroy {
         });
         fullScreenRenderer.getRenderWindow().getViews()[0].setSize([500,500]);
         const renderer = fullScreenRenderer.getRenderer();
-        const renderWindow = fullScreenRenderer.getRenderWindow();
+        this.renderWindow = fullScreenRenderer.getRenderWindow();
         const actor = vtkActor.newInstance();
         const mapper = vtkMapper.newInstance();
 
-        const cylinderSource = vtkCylinderSource.newInstance({ height: 10.0, resolution: 50, radius: this.radius });
+        this.cylinderSource = vtkCylinderSource.newInstance({ height: 10.0, resolution: 50, radius: +this.radius });
 
         actor.setMapper(mapper);
-        mapper.setInputConnection(cylinderSource.getOutputPort());
+        mapper.setInputConnection(this.cylinderSource.getOutputPort());
         renderer.addActor(actor);
         renderer.resetCamera();
-        renderWindow.render();
+        this.renderWindow.render();
 
     }
 
     public ngOnChanges(): void {
         console.log("Changing radius to ...", this.radius);
-
-
+        if(this.cylinderSource !== undefined){
+            this.cylinderSource.setRadius(this.radius)
+            this.renderWindow.render();
+         }
     }
     public ngOnDestroy(): void {
         console.log("Boom! 💣")

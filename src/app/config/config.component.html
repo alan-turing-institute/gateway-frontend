@@ -71,7 +71,7 @@
                           postfix=" {{component.units}}"
                           data-step=1
                           (onFinish)="updateSlider(component, $event)"></ion-range-slider>
-                        <app-vtk></app-vtk>
+                        <app-vtk [radius]="component.value"></app-vtk>
                       </div>
                     </div>
                   </div>

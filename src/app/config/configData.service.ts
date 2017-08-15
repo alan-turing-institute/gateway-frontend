@@ -31,15 +31,9 @@ export class ConfigDataService {
     return -1;
   }
 
-  updateJobData(supersetComponents, componentKey, newValue) : InputComponent[]{
-    var index = this.arrayObjectIndexOf(supersetComponents, componentKey, 'name'); // 1
-    var componentWithNewValue = supersetComponents[index]
-    componentWithNewValue.value = newValue
-    return [
-    ...supersetComponents.slice(0, index), 
-    Object.assign({}, componentWithNewValue),
-    ...supersetComponents.slice(index + 1)
-    ];
+    updateJobData(supersetComponents, componentKey, newValue) : void {
+        var index = this.arrayObjectIndexOf(supersetComponents, componentKey, 'name'); // 1
+        supersetComponents[index].value = newValue;
   }
 
   private extractTemplateData(res: Response) {
