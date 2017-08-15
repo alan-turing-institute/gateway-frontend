@@ -13,8 +13,12 @@
     background-color: darkgray
 }
 
-.card-header:hover {
-  background-color: #c6c7c7;
+.card-header.config:hover {
+  background-color: hsla(198,36%,75%,1);
+}
+
+.card-header.config {
+  background-color: #cfd8dc;
 }
 
 .img-thumbnail {

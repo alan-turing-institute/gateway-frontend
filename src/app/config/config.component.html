@@ -26,7 +26,7 @@
     <div class="col-md-12">
           <div [attr.id]="componentFamilyAccordion" role="tablist">
             <div *ngFor="let tag of tags" class="card">
-              <div class="card-header" role="tab">
+              <div class="card-header config" role="tab">
                 <h5 class="mb-0">
                   <a data-toggle="collapse" data-target={{getDataTarget(tag)}} data-parent="#componentFamilyAccordion" (click)="toggleCollapse(tag)">
                     {{tag.label}}

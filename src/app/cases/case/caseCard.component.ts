@@ -6,12 +6,11 @@ import { Router } from '@angular/router';
   selector: 'caseCard',
   template: `
     <div class="card card-case">
-        <div class="card-header">
+        <div class="card-header case">
             <span class="badge">
-                <i class="icon-puzzle fa-2x badge-puzzle"></i> 
+                <i class="icon-puzzle fa-lg badge-puzzle"></i> 
             </span>
-            Template
-        
+            <strong>{{info.label}}</strong>
         </div>
         <a routerLinkActive = "active" [routerLink] = "['/config/config']">
           <div class="wrapper">
@@ -22,13 +21,11 @@ import { Router } from '@angular/router';
           </div>
         </a>
         <div class="card-block">
-          <h5 class="card-title"> 
-            <a routerLinkActive = "active" [routerLink] = "['/config/config']">{{info.label}}</a>
-          </h5>
           <p class="card-text break-word">{{getShortDescription()}} 
             <a routerLinkActive = "active" [routerLink] = "['/config/config']"
             (click)="storeCaseType()">(...)</a>
           </p>
+          <p><button type="button" class="btn btn-primary">Details</button></p>
         </div>
     </div>
     `,

@@ -1,4 +1,18 @@
-.container-scroll  {
+/* .container-scroll  {
     overflow-y: scroll;
     max-height: 70vh;
+} */
+
+.img-icon {
+    height:5vh;
+    padding-left: 2%;
+    padding-right: 5%;
+     padding-top: 0.5%; 
+}
+
+.img-institute {
+    height:5vh;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-top: 0.5%; 
 }
