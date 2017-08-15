@@ -9,8 +9,6 @@ import { OutputModule } from './output/output.module';
 @NgModule({
   imports: [
     CommonModule
-    // CasesModule,
-    // OutputModule
   ],
   declarations: [
     VtkComponent

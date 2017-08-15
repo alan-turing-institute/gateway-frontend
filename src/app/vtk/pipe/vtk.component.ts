@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Input } from '@angular/core';
 
 import vtkFullScreenRenderWindow from 'vtk.js/Sources/Rendering/Misc/FullScreenRenderWindow';
 
@@ -23,11 +24,11 @@ import { FieldDataTypes } from 'vtk.js/Sources/Common/DataModel/DataSet/Constant
 export class VtkComponent implements OnInit {
 
     @ViewChild('vtk') vtkRoot: ElementRef;
-
+    @Input('anInput') anInput: string;
     constructor() {}
 
     public ngOnInit(): void {
-
+        console.log(this.anInput);
         // Set up VTK
         const fullScreenRenderer = vtkFullScreenRenderWindow.newInstance({
             rootContainer: this.vtkRoot.nativeElement,
