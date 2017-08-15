@@ -16,7 +16,7 @@ import { ConfigDataService } from './configData.service';
 export class ConfigComponent implements OnInit {
 
   case:CaseComponents 
-  // supersetComponents:InputComponent []
+  job: any
   tags:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
   mode = 'Observable';
   errorMessage: string;
@@ -30,10 +30,21 @@ export class ConfigComponent implements OnInit {
     this.getTemplateData()
   }
 
-  initNewJob() {
-    console.log("logging")
-    this.getTemplateData()  
+  newJob() {
+    console.log("init new job")
+    console.log(this.job)
+    // this.getTemplateData()  
   }
+
+  saveJob() {
+    console.log("save job")
+  }
+
+  startJob() {
+    console.log("run job")
+  }
+
+
   getTemplateData () {
     console.log(localStorage.getItem('template_id'));
     this.configDataService.template
@@ -41,7 +52,7 @@ export class ConfigComponent implements OnInit {
                           template => {
                             this.tags = template['families']
                             this.case=template['case']
-                            console.log(this.tags);
+                            this.job = template
                           },
                           error => {
                             this.errorMessage = <any> error
@@ -54,20 +65,17 @@ export class ConfigComponent implements OnInit {
 
   getVisibleComponents(tag) {
     return tag['parameters']
-    // return this.inputComponentService.getComponentsOfFamily(this.supersetComponents, tag.label);
   }
 
-  updateSlider(component, event) {
+  updateSlider(tag, component, event) {
     let newValue = event.from;
-    // this.supersetComponents = this.configDataService.updateJobData(this.supersetComponents, component.name, newValue)
+    this.configDataService.updateJobData(tag['parameters'], component.name, newValue)
   }
 
-
-  update(component) {
+  update(tag, component) {
     if (component.type == "radio")
       component.value = !component.value
-    // this.supersetComponents = this.configDataService.updateJobData(this.supersetComponents, component.name,  component.value)
-    // console.log(this.supersetComponents)
+    this.configDataService.updateJobData(tag['parameters'], component.name,  component.value)
   }
 
   toggleCollapse(tag) {

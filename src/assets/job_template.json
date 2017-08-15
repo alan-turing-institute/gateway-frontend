@@ -73,7 +73,7 @@
       "collapse": false,
       "parameters": [{
         "name": "pipe_radius",
-        "type": "vtk_slider",
+        "type": "vtk",
         "label": "Pipe Radius",
         "units": "m",
         "type_value": "float",

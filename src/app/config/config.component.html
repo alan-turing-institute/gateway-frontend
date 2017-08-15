@@ -10,13 +10,19 @@
         </div>
         <div class="row">
           <div class="col-md-9 col-md-push-3">
-            <button type="button" class="btn btn-primary" (click)="initNewJob()">
-              <i class="fa fa-file-text-o"> New</i>
+            <button type="button" class="btn btn-primary" (click)="newJob()">
+              <i class="fa fa-file-text-o"></i> 
+              <span class="actionText"><strong>New</strong></span>
               </button>
-            <button type="button" class="btn btn-primary">
-              <i class="fa fa-floppy-o"> Save</i></button>
-            <button type="button" class="btn btn-primary">
-              <i class="fa fa-rocket"> Submit Job</i></button>
+            <button type="button" class="btn btn-primary" (click)="saveJob()">
+              <i class="fa fa-floppy-o"></i>
+                <span class="actionText">
+                  <strong>Save</strong></span>
+                </button>
+            <button type="button" class="btn btn-primary" (click)="startJob()">
+              <i class="fa fa-rocket"></i>
+                <span class="actionText">
+                  <strong>Submit Job</strong></span></button>
           </div>
         </div> 
     </div> 
@@ -36,7 +42,6 @@
               <div [attr.id]=tag.name [ngClass]="{'collapse': tag.collapse }"role="tabpanel">
                 <div class="card-block">
                   <div *ngFor="let component of getVisibleComponents(tag)">
-
                     <div *ngIf="component.type == 'text'">
                       <label [for]=component.name>{{component.label}}</label>
                       <div class="input-group">
@@ -53,7 +58,7 @@
 
                     <div *ngIf="component.type == 'radio'">
                       <label class="switch switch-3d switch-danger">
-                        <input type="checkbox" class="switch-input" [ngModel] = "component.value" (ngModelChange)="update(component)">
+                        <input type="checkbox" class="switch-input" [ngModel] = "component.value" (ngModelChange)="update(tag, component)">
                         <span class="switch-label"></span>
                         <span class="switch-handle"></span>
                       </label>
@@ -73,20 +78,18 @@
                       </ion-range-slider>
                     </div>
 
-                     <div *ngIf="component.type == 'vtk_slider'">
-                      <label [for]=component.name>{{component.label}}</label>
-                      <ion-range-slider
-                        [attr.id]=component.name
-                        from={{component.value}}
-                        min={{component.min_value}}
-                        max={{component.max_value}}
-                        postfix=" {{component.units}}"
-                        data-step=0.01
-                        (onFinish)="updateSlider(component, $event)">
-                      </ion-range-slider>
-                      <app-vtk [anInput]=component.value></app-vtk>
-
-                    </div>  
+                    <div *ngIf="component.type == 'vtk'">
+                        <label [for]=component.name>{{component.label}}</label>
+                        <ion-range-slider
+                          [attr.id]=component.name
+                          from={{component.value}}
+                          min={{component.min_value}}
+                          max={{component.max_value}}
+                          postfix=" {{component.units}}"
+                          data-step=0.01
+                          (onFinish)="updateSlider(tag, component, $event)"></ion-range-slider>
+                        <app-vtk [radius]="component.value"></app-vtk>
+                    </div>
                   </div>
                 </div>
               </div>

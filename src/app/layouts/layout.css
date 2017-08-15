@@ -4,15 +4,15 @@
 } */
 
 .img-icon {
-    height:5vh;
-    padding-left: 2%;
-    padding-right: 5%;
-     padding-top: 0.5%; 
+    height:4vh;
+    padding-left: 2vh;
+    padding-right: 2vh;
+    padding-top: 1vh; 
 }
 
 .img-institute {
-    height:5vh;
-    padding-left: 1%;
-    padding-right: 1%;
-    padding-top: 0.5%; 
+    height:3.5vh;
+    padding-left: 1vh;
+    padding-right: 1vh;
+     margin-top: 0.5vh;  
 }

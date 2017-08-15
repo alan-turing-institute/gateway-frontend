@@ -56,14 +56,14 @@ export class ParametersComponent implements OnInit {
 
   updateSlider(component, event) {
     let newValue = event.from;
-    this.supersetComponents = this.configDataService.updateJobData(this.supersetComponents, component.name, newValue)
+    this.configDataService.updateJobData(this.supersetComponents, component.name, newValue)
   }
 
 
   update(component) {
     if (component.type == "radio")
       component.value = !component.value
-    this.supersetComponents = this.configDataService.updateJobData(this.supersetComponents, component.name,  component.value)
+    this.configDataService.updateJobData(this.supersetComponents, component.name,  component.value)
     console.log(this.supersetComponents)
   }
 

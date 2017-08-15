@@ -1,4 +1,4 @@
-export class InputComponent {
+export declare interface InputComponent {
     name: string;
     tag: string[];
     type: string;

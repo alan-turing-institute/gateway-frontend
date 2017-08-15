@@ -9,6 +9,10 @@
     border:#ed5565;
 }
 
+.actionText {
+    font: medium;
+}
+
 .irs-line.config {
     background-color: darkgray
 }
