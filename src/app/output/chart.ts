@@ -2,8 +2,14 @@ import { Component, Input, OnInit, NgZone, OnChanges, ViewChild, ElementRef, Hos
 
 import { OutputService } from './output.service';
 
-import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+//import {NgxChartsModule} from '@swimlane/ngx-charts';
 
+//import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+//import * as d3 from 'd3-selection';
+//import * as d3Scale from 'd3-scale';
+//import * as d3Shape from "d3-shape";
+//import * as d3Array from 'd3-array';
+//import *  as d3Axis from 'd3-axis';
 
 @Component({
   selector: 'chart',
@@ -15,34 +21,53 @@ import { BaseChartDirective } from 'ng2-charts/ng2-charts';
         Output graph
       </div>
       <div class="card-block">
-        <div class="row">
-          <div class="col-md-12">
-            <div style="display: block;"  *ngIf="isDataAvailable">
-              <canvas baseChart width="400" height="400"
-                        [datasets]="chartData"
-                        [labels]="chartLabels"
-                        [options]="chartOptions"
-                        [colors]="chartColors"
-                        [legend]="chartLegend"
-                        [chartType]="chartType"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
-            </div>
-          </div>
-          <button (click)="update()">UPDATE</button>
 
+          <!-- <svg width = "500" height="500"></svg>-->
+          <div class = "row">
+          <div class = "col-md-12">
+      <div *ngIf="isDataAvailable">
+          <ngx-charts-line-chart
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="graphData"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          [autoScale]="autoScale"
+          >
+        </ngx-charts-line-chart>
+    </div>
+    </div>
+    </div>
+          <!-- <button (click)="update()">UPDATE</button>
+
+          <div class = "row">
+          <div class = "col-md-12">
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
+              X-AXIS
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <button class="dropdown-item" type="button">Action</button>
-              <button class="dropdown-item" type="button">Another action</button>
-              <button class="dropdown-item" type="button">Something else here</button>
+            <div *ngFor="let key of keys">
+              <button class="dropdown-item" type="button" value={{key}} >{{key}}</button>
+            </div>
             </div>
           </div>
+          </div>
+          </div>-->
 
-        </div>
+          <select (change)='onChangeX($event.target.value)' >
+            <option *ngFor="let key of keys" >{{key}}</option>
+          </select>
+
+          <select (change)='onChangeY($event.target.value)' >
+            <option *ngFor="let y_var of y_vars" >{{y_var}}</option>
+          </select>
       </div>
     </div>
   </div>`,
@@ -51,16 +76,39 @@ import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 export class ChartsComponent implements OnInit{
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  //@ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
   errorMessage: string;
   jobData: {};
   keys: Array<any>;
-  data: Array<any>;
-  dataset: Array<{data: Array<number[]> | number[], label: string}>
-  isDataAvailable:boolean = false;
-  current: string;
+  y_vars: Array<any> = [];
+  data: Array<any> = [];
+  //dataset: Array<{data: Array<number[]> | number[], label: string}>
+  isDataAvailable:boolean = true;
+  //current: string;
+  varX: string;
+  varY: string;
+  x_type: string;
+  graphData: Array<any>
 
+
+  view: any[] = [700, 400];
+
+  // options
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = false;
+  showXAxisLabel = true;
+  xAxisLabel = '';
+  showYAxisLabel = true;
+  yAxisLabel = '';
+
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
+
+  autoScale = true;
   //for dropdown menu
   public disabled:boolean = false;
   public status:{isopen:boolean} = {isopen: false};
@@ -79,41 +127,6 @@ export class ChartsComponent implements OnInit{
 
   ngOnInit(){
     this.getJobData()
-
-  }
-
-  chartData:Array<any>
-  chartLabels:Array<any>
-
-  chartColors:Array<any> = [
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    },
-    { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
-    }
-  ];
-  chartLegend:boolean = false; //true
-  chartType:string = 'line';
-
-
-  // events
-  chartClicked(e:any):void {
-    console.log(e);
-  }
-
-  chartHovered(e:any):void {
-    console.log(e);
   }
 
   getJobData(){
@@ -122,15 +135,57 @@ export class ChartsComponent implements OnInit{
                         allData => {
                           this.jobData = allData
                           this.keys = this.jobData["keys"]
-                          this.data = []
+                          //this.data = []
                           for (let key of this.keys){
                             this.data.push(this.jobData[key])
+                            if (typeof(this.jobData[key][0]) === 'number'){
+                              this.y_vars.push(key)
+                            }
+                            //console.log(this.y_vars)
+
                           }
+                          //console.log(this.jobData)
+                          //console.log(this.data)
                           //draw first 2 variables against each other
-                          this.chartData = [{data: this.jobData[this.keys[0]], label: this.keys[0]}]
-                          this.chartLabels=this.jobData[this.keys[1]]
+                          //this.chartData = [{data: this.jobData[this.keys[0]], label: this.keys[0]}]
+                          //this.chartLabels=this.jobData[this.keys[1]]
+
+                          //plot first 2 vars against each other
+                          this.varY = this.y_vars[0]
+                          if(this.keys[0] != this.y_vars[0]){
+                            this.varX = this.keys[0]
+                          }else{
+                            this.varX = this.keys[1]
+                            //reorder keys so that top choice in dropdown is name of X variable being plotted
+                            let temp = this.keys[0]
+                            this.keys[0] = this.keys[1]
+                            this.keys[1] = temp
+                          }
+
+
+                          //this.x_type = typeof(this.jobData[this.varX][0])
+
+                          //if(this.x_type === 'number'){
+                          //  console.log(this.x_type)
+                          //}
+
+                          //console.log(typeof(this.jobData['time'][0]))
+
+                          //this.graphData = [{"name":this.varY, "series":[]}]
+
+                          //sort x-axis values by order
+                          //this.jobData[this.varX].sort()
+                          //console.log(this.jobData[this.varX].length)
+                          //console.log(this.graphData[])
+                          //question - is there better way to do this?!
+                          //for(var i = 0; i<this.jobData[this.varX].length; i++){
+                          //  this.graphData[0]["series"].push({'name':this.jobData[this.varX][i], 'value':this.jobData[this.varY][i]})
+                          //}
+
+                          this.drawGraph()
+
                           this.isDataAvailable = true;
-                          this.current = this.keys[0]
+
                         },
                         error => {
                           this.errorMessage = <any> error
@@ -138,28 +193,28 @@ export class ChartsComponent implements OnInit{
                       )
   }
 
-//function to call to draw chart from getJobData once data is available to draw
-//  refresh_chart(){
-//    setTimeout(() => {
-//      this.chart.chart.config.data.labels = this.chartLabels
-//      this.chart.chart.config.data.datasets = this.chartData
-//      this.chart.chart.update()
-//    })
-//  }
 
-  public update():void {
-    if(this.current == this.keys[0]){
-    this.chart.chart.config.data.datasets = [{data: this.jobData[this.keys[2]], label: this.keys[2]}]
-    this.chart.chart.config.data.labels = this.jobData[this.keys[3]]
-    this.current = this.keys[2]
-  }else{
-    this.chart.chart.config.data.datasets = [{data: this.jobData[this.keys[0]], label: this.jobData[this.keys[0]]}]
-    this.chart.chart.config.data.labels = this.jobData[this.keys[1]]
-    this.current = this.keys[0]
+drawGraph(){
+  this.graphData = [{"name":"", "series":[]}]
+  let newData = [{"name":this.varY, "series":[]}]
+
+  this.jobData[this.varX].sort()
+  for(var i = 0; i<this.jobData[this.varX].length; i++){
+    newData[0]["series"].push({'name':this.jobData[this.varX][i], 'value':this.jobData[this.varY][i]})
   }
-    this.chart.chart.update()
+  this.xAxisLabel = this.varX
+  this.yAxisLabel = this.varY
+  this.graphData = newData
+}
 
-  }
+onChangeX(key){
+  this.varX = key
+  this.drawGraph()
+}
 
+onChangeY(key){
+  this.varY = key
+  this.drawGraph()
+}
 
 }

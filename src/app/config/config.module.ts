@@ -16,7 +16,7 @@ import { VtkModule} from '../vtk.module';
     CommonModule,
     FormsModule,
     IonRangeSliderModule,
-    VtkModule,
+    VtkModule
   ],
   declarations: [ConfigComponent],
   providers: [ConfigDataService],
