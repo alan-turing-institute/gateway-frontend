@@ -57,7 +57,6 @@
     "sass-loader": "^6.0.6",
     "systemjs": "0.19.39",
     "ts-helpers": "1.1.2",
-    "vtk.js": "^3.0.4",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
