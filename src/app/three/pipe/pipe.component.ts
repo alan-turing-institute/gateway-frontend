@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
 
-import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, MeshBasicMaterial, BoxGeometry } from 'three/src/Three';
+import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, 
+         MeshToonMaterial, BoxGeometry, PointLight } from 'three/src/Three';
  
 import { TrackballControls } from './TrackballControls';
 
@@ -38,10 +39,21 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy {
         this.pipeDiv.nativeElement.appendChild(this.renderer.domElement);
 
         var geometry = new BoxGeometry( 1, 1, 1 );
-        var material = new MeshBasicMaterial( { color: 0x00ff00 } );
+        var material = new MeshToonMaterial( { color: 0x888888 } );
         var cube = new Mesh( geometry, material );
 
-       
+       var lights = [];
+       lights[ 0 ] = new PointLight( 0xff0000, 1, 0 );
+       lights[ 1 ] = new PointLight( 0x0000ff, 1, 0 );
+       lights[ 2 ] = new PointLight( 0x00ff00, 1, 0 );
+
+       lights[ 0 ].position.set( 0, 200, 0 );
+       lights[ 1 ].position.set( 100, 200, 100 );
+       lights[ 2 ].position.set( - 100, - 200, - 100 );
+
+       this.scene.add( lights[ 0 ] );
+       this.scene.add( lights[ 1 ] );
+       this.scene.add( lights[ 2 ] );
 
         this.scene.add( cube );
         
