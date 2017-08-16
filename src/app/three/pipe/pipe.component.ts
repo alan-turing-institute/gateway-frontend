@@ -8,22 +8,24 @@ import vtkRenderWindow            from 'vtk.js/Sources/Rendering/Core/RenderWind
 import vtkActor from 'vtk.js/Sources/Rendering/Core/Actor';
 import vtkCalculator from 'vtk.js/Sources/Filters/General/Calculator';
 import vtkConeSource from 'vtk.js/Sources/Filters/Sources/ConeSource';
-import vtkCylinderSource from './vtkCylinderSource';
+import vtkCylinderSource from './pipeSource';
 import vtkMapper from 'vtk.js/Sources/Rendering/Core/Mapper';
 import vtkHttpDataSetReader       from 'vtk.js/Sources/IO/Core/HttpDataSetReader';
 import { AttributeTypes } from 'vtk.js/Sources/Common/DataModel/DataSetAttributes/Constants';
 import { FieldDataTypes } from 'vtk.js/Sources/Common/DataModel/DataSet/Constants';
 
 @Component({
-  selector: 'app-vtk',
-  templateUrl: './vtk.component.html',
-  styleUrls: ['./vtk.component.css']
+  selector: 'app-pipe',
+  templateUrl: './pipe.component.html',
+  styleUrls: ['./pipe.component.css']
 })
 export class VtkComponent implements OnInit, OnChanges, OnDestroy {
 
-    @ViewChild('vtk') vtkRoot: ElementRef;
+    @ViewChild('pipeDisplay') vtkRoot: ElementRef;
     @Input() radius: number;
-    //radius: number;
+    @Input() length: number;
+    @Input() shellWidth: number;
+
     private cylinderSource: any;
     private renderWindow: any;
 
