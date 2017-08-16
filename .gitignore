@@ -11,3 +11,4 @@ npm-debug.log
 *~
 *.swo
 *.swp
+.DS_Store
