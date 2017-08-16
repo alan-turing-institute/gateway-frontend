@@ -2,15 +2,6 @@ import { Component, Input, OnInit, NgZone, OnChanges, ViewChild, ElementRef, Hos
 
 import { OutputService } from './output.service';
 
-//import {NgxChartsModule} from '@swimlane/ngx-charts';
-
-//import { BaseChartDirective } from 'ng2-charts/ng2-charts';
-//import * as d3 from 'd3-selection';
-//import * as d3Scale from 'd3-scale';
-//import * as d3Shape from "d3-shape";
-//import * as d3Array from 'd3-array';
-//import *  as d3Axis from 'd3-axis';
-
 @Component({
   selector: 'chart',
   providers: [OutputService],
@@ -21,25 +12,24 @@ import { OutputService } from './output.service';
         Output graph
       </div>
       <div class="card-block">
-
-          <!-- <svg width = "500" height="500"></svg>-->
           <div class = "row">
           <div class = "col-md-12">
+
       <div *ngIf="isDataAvailable">
           <ngx-charts-line-chart
           [view]="view"
           [scheme]="colorScheme"
           [results]="graphData"
-          [gradient]="gradient"
-          [xAxis]="showXAxis"
-          [yAxis]="showYAxis"
-          [legend]="showLegend"
-          [showXAxisLabel]="showXAxisLabel"
-          [showYAxisLabel]="showYAxisLabel"
+          [gradient]=false
+          [xAxis]=true
+          [yAxis]=true
+          [legend]=false
+          [showXAxisLabel]=true
+          [showYAxisLabel]=true
           [xAxisLabel]="xAxisLabel"
           [yAxisLabel]="yAxisLabel"
-          [autoScale]="autoScale"
-          >
+          [autoScale]=true
+          [tooltipDisabled]=true>
         </ngx-charts-line-chart>
     </div>
     </div>
@@ -76,52 +66,25 @@ import { OutputService } from './output.service';
 
 export class ChartsComponent implements OnInit{
 
-  //@ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
   errorMessage: string;
   jobData: {};
   keys: Array<any>;
   y_vars: Array<any> = [];
   data: Array<any> = [];
-  //dataset: Array<{data: Array<number[]> | number[], label: string}>
-  isDataAvailable:boolean = true;
-  //current: string;
+  isDataAvailable:boolean = false;
   varX: string;
   varY: string;
   x_type: string;
   graphData: Array<any>
 
-
+  // ngx-charts options
   view: any[] = [700, 400];
-
-  // options
-  showXAxis = true;
-  showYAxis = true;
-  gradient = false;
-  showLegend = false;
-  showXAxisLabel = true;
   xAxisLabel = '';
-  showYAxisLabel = true;
   yAxisLabel = '';
-
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
-
-  autoScale = true;
-  //for dropdown menu
-  public disabled:boolean = false;
-  public status:{isopen:boolean} = {isopen: false};
-  //items: Array<string> = ['The first choice!', 'And another choice for you.', 'but wait! A third!'];
-  public toggled(open:boolean):void {
-    console.log('Dropdown is now: ', open);
-  }
-
-  public toggleDropdown($event:MouseEvent):void {
-    $event.preventDefault();
-    $event.stopPropagation();
-    this.status.isopen = !this.status.isopen;
-  }
 
   constructor(private outputService:OutputService){}
 
@@ -141,14 +104,7 @@ export class ChartsComponent implements OnInit{
                             if (typeof(this.jobData[key][0]) === 'number'){
                               this.y_vars.push(key)
                             }
-                            //console.log(this.y_vars)
-
                           }
-                          //console.log(this.jobData)
-                          //console.log(this.data)
-                          //draw first 2 variables against each other
-                          //this.chartData = [{data: this.jobData[this.keys[0]], label: this.keys[0]}]
-                          //this.chartLabels=this.jobData[this.keys[1]]
 
                           //plot first 2 vars against each other
                           this.varY = this.y_vars[0]
@@ -161,26 +117,6 @@ export class ChartsComponent implements OnInit{
                             this.keys[0] = this.keys[1]
                             this.keys[1] = temp
                           }
-
-
-                          //this.x_type = typeof(this.jobData[this.varX][0])
-
-                          //if(this.x_type === 'number'){
-                          //  console.log(this.x_type)
-                          //}
-
-                          //console.log(typeof(this.jobData['time'][0]))
-
-                          //this.graphData = [{"name":this.varY, "series":[]}]
-
-                          //sort x-axis values by order
-                          //this.jobData[this.varX].sort()
-                          //console.log(this.jobData[this.varX].length)
-                          //console.log(this.graphData[])
-                          //question - is there better way to do this?!
-                          //for(var i = 0; i<this.jobData[this.varX].length; i++){
-                          //  this.graphData[0]["series"].push({'name':this.jobData[this.varX][i], 'value':this.jobData[this.varY][i]})
-                          //}
 
                           this.drawGraph()
 
@@ -195,9 +131,9 @@ export class ChartsComponent implements OnInit{
 
 
 drawGraph(){
+  //this.isDataAvailable = false
   this.graphData = [{"name":"", "series":[]}]
   let newData = [{"name":this.varY, "series":[]}]
-
   this.jobData[this.varX].sort()
   for(var i = 0; i<this.jobData[this.varX].length; i++){
     newData[0]["series"].push({'name':this.jobData[this.varX][i], 'value':this.jobData[this.varY][i]})
@@ -205,6 +141,7 @@ drawGraph(){
   this.xAxisLabel = this.varX
   this.yAxisLabel = this.varY
   this.graphData = newData
+  //this.isDataAvailable = true
 }
 
 onChangeX(key){

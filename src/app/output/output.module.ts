@@ -9,12 +9,13 @@ import { OutputService } from './output.service';
 import { VtkModule} from '../vtk.module';
 
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ChartsComponent } from './chart';
 
 import {ConfigModule} from '../config/config.module'
 
-import { DROPDOWN_DIRECTIVES } from '../shared/dropdown.directive';
+//import { DROPDOWN_DIRECTIVES } from '../shared/dropdown.directive';
 
 @NgModule({
   imports: [
@@ -28,8 +29,9 @@ import { DROPDOWN_DIRECTIVES } from '../shared/dropdown.directive';
     NgxChartsModule
   ],
   declarations: [OutputComponent,
-                  ChartsComponent,
-                DROPDOWN_DIRECTIVES],
+                  ChartsComponent//,
+//                DROPDOWN_DIRECTIVES
+              ],
   providers : [OutputService]
 })
 export class OutputModule { }
