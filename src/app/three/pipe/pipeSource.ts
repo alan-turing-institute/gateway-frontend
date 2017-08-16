@@ -1,123 +1,184 @@
-declare interface CylinderModel {
-        height?: number;
-        radius?: number;
-        resolution?: number;
-        center?: number [];
-        direction?: number [];
-        shellWidth?: number;
-        pointType?: string;
+import { Geometry, BufferGeometry, Float32BufferAttribute, 
+         Vector3, Vector2 } from 'three/src/Three';
+
+declare interface PipeParameters {
+    height: number;
+    radius: number;
+    resolution: number;
+    shellWidth: number;
 }
 
-// ----------------------------------------------------------------------------
-// PipeSource methods
-// ----------------------------------------------------------------------------
+export class PipeGeometry extends Geometry {
 
-function PipeSource(publicAPI: any, model: CylinderModel): void {
+    constructor (radius: number = 0.5, shellWidth: number = 0.1, 
+        height:number =1 , resolution: number = 6 ) {
 
+        super();
+        super.type = 'PipeGeometry';
+        super.parameters = {   
+            radius: radius,
+            height: height,
+            resolution: resolution,
+            shellWidth: shellWidth
+        };
 
-    function requestData(inData: any, outData: any []) {
-    
-    let dataset = outData[0];
-
-    const angle = 2 * Math.PI / model.resolution;
-    const xbot = -model.height / 2.0;
-    const xtop = model.height / 2.0;
-    const numberOfPoints = 4 * model.resolution;
-    const cellArraySize = (5 * 4 * model.resolution); // (size + 4 points) * 4 faces
-
-    // Points
-    const points = new window[model.pointType](numberOfPoints * 3); // for the 3Dimensions
-
-    // Cells
-    let cellLocation = 0;
-    const polys = new Uint32Array(cellArraySize);
-
-
-    // Add all points
-    for (let i = 0; i < model.resolution; i++) {
-
-        // bottom inside
-        points[(i * 3) + 0] = xbot;
-        points[(i * 3) + 1] = model.radius * Math.cos(i * angle);
-        points[(i * 3) + 2] = model.radius * Math.sin(i * angle);
-
-        // top inside
-        points[(model.resolution * 3 * 1) + (i * 3) + 0] = xtop;
-        points[(model.resolution * 3 * 1) + (i * 3) + 1] = model.radius * Math.cos(i * angle);
-        points[(model.resolution * 3 * 1) + (i * 3) + 2] = model.radius * Math.sin(i * angle);
-
-        // bottom outside
-        points[(model.resolution * 3 * 2) + (i * 3) + 0] = xbot;
-        points[(model.resolution * 3 * 2) + (i * 3) + 1] = (model.radius + model.shellWidth) * Math.cos(i * angle);
-        points[(model.resolution * 3 * 2) + (i * 3) + 2] = (model.radius + model.shellWidth) * Math.sin(i * angle);
-
-        // top outside
-        points[(model.resolution * 3 * 3) + (i * 3) + 0] = xtop;
-        points[(model.resolution * 3 * 3) + (i * 3) + 1] = (model.radius + model.shellWidth) * Math.cos(i * angle);
-        points[(model.resolution * 3 * 3) + (i * 3) + 2] = (model.radius + model.shellWidth) * Math.sin(i * angle);
-
+        super.fromBufferGeometry( new PipeBufferGeometry(radius, shellWidth, height, resolution) );
+        super.computeVertexNormals();
+        super.mergeVertices();
     }
-
-    // Add all triangle cells
-      for (let i = 0; i < model.resolution; i++) {
-          let  i_next = (i + 1) % model.resolution;
-
-          // Inner face of the cylinder
-          polys[cellLocation++] = 4; // size of polygon
-          polys[cellLocation++] = i;
-          polys[cellLocation++] = i_next;
-          polys[cellLocation++] = i_next + model.resolution;
-          polys[cellLocation++] = i + model.resolution;
-
-          // Outer face of the cylinder
-          polys[cellLocation++] = 4; // size of polygon
-          polys[cellLocation++] = i + 2 * model.resolution;
-          polys[cellLocation++] = i_next + 2 * model.resolution;
-          polys[cellLocation++] = i_next + model.resolution + 2 * model.resolution;
-          polys[cellLocation++] = i + model.resolution + 2 * model.resolution;
-
-          // top face
-          polys[cellLocation++] = 4; // size of polygon
-          polys[cellLocation++] = i;
-          polys[cellLocation++] = i_next;
-          polys[cellLocation++] = i_next + 2 * model.resolution;
-          polys[cellLocation++] = i + 2 * model.resolution;
-
-          // bottom face
-          polys[cellLocation++] = 4; // size of polygon
-          polys[cellLocation++] = i + 3 * model.resolution;
-          polys[cellLocation++] = i_next + 3 * model.resolution ;
-          polys[cellLocation++] = i_next + model.resolution;
-          polys[cellLocation++] = i + model.resolution;
 }
 
-    // FIXME apply tranform
-    dataset = {};
-    dataset.getPoints().setData(points, 3);
-    dataset.getPolys().setData(polys, 1);
+export class PipeBufferGeometry extends BufferGeometry {
 
-    // Update output
-    outData[0] = dataset;
-  }
+    private indices;
+    private vertices;
+    private normals_temp;
+    private uvs;
 
-  // Expose methods
-  publicAPI.requestData = requestData;
+    constructor(radius: number, shellWidth: number, height: number, resolution: number) {
+        super();
+
+        super.type = 'PipeBufferGeometry';
+        super.parameters = {   
+            radius: radius,
+            height: height,
+            resolution: resolution,
+            shellWidth: shellWidth
+        };
+
+        var scope = this;
+
+        if(!Number.isFinite(radius) &&
+        !Number.isFinite(height) &&
+        !Number.isFinite(resolution) &&
+        !Number.isFinite(shellWidth)) {
+            console.log("Invalid (non-numeric) argument provided to Pipe");
+        }
+
+        // buffers
+
+        this.indices = [];
+        this.vertices = [];
+        this.normals_temp = [];
+        this.uvs = [];
+
+        // generate geometry
+
+        this.generatePipe();
+
+
+        // build geometry
+
+        console.log(new Float32Array(this.vertices))
+        super.setIndex( this.indices );
+        super.addAttribute( 'position', new Float32BufferAttribute( this.vertices, 3 ) );
+        //super.removeAttribute( 'normal');
+        // super.addAttribute( 'normal', new Float32BufferAttribute( this.normals_temp, 3 ) );
+        //super.addAttribute( 'uv', new Float32BufferAttribute( this.uvs, 2 ) );
+
+        //super.computeFaceNormals();
+        //super.computeVertexNormals();
+        console.log(this);
+    }
+    
+    private generatePipe() {
+        var normal = new Vector3();
+        var vertex = new Vector3();
+    
+        var groupCount = 0;
+    
+        let bottomInsideVertices = [];
+        let bottomOutsideVertices = [];
+        let topInsideVertices = [];
+        let topOutsideVertices = [];
+
+        const angle = 2 * Math.PI / super.parameters.resolution;
+        const xbot = -super.parameters.height / 2.0;
+        const xtop = super.parameters.height / 2.0;
+        const radius = super.parameters.radius;
+        const shellWidth = super.parameters.shellWidth;
+        const resolution = super.parameters.resolution;
+
+            // generate vertices, normals and uvs
+            for (let i = 0; i < resolution; i++) {
+
+                        // bottom inside
+                        vertex.x = xbot;
+                        vertex.y = radius * Math.cos(i * angle);
+                        vertex.z = radius * Math.sin(i * angle);
+                        bottomInsideVertices.push(vertex.x, vertex.y, vertex.z);
+
+                        normal.x = Math.random();
+                        normal.y = Math.random();
+                        normal.z = Math.random();
+                        this.normals_temp.push(normal.x, normal.y, normal.z);
+                        
+                
+                        // top inside
+                        vertex.x = xtop;
+                        vertex.y = radius * Math.cos(i * angle);
+                        vertex.z = radius * Math.sin(i * angle);
+                        topInsideVertices.push(vertex.x, vertex.y, vertex.z);
+
+                        normal.x = Math.random();
+                        normal.y = Math.random();
+                        normal.z = Math.random();
+                        this.normals_temp.push(normal.x, normal.y, normal.z);
+
+                        // bottom outside
+                        vertex.x = xbot;
+                        vertex.y = (radius + shellWidth) * Math.cos(i * angle);
+                        vertex.z = (radius + shellWidth) * Math.sin(i * angle);
+                        bottomOutsideVertices.push(vertex.x, vertex.y, vertex.z);
+
+                        normal.x = Math.random();
+                        normal.y = Math.random();
+                        normal.z = Math.random();
+                        this.normals_temp.push(normal.x, normal.y, normal.z);
+                
+                        // top outside
+                        vertex.x = xtop;
+                        vertex.y = (radius + shellWidth) * Math.cos(i * angle);
+                        vertex.z = (radius + shellWidth) * Math.sin(i * angle);
+                        topOutsideVertices.push(vertex.x, vertex.y, vertex.z);
+
+                        normal.x = Math.random();
+                        normal.y = Math.random();
+                        normal.z = Math.random();
+                        this.normals_temp.push(normal.x, normal.y, normal.z);
+                
+                    }
+                    this.vertices = [...bottomInsideVertices, ...topInsideVertices,
+                                     ...bottomOutsideVertices, ...topOutsideVertices];
+    
+            // generate indices
+            for (let i = 0; i < resolution; i++) {
+                let  i_next = (i + 1) % resolution;
+      
+                // Inner face of the cylinder
+                this.indices.push(i, i_next, i + resolution);
+                this.indices.push(i_next, i_next + resolution, i + resolution);
+      
+                // Outer face of the cylinder
+                this.indices.push(i + 2* resolution, i_next + 2 * resolution, i + 3*resolution);
+                this.indices.push(i_next + 2 * resolution, i_next + 3 * resolution, i + 3 * resolution);
+      
+                // top face
+                this.indices.push(i, i_next, i + 2 * resolution);
+                this.indices.push(i_next, i_next + 2 * resolution, i + 2 * resolution);
+      
+                // bottom face
+                this.indices.push(i + 3 * resolution, i_next + 3 * resolution, i + resolution);
+                this.indices.push(i_next + 3 * resolution, i_next + resolution, i + resolution);
+      }
+    
+            // add a group to the geometry. this will ensure multi material support
+                // TODO Actually do this.
+            // scope.addGroup( groupStart, groupCount, 0 );
+    
+            // calculate new start value for groups
+    
+            //groupStart += groupCount;
+    
+        }
 }
-
-// ----------------------------------------------------------------------------
-// Object factory
-// ----------------------------------------------------------------------------
-
-const DEFAULT_VALUES = {
-    height: 1.0,
-    radius: 0.5,
-    resolution: 6,
-    center: [0, 0, 0],
-    direction: [1.0, 0.0, 0.0],
-    shellWidth: 0.1,
-    pointType: 'Float32Array',
-};
-
-// ----------------------------------------------------------------------------
-
-export default { PipeSource };

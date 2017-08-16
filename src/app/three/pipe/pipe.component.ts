@@ -4,6 +4,7 @@ import { Scene, PerspectiveCamera, WebGLRenderer, Mesh,
          MeshToonMaterial, BoxGeometry, PointLight } from 'three/src/Three';
  
 import { TrackballControls } from './TrackballControls';
+import { PipeGeometry } from './PipeSource';
 
 @Component({
   selector: 'app-pipe',
@@ -38,7 +39,7 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy {
         this.renderer.setSize(100,100);
         this.pipeDiv.nativeElement.appendChild(this.renderer.domElement);
 
-        var geometry = new BoxGeometry( 1, 1, 1 );
+        var geometry = new PipeGeometry( 1, 0.5, 10, 15 );
         var material = new MeshToonMaterial( { color: 0x888888 } );
         var cube = new Mesh( geometry, material );
 
