@@ -6,7 +6,7 @@ import {IonRangeSliderModule} from 'ng2-ion-range-slider';
 import { OutputComponent } from './output.component';
 import { OutputRoutingModule } from './output-routing.module';
 import { OutputService } from './output.service';
-import { VtkModule} from '../vtk.module';
+import { PipeModule} from '../pipe.module';
 
 import { ChartsComponent } from './chart';
 import { DROPDOWN_DIRECTIVES } from '../shared/dropdown.directive';
@@ -18,7 +18,7 @@ import { DROPDOWN_DIRECTIVES } from '../shared/dropdown.directive';
     FormsModule,
     IonRangeSliderModule,
     CommonModule,
-    VtkModule
+    PipeModule
   ],
   declarations: [OutputComponent,
                   ChartsComponent,

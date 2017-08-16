@@ -1,7 +1,4 @@
-import macro       from 'vtk.js/Sources/macro';
-import vtkPolyData from 'vtk.js/Sources/Common/DataModel/PolyData';
-
-declare interface CylinderModel extends VtkModel {
+declare interface CylinderModel {
         height?: number;
         radius?: number;
         resolution?: number;
@@ -12,18 +9,14 @@ declare interface CylinderModel extends VtkModel {
 }
 
 // ----------------------------------------------------------------------------
-// vtkCylinderSource methods
+// PipeSource methods
 // ----------------------------------------------------------------------------
 
-function vtkCylinderSource(publicAPI: any, model: CylinderModel): void {
-  // Set our className
-  model.classHierarchy.push('vtkCylinderSource');
+function PipeSource(publicAPI: any, model: CylinderModel): void {
+
 
     function requestData(inData: any, outData: any []) {
-    if (model.deleted) {
-      return;
-    }
-
+    
     let dataset = outData[0];
 
     const angle = 2 * Math.PI / model.resolution;
@@ -99,7 +92,7 @@ function vtkCylinderSource(publicAPI: any, model: CylinderModel): void {
 }
 
     // FIXME apply tranform
-    dataset = vtkPolyData.newInstance();
+    dataset = {};
     dataset.getPoints().setData(points, 3);
     dataset.getPolys().setData(polys, 1);
 
@@ -127,29 +120,4 @@ const DEFAULT_VALUES = {
 
 // ----------------------------------------------------------------------------
 
-export function extend(publicAPI: any, model: CylinderModel, initialValues: CylinderModel = {}) {
-  Object.assign(model, DEFAULT_VALUES, initialValues);
-
-  // Build VTK API
-  macro.obj(publicAPI, model);
-  macro.setGet(publicAPI, model, [
-    'height',
-    'radius',
-    'resolution',
-    'shellWidth',
-  ]);
-  macro.setGetArray(publicAPI, model, [
-    'center',
-    'direction',
-  ], 3);
-  macro.algo(publicAPI, model, 0, 1);
-  vtkCylinderSource(publicAPI, model);
-}
-
-// ----------------------------------------------------------------------------
-
-export const newInstance = macro.newInstance(extend, 'vtkCylinderSource');
-
-// ----------------------------------------------------------------------------
-
-export default { newInstance, extend };
+export default { PipeSource };

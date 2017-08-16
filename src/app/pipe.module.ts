@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VtkComponent } from './vtk/pipe/vtk.component';
+import { PipeComponent } from './three/pipe/pipe.component';
 
 import { CasesModule } from './cases/cases.module';
 import { OutputModule } from './output/output.module';
@@ -11,8 +11,8 @@ import { OutputModule } from './output/output.module';
     CommonModule
   ],
   declarations: [
-    VtkComponent
+    PipeComponent
   ],
-  exports : [VtkComponent]
+  exports : [PipeComponent]
 })
-export class VtkModule { }
+export class PipeModule { }

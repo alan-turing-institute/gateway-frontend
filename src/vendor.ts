@@ -16,4 +16,4 @@ import 'ngx-bootstrap';
 import 'ngx-dropdown';
 import 'ng2-ion-range-slider';
 
-import 'three';
+import 'three/src/Three';

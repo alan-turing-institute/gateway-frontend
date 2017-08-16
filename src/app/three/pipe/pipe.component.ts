@@ -1,27 +1,15 @@
 import { Component, OnInit, OnChanges, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
 
-import vtkFullScreenRenderWindow from 'vtk.js/Sources/Rendering/Misc/FullScreenRenderWindow';
-
-import vtkRenderWindow            from 'vtk.js/Sources/Rendering/Core/RenderWindow';
-
-
-import vtkActor from 'vtk.js/Sources/Rendering/Core/Actor';
-import vtkCalculator from 'vtk.js/Sources/Filters/General/Calculator';
-import vtkConeSource from 'vtk.js/Sources/Filters/Sources/ConeSource';
-import vtkCylinderSource from './pipeSource';
-import vtkMapper from 'vtk.js/Sources/Rendering/Core/Mapper';
-import vtkHttpDataSetReader       from 'vtk.js/Sources/IO/Core/HttpDataSetReader';
-import { AttributeTypes } from 'vtk.js/Sources/Common/DataModel/DataSetAttributes/Constants';
-import { FieldDataTypes } from 'vtk.js/Sources/Common/DataModel/DataSet/Constants';
+import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, MeshBasicMaterial, BoxGeometry } from 'three/src/Three';
 
 @Component({
   selector: 'app-pipe',
   templateUrl: './pipe.component.html',
   styleUrls: ['./pipe.component.css']
 })
-export class VtkComponent implements OnInit, OnChanges, OnDestroy {
+export class PipeComponent implements OnInit, OnChanges, OnDestroy {
 
-    @ViewChild('pipeDisplay') vtkRoot: ElementRef;
+    @ViewChild('pipeDisplay') pipeDiv: ElementRef;
     @Input() radius: number;
     @Input() length: number;
     @Input() shellWidth: number;
@@ -31,37 +19,31 @@ export class VtkComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor() {
         this.radius = 5;
+        this.length = 10;
+        this.shellWidth = 1;
     }
 
     public ngOnInit(): void {
-        console.log(" Init radius= ", this.radius)
-        // Set up VTK
-        const fullScreenRenderer = vtkFullScreenRenderWindow.newInstance({
-            rootContainer: this.vtkRoot.nativeElement,
-            containerStyle: { }
-        });
-        fullScreenRenderer.getRenderWindow().getViews()[0].setSize([500,500]);
-        const renderer = fullScreenRenderer.getRenderer();
-        this.renderWindow = fullScreenRenderer.getRenderWindow();
-        const actor = vtkActor.newInstance();
-        const mapper = vtkMapper.newInstance();
+        // Set up a render window
+        var scene = new Scene();
+        var camera = new PerspectiveCamera(75, 1, 0.1, 1000);
 
-        this.cylinderSource = vtkCylinderSource.newInstance({ height: 10.0, resolution: 50, radius: +this.radius });
+        var renderer = new WebGLRenderer();
+        renderer.setSize(100,100);
+        this.pipeDiv.nativeElement.appendChild(renderer.domElement);
 
-        actor.setMapper(mapper);
-        mapper.setInputConnection(this.cylinderSource.getOutputPort());
-        renderer.addActor(actor);
-        renderer.resetCamera();
-        this.renderWindow.render();
+        var geometry = new BoxGeometry( 1, 1, 1 );
+        var material = new MeshBasicMaterial( { color: 0x00ff00 } );
+        var cube = new Mesh( geometry, material );
+        scene.add( cube );
+        
+        camera.position.z = 5;
 
+        renderer.render(scene, camera);
     }
 
     public ngOnChanges(): void {
         console.log("Changing radius to ...", this.radius);
-        if(this.cylinderSource !== undefined){
-            this.cylinderSource.setRadius(this.radius)
-            this.renderWindow.render();
-         }
     }
     public ngOnDestroy(): void {
         console.log("Boom! 💣")
