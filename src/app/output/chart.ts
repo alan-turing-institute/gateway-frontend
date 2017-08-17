@@ -133,10 +133,24 @@ export class ChartsComponent implements OnInit{
 drawGraph(){
   //this.isDataAvailable = false
   this.graphData = [{"name":"", "series":[]}]
-  let newData = [{"name":this.varY, "series":[]}]
   this.jobData[this.varX].sort()
+
+  let newData = [{"name":this.varY, "series":[]}]
+  let type = typeof(this.jobData[this.varX][0])
+  let date = new Date(this.jobData[this.varX][0]).toString()
+
   for(var i = 0; i<this.jobData[this.varX].length; i++){
-    newData[0]["series"].push({'name':this.jobData[this.varX][i], 'value':this.jobData[this.varY][i]})
+    //if var is a number
+    if(type==='number'){
+      newData[0]["series"].push({'name':this.jobData[this.varX][i], 'value':this.jobData[this.varY][i]})
+    }
+    //the var is a valid date string
+    else if(date !== 'Invalid Date'){
+      newData[0]["series"].push({'name':new Date(this.jobData[this.varX][i]), 'value':this.jobData[this.varY][i]})
+    //the var is a string i.e. category
+    }else{
+      newData[0]["series"].push({'name':this.jobData[this.varX][i], 'value':this.jobData[this.varY][i]})
+    }
   }
   this.xAxisLabel = this.varX
   this.yAxisLabel = this.varY
