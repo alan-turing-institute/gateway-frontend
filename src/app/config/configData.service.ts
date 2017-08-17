@@ -11,13 +11,22 @@ import {InputComponent} from './inputComponent';
 @Injectable()
 export class ConfigDataService {
   private getTemplateUrl = require('../../assets/job_template.json');
+  private getOutputUrl = require('../../assets/job_output.json');
   private response = {}
   constructor (private http: Http) {}
   template = this.getTemplateData()
-  
+  output = this.getOutputData()
+
   getTemplateData(): Observable<InputComponent[]> {
     // console.log("reading")
     return this.http.get(this.getTemplateUrl)
+                    .map(this.extractTemplateData)
+                    .catch(this.handleError);
+  }
+
+  getOutputData(): Observable<InputComponent[]> {
+    // console.log("reading")
+    return this.http.get(this.getOutputUrl)
                     .map(this.extractTemplateData)
                     .catch(this.handleError);
   }
@@ -61,5 +70,5 @@ export class ConfigDataService {
     return Observable.throw(errMsg);
   }
 
-  
+
 }

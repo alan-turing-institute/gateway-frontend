@@ -13,7 +13,8 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 import { ChartsComponent } from './chart';
 
-import {ConfigModule} from '../config/config.module'
+import {ConfigModule} from '../config/config.module';
+import {DashboardModule} from '../dashboard/dashboard.module'
 
 //import { DROPDOWN_DIRECTIVES } from '../shared/dropdown.directive';
 
@@ -26,6 +27,7 @@ import {ConfigModule} from '../config/config.module'
     CommonModule,
     VtkModule,
     ConfigModule,
+    DashboardModule,
     NgxChartsModule
   ],
   declarations: [OutputComponent,

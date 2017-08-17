@@ -2,7 +2,10 @@ input[readonly] {
   background-color: white;
 }
 
-#section_title:hover {
+.card-header:hover {
   background-color: #c6c7c7;
+}
 
+.card-header {
+  background-color: #cfd8dc;
 }

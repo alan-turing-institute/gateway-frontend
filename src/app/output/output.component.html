@@ -1,11 +1,13 @@
-<head>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.0-rc.2/Chart.js"></script> -->
-
-</head>
-<body>
 <div class="animated fadeIn">
 
-  <div class="container-fluid">
+
+  <div class="card-deck">
+      <div *ngFor="let job of jobInfo" class='card-jobs'>
+          <jobSummary [summary]="job"></jobSummary>
+      </div>
+  </div>
+
+  <!-- <div class="container-fluid">
 
       <div *ngFor="let job of jobInfo" class="card"  >
           <img class="img-fluid" src="{{job.thumbnail}}" alt="Card image cap" style="width: 20rem;">
@@ -16,21 +18,34 @@
           </div>
       </div>
 
-  </div>
+  </div> -->
 
-  <chart></chart>
+  <div class='container-fluid'>
 
-  <div class="container-fluid">
-
-    <div class="card">
+    <div class = "card" id = 'graph_title' (click)="ToggleCollapse('#graph')">
       <div class="card-header">
-        Configuration
+      <h5 class="mb-0">
+        <a data-toggle="collapse" data-target='#graph' data-parent="#graph_title">
+          Output graph
+        </a>
+      </h5>
       </div>
 
-      <config></config> 
+        <chart></chart>
 
     </div>
   </div>
 
+  <div class="container-fluid">
+    <h5 class="mb-0">
+      <div class="card-header" >
+        Configuration
+      </div>
+    </h5>
+
+
+      <config [type]="Output"></config>
+
+  </div>
+
 </div>
-</body>

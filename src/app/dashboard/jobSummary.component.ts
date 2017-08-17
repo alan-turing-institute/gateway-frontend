@@ -7,20 +7,21 @@ import { JobInfo } from './jobInfo';
     <div class="card card-job">
         <div class="card-header" [ngClass]="getHeaderClass()">
             <span class="badge" [ngClass]="getTitleClass()">
-                <i [ngClass]="getSpanIcon()"></i> 
+                <i [ngClass]="getSpanIcon()"></i>
             </span>
             <strong>{{summary.status}}</strong>
         </div>
         <a routerLinkActive = "active" [routerLink] = "['/output/output', {id: summary.id}]">
             <div class="wrapper">
-                <img class="card-img-top img-job" src="{{summary.thumbnail}}" 
+                <img class="card-img-top img-job" src="{{summary.thumbnail}}"
                     (mouseover)='setJobHoverHidden()'
                     (mouseleave)='setJobHoverHidden()'>
-                <i class="fa fa-sign-in fa-2x" [hidden]=jobHoverHidden></i> 
+                <i class="fa fa-sign-in fa-2x" [hidden]=jobHoverHidden></i>
             </div>
         </a>
         <div class="card-block">
-            <p><button type="button" class="btn btn-primary">Details</button></p>
+            <p><a routerLinkActive = "active" [routerLink] = "['/output/output', {id: summary.id}]">
+              <button type="button" class="btn btn-primary">Details</button></a></p>
             <p><small class="text-muted">Last updated 3 mins ago</small></p>
         </div>
     </div>`,
@@ -50,7 +51,7 @@ export class JobSummaryComponent implements OnInit{
 
     getHeaderClass() : string {
         //   console.log("card-outline-"+this.summary.status.toLowerCase());
-        return "card-header-"+this.summary.status.toLowerCase();        
+        return "card-header-"+this.summary.status.toLowerCase();
     }
 
     getSpanIcon() : string  {
@@ -59,10 +60,10 @@ export class JobSummaryComponent implements OnInit{
             icon = "fa fa-circle-o-notch fa-spin fa-lg"
         if (this.summary.status == "Complete")
             icon ="fa fa-line-chart fa-lg"
-        if (this.summary.status == "Error") 
+        if (this.summary.status == "Error")
             icon ="fa fa-exclamation-triangle fa-lg"
-        if (this.summary.status == "Draft") 
+        if (this.summary.status == "Draft")
             icon ="fa fa-pencil-square fa-lg"
-        return icon    
+        return icon
     }
 }
