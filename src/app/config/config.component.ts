@@ -16,16 +16,9 @@ import { ConfigDataService } from './configData.service';
 
 export class ConfigComponent implements OnInit {
 
-<<<<<<< HEAD
-  case:CaseComponents
-  supersetComponents:InputComponent []
-  selectedComponents:InputComponent []
-  tags:{name: string, id: string, collapse: boolean} []
-=======
   case:CaseComponents 
   job: any
   tags:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
->>>>>>> e9ba91aba77ce711f9543cfbb2cfb26192f889b9
   mode = 'Observable';
   errorMessage: string;
 
