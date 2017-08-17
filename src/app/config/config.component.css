@@ -9,18 +9,31 @@
     border:#ed5565;
 }
 
+.actionText {
+    font: medium;
+}
+
 .irs-line.config {
     background-color: darkgray
 }
 
-.card-header:hover {
-  background-color: #c6c7c7;
+.card-header.config:hover {
+  background-color: hsla(198,36%,75%,1);
+}
+
+.card-header.config {
+  background-color: #cfd8dc;
 }
 
 .img-thumbnail {
-    max-width: 15rem;
+    /* max-width: 5rem;  */
     vertical-align: top;
     margin-bottom: 1rem;
+}
+
+.case-panel {
+    vertical-align: top;    
+    margin: 1% 0% 2% 0%; 
 }
 
 

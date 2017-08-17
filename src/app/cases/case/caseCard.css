@@ -3,6 +3,12 @@
     width: 18rem;
 }
 
+.card-header.case {
+    color: white;
+    background-color: #f8cb00;
+    font-size: medium;
+}
+
 .wrapper {
    position: relative;
 }
@@ -16,14 +22,14 @@
     vertical-align: middle;
     max-width:15rem;
     max-height:15rem;
+    left:2.5rem;
+    position: relative;
 }
 
 .break-word {
-    /* width:15rem; */
     word-wrap: break-word;
 }
 
 .badge-puzzle {
-    color: #1985ac;
-    padding-right: 1%
+    color: white;
 }

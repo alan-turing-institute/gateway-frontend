@@ -8,6 +8,7 @@ import { JobSummaryComponent } from './jobSummary.component';
 @Component({
   providers: [DashboardService],
   templateUrl: 'dashboard.component.html',
+  styleUrls:['jobs.css']
 })
 
 export class DashboardComponent implements OnInit {

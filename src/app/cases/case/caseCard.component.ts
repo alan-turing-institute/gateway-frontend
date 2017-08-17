@@ -6,29 +6,26 @@ import { Router } from '@angular/router';
   selector: 'caseCard',
   template: `
     <div class="card card-case">
-        <div class="card-header">
+        <div class="card-header case">
             <span class="badge">
-                <i class="icon-puzzle fa-2x badge-puzzle"></i> 
+                <i class="icon-puzzle fa-lg badge-puzzle"></i> 
             </span>
-            Template
-        
+            <strong>{{info.label}}</strong>
         </div>
         <a routerLinkActive = "active" [routerLink] = "['/config/config']">
           <div class="wrapper">
-            <img class="card-img-top img-case" src="{{info.job_thumbnail}}"
+            <img class="card-img-top img-case" src="{{info.thumbnail}}"
               (mouseover)='setCaseHoverHidden()'
               (mouseleave)='setCaseHoverHidden()'>
             <i class="fa fa-sign-in fa-2x" [hidden]=caseHoverHidden></i> 
           </div>
         </a>
         <div class="card-block">
-          <h5 class="card-title"> 
-            <a routerLinkActive = "active" [routerLink] = "['/config/config']">{{info.job_label}}</a>
-          </h5>
           <p class="card-text break-word">{{getShortDescription()}} 
             <a routerLinkActive = "active" [routerLink] = "['/config/config']"
             (click)="storeCaseType()">(...)</a>
           </p>
+          <p><button type="button" class="btn btn-primary">Details</button></p>
         </div>
     </div>
     `,
@@ -40,7 +37,7 @@ export class CaseCardComponent implements OnInit{
   caseHoverHidden: boolean;
   
   storeCaseType(): void {
-    localStorage.setItem('template_id', this.info.job_label);
+    localStorage.setItem('template_id', this.info.label);
     console.log(localStorage.getItem('template_id'));
   }
 
@@ -49,7 +46,7 @@ export class CaseCardComponent implements OnInit{
     }
 
   getShortDescription(): string {
-    return this.info.job_long_description.slice(0,100);
+    return this.info.description.slice(0,100);
   }
 
   ngOnInit(): void {

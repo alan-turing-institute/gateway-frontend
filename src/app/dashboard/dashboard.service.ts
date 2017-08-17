@@ -10,7 +10,11 @@ import {JobInfo} from './jobInfo';
 @Injectable()
 export class DashboardService {
   private componentsUrl = require('../../assets/job_status.json');
+<<<<<<< HEAD
   //private componentsUrl = 'http://localhost:5000/api/job';
+=======
+  // private componentsUrl = 'http://localhost:5000/api/job';
+>>>>>>> e9ba91aba77ce711f9543cfbb2cfb26192f889b9
   constructor (private http: Http) {}
 
   data = this.getJobData()

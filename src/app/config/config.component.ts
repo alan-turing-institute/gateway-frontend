@@ -16,10 +16,16 @@ import { ConfigDataService } from './configData.service';
 
 export class ConfigComponent implements OnInit {
 
+<<<<<<< HEAD
   case:CaseComponents
   supersetComponents:InputComponent []
   selectedComponents:InputComponent []
   tags:{name: string, id: string, collapse: boolean} []
+=======
+  case:CaseComponents 
+  job: any
+  tags:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
+>>>>>>> e9ba91aba77ce711f9543cfbb2cfb26192f889b9
   mode = 'Observable';
   errorMessage: string;
 
@@ -29,20 +35,32 @@ export class ConfigComponent implements OnInit {
   ngOnInit() {
     this.tags = []
     this.case = new CaseComponents
-    this.supersetComponents = []
-    this.selectedComponents = []
-    console.log(localStorage.getItem('template_id'));
     this.getTemplateData()
   }
 
+  newJob() {
+    console.log("init new job")
+    console.log(this.job)
+    // this.getTemplateData()  
+  }
+
+  saveJob() {
+    console.log("save job")
+  }
+
+  startJob() {
+    console.log("run job")
+  }
+
+
   getTemplateData () {
+    console.log(localStorage.getItem('template_id'));
     this.configDataService.template
                         .subscribe(
                           template => {
-                            this.supersetComponents = template['parameters']
-                            this.tags = this.inputComponentService.getFamilyTags(this.supersetComponents)
+                            this.tags = template['families']
                             this.case=template['case']
-                            console.log(template);
+                            this.job = template
                           },
                           error => {
                             this.errorMessage = <any> error
@@ -50,29 +68,27 @@ export class ConfigComponent implements OnInit {
   }
 
   getDataTarget(tag) {
-    return "#" + tag.id
+    return "#" + tag.name
   }
 
   getVisibleComponents(tag) {
-    return this.inputComponentService.getComponentsOfFamily(this.supersetComponents, tag.label);
+    return tag['parameters']
   }
 
-  updateSlider(component, event) {
+  updateSlider(tag, component, event) {
     let newValue = event.from;
-    this.supersetComponents = this.configDataService.updateJobData(this.supersetComponents, component.name, newValue)
+    this.configDataService.updateJobData(tag['parameters'], component.name, newValue)
   }
 
-
-  update(component) {
+  update(tag, component) {
     if (component.type == "radio")
       component.value = !component.value
-    this.supersetComponents = this.configDataService.updateJobData(this.supersetComponents, component.name,  component.value)
-    console.log(this.supersetComponents)
+    this.configDataService.updateJobData(tag['parameters'], component.name,  component.value)
   }
 
   toggleCollapse(tag) {
-    let element = document.getElementById(tag.id)
-    let tagToToggle = this.tags.filter(function(x) { if (x.id === tag.id) return x });
+    let element = document.getElementById(tag.name)
+    let tagToToggle = this.tags.filter(function(x) { if (x.name === tag.name) return x });
     for (var _i = 0; _i < tagToToggle.length; _i++) {
       tagToToggle[_i].collapse = !tagToToggle[_i].collapse
     }

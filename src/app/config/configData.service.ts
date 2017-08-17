@@ -6,7 +6,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import {InputComponent} from './inputComponent';
-import {INPUT_COMPONENTS} from './inputComponents';
 
 
 @Injectable()
@@ -14,7 +13,6 @@ export class ConfigDataService {
   private getTemplateUrl = require('../../assets/job_template.json');
   private response = {}
   constructor (private http: Http) {}
-
   template = this.getTemplateData()
   
   getTemplateData(): Observable<InputComponent[]> {
@@ -31,15 +29,9 @@ export class ConfigDataService {
     return -1;
   }
 
-  updateJobData(supersetComponents, componentKey, newValue) : InputComponent[]{
-    var index = this.arrayObjectIndexOf(supersetComponents, componentKey, 'name'); // 1
-    var componentWithNewValue = supersetComponents[index]
-    componentWithNewValue.value = newValue
-    return [
-    ...supersetComponents.slice(0, index), 
-    Object.assign({}, componentWithNewValue),
-    ...supersetComponents.slice(index + 1)
-    ];
+    updateJobData(supersetComponents, componentKey, newValue) : void {
+        var index = this.arrayObjectIndexOf(supersetComponents, componentKey, 'name'); // 1
+        supersetComponents[index].value = newValue;
   }
 
   private extractTemplateData(res: Response) {

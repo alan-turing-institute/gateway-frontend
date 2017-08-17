@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './full-layout.component.html'
+  templateUrl: './full-layout.component.html',
+  styleUrls: ['./layout.css']
 })
 export class FullLayoutComponent {
 

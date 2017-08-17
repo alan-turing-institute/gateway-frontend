@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import {InputComponent} from './inputComponent';
-import {INPUT_COMPONENTS} from './inputComponents';
 
 
 @Injectable()
 export class InputComponentService {
-  getInputComponents(): InputComponent[] {
-      return INPUT_COMPONENTS;
-  }
 
   getFamilyTags(components): {name: string, id: string, collapse: boolean} [] {
     var tags = []
@@ -24,18 +20,8 @@ export class InputComponentService {
         flags[tag.id] = true;
         return true;
     });
-    // console.log(uniqueTags)
     return uniqueTags  
   }
-
-//   toggleFamilyTag(tag:string, tags:{tag:{name: string, id: string}, checked: boolean} []): {tag:{name: string, id: string}, checked: boolean} [] {
-//       let newTags = tags.slice(0)
-//       newTags.forEach(element => {
-//                                 if (element['tag']['name'] === tag['name'])
-//                                     element['checked'] = !element['checked']
-//       });
-//       return newTags
-//   }
 
   getComponentsOfFamily(allComponents, tag:{name: string, id: string, collapse: boolean}): InputComponent[] {
       let components = []
