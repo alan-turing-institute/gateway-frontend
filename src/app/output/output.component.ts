@@ -26,9 +26,8 @@ export class OutputComponent implements OnInit {
   job_id: string;
   graph:{} = {collapse:false}
   config:{} = {collapse:false}
-  //sections:{label: string, id: string, collapse: boolean} [] = [{label:'graph', id:'graph', collapse:false},
-  //                                                              {label:'config', id:'config', collapse:false}];
   errorMessage: string;
+  caseID:string = "yy69843b-4939-6f37-96c7-c382c3e74b46";
 
 
   constructor(private activatedRoute: ActivatedRoute,
