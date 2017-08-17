@@ -29,7 +29,7 @@ import { OutputService } from './output.service';
           [xAxisLabel]="xAxisLabel"
           [yAxisLabel]="yAxisLabel"
           [autoScale]=true
-          [tooltipDisabled]=true>
+          [tooltipDisabled]=false>
         </ngx-charts-line-chart>
     </div>
     </div>
