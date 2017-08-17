@@ -2,6 +2,8 @@
 	"jobs": [{
 			"id": "47684a76-2841-4626-a3de-dfa532c1d012",
 			"uri": "https://science-gate-way-middleware.azurewebstes.net/job/47684a76-2841-4626-a3de-dfa532c1d012",
+			"name": "Talcum powder to flour",
+                        "description": "Spicy jalapeno bacon ipsum dolor amet burgdoggen tenderloin cow ribeye kielbasa boudin. Kevin salami bacon venison landjaeger capicola frankfurter jerky ham hock hamburger tenderloin kielbasa rump porchetta. Tenderloin cow short loin, jowl brisket alcatra meatball burgdoggen doner ground round. Short ribs pancetta corned beef shankle, alcatra pastrami chicken biltong meatloaf t-bone ground round sausage bresaola ham. Drumstick chuck pork burgdoggen",
 			"case": {
 				"id": "d769843b-6f37-4939-96c7-c382c3e74b46",
 				"uri": "https://science-gate-way-middleware.azurewebstes.net/case/85b8995c-63a9-474f-8fdc-52c7582ec2ac",
@@ -15,6 +17,8 @@
 		{
 			"id": "a22b92f5-96ec-4190-8c8e-996b80bf8c8f",
 			"uri": "https://science-gate-way-middleware.azurewebstes.net/job/a22b92f5-96ec-4190-8c8e-996b80bf8c8f",
+			"name": "Talcum powder to flour",
+                        "description": "Spicy jalapeno bacon ipsum dolor amet burgdoggen tenderloin cow ribeye kielbasa boudin. Kevin salami bacon venison landjaeger capicola frankfurter jerky ham hock hamburger tenderloin kielbasa rump porchetta. Tenderloin cow short loin, jowl brisket alcatra meatball burgdoggen doner ground round. Short ribs pancetta corned beef shankle, alcatra pastrami chicken biltong meatloaf t-bone ground round sausage bresaola ham. Drumstick chuck pork burgdoggen",
 			"case": {
 				"id": "85b8995c-63a9-474f-8fdc-52c7582ec2ac",
 				"uri": "https://science-gate-way-middleware.azurewebstes.net/case/85b8995c-63a9-474f-8fdc-52c7582ec2ac",
@@ -28,6 +32,8 @@
 		{
 			"id": "60dfe8a5-9a49-4706-b950-c59fc697d8a4",
 			"uri": "https://science-gateway-middleware.azurewebsites.net/job/60dfe8a5-9a49-4706-b950-c59fc697d8a4",
+			"name": "Talcum powder to flour",
+                        "description": "Spicy jalapeno bacon ipsum dolor amet burgdoggen tenderloin cow ribeye kielbasa boudin. Kevin salami bacon venison landjaeger capicola frankfurter jerky ham hock hamburger tenderloin kielbasa rump porchetta. Tenderloin cow short loin, jowl brisket alcatra meatball burgdoggen doner ground round. Short ribs pancetta corned beef shankle, alcatra pastrami chicken biltong meatloaf t-bone ground round sausage bresaola ham. Drumstick chuck pork burgdoggen",
 			"case": {
 				"id": "d769843b-6f37-4939-96c7-c382c3e74b46",
 				"uri": "https://science-gate-way-middleware.azurewebstes.net/case/d769843b-6f37-4939-96c7-c382c3e74b46",
@@ -41,6 +47,8 @@
 		{
 			"id": "488fa829-1abd-4e1d-9c1c-77be2b532e51",
 			"uri": "https://science-gateway-middleware.azurewebsites.net/job/488fa829-1abd-4e1d-9c1c-77be2b532e51",
+			"name": "Talcum powder to flour",
+            "description": "Spicy jalapeno bacon ipsum dolor amet burgdoggen tenderloin cow ribeye kielbasa boudin. Kevin salami bacon venison landjaeger capicola frankfurter jerky ham hock hamburger tenderloin kielbasa rump porchetta. Tenderloin cow short loin, jowl brisket alcatra meatball burgdoggen doner ground round. Short ribs pancetta corned beef shankle, alcatra pastrami chicken biltong meatloaf t-bone ground round sausage bresaola ham. Drumstick chuck pork burgdoggen",
 			"case": {
 				"id": "d769843b-6f37-4939-96c7-c382c3e74b46",
 				"uri": "https://science-gate-way-middleware.azurewebstes.net/case/d769843b-6f37-4939-96c7-c382c3e74b46",
