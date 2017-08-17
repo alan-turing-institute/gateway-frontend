@@ -32,8 +32,10 @@
 }
 
 .case-panel {
-    vertical-align: top;    
-    margin: 1% 0% 2% 0%; 
+    vertical-align: top;
+    margin: 1% 0% 2% 0%;
 }
 
-
+input[readonly] {
+  background-color: white;
+}

@@ -16,22 +16,24 @@ import { ChartsComponent } from './chart';
   templateUrl: './output.component.html',
   styles: [require('../../../node_modules/ion-rangeslider/css/ion.rangeSlider.css').toString(),
   require('../../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinFlat.css').toString(),
-  require('./output.component.css').toString()]
+  require('./output.component.css').toString(),
+  require('../config/config.component.css').toString()]
 })
 
 export class OutputComponent implements OnInit {
 
   jobInfo: JobInfo [];
   job_id: string;
-  tags:{label: string, id: string, collapse: boolean} [];
+  sections:{label: string, id: string, collapse: boolean} [] = [{label:'graph', id:'graph', collapse:false},
+                                                                {label:'config', id:'config', collapse:false}];
   errorMessage: string;
+
 
   constructor(private activatedRoute: ActivatedRoute,
   private outputService:OutputService) {}
 
   ngOnInit() {
         this.job_id = this.activatedRoute.snapshot.params["id"];
-        this.tags = [];
 
         //get job status (same as in dashboard)
         this.getInfoData();
@@ -56,64 +58,12 @@ getInfoData(){
                     });
  }
 
-// getConfigData(){
-//   this.outputService.config
-//                     .subscribe(
-//                       allJobsConfig => {
-//                         this.jobConfig= allJobsConfig
-//                         this.tags = this.getFamilyTags(this.jobConfig)
-//                       },
-//                       error => {
-//                         this.errorMessage = <any> error
-//                       });
-// }
-
-
-// getFamilyTags(components): {label: string, id: string, collapse: boolean} [] {
-//    var tags = []
-//    for (var key in components) {
-//        tags = tags.concat(components[key].tag)
-//    }
-//
-//    var flags = {};
-//    var uniqueTags = tags.filter(function(tag) {
-//        if (flags[tag.id]) {
-//            return false;
-//        }
-//        flags[tag.id] = true;
-//        return true;
-//    });
-//    return uniqueTags
-//  }
-//
-//  getComponentsOfFamily(jobConfiguration, tag) {
-//      let components = []
-//      //loop through job configuration information
-//      for (var key in jobConfiguration){
-//           //for each config component, check if label is present
-//            if (jobConfiguration[key].tag[0].label.indexOf(tag) > -1){
-//                components.push(jobConfiguration[key])
-//            }
-//          }
-//
-//      return components
-//  }
-//
-// getDataTarget(tag) {
-//    return "#" + tag.id
-//  }
-//
-// getVisibleComponents(tag) {
-//  return this.getComponentsOfFamily(this.jobConfig, tag.label);
-//  }
-//
-//  toggleCollapse(tag) {
-//    let element = document.getElementById(tag.id)
-//    let tagToToggle = this.tags.filter(function(x) { if (x.id === tag.id) return x });
-//    for (var _i = 0; _i < tagToToggle.length; _i++) {
-//      tagToToggle[_i].collapse = !tagToToggle[_i].collapse
-//    }
-//
-//  }
+ toggleCollapse(section) {
+   //let element = document.getElementById(section.name)
+   let tagToToggle = this.sections.filter(function(x) { if (x.id === section.id) return x });
+   for (var _i = 0; _i < tagToToggle.length; _i++) {
+     tagToToggle[_i].collapse = !tagToToggle[_i].collapse
+   }
+ }
 
 }
