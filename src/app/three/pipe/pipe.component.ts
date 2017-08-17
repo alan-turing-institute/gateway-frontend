@@ -6,7 +6,7 @@ import {
 } from 'three/src/Three';
 
 import { TrackballControls } from './TrackballControls';
-import { PipeGeometry } from './PipeSource';
+import { PipeGeometry } from './pipeSource';
 
 @Component({
     selector: 'app-pipe',
