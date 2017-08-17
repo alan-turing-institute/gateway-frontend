@@ -11,8 +11,9 @@
 }
 
 .img-institute {
-    height:3.5vh;
-    padding-left: 1vh;
-    padding-right: 1vh;
-     margin-top: 0.5vh;  
+    height:2.5vh;
+    /* padding-left: 2%; */
+    padding-right: 0vh;
+     /* margin-top: 0.5vh;   */
+     background: transparent;
 }
