@@ -10,11 +10,9 @@ import { OutputService } from './output.service';
 
       <div class="card-block">
           <div class = "row">
-<<<<<<< HEAD
+
           <div class = "col-md-10">
-=======
-          <div class = "col-md-9">
->>>>>>> ce46aec2f1a981a04dc78948b292ee36dc696e21
+
 
       <div *ngIf="isDataAvailable" style="width:100%; min-height: 300px">
           <ngx-charts-line-chart
@@ -34,12 +32,9 @@ import { OutputService } from './output.service';
         </ngx-charts-line-chart>
     </div>
     </div>
-<<<<<<< HEAD
 
-=======
-    <div class = "col-md-1">
-    </div>
->>>>>>> ce46aec2f1a981a04dc78948b292ee36dc696e21
+
+
     <div class = 'col-md-2'>
     <select (change)='onChangeX($event.target.value)' >
       <option *ngFor="let key of keys" >{{key}}</option>
@@ -49,11 +44,7 @@ import { OutputService } from './output.service';
       <option *ngFor="let y_var of y_vars" >{{y_var}}</option>
     </select>
     </div>
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> ce46aec2f1a981a04dc78948b292ee36dc696e21
           <!-- <button (click)="update()">UPDATE</button>
 
           <div class = "row">
@@ -92,11 +83,9 @@ export class ChartsComponent implements OnInit{
   graphData: Array<any>
 
   // ngx-charts options
-<<<<<<< HEAD
+
   //view: any[] = [500, 400];
-=======
-  view: any[] = [600, 400];
->>>>>>> ce46aec2f1a981a04dc78948b292ee36dc696e21
+
   xAxisLabel = '';
   yAxisLabel = '';
   colorScheme = {
