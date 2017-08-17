@@ -430,7 +430,7 @@ public keydown(event) {
 
 	if (_this.enabled === false) return;
 
-	window.removeEventListener('keydown', _this.keydown);
+	_this.domElement.removeEventListener('keydown', _this.keydown);
 
 	_this._prevState = _this._state;
 
@@ -461,7 +461,7 @@ public keyup(event) {
 
 	_this._state = _this._prevState;
 
-	window.addEventListener('keydown', _this.keydown, false);
+	_this.domElement.addEventListener('keydown', _this.keydown, false);
 	_this.update();
 	_pipe.render();
 }
@@ -496,8 +496,8 @@ public mousedown(event) {
 
 	}
 
-	document.addEventListener('mousemove', _this.mousemove, false);
-	document.addEventListener('mouseup', _this.mouseup, false);
+	_this.domElement.addEventListener('mousemove', _this.mousemove, false);
+	_this.domElement.addEventListener('mouseup', _this.mouseup, false);
 
 	// this.domElement.dispatchEvent(this.startEvent);
 	_this.update();
@@ -538,8 +538,8 @@ public mouseup(event) {
 
 	_this._state = STATE.NONE;
 
-	document.removeEventListener('mousemove', this.mousemove);
-	document.removeEventListener('mouseup', this.mouseup);
+	_this.domElement.removeEventListener('mousemove', this.mousemove);
+	_this.domElement.removeEventListener('mouseup', this.mouseup);
 	// this.domElement.dispatchEvent(this.endEvent);
 	_this.update();
 	_pipe.render();
@@ -679,11 +679,11 @@ public contextmenu(event) {
 	this.domElement.removeEventListener('touchend', this.touchend, false);
 	this.domElement.removeEventListener('touchmove', this.touchmove, false);
 
-	document.removeEventListener('mousemove', this.mousemove, false);
-	document.removeEventListener('mouseup', this.mouseup, false);
+	this.domElement.removeEventListener('mousemove', this.mousemove, false);
+	this.domElement.removeEventListener('mouseup', this.mouseup, false);
 
-	window.removeEventListener('keydown', this.keydown, false);
-	window.removeEventListener('keyup', this.keyup, false);
+	this.domElement.removeEventListener('keydown', this.keydown, false);
+	this.domElement.removeEventListener('keyup', this.keyup, false);
 
 }
 
