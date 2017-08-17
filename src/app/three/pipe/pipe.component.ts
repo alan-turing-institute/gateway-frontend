@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy, ViewChild, ElementRef, Input, DoCheck } from '@angular/core';
 
 import {
     Scene, PerspectiveCamera, WebGLRenderer, Mesh, Color,
@@ -13,7 +13,7 @@ import { PipeGeometry } from './pipeSource';
     templateUrl: './pipe.component.html',
     styleUrls: ['./pipe.component.css']
 })
-export class PipeComponent implements OnInit, OnChanges, OnDestroy {
+export class PipeComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
     @ViewChild('pipeDisplay') pipeDiv: ElementRef;
     @Input() radius: number;
@@ -36,14 +36,13 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy {
     public ngOnInit(): void {
         // Set up a render window
         this.renderer = new WebGLRenderer({alpha: true});
-        this.renderer.setSize(500, 300);
         this.pipeDiv.nativeElement.appendChild(this.renderer.domElement);
 
         this.scene = new Scene();
         this.scene.background = new Color(0xffffff);
 
-        var screenRatio = this.renderer.domElement.width / this.renderer.domElement.height;
-        console.log("Screen ratio is " + screenRatio); 
+        var screenRatio = this.renderer.domElement.offsetWidth / this.renderer.domElement.offsetHeight;
+        console.log("Setting screen ratio to " + screenRatio + " width: " + this.renderer.domElement.offsetWidth);
         this.camera = new PerspectiveCamera(75, screenRatio, 0.1, 1000);
 
         this.geometry = new PipeGeometry(+this.radius, +this.shellWidth, +this.length, +this.resolution);
@@ -90,5 +89,15 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy {
 
     public ngOnDestroy(): void {
         console.log("Boom! 💣")
+    }
+
+    public ngDoCheck(){
+        if(this.camera === undefined){
+            return;
+        }
+        // var screenRatio = this.renderer.domElement.width / this.renderer.domElement.height;
+        // this.camera.aspect = screenRatio;
+        // console.log("Updating screen ratio to " + screenRatio);
+        // console.log(this.renderer.domElement);
     }
 }

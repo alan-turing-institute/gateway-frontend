@@ -4,8 +4,7 @@
     padding: 2%;
 }
 
-.pipeDiv > canvas { 
-    width: 200; 
-    height: 80; 
-    /* height: 75%; */
+:host >>> canvas {
+    width: 350px; 
+    height: 250px; 
 }
