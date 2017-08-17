@@ -6,6 +6,7 @@ import { ConfigDataService } from './configData.service';
 // import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
 
 @Component({
+  selector:"config",
   providers:[InputComponentService],
   templateUrl: './config.component.html',
   styles:[require('../../../node_modules/ion-rangeslider/css/ion.rangeSlider.css').toString(),
@@ -15,9 +16,16 @@ import { ConfigDataService } from './configData.service';
 
 export class ConfigComponent implements OnInit {
 
+<<<<<<< HEAD
+  case:CaseComponents
+  supersetComponents:InputComponent []
+  selectedComponents:InputComponent []
+  tags:{name: string, id: string, collapse: boolean} []
+=======
   case:CaseComponents 
   job: any
   tags:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
+>>>>>>> e9ba91aba77ce711f9543cfbb2cfb26192f889b9
   mode = 'Observable';
   errorMessage: string;
 
