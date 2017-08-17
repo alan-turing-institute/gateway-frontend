@@ -39,11 +39,9 @@ export class PipeGeometry {
         this.geometry.elementsNeedUpdate = true;
         this.geometry.verticesNeedUpdate = true;
         this.geometry.normalsNeedUpdate = true;
-        
+
         this.geometry.computeBoundingSphere();
         this.geometry.computeFaceNormals();
-
-        console.log(this.geometry);
     }
 
     public getGeometry(): THREE.Geometry {

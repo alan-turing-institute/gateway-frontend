@@ -21,8 +21,7 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy {
     @Input() shellWidth: number;
     @Input() resolution: number;
 
-    private renderWindow: any;
-    private renderer: any;
+    private renderer: THREE.WebGLRenderer;
     private scene: any;
     private camera: any;
     private geometry: PipeGeometry;
@@ -36,13 +35,16 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy {
 
     public ngOnInit(): void {
         // Set up a render window
+        this.renderer = new WebGLRenderer({alpha: true});
+        this.renderer.setSize(500, 300);
+        this.pipeDiv.nativeElement.appendChild(this.renderer.domElement);
+
         this.scene = new Scene();
         this.scene.background = new Color(0xffffff);
-        this.camera = new PerspectiveCamera(75, 1, 0.1, 1000);
 
-        this.renderer = new WebGLRenderer({alpha: true});
-        this.renderer.setSize(100, 100);
-        this.pipeDiv.nativeElement.appendChild(this.renderer.domElement);
+        var screenRatio = this.renderer.domElement.width / this.renderer.domElement.height;
+        console.log("Screen ratio is " + screenRatio); 
+        this.camera = new PerspectiveCamera(75, screenRatio, 0.1, 1000);
 
         this.geometry = new PipeGeometry(+this.radius, +this.shellWidth, +this.length, +this.resolution);
         var material = new MeshToonMaterial({ color: 0x222222 });
@@ -80,7 +82,6 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public ngOnChanges(): void {
-        console.log("Changing radius to ...", this.radius);
         if (this.geometry !== undefined) {
             this.geometry.update(+this.radius, +this.shellWidth, +this.length, +this.resolution);
             this.render();
