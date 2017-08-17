@@ -3,8 +3,7 @@ input[readonly] {
 }
 
 .card-header:hover {
-  background-color: #c6c7c7;
-}
+  background-color: hsla(198,36%,75%,1);}
 
 .card-header {
   background-color: #cfd8dc;

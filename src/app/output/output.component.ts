@@ -24,8 +24,10 @@ export class OutputComponent implements OnInit {
 
   jobInfo: JobInfo [];
   job_id: string;
-  sections:{label: string, id: string, collapse: boolean} [] = [{label:'graph', id:'graph', collapse:false},
-                                                                {label:'config', id:'config', collapse:false}];
+  graph:{} = {collapse:false}
+  config:{} = {collapse:false}
+  //sections:{label: string, id: string, collapse: boolean} [] = [{label:'graph', id:'graph', collapse:false},
+  //                                                              {label:'config', id:'config', collapse:false}];
   errorMessage: string;
 
 
@@ -34,7 +36,7 @@ export class OutputComponent implements OnInit {
 
   ngOnInit() {
         this.job_id = this.activatedRoute.snapshot.params["id"];
-
+        console.log(!this.graph['collapse'])
         //get job status (same as in dashboard)
         this.getInfoData();
       }
@@ -58,12 +60,12 @@ getInfoData(){
                     });
  }
 
- toggleCollapse(section) {
-   //let element = document.getElementById(section.name)
-   let tagToToggle = this.sections.filter(function(x) { if (x.id === section.id) return x });
-   for (var _i = 0; _i < tagToToggle.length; _i++) {
-     tagToToggle[_i].collapse = !tagToToggle[_i].collapse
+ graphCollapse(graph) {
+     this.graph['collapse'] = !this.graph['collapse']
    }
- }
+
+ configCollapse(graph) {
+     this.config['collapse'] = !this.config['collapse']
+   }
 
 }

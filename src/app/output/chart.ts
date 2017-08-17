@@ -10,11 +10,11 @@ import { OutputService } from './output.service';
 
       <div class="card-block">
           <div class = "row">
-          <div class = "col-md-9">
+          <div class = "col-md-10">
 
-      <div *ngIf="isDataAvailable">
+      <div *ngIf="isDataAvailable" style="width:100%; min-height: 300px">
           <ngx-charts-line-chart
-          [view]="view"
+
           [scheme]="colorScheme"
           [results]="graphData"
           [gradient]=false
@@ -30,8 +30,7 @@ import { OutputService } from './output.service';
         </ngx-charts-line-chart>
     </div>
     </div>
-    <div class = "col-md-1">
-    </div>
+
     <div class = 'col-md-2'>
     <select (change)='onChangeX($event.target.value)' >
       <option *ngFor="let key of keys" >{{key}}</option>
@@ -41,7 +40,7 @@ import { OutputService } from './output.service';
       <option *ngFor="let y_var of y_vars" >{{y_var}}</option>
     </select>
     </div>
-    
+
           <!-- <button (click)="update()">UPDATE</button>
 
           <div class = "row">
@@ -80,7 +79,7 @@ export class ChartsComponent implements OnInit{
   graphData: Array<any>
 
   // ngx-charts options
-  view: any[] = [600, 400];
+  //view: any[] = [500, 400];
   xAxisLabel = '';
   yAxisLabel = '';
   colorScheme = {

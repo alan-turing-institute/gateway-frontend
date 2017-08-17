@@ -1,11 +1,11 @@
 <div class="animated fadeIn">
+  <div class='container-fluid'>
 
-
-  <div class="card-deck">
-      <div *ngFor="let job of jobInfo" class='card-jobs'>
-          <jobSummary [summary]="job"></jobSummary>
-      </div>
-  </div>
+    <div class="card-deck">
+        <div *ngFor="let job of jobInfo" class='card-jobs'>
+            <jobSummary [summary]="job"></jobSummary>
+        </div>
+    </div>
 
   <!-- <div class="container-fluid">
 
@@ -20,31 +20,27 @@
 
   </div> -->
 
-  <div class='container-fluid'>
+    <div class = "card" (click)="graphCollapse()">
 
-    <div class = "card" id = 'graph_title' (click)="ToggleCollapse('#graph')">
       <div class="card-header">
-      <h5 class="mb-0">
-        <a data-toggle="collapse" data-target='#graph' data-parent="#graph_title">
-          Output graph
-        </a>
-      </h5>
+
+          <strong>Output graph</strong>
+
       </div>
 
+      <div [ngClass] = "{'collapse': graph.collapse}">
         <chart></chart>
+      </div>
 
     </div>
-  </div>
 
-  <div class="container-fluid">
-    <h5 class="mb-0">
-      <div class="card-header" >
-        Configuration
-      </div>
-    </h5>
+    <div class="card-header" (click)="configCollapse()">
+      <strong>Configuration</strong>
+    </div>
 
-
+    <div [ngClass] = "{'collapse':config.collapse}">
       <config [type]="Output"></config>
+    </div>
 
   </div>
 
