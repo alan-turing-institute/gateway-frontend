@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
 
 import {
-    Scene, PerspectiveCamera, WebGLRenderer, Mesh,
+    Scene, PerspectiveCamera, WebGLRenderer, Mesh, Color,
     MeshToonMaterial, BoxGeometry, PointLight, AmbientLight
 } from 'three/src/Three';
 
@@ -37,20 +37,21 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy {
     public ngOnInit(): void {
         // Set up a render window
         this.scene = new Scene();
+        this.scene.background = new Color(0xffffff);
         this.camera = new PerspectiveCamera(75, 1, 0.1, 1000);
 
-        this.renderer = new WebGLRenderer();
+        this.renderer = new WebGLRenderer({alpha: true});
         this.renderer.setSize(100, 100);
         this.pipeDiv.nativeElement.appendChild(this.renderer.domElement);
 
         this.geometry = new PipeGeometry(+this.radius, +this.shellWidth, +this.length, +this.resolution);
-        var material = new MeshToonMaterial({ color: 0x888888 });
+        var material = new MeshToonMaterial({ color: 0x222222 });
         var pipe = new Mesh(this.geometry.getGeometry(), material);
 
         var lights = [];
-        lights[0] = new PointLight(0xff0000, 1, 0);
-        lights[1] = new PointLight(0x0000ff, 1, 0);
-        lights[2] = new PointLight(0x00ff00, 1, 0);
+        lights[0] = new PointLight(0xffffff, 1, 0);
+        lights[1] = new PointLight(0xffffff, 1, 0);
+        lights[2] = new PointLight(0xffffff, 1, 0);
 
         lights[0].position.set(0, 200, 0);
         lights[1].position.set(100, 200, 100);
@@ -65,7 +66,7 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy {
 
         this.scene.add(pipe);
 
-        this.camera.position.z = this.length * 0.8;
+        this.camera.position.z = this.length;
 
         this.render();
 
