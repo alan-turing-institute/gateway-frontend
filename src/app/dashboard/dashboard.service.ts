@@ -11,6 +11,7 @@ import {JobInfo} from './jobInfo';
 export class DashboardService {
   private componentsUrl = require('../../assets/job_status.json');
   //private componentsUrl = 'http://localhost:5000/api/job';
+
   constructor (private http: Http) {}
 
   data = this.getJobData()
