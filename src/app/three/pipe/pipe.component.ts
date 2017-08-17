@@ -1,15 +1,17 @@
 import { Component, OnInit, OnChanges, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
 
-import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, 
-         MeshToonMaterial, BoxGeometry, PointLight } from 'three/src/Three';
- 
+import {
+    Scene, PerspectiveCamera, WebGLRenderer, Mesh,
+    MeshToonMaterial, BoxGeometry, PointLight, AmbientLight
+} from 'three/src/Three';
+
 import { TrackballControls } from './TrackballControls';
 import { PipeGeometry } from './PipeSource';
 
 @Component({
-  selector: 'app-pipe',
-  templateUrl: './pipe.component.html',
-  styleUrls: ['./pipe.component.css']
+    selector: 'app-pipe',
+    templateUrl: './pipe.component.html',
+    styleUrls: ['./pipe.component.css']
 })
 export class PipeComponent implements OnInit, OnChanges, OnDestroy {
 
@@ -17,17 +19,19 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy {
     @Input() radius: number;
     @Input() length: number;
     @Input() shellWidth: number;
+    @Input() resolution: number;
 
-    private cylinderSource: any;
     private renderWindow: any;
     private renderer: any;
     private scene: any;
     private camera: any;
+    private geometry: PipeGeometry;
 
     constructor() {
         this.radius = 5;
         this.length = 10;
         this.shellWidth = 1;
+        this.resolution = 10;
     }
 
     public ngOnInit(): void {
@@ -36,29 +40,32 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy {
         this.camera = new PerspectiveCamera(75, 1, 0.1, 1000);
 
         this.renderer = new WebGLRenderer();
-        this.renderer.setSize(100,100);
+        this.renderer.setSize(100, 100);
         this.pipeDiv.nativeElement.appendChild(this.renderer.domElement);
 
-        var geometry = new PipeGeometry( 1, 0.5, 10, 15 );
-        var material = new MeshToonMaterial( { color: 0x888888 } );
-        var cube = new Mesh( geometry, material );
+        this.geometry = new PipeGeometry(+this.radius, +this.shellWidth, +this.length, +this.resolution);
+        var material = new MeshToonMaterial({ color: 0x888888 });
+        var pipe = new Mesh(this.geometry.getGeometry(), material);
 
-       var lights = [];
-       lights[ 0 ] = new PointLight( 0xff0000, 1, 0 );
-       lights[ 1 ] = new PointLight( 0x0000ff, 1, 0 );
-       lights[ 2 ] = new PointLight( 0x00ff00, 1, 0 );
+        var lights = [];
+        lights[0] = new PointLight(0xff0000, 1, 0);
+        lights[1] = new PointLight(0x0000ff, 1, 0);
+        lights[2] = new PointLight(0x00ff00, 1, 0);
 
-       lights[ 0 ].position.set( 0, 200, 0 );
-       lights[ 1 ].position.set( 100, 200, 100 );
-       lights[ 2 ].position.set( - 100, - 200, - 100 );
+        lights[0].position.set(0, 200, 0);
+        lights[1].position.set(100, 200, 100);
+        lights[2].position.set(- 100, - 200, - 100);
 
-       this.scene.add( lights[ 0 ] );
-       this.scene.add( lights[ 1 ] );
-       this.scene.add( lights[ 2 ] );
+        this.scene.add(lights[0]);
+        this.scene.add(lights[1]);
+        this.scene.add(lights[2]);
 
-        this.scene.add( cube );
-        
-        this.camera.position.z = 5;
+        var ambLight = new AmbientLight(0xffffff);
+        this.scene.add(ambLight);
+
+        this.scene.add(pipe);
+
+        this.camera.position.z = this.length * 0.8;
 
         this.render();
 
@@ -66,13 +73,17 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public render(): void {
-        if(this.renderer !== undefined){
+        if (this.renderer !== undefined) {
             this.renderer.render(this.scene, this.camera);
         }
     }
 
     public ngOnChanges(): void {
         console.log("Changing radius to ...", this.radius);
+        if (this.geometry !== undefined) {
+            this.geometry.update(+this.radius, +this.shellWidth, +this.length, +this.resolution);
+            this.render();
+        }
     }
 
     public ngOnDestroy(): void {
