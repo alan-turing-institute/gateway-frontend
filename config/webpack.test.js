@@ -25,7 +25,7 @@ module.exports = {
 
       },
       {
-        test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|vtp|json")$/,
+        test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|vtp|json|glsl")$/,
         loader: 'null-loader'
       },
       {
