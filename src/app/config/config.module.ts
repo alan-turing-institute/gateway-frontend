@@ -8,6 +8,7 @@ import { ConfigComponent } from './config.component';
 import { DescriptionComponent } from './description.component'
 import { ConfigDataService } from './configData.service';
 import { VtkModule} from '../vtk.module';
+
 // import { ParametersComponent} from './parameters.component';
 // import { DescriptionComponent} from './description.component';
 
@@ -22,7 +23,7 @@ import { VtkModule} from '../vtk.module';
   declarations: [ConfigComponent,
                   DescriptionComponent],
   providers: [ConfigDataService],
-  exports: [ConfigComponent, DescriptionComponent]
+  exports: [ConfigComponent, DescriptionComponent, ConfigComponent]
 })
 
 export class ConfigModule { }

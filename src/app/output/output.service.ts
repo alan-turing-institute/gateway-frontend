@@ -15,7 +15,7 @@ export class OutputService {
   constructor (private http: Http) {}
 
   info = this.getJobInfo()
-  config = this.getJobConfig()
+  //config = this.getJobConfig()
   data = this.getOutputData()
 
   getJobInfo(): Observable<JobInfo[]>{
@@ -40,16 +40,16 @@ export class OutputService {
     return body.data || { };
   }
 
-  getJobConfig(): Observable<JobConfig[]>{
-    return this.http.get(this.configsUrl)
-                    .map(this.extractParameters)
-                    .catch(this.handleError)
-  }
-
-  private extractParameters(res: Response){
-    let body = res.json();
-    return body.parameters|| { };
-  }
+  // getJobConfig(): Observable<JobConfig[]>{
+  //   return this.http.get(this.configsUrl)
+  //                   .map(this.extractParameters)
+  //                   .catch(this.handleError)
+  // }
+  //
+  // private extractParameters(res: Response){
+  //   let body = res.json();
+  //   return body.parameters|| { };
+  // }
 
   private handleError (error: Response | any) {
     // In a real world app, you might use a remote logging infrastructure

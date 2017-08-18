@@ -3,46 +3,35 @@
 
     <div class="card-deck">
         <div *ngFor="let job of jobInfo" class='card-jobs'>
-            <jobSummary [summary]="job"></jobSummary>
+            <jobSummary [summary]="job" [type]='type' [caseInfo] = false></jobSummary>
         </div>
     </div>
 
-  <!-- <div class="container-fluid">
+    <div class="card-deck">
+        <div *ngFor="let job of jobInfo" class='card-jobs'>
+            <jobSummary [summary]="job" [type]='type' [caseInfo] = true [case] = case></jobSummary>
+        </div>
+    </div>
 
-      <div *ngFor="let job of jobInfo" class="card"  >
-          <img class="img-fluid" src="{{job.thumbnail}}" alt="Card image cap" style="width: 20rem;">
-          <div class="card-block">
-            <h4 class="card-title">{{job.job_type}}  <span class="badge badge-success">{{job.status}}</span></h4>
-            <p class="card-text">Job id: {{job.id}}</p>
-            <p class="card-text">Date: {{job.start_date}} - {{job.end_date}}</p>
-          </div>
+
+    <div *ngIf="status=='Complete' || status=='Running'">
+      <div class = "card" >
+        <div class="card-header" (click)="graphCollapse()">
+            <strong>Output graph</strong>
+        </div>
+        <div [ngClass] = "{'collapse': graph.collapse}">
+          <chart></chart>
+        </div>
       </div>
-
-  </div> -->
-
-    <div class = "card" (click)="graphCollapse()">
-
-      <div class="card-header">
-
-          <strong>Output graph</strong>
-
-      </div>
-
-      <div [ngClass] = "{'collapse': graph.collapse}">
-        <chart></chart>
-      </div>
-
     </div>
 
     <div class="card-header" (click)="configCollapse()">
       <strong>Configuration</strong>
     </div>
-
     <div [ngClass] = "{'collapse':config.collapse}">
-      <config [type]="Output"></config>
+      <config [type]='type'></config>
     </div>
 
+
   </div>
-
-
 </div>

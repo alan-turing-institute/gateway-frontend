@@ -1,7 +1,8 @@
-import { Component, Injectable, OnInit} from '@angular/core';
+import { Component, Injectable, OnInit, Input} from '@angular/core';
 import { InputComponent } from './inputComponent';
 import { InputComponentService } from './inputComponent.service';
 import { ConfigDataService } from './configData.service';
+import { CaseComponents } from './caseComponents';
 // import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
 
 @Component({
@@ -11,6 +12,8 @@ import { ConfigDataService } from './configData.service';
 })
 
 export class DescriptionComponent implements OnInit {
+  @Input() case:CaseComponents;
+  @Input() type:string;
   ngOnInit() {
   }
 }
