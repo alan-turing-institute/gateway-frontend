@@ -23,15 +23,18 @@ import { ChartsComponent } from './chart';
 })
 
 export class OutputComponent implements OnInit {
-  case:CaseComponents
-  jobInfo: JobInfo [];
+  case:CaseComponents;
+  //jobInfo: JobInfo [];
+  job: JobInfo;
   job_id: string;
   graph:{} = {collapse:false}
   config:{} = {collapse:false}
   errorMessage: string;
-  caseID:string = "yy69843b-4939-6f37-96c7-c382c3e74b46";
+  caseID:string; //= "yy69843b-4939-6f37-96c7-c382c3e74b46";
   type:string = 'Output';
-  status: string;
+  status: string = 'Error';
+  haveData:boolean;
+
 
   constructor(private activatedRoute: ActivatedRoute,
   private outputService:OutputService,
@@ -43,7 +46,7 @@ export class OutputComponent implements OnInit {
         //get job status (same as in dashboard)
         this.getInfoData();
         this.case = new CaseComponents
-        this.getTemplateData()
+        //this.getCaseData()
       }
 
 
@@ -56,10 +59,13 @@ getInfoData(){
                       //find which job want to plot
                       for(let job of allJobsInfo){
                         if(job.id == this.job_id){
-                          this.jobInfo = [job]
+                          this.job = job
                         }
                       }
-                      this.status = this.jobInfo[0].status
+                      this.status = this.job.status
+                      this.caseID = this.job.case.id
+                      console.log(this.job)
+                      this.getCaseData()
                     },
                     error => {
                       this.errorMessage = <any> error
@@ -74,14 +80,21 @@ getInfoData(){
      this.config['collapse'] = !this.config['collapse']
    }
 
-   getTemplateData () {
-     console.log(localStorage.getItem('template_id'));
-     this.configDataService.template
-                         .subscribe(
-                           template => {
-                             this.case=template['case']
-                             console.log(this.case)
-                           },
+   getCaseData () {
+     this.outputService.case
+                        .subscribe(
+                          allCases =>{
+                            for(let aCase of allCases){
+                              if(aCase.id==this.caseID){
+                                this.case = aCase
+                                console.log("Case")
+                                console.log(this.case)
+                                if(this.case.id != ""){
+                                  this.haveData = true
+                              }
+                              }
+                            }
+                          },
                            error => {
                              this.errorMessage = <any> error
                            });

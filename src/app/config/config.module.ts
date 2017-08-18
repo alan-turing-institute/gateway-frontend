@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 
 import { IonRangeSliderModule } from "ng2-ion-range-slider";
 import { ConfigComponent } from './config.component';
-import { DescriptionComponent } from './description.component'
 import { ConfigDataService } from './configData.service';
 import { VtkModule} from '../vtk.module';
 
@@ -20,10 +19,9 @@ import { VtkModule} from '../vtk.module';
     IonRangeSliderModule,
     VtkModule
   ],
-  declarations: [ConfigComponent,
-                  DescriptionComponent],
+  declarations: [ConfigComponent],
   providers: [ConfigDataService],
-  exports: [ConfigComponent, DescriptionComponent, ConfigComponent]
+  exports: [ConfigComponent]
 })
 
 export class ConfigModule { }

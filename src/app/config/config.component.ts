@@ -17,6 +17,7 @@ import { DescriptionComponent } from './description.component';
 
 export class ConfigComponent implements OnInit {
   @Input() type:string;
+  //@Input() case_type: string;
 
   //case:CaseComponents
   //supersetComponents:InputComponent []

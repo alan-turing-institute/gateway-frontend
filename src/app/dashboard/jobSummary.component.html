@@ -14,18 +14,16 @@
             </div>
         </div>
     </div>
+
     <div class="card-block">
         <div class="container-fluid card-block-container">
+
+          <!-- <div *ngIf="type!='Output'"> -->
             <a routerLinkActive = "active" [routerLink] = "['/output/output', {id: summary.id}]">
             <div class="row">
                 <div class="col-md-2"><img src={{summary.thumbnail}}  class="img-job"></div>
                 <div class="col-md-7">
-                  <div *ngIf="caseInfo==false">
                     <p class="descriptionText">{{getShortDescription()}}</p>
-                  </div>
-                  <div *ngIf="caseInfo==true">
-                    <p class="descriptionText">{{case.description}}</p>
-                  </div>
 
                 </div>
                 <div class="col-md-3">
@@ -38,17 +36,50 @@
                     </div>
                     <div class="row" style="padding-top:3%">
                         <div class="col-md-4 offset-md-4">
-                          <div *ngIf="type!='Output'">
+
                             <button type="button" class="btn btn-primary">
                                 <i [ngClass]="getActionIcon()"></i>
                                 <span class="actionText"><strong> {{getActionText()}}</strong></span>
                             </button>
                         </div>
-                      </div>
                     </div>
                 </div>
             </div>
             </a>
-        </div>
+          <!-- </div>
+
+          <div *ngIf="type=='Output'">
+
+            <div class="row">
+
+                <div class="col-md-2"><img src={{summary.thumbnail}}  class="img-job"></div>
+
+                <div class="col-md-7">
+                  <div *ngIf="caseInfo==false">
+                    <p class="descriptionText">{{summary.description}}</p>
+                  </div>
+                  <div *ngIf="caseInfo==true">
+                    <p class="descriptionText">{{case.description}}</p>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="progress" [hidden]="getProgressBarHidden()">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top:3%">
+                        <div class="col-md-4 offset-md-4">
+
+                      </div>
+                    </div>
+                </div>
+
+          </div>
+        </div> -->
+
     </div>
 </div>

@@ -1,18 +1,54 @@
-<div class="animated fadeIn">
-  <div class='container-fluid'>
+<!-- <div class="animated fadeIn">
+  <div class='container-fluid card-block-container'> -->
 
-    <div class="card-deck">
-        <div *ngFor="let job of jobInfo" class='card-jobs'>
-            <jobSummary [summary]="job" [type]='type' [caseInfo] = false></jobSummary>
-        </div>
+<div *ngIf="haveData==true">
+    <div class="row">
+      <div class="col-md-12">
+            <tabset style="width:100%">
+              <tab heading={{case.label}}>
+                <div class="row">
+                  <div class="col-md-2">
+                    <img src={{case.thumbnail}} class=img-job>
+                  </div>
+                <div class="col-md-10">
+                  <p class="descriptionText">{{case.description}}</p>
+                </div>
+
+                </div>
+
+              </tab>
+              <tab heading={{job.name}}>
+                <div class="row">
+                  <div class="col-md-2">
+                    <img src={{case.thumbnail}} class=img-job>
+                  </div>
+                <div class="col-md-10">
+                  <p class="descriptionText">{{job.description}}</p>
+                </div>
+
+                </div>
+              </tab>
+
+              <tab heading="Job Information">
+                <div class="row">
+                  <div class="col-md-2">
+                    <img src={{case.thumbnail}} class=img-job>
+                  </div>
+                <div class="col-md-10">
+                  <p class="descriptionText">Status: {{job.status}}</p>
+                  <p class="descriptionText">Start: {{job.start_datetime}}</p>
+                  <p class="descriptionText">Start: {{job.start_datetime}}</p>
+                </div>
+
+                </div>
+
+            </tab>
+          </tabset>
+      </div>
     </div>
+  </div>
 
-    <div class="card-deck">
-        <div *ngFor="let job of jobInfo" class='card-jobs'>
-            <jobSummary [summary]="job" [type]='type' [caseInfo] = true [case] = case></jobSummary>
-        </div>
-    </div>
-
+    <p></p>
 
     <div *ngIf="status=='Complete' || status=='Running'">
       <div class = "card" >
@@ -28,10 +64,12 @@
     <div class="card-header" (click)="configCollapse()">
       <strong>Configuration</strong>
     </div>
+    <div class = "card">
     <div [ngClass] = "{'collapse':config.collapse}">
-      <config [type]='type'></config>
+      <config [type]='type' ></config>
     </div>
-
-
   </div>
-</div>
+
+
+  <!-- </div>
+</div> -->
