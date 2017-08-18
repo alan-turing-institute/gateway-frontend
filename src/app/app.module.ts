@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { IonRangeSliderModule } from "ng2-ion-range-slider";
 import { Routes, RouterModule } from '@angular/router';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { Routes, RouterModule } from '@angular/router';
     JsonpModule,
     FormsModule,
     IonRangeSliderModule,
-    RouterModule
+    RouterModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     AppComponent,

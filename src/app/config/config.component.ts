@@ -6,6 +6,7 @@ import { ConfigDataService } from './configData.service';
 // import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
 
 @Component({
+  selector:"config",
   providers:[InputComponentService],
   templateUrl: './config.component.html',
   styles:[require('../../../node_modules/ion-rangeslider/css/ion.rangeSlider.css').toString(),

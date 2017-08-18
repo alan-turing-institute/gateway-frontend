@@ -1,8 +1,15 @@
 export class JobInfo {
     id: string;
-    job_type: string;
-    start_date: string;
-    end_date: string;
+    uri: string;
+    name: string;
+    description: string;
+    case: {
+        id: string;
+        uri: string;
+        label: string;
+    };
+    start_datetime: string;
+    end_datetime: string;
     status: string;
-    output: string;
+    thumbnail: string;
 }

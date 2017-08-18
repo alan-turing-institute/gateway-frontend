@@ -16,7 +16,7 @@ import { PipeModule} from '../pipe.module';
     CommonModule,
     FormsModule,
     IonRangeSliderModule,
-    PipeModule,
+    PipeModule
   ],
   declarations: [ConfigComponent],
   providers: [ConfigDataService],
