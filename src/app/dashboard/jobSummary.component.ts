@@ -10,8 +10,13 @@ import { JobInfo } from './jobInfo';
 
 export class JobSummaryComponent implements OnInit{
     @Input() summary: JobInfo;
+    @Input() type: string;
+    @Input() caseInfo:boolean;
+    @Input() case:{};
+
     jobHoverHidden: boolean;
 
+    dashboard:boolean = true;
     testMe(): void {
         console.log(this.summary);
     }

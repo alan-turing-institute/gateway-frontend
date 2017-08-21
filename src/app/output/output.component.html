@@ -1,48 +1,72 @@
 <div class="animated fadeIn">
-  <div class='container-fluid'>
+  <div *ngIf="haveData==true">
+    <div class='container-fluid card-block-container'>
 
-    <div class="card-deck">
-        <div *ngFor="let job of jobInfo" class='card-jobs'>
-            <jobSummary [summary]="job"></jobSummary>
+      <div class="row">
+        <div class="col-md-12">
+            <tabset style="width:100%">
+
+              <tab heading={{case.label}}>
+                <div class="row">
+                  <div class="col-md-2">
+                    <img src={{case.thumbnail}} class=img-job>
+                  </div>
+                <div class="col-md-10">
+                  <p class="descriptionText">{{case.description}}</p>
+                </div>
+                </div>
+              </tab>
+
+              <tab heading={{job.name}}>
+                <div class="row">
+                  <div class="col-md-2">
+                    <img src={{case.thumbnail}} class=img-job>
+                  </div>
+                <div class="col-md-10">
+                  <p class="descriptionText">{{job.description}}</p>
+                </div>
+                </div>
+              </tab>
+
+              <tab heading="Job Information">
+                <div class="row">
+                  <div class="col-md-2">
+                    <img src={{case.thumbnail}} class=img-job>
+                  </div>
+                <div class="col-md-10">
+                  <p class="descriptionText">Status: {{job.status}}</p>
+                  <p class="descriptionText">Start: {{job.start_datetime}} </p>
+                  <p class="descriptionText">End: {{job.start_datetime}}</p>
+                </div>
+                </div>
+            </tab>
+
+          </tabset>
         </div>
-    </div>
+      </div>
 
-  <!-- <div class="container-fluid">
+      <p></p>
 
-      <div *ngFor="let job of jobInfo" class="card"  >
-          <img class="img-fluid" src="{{job.thumbnail}}" alt="Card image cap" style="width: 20rem;">
-          <div class="card-block">
-            <h4 class="card-title">{{job.job_type}}  <span class="badge badge-success">{{job.status}}</span></h4>
-            <p class="card-text">Job id: {{job.id}}</p>
-            <p class="card-text">Date: {{job.start_date}} - {{job.end_date}}</p>
+      <div *ngIf="status=='Complete' || status=='Running'">
+        <div class = "card" >
+          <div class="card-header" (click)="graphCollapse()">
+            <strong>Output graph</strong>
           </div>
+          <div [ngClass] = "{'collapse': graph.collapse}">
+            <chart></chart>
+          </div>
+        </div>
       </div>
 
-  </div> -->
-
-    <div class = "card" (click)="graphCollapse()">
-
-      <div class="card-header">
-
-          <strong>Output graph</strong>
-
+      <div class="card-header" (click)="configCollapse()">
+        <strong>Configuration</strong>
       </div>
-
-      <div [ngClass] = "{'collapse': graph.collapse}">
-        <chart></chart>
+      <div class = "card">
+        <div [ngClass] = "{'collapse':config.collapse}">
+          <config [type]='type' ></config>
+        </div>
       </div>
 
     </div>
-
-    <div class="card-header" (click)="configCollapse()">
-      <strong>Configuration</strong>
-    </div>
-
-    <div [ngClass] = "{'collapse':config.collapse}">
-      <config [type]="Output"></config>
-    </div>
-
   </div>
-
-
 </div>

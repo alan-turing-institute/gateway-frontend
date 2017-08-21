@@ -5,9 +5,10 @@ import { FormsModule } from '@angular/forms';
 
 import { IonRangeSliderModule } from "ng2-ion-range-slider";
 import { ConfigComponent } from './config.component';
-import { DescriptionComponent } from './description.component'
 import { ConfigDataService } from './configData.service';
+
 import { PipeModule} from '../pipe.module';
+
 // import { ParametersComponent} from './parameters.component';
 // import { DescriptionComponent} from './description.component';
 
@@ -19,10 +20,9 @@ import { PipeModule} from '../pipe.module';
     IonRangeSliderModule,
     PipeModule
   ],
-  declarations: [ConfigComponent,
-                  DescriptionComponent],
+  declarations: [ConfigComponent],
   providers: [ConfigDataService],
-  exports: [ConfigComponent, DescriptionComponent]
+  exports: [ConfigComponent]
 })
 
 export class ConfigModule { }

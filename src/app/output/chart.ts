@@ -8,64 +8,47 @@ import { OutputService } from './output.service';
   template: `
   <div class='container-fluid'>
 
-      <div class="card-block">
-          <div class = "row">
+    <div class="card-block">
+      <div class = "row">
+        <div class = "col-md-12">
+          <div *ngIf="isDataAvailable" style="width:100%; min-height: 300px">
+            <ngx-charts-line-chart
 
-          <div class = "col-md-10">
-
-
-      <div *ngIf="isDataAvailable" style="width:100%; min-height: 300px">
-          <ngx-charts-line-chart
-
-          [scheme]="colorScheme"
-          [results]="graphData"
-          [gradient]=false
-          [xAxis]=true
-          [yAxis]=true
-          [legend]=false
-          [showXAxisLabel]=true
-          [showYAxisLabel]=true
-          [xAxisLabel]="xAxisLabel"
-          [yAxisLabel]="yAxisLabel"
-          [autoScale]=true
-          [tooltipDisabled]=false>
-        </ngx-charts-line-chart>
-    </div>
-    </div>
-
-
-
-    <div class = 'col-md-2'>
-    <select (change)='onChangeX($event.target.value)' >
-      <option *ngFor="let key of keys" >{{key}}</option>
-    </select>
-
-    <select (change)='onChangeY($event.target.value)' >
-      <option *ngFor="let y_var of y_vars" >{{y_var}}</option>
-    </select>
-    </div>
-
-          <!-- <button (click)="update()">UPDATE</button>
-
-          <div class = "row">
-          <div class = "col-md-12">
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              X-AXIS
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <div *ngFor="let key of keys">
-              <button class="dropdown-item" type="button" value={{key}} >{{key}}</button>
-            </div>
-            </div>
-          </div>
-          </div>
-          </div>-->
-
-
+            [scheme]="colorScheme"
+            [results]="graphData"
+            [gradient]=false
+            [xAxis]=true
+            [yAxis]=true
+            [legend]=false
+            [showXAxisLabel]=true
+            [showYAxisLabel]=true
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [autoScale]=true
+            [tooltipDisabled]=false>
+          </ngx-charts-line-chart>
+        </div>
       </div>
     </div>
-  </div>`,
+
+    <div class = "row">
+      <div class = "col-md-6">
+        <select class="form-control" (change)='onChangeX($event.target.value)' >
+          <!--<option selected>X-axis</option>-->
+          <option *ngFor="let key of keys" >{{key}}</option>
+        </select>
+      </div>
+
+      <div class = "col-md-6">
+        <select class = "form-control" (change)='onChangeY($event.target.value)' >
+          <!--<option selected>Y-axis</option>-->
+          <option *ngFor="let y_var of y_vars" >{{y_var}}</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+</div>`,
   inputs:['lineChartLabel', 'lineChartData']
 })
 
@@ -144,7 +127,7 @@ drawGraph(){
   let date = new Date(this.jobData[this.varX][0]).toString()
 
   for(var i = 0; i<this.jobData[this.varX].length; i++){
-    //if var is a number
+    //var is a number - need to check first otherwise numbers will be treated as dates
     if(type==='number'){
       newData[0]["series"].push({'name':this.jobData[this.varX][i], 'value':this.jobData[this.varY][i]})
     }

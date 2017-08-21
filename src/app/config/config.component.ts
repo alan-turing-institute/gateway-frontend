@@ -5,6 +5,10 @@ import { CaseInfo } from '../cases/case/caseInfo';
 // import { InputComponentService } from './inputComponent.service';
 import { ConfigDataService } from './configData.service';
 
+import { DescriptionComponent } from './description.component';
+// import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
+
+
 @Component({
   selector:"config",
   // providers:[InputComponentService],
@@ -15,11 +19,22 @@ import { ConfigDataService } from './configData.service';
 })
 
 export class ConfigComponent implements OnInit {
-  case:CaseInfo 
-  tags:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
 
+  @Input() type:string;
+  //@Input() case_type: string;
+
+  //case:CaseComponents
+  //supersetComponents:InputComponent []
+  //selectedComponents:InputComponent []
+  //tags:{name: string, id: string, collapse: boolean} []
+
+  case:CaseComponents
+  job: any
+
+  tags:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
   mode = 'Observable';
   errorMessage: string;
+
 
   constructor(private configDataService:ConfigDataService,
     // private inputComponentService:InputComponentService
@@ -27,8 +42,12 @@ export class ConfigComponent implements OnInit {
 
   ngOnInit() {
     this.tags = []
-    this.case = new CaseInfo
+
+    this.case = new CaseComponents
+    //this.type = 'Template'
+
     this.getTemplateData()
+    //this.getData()
   }
 
   newJob() {

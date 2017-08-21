@@ -12,11 +12,14 @@ import {JobConfig} from './jobConfigComponent';
 export class OutputService {
   private infosUrl = require('../../assets/job_status.json');
   private configsUrl = require('../../assets/job_output.json');
+  private caseTypesUrl = require('../../assets/case_types.json')
   constructor (private http: Http) {}
 
   info = this.getJobInfo()
-  config = this.getJobConfig()
+  //config = this.getJobConfig()
   data = this.getOutputData()
+
+  case = this.getCaseInfo()
 
   getJobInfo(): Observable<JobInfo[]>{
       return this.http.get(this.infosUrl)
@@ -30,6 +33,12 @@ export class OutputService {
                     .catch(this.handleError)
   }
 
+  getCaseInfo():Observable<Array<any>>{
+    return this.http.get(this.caseTypesUrl)
+                    .map(this.extractCases)
+                    .catch(this.handleError)
+  }
+
   private extractJobs(res: Response){
     let body = res.json();
     return body.jobs || { };
@@ -40,16 +49,21 @@ export class OutputService {
     return body.data || { };
   }
 
-  getJobConfig(): Observable<JobConfig[]>{
-    return this.http.get(this.configsUrl)
-                    .map(this.extractParameters)
-                    .catch(this.handleError)
+  private extractCases(res: Response){
+    let body = res.json();
+    return body.cases || { };
   }
 
-  private extractParameters(res: Response){
-    let body = res.json();
-    return body.parameters|| { };
-  }
+  // getJobConfig(): Observable<JobConfig[]>{
+  //   return this.http.get(this.configsUrl)
+  //                   .map(this.extractParameters)
+  //                   .catch(this.handleError)
+  // }
+  //
+  // private extractParameters(res: Response){
+  //   let body = res.json();
+  //   return body.parameters|| { };
+  // }
 
   private handleError (error: Response | any) {
     // In a real world app, you might use a remote logging infrastructure
