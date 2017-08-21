@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/switchMap';
 import { Component, OnInit, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CaseComponents } from '../config/caseComponents';
+import { CaseInfo } from '../cases/case/caseInfo';
 
 import { JobInfo } from '../dashboard/jobInfo';
 
@@ -23,7 +23,7 @@ import { ChartsComponent } from './chart';
 })
 
 export class OutputComponent implements OnInit {
-  case:CaseComponents;
+  case:CaseInfo;
   //jobInfo: JobInfo [];
   job: JobInfo;
   job_id: string;
@@ -45,7 +45,7 @@ export class OutputComponent implements OnInit {
         console.log(!this.graph['collapse'])
         //get job status (same as in dashboard)
         this.getInfoData();
-        this.case = new CaseComponents
+        this.case = new CaseInfo
         //this.getCaseData()
       }
 
