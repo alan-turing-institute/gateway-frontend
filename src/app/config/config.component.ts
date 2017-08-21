@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit} from '@angular/core';
+import { Component, Injectable, OnInit, Input} from '@angular/core';
 // import { ActivatedRoute} from '@angular/router';
 import { InputComponent } from './inputComponent';
 import { CaseInfo } from '../cases/case/caseInfo';
@@ -15,9 +15,10 @@ import { ConfigDataService } from './configData.service';
 })
 
 export class ConfigComponent implements OnInit {
+  @Input() type:string
   case:CaseInfo 
   tags:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
-
+  job: any
   mode = 'Observable';
   errorMessage: string;
 

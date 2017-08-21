@@ -27,6 +27,9 @@ export class ConfigDataService {
 
   template = this.getTemplateData()
   output = this.getOutputData()
+  newJob = this.getNewJobData()
+  saveJob = this.saveJobData()
+
   getTemplateData(): Observable<InputComponent[]> {
     let url = this.getTemplateUrl;
     // let url = this.getTemplateUrl + localStorage.getItem('template_id') 
@@ -55,7 +58,7 @@ export class ConfigDataService {
   getOutputData(): Observable<InputComponent[]> {
     // console.log("reading")
     return this.http.get(this.getOutputUrl)
-                    .map(this.extractTemplateData)
+                    .map(this.extractJsonData)
                     .catch(this.handleError);
   }
 
