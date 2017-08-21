@@ -1,10 +1,11 @@
-<!-- <div class="animated fadeIn">
-  <div class='container-fluid card-block-container'> -->
+<div class="animated fadeIn">
+  <div *ngIf="haveData==true">
+    <div class='container-fluid card-block-container'>
 
-<div *ngIf="haveData==true">
-    <div class="row">
-      <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
             <tabset style="width:100%">
+
               <tab heading={{case.label}}>
                 <div class="row">
                   <div class="col-md-2">
@@ -13,10 +14,9 @@
                 <div class="col-md-10">
                   <p class="descriptionText">{{case.description}}</p>
                 </div>
-
                 </div>
-
               </tab>
+
               <tab heading={{job.name}}>
                 <div class="row">
                   <div class="col-md-2">
@@ -25,7 +25,6 @@
                 <div class="col-md-10">
                   <p class="descriptionText">{{job.description}}</p>
                 </div>
-
                 </div>
               </tab>
 
@@ -36,40 +35,38 @@
                   </div>
                 <div class="col-md-10">
                   <p class="descriptionText">Status: {{job.status}}</p>
-                  <p class="descriptionText">Start: {{job.start_datetime}}</p>
+                  <p class="descriptionText">Start: {{job.start_datetime}} </p>
                   <p class="descriptionText">End: {{job.start_datetime}}</p>
                 </div>
-
                 </div>
-
             </tab>
+
           </tabset>
+        </div>
       </div>
-    </div>
-  </div>
 
-    <p></p>
+      <p></p>
 
-    <div *ngIf="status=='Complete' || status=='Running'">
-      <div class = "card" >
-        <div class="card-header" (click)="graphCollapse()">
+      <div *ngIf="status=='Complete' || status=='Running'">
+        <div class = "card" >
+          <div class="card-header" (click)="graphCollapse()">
             <strong>Output graph</strong>
-        </div>
-        <div [ngClass] = "{'collapse': graph.collapse}">
-          <chart></chart>
+          </div>
+          <div [ngClass] = "{'collapse': graph.collapse}">
+            <chart></chart>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="card-header" (click)="configCollapse()">
-      <strong>Configuration</strong>
-    </div>
-    <div class = "card">
-    <div [ngClass] = "{'collapse':config.collapse}">
-      <config [type]='type' ></config>
+      <div class="card-header" (click)="configCollapse()">
+        <strong>Configuration</strong>
+      </div>
+      <div class = "card">
+        <div [ngClass] = "{'collapse':config.collapse}">
+          <config [type]='type' ></config>
+        </div>
+      </div>
+
     </div>
   </div>
-
-
-  <!-- </div>
-</div> -->
+</div>
