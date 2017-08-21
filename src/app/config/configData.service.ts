@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { RequestOptions } from '@angular/http';
+import {Headers} from '@angular/http';
+// import { HttpModule } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -15,7 +18,7 @@ export class ConfigDataService {
   // private templateData;
 
   private getNewJobUrl = require('../../assets/job_template.json');
-  private newJobUrl = 'http://localhost:5000/api/jobs/';
+  private newJobUrl = 'http://localhost:5000/api/jobs';
   private jobData;
 
   private saveJobUrl = require('../../assets/job_template.json');
@@ -27,7 +30,7 @@ export class ConfigDataService {
 
   template = this.getTemplate()
   output = this.getOutputData()
-  create = this.createJob()
+  // create = this.createJob()
   save = this.saveJob()
 
   getTemplate(): Observable<InputComponent[]> {
@@ -40,22 +43,18 @@ export class ConfigDataService {
     return this.jobData;
   }
 
-  saveJobID(job_id): void {
-    console.log("am I here");
-    console.log(job_id)
+  getCreateJobURL(job_id): string {
     localStorage.setItem("job_id", job_id)
-    console.log("Job ID: " + localStorage.getItem('job_id'))
-    this.newJobUrl = this.newJobUrl + localStorage.getItem('job_id') 
+    this.newJobUrl = this.newJobUrl //+ localStorage.getItem('job_id') 
     console.log(this.newJobUrl)
+    return this.newJobUrl
   }
 
-  createJob(): Observable<InputComponent[]> {
-    // let url = this.getNewJobUrl;
-    // var url = this.newJobUrl;
-    
-
-    this.jobData = this.http.post(this.newJobUrl, this.jobData)
-                    // .map(this.extractJsonData)
+  createJob(jobData:any, newJobUrl): Observable<InputComponent[]> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    this.jobData = this.http.post(newJobUrl, jobData, options)
+                    .map(this.extractJsonData)
                     .catch(this.handleError);
     console.log("Response: "+this.jobData)
 

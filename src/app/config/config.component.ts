@@ -55,8 +55,8 @@ export class ConfigComponent implements OnInit {
     }
     else {
       console.log("create job")
-      this.configDataService.saveJobID(this.job['id']);
-      this.configDataService.create
+      let url = this.configDataService.getCreateJobURL(this.job['id'])
+      this.configDataService.createJob(this.job, url)
                       .subscribe(
                         createJob => {
                           console.log("created bloody job")
