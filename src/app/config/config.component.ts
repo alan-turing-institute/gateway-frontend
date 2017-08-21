@@ -23,6 +23,7 @@ export class ConfigComponent implements OnInit {
   job: any
   mode = 'Observable';
   errorMessage: string;
+  jobCreated: boolean
 
 
   constructor(private configDataService:ConfigDataService,
@@ -32,22 +33,37 @@ export class ConfigComponent implements OnInit {
   ngOnInit() {
     this.tags = []
     this.case = new CaseInfo
-    this.getTemplateData()
+    this.getTemplate()
     //this.getData()
+    console.log("init")
+    this.jobCreated = false
   }
 
-  newJob() {
-    console.log("init new job")
-    // this.getNewJobData()
-  }
-
+  
   saveJob() {
-    console.log("save job")
-    // this.saveJobData () {
-  }
-
-  startJob() {
-    console.log("run job")
+    console.log("saving")
+    if (this.jobCreated) {
+      console.log("save job")
+      this.configDataService.save
+                        .subscribe(
+                          saveJob => {
+                            console.log(saveJob)
+                          },
+                          error => {
+                            this.errorMessage = <any> error
+                          });
+    }
+    else {
+      console.log("create job")
+      this.configDataService.create
+                      .subscribe(
+                        createJob => {
+                          console.log(createJob)
+                        },
+                        error => {
+                          this.errorMessage = <any> error
+                        });
+    } 
   }
 
   getData () {
@@ -108,8 +124,7 @@ export class ConfigComponent implements OnInit {
                           });
   }
 
-  getTemplateData () {
-    console.log("Template ID: "+localStorage.getItem('template_id'));
+  getTemplate () {
     this.configDataService.template
                         .subscribe(
                           template => {
@@ -122,28 +137,11 @@ export class ConfigComponent implements OnInit {
                           });
   }
 
-  getNewJobData () {
-    this.configDataService.newJob
-                        .subscribe(
-                          newJob => {
-                            this.tags = newJob['families']
-                            this.case=newJob['case']
-                          },
-                          error => {
-                            this.errorMessage = <any> error
-                          });
+  createJob () {
+    
   }
 
-  saveJobData () {
-    this.configDataService.saveJob
-                        .subscribe(
-                          saveJob => {
-                            console.log(saveJob)
-                          },
-                          error => {
-                            this.errorMessage = <any> error
-                          });
-  }
+  
 
   getDataTarget(tag) {
     return "#" + tag.name

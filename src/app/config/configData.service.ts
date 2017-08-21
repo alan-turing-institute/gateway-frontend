@@ -11,11 +11,11 @@ import {InputComponent} from './inputComponent';
 @Injectable()
 export class ConfigDataService {
   private getTemplateUrl = require('../../assets/job_template.json');
-  // private getTemplateUrl = require('http://localhost:5000/api/cases/');
-  private templateData;
+  private templateUrl = 'http://localhost:5000/api/cases/';
+  // private templateData;
 
   private getNewJobUrl = require('../../assets/job_template.json');
-  // private getNewJobUrl = require('http://localhost:5000/api/jobs/');
+  private newJobUrl = 'http://localhost:5000/api/jobs/';
   private jobData;
 
   private saveJobUrl = require('../../assets/job_template.json');
@@ -25,32 +25,39 @@ export class ConfigDataService {
   private response = {}
   constructor (private http: Http) {}
 
-  template = this.getTemplateData()
+  template = this.getTemplate()
   output = this.getOutputData()
-  newJob = this.getNewJobData()
-  saveJob = this.saveJobData()
+  create = this.createJob()
+  save = this.saveJob()
 
-  getTemplateData(): Observable<InputComponent[]> {
-    let url = this.getTemplateUrl;
-    // let url = this.getTemplateUrl + localStorage.getItem('template_id') 
-    this.templateData = this.http.get(this.getTemplateUrl)
+  getTemplate(): Observable<InputComponent[]> {
+    // let url = this.getTemplateUrl;
+    let url = this.templateUrl + localStorage.getItem('template_id') 
+    this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
                     .catch(this.handleError);
-    return this.templateData;
+    
+    return this.jobData;
   }
 
-  getNewJobData(): Observable<InputComponent[]> {
-    let url = this.getNewJobUrl;
-    this.jobData = this.http.post(url, this.templateData)
-                    .map(this.extractJsonData)
-                    .catch(this.handleError);
+  createJob(): Observable<InputComponent[]> {
+    // let url = this.getNewJobUrl;
+    let url = this.newJobUrl
+    console.log("am I here");
+    console.log(this.jobData['id'])
+    localStorage.setItem("job_id", this.jobData['id'])
+    console.log("Job ID: " + localStorage.getItem('job_id'))
+
+    // let response = this.http.post(url, this.jobData)
+    //                 .map(this.extractJsonData)
+    //                 .catch(this.handleError);
+    // console.log("Response: "+response)
     return this.jobData
   }
 
-  saveJobData(): Observable<InputComponent[]> {
+  saveJob(): Observable<InputComponent[]> {
     let url = this.saveJobUrl;
     let response = this.http.patch(url, this.jobData)
-                    .map(this.extractJsonData)
                     .catch(this.handleError);
     return response
   }

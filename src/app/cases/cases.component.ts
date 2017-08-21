@@ -23,7 +23,7 @@ export class CasesComponent implements OnInit {
     }
 
     getCaseTypes() {
-        this.casesService.data
+        this.casesService.cases
                             .subscribe(
                                 cases => {
                                     this.cases = cases
