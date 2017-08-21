@@ -55,9 +55,11 @@ export class ConfigComponent implements OnInit {
     }
     else {
       console.log("create job")
+      this.configDataService.saveJobID();
       this.configDataService.create
                       .subscribe(
                         createJob => {
+                          console.log("created bloody job")
                           console.log(createJob)
                         },
                         error => {
@@ -125,23 +127,18 @@ export class ConfigComponent implements OnInit {
   }
 
   getTemplate () {
+    console.log("getting template")
     this.configDataService.template
                         .subscribe(
                           template => {
                             this.tags = template['families']
-                            console.log(this.tags)
+                            console.log(template['id'])
                             this.case=template['case']
                           },
                           error => {
                             this.errorMessage = <any> error
                           });
   }
-
-  createJob () {
-    
-  }
-
-  
 
   getDataTarget(tag) {
     return "#" + tag.name

@@ -31,8 +31,8 @@ export class ConfigDataService {
   save = this.saveJob()
 
   getTemplate(): Observable<InputComponent[]> {
-    // let url = this.getTemplateUrl;
-    let url = this.templateUrl + localStorage.getItem('template_id') 
+    console.log("in template")
+    var url = this.templateUrl + localStorage.getItem('template_id') 
     this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
                     .catch(this.handleError);
@@ -40,22 +40,32 @@ export class ConfigDataService {
     return this.jobData;
   }
 
-  createJob(): Observable<InputComponent[]> {
-    // let url = this.getNewJobUrl;
-    let url = this.newJobUrl
+  saveJobID(): void {
     console.log("am I here");
-    console.log(this.jobData['id'])
+    console.log(this.jobData[])
     localStorage.setItem("job_id", this.jobData['id'])
     console.log("Job ID: " + localStorage.getItem('job_id'))
+    this.newJobUrl = this.newJobUrl + localStorage.getItem('job_id') 
+  }
+
+  createJob(): Observable<InputComponent[]> {
+    // let url = this.getNewJobUrl;
+    // var url = this.newJobUrl;
+    
 
     // let response = this.http.post(url, this.jobData)
-    //                 .map(this.extractJsonData)
+    //                 // .map(this.extractJsonData)
     //                 .catch(this.handleError);
     // console.log("Response: "+response)
-    return this.jobData
+
+    this.jobData = this.http.get(this.newJobUrl)
+                    .map(this.extractJsonData)
+                    .catch(this.handleError);
+    return  this.jobData
   }
 
   saveJob(): Observable<InputComponent[]> {
+    console.log("in save")
     let url = this.saveJobUrl;
     let response = this.http.patch(url, this.jobData)
                     .catch(this.handleError);
@@ -82,10 +92,10 @@ export class ConfigDataService {
   }
 
   private extractJsonData(res: Response) {
+    console.log(res)
     let body = res.json();
     this.response = body
-    // console.log("making a call")
-    // console.log(body.parameters)
+    
     return body || { };
   }
 
