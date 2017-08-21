@@ -31,7 +31,7 @@ export class ConfigDataService {
   template = this.getTemplate()
   output = this.getOutputData()
   // create = this.createJob()
-  save = this.saveJob()
+  // save = this.saveJob()
 
   getTemplate(): Observable<InputComponent[]> {
     console.log("in template")
@@ -50,21 +50,27 @@ export class ConfigDataService {
     return this.newJobUrl
   }
 
+  getSaveJobURL(job_id): string {
+    localStorage.setItem("job_id", job_id)
+    this.newJobUrl = this.newJobUrl +"/"+ localStorage.getItem('job_id') 
+    console.log(this.newJobUrl)
+    return this.newJobUrl
+  }
+
   createJob(jobData:any, newJobUrl): Observable<InputComponent[]> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     this.jobData = this.http.post(newJobUrl, jobData, options)
                     .map(this.extractJsonData)
                     .catch(this.handleError);
-    console.log("Response: "+this.jobData)
-
     return  this.jobData
   }
 
-  saveJob(): Observable<InputComponent[]> {
+  saveJob(jobData:any, newJobUrl): Observable<InputComponent[]> {
     console.log("in save")
-    let url = this.saveJobUrl;
-    let response = this.http.patch(url, this.jobData)
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let response = this.http.patch(newJobUrl, jobData, options)
                     .catch(this.handleError);
     return response
   }

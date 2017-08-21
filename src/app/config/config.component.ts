@@ -44,7 +44,8 @@ export class ConfigComponent implements OnInit {
     console.log("saving")
     if (this.jobCreated) {
       console.log("save job")
-      this.configDataService.save
+      let url = this.configDataService.getSaveJobURL(this.job['id'])
+      this.configDataService.saveJob(this.job, url)
                         .subscribe(
                           saveJob => {
                             console.log(saveJob)
@@ -60,6 +61,7 @@ export class ConfigComponent implements OnInit {
                       .subscribe(
                         createJob => {
                           console.log("created bloody job")
+                          this.jobCreated = true
                           console.log(createJob)
                         },
                         error => {
@@ -151,7 +153,7 @@ export class ConfigComponent implements OnInit {
 
   updateSlider(tag, component, event) {
     let newValue = event.from;
-    this.configDataService.updateJobData(tag['parameters'], component.name, newValue)
+    this.configDataService.updateJobData(tag['parameters'], component.name, newValue.toString())
   }
 
   update(tag, component) {
