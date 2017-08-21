@@ -40,12 +40,13 @@ export class ConfigDataService {
     return this.jobData;
   }
 
-  saveJobID(): void {
+  saveJobID(job_id): void {
     console.log("am I here");
-    console.log(this.jobData[])
-    localStorage.setItem("job_id", this.jobData['id'])
+    console.log(job_id)
+    localStorage.setItem("job_id", job_id)
     console.log("Job ID: " + localStorage.getItem('job_id'))
     this.newJobUrl = this.newJobUrl + localStorage.getItem('job_id') 
+    console.log(this.newJobUrl)
   }
 
   createJob(): Observable<InputComponent[]> {
@@ -53,14 +54,11 @@ export class ConfigDataService {
     // var url = this.newJobUrl;
     
 
-    // let response = this.http.post(url, this.jobData)
-    //                 // .map(this.extractJsonData)
-    //                 .catch(this.handleError);
-    // console.log("Response: "+response)
-
-    this.jobData = this.http.get(this.newJobUrl)
-                    .map(this.extractJsonData)
+    this.jobData = this.http.post(this.newJobUrl, this.jobData)
+                    // .map(this.extractJsonData)
                     .catch(this.handleError);
+    console.log("Response: "+this.jobData)
+
     return  this.jobData
   }
 

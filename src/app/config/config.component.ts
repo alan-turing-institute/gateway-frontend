@@ -55,7 +55,7 @@ export class ConfigComponent implements OnInit {
     }
     else {
       console.log("create job")
-      this.configDataService.saveJobID();
+      this.configDataService.saveJobID(this.job['id']);
       this.configDataService.create
                       .subscribe(
                         createJob => {
@@ -134,6 +134,7 @@ export class ConfigComponent implements OnInit {
                             this.tags = template['families']
                             console.log(template['id'])
                             this.case=template['case']
+                            this.job = template
                           },
                           error => {
                             this.errorMessage = <any> error
