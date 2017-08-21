@@ -6,7 +6,7 @@ import {IonRangeSliderModule} from 'ng2-ion-range-slider';
 import { OutputComponent } from './output.component';
 import { OutputRoutingModule } from './output-routing.module';
 import { OutputService } from './output.service';
-import { VtkModule} from '../vtk.module';
+import { PipeModule} from '../pipe.module';
 
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,7 +26,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     FormsModule,
     IonRangeSliderModule,
     CommonModule,
-    VtkModule,
+    PipeModule,
     ConfigModule,
     DashboardModule,
     NgxChartsModule,

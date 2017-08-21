@@ -15,3 +15,5 @@ import 'rxjs';
 import 'ngx-bootstrap';
 import 'ngx-dropdown';
 import 'ng2-ion-range-slider';
+
+import 'three/src/Three';

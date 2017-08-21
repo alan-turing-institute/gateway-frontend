@@ -1,6 +1,5 @@
 var webpack = require('webpack');
 var helpers = require('./helpers');
-var vtkRules = require('vtk.js/Utilities/config/dependency.js').webpack.v2.rules;
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -26,7 +25,7 @@ module.exports = {
 
       },
       {
-        test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|vtp|json")$/,
+        test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|vtp|json|glsl)$/,
         loader: 'null-loader'
       },
       {
@@ -49,7 +48,7 @@ module.exports = {
           loader: "sass-loader" // compiles Sass to CSS
         }]
       }
-    ].concat(vtkRules)
+    ]
   },
 
   plugins: [

@@ -5,28 +5,6 @@ import { JobInfo } from './jobInfo';
   selector: 'jobSummary',
 
   templateUrl: './jobSummary.component.html',
-//   template: `
-//     <div class="card card-job">
-//         <div class="card-header" [ngClass]="getHeaderClass()">
-//             <span class="badge" [ngClass]="getTitleClass()">
-//                 <i [ngClass]="getSpanIcon()"></i>
-//             </span>
-//             <strong>{{summary.status}}</strong>
-//         </div>
-//         <a routerLinkActive = "active" [routerLink] = "['/output/output', {id: summary.id}]">
-//             <div class="wrapper">
-//                 <img class="card-img-top img-job" src="{{summary.thumbnail}}"
-//                     (mouseover)='setJobHoverHidden()'
-//                     (mouseleave)='setJobHoverHidden()'>
-//                 <i class="fa fa-sign-in fa-2x" [hidden]=jobHoverHidden></i>
-//             </div>
-//         </a>
-//         <div class="card-block">
-//             <p><button type="button" class="btn btn-primary">Details</button></p>
-//             <p><small class="text-muted">Last updated 3 mins ago</small></p>
-//         </div>
-//     </div>`,
-
     styleUrls: ['jobSummary.css']
 })
 

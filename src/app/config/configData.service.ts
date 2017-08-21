@@ -11,23 +11,54 @@ import {InputComponent} from './inputComponent';
 @Injectable()
 export class ConfigDataService {
   private getTemplateUrl = require('../../assets/job_template.json');
+  // private getTemplateUrl = require('http://localhost:5000/api/cases/');
+  private templateData;
+
+  private getNewJobUrl = require('../../assets/job_template.json');
+  // private getNewJobUrl = require('http://localhost:5000/api/jobs/');
+  private jobData;
+
+  private saveJobUrl = require('../../assets/job_template.json');
+  // private getNewJobUrl = require('http://localhost:5000/api/jobs/');
+
   private getOutputUrl = require('../../assets/job_output.json');
   private response = {}
   constructor (private http: Http) {}
+
   template = this.getTemplateData()
   output = this.getOutputData()
+  newJob = this.getNewJobData()
+  saveJob = this.saveJobData()
 
   getTemplateData(): Observable<InputComponent[]> {
-    // console.log("reading")
-    return this.http.get(this.getTemplateUrl)
-                    .map(this.extractTemplateData)
+    let url = this.getTemplateUrl;
+    // let url = this.getTemplateUrl + localStorage.getItem('template_id') 
+    this.templateData = this.http.get(this.getTemplateUrl)
+                    .map(this.extractJsonData)
                     .catch(this.handleError);
+    return this.templateData;
+  }
+
+  getNewJobData(): Observable<InputComponent[]> {
+    let url = this.getNewJobUrl;
+    this.jobData = this.http.post(url, this.templateData)
+                    .map(this.extractJsonData)
+                    .catch(this.handleError);
+    return this.jobData
+  }
+
+  saveJobData(): Observable<InputComponent[]> {
+    let url = this.saveJobUrl;
+    let response = this.http.patch(url, this.jobData)
+                    .map(this.extractJsonData)
+                    .catch(this.handleError);
+    return response
   }
 
   getOutputData(): Observable<InputComponent[]> {
     // console.log("reading")
     return this.http.get(this.getOutputUrl)
-                    .map(this.extractTemplateData)
+                    .map(this.extractJsonData)
                     .catch(this.handleError);
   }
 
@@ -43,7 +74,7 @@ export class ConfigDataService {
         supersetComponents[index].value = newValue;
   }
 
-  private extractTemplateData(res: Response) {
+  private extractJsonData(res: Response) {
     let body = res.json();
     this.response = body
     // console.log("making a call")
