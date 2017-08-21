@@ -155,6 +155,7 @@ export class ConfigComponent implements OnInit {
   }
 
   update(tag, component) {
+    console.log(component)
     if (component.type == "radio")
       component.value = !component.value
     this.configDataService.updateJobData(tag['parameters'], component.name,  component.value)

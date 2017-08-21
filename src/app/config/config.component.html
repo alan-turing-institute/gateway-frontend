@@ -56,8 +56,8 @@
                             [(ngModel)]="component.value"
                             [attr.id]="component.name"
                             type="text"
-                            (keyup.enter)="update(component)"
-                            (blur)="update(component)"
+                            (keyup.enter)="update(tag,component)"
+                            (blur)="update(tag, component)"
                             [disabled]="component.disabled">
                           <span class="input-group-addon">{{component.units}}</span>
                         </div>
@@ -107,7 +107,7 @@
                         max={{component.max_value}}
                         postfix=" {{component.units}}"
                         data-step=0.01
-                        (onFinish)="updateSlider(component, $event)">
+                        (onFinish)="updateSlider(tag, component, $event)">
                       </ion-range-slider>
                     </div>
                     <div *ngIf="type == 'Output'">
