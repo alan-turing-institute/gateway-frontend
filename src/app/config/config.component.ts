@@ -1,21 +1,25 @@
-import { Component, Injectable, OnInit, Input} from '@angular/core';
+import { Component, Injectable, OnInit} from '@angular/core';
+// import { ActivatedRoute} from '@angular/router';
 import { InputComponent } from './inputComponent';
-import { CaseComponents } from './caseComponents';
-import { InputComponentService } from './inputComponent.service';
+import { CaseInfo } from '../cases/case/caseInfo';
+// import { InputComponentService } from './inputComponent.service';
 import { ConfigDataService } from './configData.service';
+
 import { DescriptionComponent } from './description.component';
 // import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
 
+
 @Component({
   selector:"config",
-  providers:[InputComponentService],
+  // providers:[InputComponentService],
   templateUrl: './config.component.html',
   styles:[require('../../../node_modules/ion-rangeslider/css/ion.rangeSlider.css').toString(),
-  require('../../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinFlat.css').toString(),
-  require('./config.component.css').toString()]
+    require('../../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinFlat.css').toString(),
+    require('./config.component.css').toString()]
 })
 
 export class ConfigComponent implements OnInit {
+
   @Input() type:string;
   //@Input() case_type: string;
 
@@ -26,30 +30,34 @@ export class ConfigComponent implements OnInit {
 
   case:CaseComponents
   job: any
+
   tags:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
   mode = 'Observable';
   errorMessage: string;
 
 
   constructor(private configDataService:ConfigDataService,
-    private inputComponentService:InputComponentService) { }
+    // private inputComponentService:InputComponentService
+  ) { }
 
   ngOnInit() {
     this.tags = []
+
     this.case = new CaseComponents
     //this.type = 'Template'
+
     this.getTemplateData()
     //this.getData()
   }
 
   newJob() {
     console.log("init new job")
-    console.log(this.job)
-    // this.getTemplateData()
+    // this.getNewJobData()  
   }
 
   saveJob() {
     console.log("save job")
+    // this.saveJobData () {
   }
 
   startJob() {
@@ -115,14 +123,36 @@ export class ConfigComponent implements OnInit {
   }
 
   getTemplateData () {
-    console.log(localStorage.getItem('template_id'));
+    console.log("Template ID: "+localStorage.getItem('template_id'));
     this.configDataService.template
                         .subscribe(
                           template => {
                             this.tags = template['families']
                             console.log(this.tags)
                             this.case=template['case']
-                            this.job = template
+                          },
+                          error => {
+                            this.errorMessage = <any> error
+                          });
+  }
+
+  getNewJobData () {
+    this.configDataService.newJob
+                        .subscribe(
+                          newJob => {
+                            this.tags = newJob['families']
+                            this.case=newJob['case']
+                          },
+                          error => {
+                            this.errorMessage = <any> error
+                          });
+  }
+
+  saveJobData () {
+    this.configDataService.saveJob
+                        .subscribe(
+                          saveJob => {
+                            console.log(saveJob)
                           },
                           error => {
                             this.errorMessage = <any> error

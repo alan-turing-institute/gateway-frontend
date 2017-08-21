@@ -6,7 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { IonRangeSliderModule } from "ng2-ion-range-slider";
 import { ConfigComponent } from './config.component';
 import { ConfigDataService } from './configData.service';
-import { VtkModule} from '../vtk.module';
+
+import { PipeModule} from '../pipe.module';
 
 // import { ParametersComponent} from './parameters.component';
 // import { DescriptionComponent} from './description.component';
@@ -17,7 +18,7 @@ import { VtkModule} from '../vtk.module';
     CommonModule,
     FormsModule,
     IonRangeSliderModule,
-    VtkModule
+    PipeModule
   ],
   declarations: [ConfigComponent],
   providers: [ConfigDataService],
