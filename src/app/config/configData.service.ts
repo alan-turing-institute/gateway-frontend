@@ -21,13 +21,12 @@ export class ConfigDataService {
   private saveJobUrl = require('../../assets/job_template.json');
   // private getNewJobUrl = require('http://localhost:5000/api/jobs/');
 
+  private getOutputUrl = require('../../assets/job_output.json');
   private response = {}
   constructor (private http: Http) {}
 
   template = this.getTemplateData()
-  newJob = this.getNewJobData()
-  saveJob = this.saveJobData()
-  
+  output = this.getOutputData()
   getTemplateData(): Observable<InputComponent[]> {
     let url = this.getTemplateUrl;
     // let url = this.getTemplateUrl + localStorage.getItem('template_id') 
@@ -51,6 +50,13 @@ export class ConfigDataService {
                     .map(this.extractJsonData)
                     .catch(this.handleError);
     return response
+  }
+
+  getOutputData(): Observable<InputComponent[]> {
+    // console.log("reading")
+    return this.http.get(this.getOutputUrl)
+                    .map(this.extractTemplateData)
+                    .catch(this.handleError);
   }
 
   private arrayObjectIndexOf(myArray, searchTerm, property) {
@@ -92,5 +98,5 @@ export class ConfigDataService {
     return Observable.throw(errMsg);
   }
 
-  
+
 }

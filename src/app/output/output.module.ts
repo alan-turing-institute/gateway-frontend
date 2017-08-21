@@ -6,14 +6,15 @@ import {IonRangeSliderModule} from 'ng2-ion-range-slider';
 import { OutputComponent } from './output.component';
 import { OutputRoutingModule } from './output-routing.module';
 import { OutputService } from './output.service';
-import { VtkModule} from '../vtk.module';
+import { PipeModule} from '../pipe.module';
 
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ChartsComponent } from './chart';
 
-import {ConfigModule} from '../config/config.module'
+import {ConfigModule} from '../config/config.module';
+import {DashboardModule} from '../dashboard/dashboard.module'
 
 //import { DROPDOWN_DIRECTIVES } from '../shared/dropdown.directive';
 
@@ -24,8 +25,9 @@ import {ConfigModule} from '../config/config.module'
     FormsModule,
     IonRangeSliderModule,
     CommonModule,
-    VtkModule,
+    PipeModule,
     ConfigModule,
+    DashboardModule,
     NgxChartsModule
   ],
   declarations: [OutputComponent,

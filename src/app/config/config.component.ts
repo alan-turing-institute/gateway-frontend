@@ -17,6 +17,7 @@ import { ConfigDataService } from './configData.service';
 export class ConfigComponent implements OnInit {
   case:CaseInfo 
   tags:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
+
   mode = 'Observable';
   errorMessage: string;
 
@@ -44,6 +45,63 @@ export class ConfigComponent implements OnInit {
     console.log("run job")
   }
 
+  getData () {
+    if (this.type == "Output") {
+      console.log(localStorage.getItem('template_id'));
+      this.configDataService.template
+                          .subscribe(
+                            template => {
+                              this.tags = template['families']
+                              console.log(this.tags)
+                              this.case=template['case']
+                              this.job = template
+                            },
+                            error => {
+                              this.errorMessage = <any> error
+                            });
+    }
+    if (this.type == "Template") {
+      console.log(localStorage.getItem('template_id'));
+      this.configDataService.template
+                          .subscribe(
+                            template => {
+                              this.tags = template['families']
+                              console.log(this.tags)
+                              this.case=template['case']
+                              this.job = template
+                            },
+                            error => {
+                              this.errorMessage = <any> error
+                            });
+    }
+    if (this.type == "Edit") {
+      console.log(localStorage.getItem('template_id'));
+      this.configDataService.template
+                          .subscribe(
+                            template => {
+                              this.tags = template['families']
+                              console.log(this.tags)
+                              this.case=template['case']
+                              this.job = template
+                            },
+                            error => {
+                              this.errorMessage = <any> error
+                            });
+    }
+
+    console.log(localStorage.getItem('template_id'));
+    this.configDataService.template
+                        .subscribe(
+                          template => {
+                            this.tags = template['families']
+                            console.log(this.tags)
+                            this.case=template['case']
+                            this.job = template
+                          },
+                          error => {
+                            this.errorMessage = <any> error
+                          });
+  }
 
   getTemplateData () {
     console.log("Template ID: "+localStorage.getItem('template_id'));
@@ -51,6 +109,7 @@ export class ConfigComponent implements OnInit {
                         .subscribe(
                           template => {
                             this.tags = template['families']
+                            console.log(this.tags)
                             this.case=template['case']
                           },
                           error => {
@@ -106,6 +165,7 @@ export class ConfigComponent implements OnInit {
     for (var _i = 0; _i < tagToToggle.length; _i++) {
       tagToToggle[_i].collapse = !tagToToggle[_i].collapse
     }
+
 
   }
 }

@@ -7,17 +7,16 @@ import { OutputService } from './output.service';
   providers: [OutputService],
   template: `
   <div class='container-fluid'>
-    <div class = "card">
-      <div class="card-header">
-        Output graph
-      </div>
+
       <div class="card-block">
           <div class = "row">
-          <div class = "col-md-12">
 
-      <div *ngIf="isDataAvailable">
+          <div class = "col-md-10">
+
+
+      <div *ngIf="isDataAvailable" style="width:100%; min-height: 300px">
           <ngx-charts-line-chart
-          [view]="view"
+
           [scheme]="colorScheme"
           [results]="graphData"
           [gradient]=false
@@ -33,7 +32,19 @@ import { OutputService } from './output.service';
         </ngx-charts-line-chart>
     </div>
     </div>
+
+
+
+    <div class = 'col-md-2'>
+    <select (change)='onChangeX($event.target.value)' >
+      <option *ngFor="let key of keys" >{{key}}</option>
+    </select>
+
+    <select (change)='onChangeY($event.target.value)' >
+      <option *ngFor="let y_var of y_vars" >{{y_var}}</option>
+    </select>
     </div>
+
           <!-- <button (click)="update()">UPDATE</button>
 
           <div class = "row">
@@ -51,13 +62,7 @@ import { OutputService } from './output.service';
           </div>
           </div>-->
 
-          <select (change)='onChangeX($event.target.value)' >
-            <option *ngFor="let key of keys" >{{key}}</option>
-          </select>
 
-          <select (change)='onChangeY($event.target.value)' >
-            <option *ngFor="let y_var of y_vars" >{{y_var}}</option>
-          </select>
       </div>
     </div>
   </div>`,
@@ -75,11 +80,12 @@ export class ChartsComponent implements OnInit{
   isDataAvailable:boolean = false;
   varX: string;
   varY: string;
-  x_type: string;
   graphData: Array<any>
 
   // ngx-charts options
-  view: any[] = [700, 400];
+
+  //view: any[] = [500, 400];
+
   xAxisLabel = '';
   yAxisLabel = '';
   colorScheme = {
@@ -98,7 +104,7 @@ export class ChartsComponent implements OnInit{
                         allData => {
                           this.jobData = allData
                           this.keys = this.jobData["keys"]
-                          //this.data = []
+
                           for (let key of this.keys){
                             this.data.push(this.jobData[key])
                             if (typeof(this.jobData[key][0]) === 'number'){
@@ -131,17 +137,28 @@ export class ChartsComponent implements OnInit{
 
 
 drawGraph(){
-  //this.isDataAvailable = false
   this.graphData = [{"name":"", "series":[]}]
+
   let newData = [{"name":this.varY, "series":[]}]
-  this.jobData[this.varX].sort()
+  let type = typeof(this.jobData[this.varX][0])
+  let date = new Date(this.jobData[this.varX][0]).toString()
+
   for(var i = 0; i<this.jobData[this.varX].length; i++){
-    newData[0]["series"].push({'name':this.jobData[this.varX][i], 'value':this.jobData[this.varY][i]})
+    //if var is a number
+    if(type==='number'){
+      newData[0]["series"].push({'name':this.jobData[this.varX][i], 'value':this.jobData[this.varY][i]})
+    }
+    //the var is a valid date string
+    else if(date !== 'Invalid Date'){
+      newData[0]["series"].push({'name':new Date(this.jobData[this.varX][i]), 'value':this.jobData[this.varY][i]})
+    //the var is a string i.e. category
+    }else{
+      newData[0]["series"].push({'name':this.jobData[this.varX][i], 'value':this.jobData[this.varY][i]})
+    }
   }
   this.xAxisLabel = this.varX
   this.yAxisLabel = this.varY
   this.graphData = newData
-  //this.isDataAvailable = true
 }
 
 onChangeX(key){

@@ -1,5 +1,6 @@
 <div class="container-fluid">
   <div class="row case-panel">
+
     <!-- <div class="col-md-12">
       <caseCard [info]="case"></caseCard>
     </div> -->
@@ -48,6 +49,7 @@
 
       <!-- <div class="col-md-4"><img src={{case.thumbnail}}  class="img-thumbnail"></div>   -->
       <!-- <div class="col-md-8">
+
         <div class="row">
           <div class="col-md-12">
             <h4>  {{case.label}}</h4>
@@ -57,7 +59,7 @@
         <div class="row">
           <div class="col-md-9 col-md-push-3">
             <button type="button" class="btn btn-primary" (click)="newJob()">
-              <i class="fa fa-file-text-o"></i> 
+              <i class="fa fa-file-text-o"></i>
               <span class="actionText"><strong>New</strong></span>
               </button>
             <button type="button" class="btn btn-primary" (click)="saveJob()">
@@ -70,17 +72,19 @@
                 <span class="actionText">
                   <strong>Submit Job</strong></span></button>
           </div>
+
         </div> 
     </div>  -->
+
   </div>
-  
+
   <div class="row">
     <div class="col-md-12">
           <div [attr.id]="componentFamilyAccordion" role="tablist">
-            <div *ngFor="let tag of tags" class="card">
-              <div class="card-header config" role="tab">
+            <div *ngFor="let tag of tags" class="card" >
+              <div class="card-header config" role="tab" (click)="toggleCollapse(tag)">
                 <h5 class="mb-0">
-                  <a data-toggle="collapse" data-target={{getDataTarget(tag)}} data-parent="#componentFamilyAccordion" (click)="toggleCollapse(tag)">
+                  <a data-toggle="collapse" data-target={{getDataTarget(tag)}} data-parent="#componentFamilyAccordion">
                     {{tag.label}}
                   </a>
                 </h5>
@@ -134,7 +138,7 @@
                           postfix=" {{component.units}}"
                           data-step=0.01
                           (onFinish)="updateSlider(tag, component, $event)"></ion-range-slider>
-                        <app-vtk [radius]="component.value"></app-vtk>
+                        <app-pipe [radius]="component.value"></app-pipe>
                     </div>
                   </div>
                 </div>
@@ -142,6 +146,5 @@
             </div>
           </div>
     </div>
-  </div> 
+  </div>
 </div>
-

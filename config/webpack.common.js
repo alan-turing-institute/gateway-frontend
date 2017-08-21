@@ -2,7 +2,6 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var helpers = require('./helpers');
-var vtkRules = require('vtk.js/Utilities/config/dependency.js').webpack.v2.rules;
 
 module.exports = {
   entry: {
@@ -37,12 +36,16 @@ module.exports = {
       {
         test: /\.css$/,
         exclude: helpers.root('src', 'app'),
-        loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap' })
+        loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: ['css-loader'] })
       },
       {
         test: /\.css$/,
         include: helpers.root('src', 'app'),
         loader: 'raw-loader'
+      },
+      {
+        test: /\.glsl$/,
+        loader: 'webpack-glsl-loader'
       },
       {
         test: /\.scss$/,
@@ -54,7 +57,7 @@ module.exports = {
           loader: "sass-loader" // compiles Sass to CSS
         }]
       }
-    ].concat(vtkRules)
+    ]
   },
 
   plugins: [

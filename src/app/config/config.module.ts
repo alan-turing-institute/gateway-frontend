@@ -5,9 +5,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonRangeSliderModule } from "ng2-ion-range-slider";
 import { ConfigComponent } from './config.component';
+import { DescriptionComponent } from './description.component'
 import { ConfigDataService } from './configData.service';
-import { VtkModule} from '../vtk.module';
-import { CasesModule} from '../cases/cases.module';
+import { PipeModule} from '../pipe.module';
 // import { ParametersComponent} from './parameters.component';
 // import { DescriptionComponent} from './description.component';
 
@@ -17,12 +17,12 @@ import { CasesModule} from '../cases/cases.module';
     CommonModule,
     FormsModule,
     IonRangeSliderModule,
-    VtkModule,
-    CasesModule
+    PipeModule
   ],
-  declarations: [ConfigComponent],
+  declarations: [ConfigComponent,
+                  DescriptionComponent],
   providers: [ConfigDataService],
-  exports: [ConfigComponent]
+  exports: [ConfigComponent, DescriptionComponent]
 })
 
 export class ConfigModule { }

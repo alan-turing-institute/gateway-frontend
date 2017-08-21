@@ -6,6 +6,7 @@ import { JobSummaryComponent } from './jobSummary.component';
 
 
 @Component({
+  selector: "dashboard",
   providers: [DashboardService],
   templateUrl: 'dashboard.component.html',
   styleUrls:['jobs.css']
