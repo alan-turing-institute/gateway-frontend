@@ -13,8 +13,10 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 import { ChartsComponent } from './chart';
 
-import {ConfigModule} from '../config/config.module'
+import {ConfigModule} from '../config/config.module';
+import {DashboardModule} from '../dashboard/dashboard.module'
 
+import { TabsModule } from 'ngx-bootstrap/tabs';
 //import { DROPDOWN_DIRECTIVES } from '../shared/dropdown.directive';
 
 @NgModule({
@@ -26,7 +28,9 @@ import {ConfigModule} from '../config/config.module'
     CommonModule,
     VtkModule,
     ConfigModule,
-    NgxChartsModule
+    DashboardModule,
+    NgxChartsModule,
+    TabsModule.forRoot()
   ],
   declarations: [OutputComponent,
                   ChartsComponent//,

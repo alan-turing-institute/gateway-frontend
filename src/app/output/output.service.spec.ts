@@ -87,9 +87,9 @@ describe('Output Service', () => {
             expect(components).toBeDefined();
           })
 
-          outputService.getJobConfig().subscribe((components: JobConfig []) => {
-              expect(components).toBeDefined();
-        });
+          //outputService.getJobConfig().subscribe((components: JobConfig []) => {
+          //    expect(components).toBeDefined();
+        //});
 
         done();
     });

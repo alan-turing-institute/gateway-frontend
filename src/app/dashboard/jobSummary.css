@@ -1,46 +1,39 @@
+
 .card-job {
-    margin:2% 2% 2% 2%;
-    width: 18rem;
+    margin:1% 1% 1% 1%;
+    /* max-width: 70vh; */
 }
 
-.card-outline-running {
-    background-color: transparent;
-    /*border-color: #cfd8dc;*/
+.card-block-container {
+    padding: 0%;
 }
 
-.card-outline-error {
-    background-color: transparent;
+
+.card-header-name {
+    color: #263238;
 }
 
-.card-outline-complete {
-    background-color: transparent;
+.card-header, a:focus, a:hover {
+    /* background-color: #a8c8d6; */
 }
 
-.card-header-running {
-    color: white;
-    background-color: #4dbd74;
-    font-size: medium;
+.badge-draft {
+    color: #f8cb00;
 }
 
-.card-header-error {
-    /*border-bottom: 1px solid #a94442;*/
-    color: white;
-    background-color: #f86c6b;
-    font-size: medium;
+.badge-running {
+    color: #4dbd74;
 }
 
-.card-header-complete {
-    /*border-bottom: 1px solid #263238;*/
-    background-color: #20a8d8;
-    color: white;
-    font-size: medium;
+.badge-error {
+    
+    color: #f86c6b;
 }
 
-.card-header-draft {
-    /*border-bottom: 1px solid #263238;*/
-    background-color: #f8cb00;
-    color: white;
-    font-size: medium;
+.badge-complete {
+    color: #20a8d8;
+    
+
 }
 
 .wrapper {
@@ -55,10 +48,17 @@
 }
 
 .img-job {
-    vertical-align: middle;
-    max-width:15rem;
-    max-height:15rem;
-    left:2.5rem;
-    position: relative;
+    max-width:5rem;
+    /* max-height:5rem; */
+    /* padding-right: 1rem;
+    padding-left: 1rem; */
 }
 
+.descriptionText, a:focus, a:hover {
+    color: #263238;
+    text-decoration: none;
+}
+
+.break-word {
+    word-wrap: break-word;
+}
