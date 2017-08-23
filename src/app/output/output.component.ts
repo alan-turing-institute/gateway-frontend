@@ -42,6 +42,8 @@ export class OutputComponent implements OnInit {
 
   ngOnInit() {
         this.job_id = this.activatedRoute.snapshot.params["id"];
+        //this.job_id = "0a2ca1f2-1de3-4638-a70f-b3f23a4018ef"
+        console.log(this.job_id)
         console.log(!this.graph['collapse'])
         //get job status (same as in dashboard)
         this.getInfoData();
@@ -63,8 +65,9 @@ getInfoData(){
                         }
                       }
                       this.status = this.job.status
-                      this.caseID = this.job.case.id
-                      console.log(this.job)
+                      //this.caseID = this.job.case.id
+                      this.caseID = 'af7fd241-e816-40e5-9a70-49598a452b7b'
+                      console.log(this.job.case.id)
                       this.getCaseData()
                     },
                     error => {
@@ -84,6 +87,8 @@ getInfoData(){
      this.outputService.case
                         .subscribe(
                           allCases =>{
+                            console.log(allCases)
+                            console.log(this.caseID)
                             for(let aCase of allCases){
                               if(aCase.id==this.caseID){
                                 this.case = aCase

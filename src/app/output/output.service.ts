@@ -7,12 +7,15 @@ import 'rxjs/add/operator/map';
 
 import {JobInfo} from '../dashboard/jobInfo';
 import {JobConfig} from './jobConfigComponent';
+import { CaseInfo } from '../cases/case/caseInfo';
+
 
 @Injectable()
 export class OutputService {
   private infosUrl = require('../../assets/job_status.json');
   private configsUrl = require('../../assets/job_output.json');
-  private caseTypesUrl = require('../../assets/case_types.json')
+  //private caseTypesUrl = require('../../assets/case_types.json')
+  private caseTypesUrl = 'http://localhost:5000/api/cases';
   constructor (private http: Http) {}
 
   info = this.getJobInfo()
@@ -33,7 +36,7 @@ export class OutputService {
                     .catch(this.handleError)
   }
 
-  getCaseInfo():Observable<Array<any>>{
+  getCaseInfo():Observable<CaseInfo[]>{
     return this.http.get(this.caseTypesUrl)
                     .map(this.extractCases)
                     .catch(this.handleError)
