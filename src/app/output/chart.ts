@@ -120,28 +120,44 @@ export class ChartsComponent implements OnInit{
 
 
 drawGraph(){
-  this.graphData = [{"name":"", "series":[]}]
 
-  let newData = [{"name":this.varY, "series":[]}]
+  // At this point varX and varY are known (both are key strings
+  // specifying the X and Y variables to plot)
+
+  let newData = {"name":this.varY, "series":[]}
   let type = typeof(this.jobData[this.varX][0])
   let date = new Date(this.jobData[this.varX][0]).toString()
+
+  console.log("this.jobData", this.jobData)
+
 
   for(var i = 0; i<this.jobData[this.varX].length; i++){
     //var is a number - need to check first otherwise numbers will be treated as dates
     if(type==='number'){
-      newData[0]["series"].push({'name':this.jobData[this.varX][i], 'value':this.jobData[this.varY][i]})
+      newData.series.push({
+        'name':this.jobData[this.varX][i],
+        'value':this.jobData[this.varY][i]
+      })
     }
     //the var is a valid date string
     else if(date !== 'Invalid Date'){
-      newData[0]["series"].push({'name':new Date(this.jobData[this.varX][i]), 'value':this.jobData[this.varY][i]})
+      newData.series.push({
+        'name':new Date(this.jobData[this.varX][i]),
+        'value':this.jobData[this.varY][i]}
+      )
     //the var is a string i.e. category
     }else{
-      newData[0]["series"].push({'name':this.jobData[this.varX][i], 'value':this.jobData[this.varY][i]})
+      newData.series.push({
+        'name':this.jobData[this.varX][i],
+        'value':this.jobData[this.varY][i]
+      })
     }
   }
   this.xAxisLabel = this.varX
   this.yAxisLabel = this.varY
-  this.graphData = newData
+  this.graphData = [newData]
+
+  console.log("graphData", this.graphData)
 }
 
 onChangeX(key){

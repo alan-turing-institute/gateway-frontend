@@ -13,6 +13,7 @@ export class OutputService {
   private infosUrl = require('../../assets/job_status.json');
   private configsUrl = require('../../assets/job_output.json');
   private caseTypesUrl = require('../../assets/case_types.json')
+  private dataUrl = require('../../assets/sample_data.json');
   constructor (private http: Http) {}
 
   info = this.getJobInfo()
@@ -28,7 +29,7 @@ export class OutputService {
   }
 
   getOutputData(): Observable<Array<any>>{
-    return this.http.get(this.configsUrl)
+    return this.http.get(this.dataUrl)
                     .map(this.extractData)
                     .catch(this.handleError)
   }
