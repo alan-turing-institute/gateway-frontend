@@ -13,7 +13,10 @@ export class OutputService {
   private infosUrl = require('../../assets/job_status.json');
   private configsUrl = require('../../assets/job_output.json');
   private caseTypesUrl = require('../../assets/case_types.json')
-  private dataUrl = require('../../assets/sample_data.json');
+  // private dataUrl = require('../../assets/sample_data.json');
+  private dataUrl = 'http://localhost:5000/api/progress/zfa6521e-a123-4a76-a04e-c367b6da169a';
+
+
   constructor (private http: Http) {}
 
   info = this.getJobInfo()
@@ -45,9 +48,17 @@ export class OutputService {
     return body.jobs || { };
   }
 
+  // private extractData(res: Response){
+  //   let body = res.json();
+  //   return body.data || { };
+  // }
+
   private extractData(res: Response){
     let body = res.json();
-    return body.data || { };
+    let gatewayData = JSON.parse(body.stdout);
+    console.log(gatewayData);
+    console.log(gatewayData.data);
+    return gatewayData.data || { };
   }
 
   private extractCases(res: Response){

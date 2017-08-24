@@ -32,6 +32,14 @@ import { OutputService } from './output.service';
     </div>
 
     <div class = "row">
+
+      <div class = "col-md-6">
+        <select class = "form-control" (change)='onChangeY($event.target.value)' >
+          <!--<option selected>Y-axis</option>-->
+          <option *ngFor="let y_var of number_vars" >{{y_var}}</option>
+        </select>
+      </div>
+
       <div class = "col-md-6">
         <select class="form-control" (change)='onChangeX($event.target.value)' >
           <!--<option selected>X-axis</option>-->
@@ -39,12 +47,6 @@ import { OutputService } from './output.service';
         </select>
       </div>
 
-      <div class = "col-md-6">
-        <select class = "form-control" (change)='onChangeY($event.target.value)' >
-          <!--<option selected>Y-axis</option>-->
-          <option *ngFor="let y_var of y_vars" >{{y_var}}</option>
-        </select>
-      </div>
     </div>
 
   </div>
@@ -58,7 +60,7 @@ export class ChartsComponent implements OnInit{
   errorMessage: string;
   jobData: {};
   keys: Array<any>;
-  y_vars: Array<any> = [];
+  number_vars: Array<any> = [];
   data: Array<any> = [];
   isDataAvailable:boolean = false;
   varX: string;
@@ -86,26 +88,24 @@ export class ChartsComponent implements OnInit{
                       .subscribe(
                         allData => {
                           this.jobData = allData
-                          this.keys = this.jobData["keys"]
+                          this.keys = this.jobData["keys"];
 
-                          for (let key of this.keys){
+                          for (let key of this.keys) {
                             this.data.push(this.jobData[key])
                             if (typeof(this.jobData[key][0]) === 'number'){
-                              this.y_vars.push(key)
+                              this.number_vars.push(key)
                             }
                           }
 
-                          //plot first 2 vars against each other
-                          this.varY = this.y_vars[0]
-                          if(this.keys[0] != this.y_vars[0]){
-                            this.varX = this.keys[0]
-                          }else{
-                            this.varX = this.keys[1]
-                            //reorder keys so that top choice in dropdown is name of X variable being plotted
-                            let temp = this.keys[0]
-                            this.keys[0] = this.keys[1]
-                            this.keys[1] = temp
-                          }
+                          // plot first 2 vars against each other
+                          this.varX = this.number_vars[0]
+                          this.varY = this.number_vars[1]
+
+                          // reorder number_vars (labels) so that the visible
+                          // choice in the menu corresponds to the Y variable shown
+                          let temp = this.number_vars[0]
+                          this.number_vars[0] = this.number_vars[1]
+                          this.number_vars[1] = temp
 
                           this.drawGraph()
 
@@ -118,7 +118,6 @@ export class ChartsComponent implements OnInit{
                       )
   }
 
-
 drawGraph(){
 
   // At this point varX and varY are known (both are key strings
@@ -128,8 +127,13 @@ drawGraph(){
   let type = typeof(this.jobData[this.varX][0])
   let date = new Date(this.jobData[this.varX][0]).toString()
 
-  console.log("this.jobData", this.jobData)
 
+  // TODO refactor the code below into a function that converts
+  // "sample_x": [1, 2]
+  // "sample_y": [10, 24]
+  //
+  // to:
+  // [{"name": 1, "value": 10}, {"name": 2, "value": 24}]
 
   for(var i = 0; i<this.jobData[this.varX].length; i++){
     //var is a number - need to check first otherwise numbers will be treated as dates
