@@ -14,7 +14,7 @@ export class OutputService {
   private configsUrl = require('../../assets/job_output.json');
   private caseTypesUrl = require('../../assets/case_types.json')
   // private dataUrl = require('../../assets/sample_data.json');
-  private dataUrl = 'http://localhost:5000/api/progress/zfa6521e-a123-4a76-a04e-c367b6da169a';
+  private dataUrl = 'http://localhost:5000/api/data/eee9d958-2bd3-4aca-aea5-3ed1c7a6a673';
 
 
   constructor (private http: Http) {}
