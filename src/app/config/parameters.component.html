@@ -53,6 +53,11 @@
                     <label [for]=component.name>{{component.label}}</label>
                     <app-pipe></app-pipe>
                     </div>
+
+                    <div *ngIf="component.type == 'tank'">
+                        <label [for]=component.name>{{component.label}}</label>
+                        <app-tank></app-tank>
+                    </div>
                 </div>
                 </div>
             </div>
