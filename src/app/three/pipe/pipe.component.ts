@@ -5,7 +5,7 @@ import {
     MeshToonMaterial, BoxGeometry, PointLight, AmbientLight
 } from 'three/src/Three';
 
-import { TrackballControls } from './TrackballControls';
+import { TrackballControls } from '../TrackballControls';
 import { PipeGeometry } from './pipeSource';
 
 @Component({
@@ -13,7 +13,7 @@ import { PipeGeometry } from './pipeSource';
     templateUrl: './pipe.component.html',
     styleUrls: ['./pipe.component.css']
 })
-export class PipeComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
+export class PipeComponent implements ThreeComponent, OnInit, OnChanges, OnDestroy, DoCheck {
 
     @ViewChild('pipeDisplay') pipeDiv: ElementRef;
     @Input() radius: number;
@@ -41,15 +41,15 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         this.scene = new Scene();
         this.scene.background = new Color(0xffffff);
 
-        var screenRatio = this.renderer.domElement.offsetWidth / this.renderer.domElement.offsetHeight;
-        console.log("Setting screen ratio to " + screenRatio + " width: " + this.renderer.domElement.offsetWidth);
+        let screenRatio = this.renderer.domElement.offsetWidth / this.renderer.domElement.offsetHeight;
+        console.log('Setting screen ratio to ' + screenRatio + ' width: ' + this.renderer.domElement.offsetWidth);
         this.camera = new PerspectiveCamera(75, screenRatio, 0.1, 1000);
 
         this.geometry = new PipeGeometry(+this.radius, +this.shellWidth, +this.length, +this.resolution);
-        var material = new MeshToonMaterial({ color: 0x222222 });
-        var pipe = new Mesh(this.geometry.getGeometry(), material);
+        let material = new MeshToonMaterial({ color: 0x222222 });
+        let pipe = new Mesh(this.geometry.getGeometry(), material);
 
-        var lights = [];
+        let lights = [];
         lights[0] = new PointLight(0xffffff, 1, 0);
         lights[1] = new PointLight(0xffffff, 1, 0);
         lights[2] = new PointLight(0xffffff, 1, 0);
@@ -62,7 +62,7 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         this.scene.add(lights[1]);
         this.scene.add(lights[2]);
 
-        var ambLight = new AmbientLight(0xffffff);
+        let ambLight = new AmbientLight(0xffffff);
         this.scene.add(ambLight);
 
         this.scene.add(pipe);
@@ -71,7 +71,7 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
         this.render();
 
-        var controls = new TrackballControls(this.camera, this.renderer.domElement, this);
+        let controls = new TrackballControls(this.camera, this.renderer.domElement, this);
     }
 
     public render(): void {
@@ -88,11 +88,11 @@ export class PipeComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
 
     public ngOnDestroy(): void {
-        console.log("Boom! 💣")
+        console.log('Boom! 💣')
     }
 
-    public ngDoCheck(){
-        if(this.camera === undefined){
+    public ngDoCheck(): void {
+        if (this.camera === undefined) {
             return;
         }
         // var screenRatio = this.renderer.domElement.width / this.renderer.domElement.height;
