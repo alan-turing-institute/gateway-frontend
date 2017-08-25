@@ -15,8 +15,6 @@ declare interface ThreeScreen {
 }
 
 const STATE = { NONE: - 1, ROTATE: 0, ZOOM: 1, PAN: 2, TOUCH_ROTATE: 3, TOUCH_ZOOM_PAN: 4 };
-let _this: TrackballControls;
-let _pipe: ThreeComponent;
 
 export class TrackballControls {
 
@@ -75,12 +73,14 @@ export class TrackballControls {
 
     private is_mousedown: boolean;
 
+
+    private _pipe: ThreeComponent;
+
     constructor(object, domElement, pipe: ThreeComponent) {
         if (domElement === undefined) {
             throw 'DomElement must be provided to TrackballControls';
         }
-        _this = this;
-        _pipe = pipe;
+        this._pipe = pipe;
 
         this.object = object;
         this.domElement = domElement;
@@ -116,24 +116,24 @@ export class TrackballControls {
         this.lastPosition = new Vector3();
 
         this._state = STATE.NONE,
-        this._prevState = STATE.NONE,
+            this._prevState = STATE.NONE,
 
-        this._eye = new Vector3(),
+            this._eye = new Vector3(),
 
-        this._movePrev = new Vector2(),
-        this._moveCurr = new Vector2(),
+            this._movePrev = new Vector2(),
+            this._moveCurr = new Vector2(),
 
-        this._lastAxis = new Vector3(),
-        this._lastAngle = 0,
+            this._lastAxis = new Vector3(),
+            this._lastAngle = 0,
 
-        this._zoomStart = new Vector2(),
-        this._zoomEnd = new Vector2(),
+            this._zoomStart = new Vector2(),
+            this._zoomEnd = new Vector2(),
 
-        this._touchZoomDistanceStart = 0,
-        this._touchZoomDistanceEnd = 0,
+            this._touchZoomDistanceStart = 0,
+            this._touchZoomDistanceEnd = 0,
 
-        this._panStart = new Vector2(),
-        this._panEnd = new Vector2();
+            this._panStart = new Vector2(),
+            this._panEnd = new Vector2();
 
         this.is_mousedown = false;
 
@@ -160,21 +160,21 @@ export class TrackballControls {
         this._panCamera_pan = new Vector3();
 
 
-        this.domElement.addEventListener('contextmenu', this.contextmenu, false);
+        this.domElement.addEventListener('contextmenu', this.makeContextmenu(), false);
 
-        this.domElement.addEventListener('mousedown', this.mousedown, false);
-        this.domElement.addEventListener('mousemove', this.mousemove, false);
-        this.domElement.addEventListener('mouseup', this.mouseup, false);
-        this.domElement.addEventListener('mouseleave', this.mouseleave, false);
+        this.domElement.addEventListener('mousedown', this.makeMousedown(), false);
+        this.domElement.addEventListener('mousemove', this.makeMousemove(), false);
+        this.domElement.addEventListener('mouseup', this.makeMouseup(), false);
+        this.domElement.addEventListener('mouseleave', this.makeMouseleave(), false);
 
-        this.domElement.addEventListener('wheel', this.mousewheel, false);
+        this.domElement.addEventListener('wheel', this.makeMousewheel(), false);
 
-        this.domElement.addEventListener('touchstart', this.touchstart, false);
-        this.domElement.addEventListener('touchend', this.touchend, false);
-        this.domElement.addEventListener('touchmove', this.touchmove, false);
+        this.domElement.addEventListener('touchstart', this.makeTouchstart(), false);
+        this.domElement.addEventListener('touchend', this.makeTouchend(), false);
+        this.domElement.addEventListener('touchmove', this.makeTouchmove(), false);
 
-        this.domElement.addEventListener('keydown', this.keydown, false);
-        this.domElement.addEventListener('keyup', this.keyup, false);
+        this.domElement.addEventListener('keydown', this.makeKeydown(), false);
+        this.domElement.addEventListener('keyup', this.makeKeyup(), false);
 
         this.handleResize();
 
@@ -246,7 +246,7 @@ export class TrackballControls {
             this._rotateCamera_eyeDirection.copy(this._eye).normalize();
             this._rotateCamera_objectUpDirection.copy(this.object.up).normalize();
             this._rotateCamera_objectSidewaysDirection.crossVectors(this._rotateCamera_objectUpDirection,
-                                                                    this._rotateCamera_eyeDirection).normalize();
+                this._rotateCamera_eyeDirection).normalize();
 
             this._rotateCamera_objectUpDirection.setLength(this._moveCurr.y - this._movePrev.y);
             this._rotateCamera_objectSidewaysDirection.setLength(this._moveCurr.x - this._movePrev.x);
@@ -333,7 +333,7 @@ export class TrackballControls {
 
             } else {
                 this._panStart.add(this._panCamera_mouseChange.subVectors(this._panEnd,
-                                                                          this._panStart).multiplyScalar(this.dynamicDampingFactor));
+                    this._panStart).multiplyScalar(this.dynamicDampingFactor));
             }
 
         }
@@ -421,272 +421,305 @@ export class TrackballControls {
 
     // listeners
 
-    public keydown(event) {
+    public makeKeydown() {
+        const _this = this;
+        return function (event) {
+            if (_this.enabled === false) {
+                return;
+            }
 
-        if (_this.enabled === false) {
-            return;
+            _this._prevState = _this._state;
+
+            if (_this._state !== STATE.NONE) {
+
+                return;
+
+            } else if (event.keyCode === _this.keys[STATE.ROTATE] && !_this.noRotate) {
+
+                _this._state = STATE.ROTATE;
+
+            } else if (event.keyCode === _this.keys[STATE.ZOOM] && !_this.noZoom) {
+
+                _this._state = STATE.ZOOM;
+
+            } else if (event.keyCode === _this.keys[STATE.PAN] && !_this.noPan) {
+
+                _this._state = STATE.PAN;
+
+            }
+            _this.update();
+            _this._pipe.render();
         }
-
-        _this._prevState = _this._state;
-
-        if (_this._state !== STATE.NONE) {
-
-            return;
-
-        } else if (event.keyCode === _this.keys[STATE.ROTATE] && !_this.noRotate) {
-
-            _this._state = STATE.ROTATE;
-
-        } else if (event.keyCode === _this.keys[STATE.ZOOM] && !_this.noZoom) {
-
-            _this._state = STATE.ZOOM;
-
-        } else if (event.keyCode === _this.keys[STATE.PAN] && !_this.noPan) {
-
-            _this._state = STATE.PAN;
-
-        }
-        _this.update();
-        _pipe.render();
     }
 
-    public keyup(event) {
+    public makeKeyup() {
+        const _this = this;
+        return function (event) {
 
-        if (_this.enabled === false) {
-            return;
+            if (_this.enabled === false) {
+                return;
+            }
+
+            _this._state = _this._prevState;
+
+            _this.update();
+            _this._pipe.render();
         }
-
-        _this._state = _this._prevState;
-
-        _this.update();
-        _pipe.render();
     }
 
-    public mousedown(event) {
+    public makeMousedown() {
 
-        if (_this.enabled === false) {
-            return;
-        }
+        const _this = this;
+        return function (event) {
 
-        event.preventDefault();
-        event.stopPropagation();
+            if (_this.enabled === false) {
+                return;
+            }
 
-        if (_this._state === STATE.NONE) {
-            _this._state = event.button;
-        }
+            event.preventDefault();
+            event.stopPropagation();
 
-        if (_this._state === STATE.ROTATE && !_this.noRotate) {
+            if (_this._state === STATE.NONE) {
+                _this._state = event.button;
+            }
 
-            _this._moveCurr.copy(_this.getMouseOnCircle(event.pageX, event.pageY));
-            _this._movePrev.copy(_this._moveCurr);
             _this.is_mousedown = true;
 
-        } else if (_this._state === STATE.ZOOM && !_this.noZoom) {
+            if (_this._state === STATE.ROTATE && !_this.noRotate) {
 
-            _this._zoomStart.copy(_this.getMouseOnScreen(event.pageX, event.pageY));
-            _this._zoomEnd.copy(_this._zoomStart);
-            _this.is_mousedown = true;
-
-        } else if (_this._state === STATE.PAN && !_this.noPan) {
-
-            _this._panStart.copy(_this.getMouseOnScreen(event.pageX, event.pageY));
-            _this._panEnd.copy(_this._panStart);
-            _this.is_mousedown = true;
-
-        }
-
-        // this.domElement.dispatchEvent(this.startEvent);
-        _this.update();
-        _pipe.render();
-    }
-
-    public mousemove(event) {
-
-        if (_this.enabled === false || _this.is_mousedown === false) {
-            return;
-        }
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        if (_this._state === STATE.ROTATE && !_this.noRotate) {
-
-            _this._movePrev.copy(_this._moveCurr);
-            _this._moveCurr.copy(_this.getMouseOnCircle(event.pageX, event.pageY));
-
-        } else if (_this._state === STATE.ZOOM && !_this.noZoom) {
-
-            _this._zoomEnd.copy(this.getMouseOnScreen(event.pageX, event.pageY));
-
-        } else if (_this._state === STATE.PAN && !_this.noPan) {
-
-            _this._panEnd.copy(_this.getMouseOnScreen(event.pageX, event.pageY));
-
-        }
-        _this.update();
-        _pipe.render();
-    }
-
-    public mouseup(event) {
-
-        if (_this.enabled === false) {
-            return;
-        }
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        _this._state = STATE.NONE;
-        _this.is_mousedown = false;
-
-        _pipe.render();
-    }
-
-    public mouseleave(event) {
-        if (_this.enabled === false) {
-            return;
-        }
-        event.preventDefault();
-        event.stopPropagation();
-
-        _this.STATE = STATE.NONE;
-        _this.is_mousedown = false;
-
-        _pipe.render();
-    }
-
-    public mousewheel(event) {
-
-        if (_this.enabled === false) {
-            return;
-        }
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        switch (event.deltaMode) {
-
-            case 2:
-                // Zoom in pages
-                _this._zoomStart.y -= event.deltaY * 0.025;
-                break;
-
-            case 1:
-                // Zoom in lines
-                _this._zoomStart.y -= event.deltaY * 0.01;
-                break;
-
-            default:
-                // undefined, 0, assume pixels
-                _this._zoomStart.y -= event.deltaY * 0.00025;
-                break;
-
-        }
-
-        // this.domElement.dispatchEvent(this.startEvent);
-        // this.domElement.dispatchEvent(this.endEvent);
-        _this.update();
-        _pipe.render();
-    }
-
-    public touchstart(event) {
-
-        if (_this.enabled === false) {
-            return;
-        }
-
-        switch (event.touches.length) {
-
-            case 1:
-                _this._state = STATE.TOUCH_ROTATE;
-                _this._moveCurr.copy(_this.getMouseOnCircle(event.touches[0].pageX, event.touches[0].pageY));
+                _this._moveCurr.copy(_this.getMouseOnCircle(event.pageX, event.pageY));
                 _this._movePrev.copy(_this._moveCurr);
-                break;
 
-            default: // 2 or more
-                _this._state = STATE.TOUCH_ZOOM_PAN;
-                let dx = event.touches[0].pageX - event.touches[1].pageX;
-                let dy = event.touches[0].pageY - event.touches[1].pageY;
-                _this._touchZoomDistanceEnd = _this._touchZoomDistanceStart = Math.sqrt(dx * dx + dy * dy);
+            } else if (_this._state === STATE.ZOOM && !_this.noZoom) {
 
-                let x = (event.touches[0].pageX + event.touches[1].pageX) / 2;
-                let y = (event.touches[0].pageY + event.touches[1].pageY) / 2;
-                _this._panStart.copy(_this.getMouseOnScreen(x, y));
+                _this._zoomStart.copy(_this.getMouseOnScreen(event.pageX, event.pageY));
+                _this._zoomEnd.copy(_this._zoomStart);
+
+            } else if (_this._state === STATE.PAN && !_this.noPan) {
+
+                _this._panStart.copy(_this.getMouseOnScreen(event.pageX, event.pageY));
                 _this._panEnd.copy(_this._panStart);
-                break;
 
+            }
+
+            _this.update();
+            _this._pipe.render();
         }
-
-        // this.domElement.dispatchEvent(this.startEvent);
-        _this.update();
-        _pipe.render();
     }
 
-    public touchmove(event) {
+    public makeMousemove() {
+        const _this = this;
+        return function (event) {
 
-        if (_this.enabled === false) {
-            return;
-        }
+            if (_this.enabled === false || _this.is_mousedown === false) {
+                return;
+            }
 
-        event.preventDefault();
-        event.stopPropagation();
+            event.preventDefault();
+            event.stopPropagation();
 
-        switch (event.touches.length) {
+            if (_this._state === STATE.ROTATE && !_this.noRotate) {
 
-            case 1:
                 _this._movePrev.copy(_this._moveCurr);
-                _this._moveCurr.copy(_this.getMouseOnCircle(event.touches[0].pageX, event.touches[0].pageY));
-                break;
+                _this._moveCurr.copy(_this.getMouseOnCircle(event.pageX, event.pageY));
 
-            default: // 2 or more
-                let dx = event.touches[0].pageX - event.touches[1].pageX;
-                let dy = event.touches[0].pageY - event.touches[1].pageY;
-                _this._touchZoomDistanceEnd = Math.sqrt(dx * dx + dy * dy);
+            } else if (_this._state === STATE.ZOOM && !_this.noZoom) {
 
-                let x = (event.touches[0].pageX + event.touches[1].pageX) / 2;
-                let y = (event.touches[0].pageY + event.touches[1].pageY) / 2;
-                _this._panEnd.copy(_this.getMouseOnScreen(x, y));
-                break;
+                _this._zoomEnd.copy(this.getMouseOnScreen(event.pageX, event.pageY));
 
+            } else if (_this._state === STATE.PAN && !_this.noPan) {
+
+                _this._panEnd.copy(_this.getMouseOnScreen(event.pageX, event.pageY));
+
+            }
+            _this.update();
+            _this._pipe.render();
         }
-        _this.update();
-        _pipe.render();
     }
 
-    public touchend(event) {
+    public makeMouseup() {
+        const _this = this;
 
-        if (_this.enabled === false) {
-            return;
+        return function (event) {
+
+            if (_this.enabled === false) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            _this._state = STATE.NONE;
+            _this.is_mousedown = false;
+
+            _this._pipe.render();
         }
-
-        switch (event.touches.length) {
-
-            case 0:
-                _this._state = STATE.NONE;
-                break;
-
-            case 1:
-                _this._state = STATE.TOUCH_ROTATE;
-                _this._moveCurr.copy(this.getMouseOnCircle(event.touches[0].pageX, event.touches[0].pageY));
-                _this._movePrev.copy(this._moveCurr);
-                break;
-
-        }
-
-        // this.domElement.dispatchEvent(this.endEvent);
-        _this.update();
-        _pipe.render();
     }
 
-    public contextmenu(event) {
+    public makeMouseleave() {
+        const _this = this;
+        return function (event) {
+            if (_this.enabled === false) {
+                return;
+            }
+            event.preventDefault();
+            event.stopPropagation();
 
-        if (_this.enabled === false) {
-            return;
+            _this.STATE = STATE.NONE;
+            _this.is_mousedown = false;
+
+            _this._pipe.render();
         }
+    }
 
-        event.preventDefault();
-        _this.update();
-        _pipe.render();
+    public makeMousewheel() {
+        const _this = this;
+        return function (event) {
+
+            if (_this.enabled === false) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            switch (event.deltaMode) {
+
+                case 2:
+                    // Zoom in pages
+                    _this._zoomStart.y -= event.deltaY * 0.025;
+                    break;
+
+                case 1:
+                    // Zoom in lines
+                    _this._zoomStart.y -= event.deltaY * 0.01;
+                    break;
+
+                default:
+                    // undefined, 0, assume pixels
+                    _this._zoomStart.y -= event.deltaY * 0.00025;
+                    break;
+
+            }
+
+            // this.domElement.dispatchEvent(this.startEvent);
+            // this.domElement.dispatchEvent(this.endEvent);
+            _this.update();
+            _this._pipe.render();
+        }
+    }
+
+    public makeTouchstart() {
+        const _this = this;
+
+        return function (event) {
+
+            if (_this.enabled === false) {
+                return;
+            }
+
+            switch (event.touches.length) {
+
+                case 1:
+                    _this._state = STATE.TOUCH_ROTATE;
+                    _this._moveCurr.copy(_this.getMouseOnCircle(event.touches[0].pageX, event.touches[0].pageY));
+                    _this._movePrev.copy(_this._moveCurr);
+                    break;
+
+                default: // 2 or more
+                    _this._state = STATE.TOUCH_ZOOM_PAN;
+                    let dx = event.touches[0].pageX - event.touches[1].pageX;
+                    let dy = event.touches[0].pageY - event.touches[1].pageY;
+                    _this._touchZoomDistanceEnd = _this._touchZoomDistanceStart = Math.sqrt(dx * dx + dy * dy);
+
+                    let x = (event.touches[0].pageX + event.touches[1].pageX) / 2;
+                    let y = (event.touches[0].pageY + event.touches[1].pageY) / 2;
+                    _this._panStart.copy(_this.getMouseOnScreen(x, y));
+                    _this._panEnd.copy(_this._panStart);
+                    break;
+
+            }
+
+            // this.domElement.dispatchEvent(this.startEvent);
+            _this.update();
+            _this._pipe.render();
+        }
+    }
+
+    public makeTouchmove() {
+        const _this = this;
+        return function (event) {
+
+            if (_this.enabled === false) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            switch (event.touches.length) {
+
+                case 1:
+                    _this._movePrev.copy(_this._moveCurr);
+                    _this._moveCurr.copy(_this.getMouseOnCircle(event.touches[0].pageX, event.touches[0].pageY));
+                    break;
+
+                default: // 2 or more
+                    let dx = event.touches[0].pageX - event.touches[1].pageX;
+                    let dy = event.touches[0].pageY - event.touches[1].pageY;
+                    _this._touchZoomDistanceEnd = Math.sqrt(dx * dx + dy * dy);
+
+                    let x = (event.touches[0].pageX + event.touches[1].pageX) / 2;
+                    let y = (event.touches[0].pageY + event.touches[1].pageY) / 2;
+                    _this._panEnd.copy(_this.getMouseOnScreen(x, y));
+                    break;
+
+            }
+            _this.update();
+            _this._pipe.render();
+        }
+    }
+
+    public makeTouchend() {
+        const _this = this;
+        return function (event) {
+
+            if (_this.enabled === false) {
+                return;
+            }
+
+            switch (event.touches.length) {
+
+                case 0:
+                    _this._state = STATE.NONE;
+                    break;
+
+                case 1:
+                    _this._state = STATE.TOUCH_ROTATE;
+                    _this._moveCurr.copy(this.getMouseOnCircle(event.touches[0].pageX, event.touches[0].pageY));
+                    _this._movePrev.copy(this._moveCurr);
+                    break;
+
+            }
+
+            // this.domElement.dispatchEvent(this.endEvent);
+            _this.update();
+            _this._pipe.render();
+        }
+    }
+
+    public makeContextmenu() {
+        const _this = this;
+        return function (event) {
+
+            if (_this.enabled === false) {
+                return;
+            }
+
+            event.preventDefault();
+            _this.update();
+            _this._pipe.render();
+        }
     }
 
 }
