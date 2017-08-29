@@ -1,9 +1,10 @@
- <div class="animated fadeIn" > 
+ <div class="animated fadeIn">
   <div *ngIf="haveData==true">
-    <div class='container-fluid'>
+    <div class='container-fluid' >
       <div class="row">
         <div class="col-md-12">
-             <tabset>  
+             <tabset>
+
               <tab heading={{case.label}}>
                 <div class="row">
                   <div class="col-md-2">
@@ -39,18 +40,18 @@
                 </div>
             </tab>
 
-           </tabset> 
+           </tabset>
         </div>
       </div>
 
-      <!-- <p></p> -->
+      <p></p>
 
        <div *ngIf="status=='Complete' || status=='Running'">
         <div class = "card" >
-          <div class="card-header" (click)="graphCollapse()">
+          <div class="card-header" (click)="chartCollapse()">
             <strong>Output graph</strong>
           </div>
-          <div [ngClass] = "{'collapse': graph.collapse}">
+          <div [ngClass] = "{'collapse': chart.collapse}">
             <chart></chart>
           </div>
         </div>
@@ -68,4 +69,4 @@
 
     </div>
   </div>
- </div> 
+ </div>
