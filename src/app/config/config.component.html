@@ -1,37 +1,34 @@
 <div class="container-fluid">
 
-<div class="row case-panel">
-  <div *ngIf="type!='Output'">
-    <div class="row case-panel">
-
-      <div class="col-md-4"><img src={{case.thumbnail}}  class="img-thumbnail"></div>
-      <div class="col-md-8">
-        <div class="row">
-          <div class="col-md-12">
-            <h4>  {{case.label}}</h4>
-            <p>  {{case.description}}</p>
-          </div>
-        </div>
-
+  <div class="row case-panel">
     <div *ngIf="type!='Output'">
-        <div class="row">
-          <div class="col-md-9 col-md-push-3">
-            <button type="button" class="btn btn-primary" (click)="saveJob()">
-              <i class="fa fa-floppy-o"></i>
-                <span class="actionText">
-                  <strong>Save</strong></span>
-                </button>
-            <button type="button" class="btn btn-primary" (click)="startJob()">
-              <i class="fa fa-rocket"></i>
-                <span class="actionText">
-                  <strong>Submit Job</strong></span></button>
+      <div class="row case-panel">
+        <div class="col-md-4"><img src={{case.thumbnail}}  class="img-thumbnail">
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-12">
+              <h4>  {{case.label}}</h4>
+              <p>  {{case.description}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-9 col-md-push-3">
+              <button type="button" class="btn btn-primary" (click)="saveJob()">
+                <i class="fa fa-floppy-o"></i>
+                  <span class="actionText">
+                    <strong>Save</strong></span>
+                  </button>
+              <button type="button" class="btn btn-primary" (click)="startJob()">
+                <i class="fa fa-rocket"></i>
+                  <span class="actionText">
+                    <strong>Submit Job</strong></span></button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-</div>
 
   <div class="row">
     <div class="col-md-12">
@@ -49,58 +46,50 @@
                   <div *ngFor="let component of getVisibleComponents(tag)">
 
                     <div *ngIf="component.type == 'text'">
-                      <div *ngIf="type != 'Output'">
-                        <label [for]=component.name>{{component.label}}</label>
-                        <div class="input-group">
-                          <input
-                            [(ngModel)]="component.value"
-                            [attr.id]="component.name"
-                            type="text"
-                            min="component.min_value"
-                            max="component.max_value"
-                            (keyup.enter)="update(tag,component)"
-                            (blur)="update(tag, component)"
-                            [disabled]="component.disabled">
-                          <span class="input-group-addon">{{component.units}}</span>
-                        </div>
-                      </div>
-
-                      <!-- <div *ngIf="type == 'Output'">
-                        <label [for]=component.name>{{component.label}}</label>
-                        <div class="input-group">
+                      <label [for]=component.name>{{component.label}}</label>
+                      <div class="input-group">
                         <input
                           [(ngModel)]="component.value"
                           [attr.id]="component.name"
                           type="text"
-                          [disabled]=true>
+                          min="component.min_value"
+                          max="component.max_value"
+                          (keyup.enter)="update(tag,component)"
+                          (blur)="update(tag, component)"
+                          [disabled]="isDisabled()"
+                        >
                         <span class="input-group-addon">{{component.units}}</span>
                       </div>
+                    </div>
 
-                      </div> -->
-                  </div>
-
-                  <div *ngIf="component.type == 'radio'">
-
-                    <div *ngIf="type != 'Output'">
+                    <div *ngIf="component.type == 'radio'">
                       <label class="switch switch-3d switch-danger">
-                        <input type="checkbox" class="switch-input" [ngModel] = "component.value" (ngModelChange)="update(tag, component)">
+                        <input type="checkbox" 
+                          class="switch-input" 
+                          [ngModel] = "component.value" 
+                          (ngModelChange)="update(tag, component)"
+                          [disabled]="isDisabled()">
                         <span class="switch-label"></span>
                         <span class="switch-handle"></span>
                       </label>
                       {{component.units}}
                     </div>
-                    <div *ngIf="type == 'Output'">
-                      <label class="switch switch-3d switch-danger">
-                        <input type="checkbox" class="switch-input" [ngModel] = "component.value" [disabled]=true>
-                        <span class="switch-label"></span>
-                        <span class="switch-handle"></span>
-                      </label>
-                      {{component.units}}
-                    </div>
-                  </div>
+                  
 
                   <div *ngIf="component.type == 'slider'">
-                    <div *ngIf="type != 'Output'">
+                    <label [for]=component.name>{{component.label}}</label>
+                    <ion-range-slider
+                      [attr.id]=component.name
+                      from={{component.value}}
+                      min={{component.min_value}}
+                      max={{component.max_value}}
+                      postfix=" {{component.units}}"
+                      data-step=0.01
+                      (onFinish)="updateSlider(tag, component, $event)"
+                      [disable]="isDisabled()">
+                    </ion-range-slider>
+                    
+                    <!-- <div *ngIf="type == 'Output'">
                       <label [for]=component.name>{{component.label}}</label>
                       <ion-range-slider
                         [attr.id]=component.name
@@ -109,50 +98,25 @@
                         max={{component.max_value}}
                         postfix=" {{component.units}}"
                         data-step=0.01
-                        (onFinish)="updateSlider(tag, component, $event)">
+                        from_fixed=true>
                       </ion-range-slider>
-                    </div>
-                    <div *ngIf="type == 'Output'">
-                      <label [for]=component.name>{{component.label}}</label>
-                      <ion-range-slider
-                        [attr.id]=component.name
-                        from={{component.value}}
-                        min={{component.min_value}}
-                        max={{component.max_value}}
-                        postfix=" {{component.units}}"
-                        data-step=0.01
-                        disable=true>
-                      </ion-range-slider>
-                    </div>
+                    </div> -->
                   </div>
 
-                    <div *ngIf="component.type == 'vtk'">
-                        <label [for]=component.name>{{component.label}}</label>
-
-                      <div *ngIf="type != 'Output'">
-                        <ion-range-slider
-                          [attr.id]=component.name
-                          from={{component.value}}
-                          min={{component.min_value}}
-                          max={{component.max_value}}
-                          postfix=" {{component.units}}"
-                          data-step=0.01
-                          (onFinish)="updateSlider(tag, component, $event)"></ion-range-slider>
-                    </div>
-                    <div *ngIf="type == 'Output'">
-                        <ion-range-slider
-                          [attr.id]=component.name
-                          from={{component.value}}
-                          min={{component.min_value}}
-                          max={{component.max_value}}
-                          postfix=" {{component.units}}"
-                          data-step=0.01
-                          disable=true></ion-range-slider>
-                      </div>
-                        <app-pipe [radius]="component.value"></app-pipe>
-                    </div>
+                  <div *ngIf="component.type == 'vtk'">
+                    <label [for]=component.name>{{component.label}}</label>
+                    <ion-range-slider
+                      [attr.id]=component.name
+                      from={{component.value}}
+                      min={{component.min_value}}
+                      max={{component.max_value}}
+                      postfix=" {{component.units}}"
+                      data-step=0.01
+                      [disable]="isDisabled()"
+                      (onFinish)="updateSlider(tag, component, $event)">
+                    </ion-range-slider>
+                    <app-pipe [radius]="component.value"></app-pipe>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -160,3 +124,4 @@
         </div>
       </div>
     </div>
+</div>

@@ -52,57 +52,60 @@ export class OutputComponent implements OnInit {
       }
 
 
-//Get all the data
-getInfoData(){
-  this.outputService.info
-                  .subscribe(
-                    allJobsInfo => {
-                      //get all jobs
-                      //find which job want to plot
-                      for(let job of allJobsInfo){
-                        if(job.id == this.job_id){
-                          this.job = job
+  //Get all the data
+  getInfoData(){
+    this.outputService.info
+                    .subscribe(
+                      allJobsInfo => {
+                        //get all jobs
+                        //find which job want to plot
+                        for(let job of allJobsInfo){
+                          if(job.id == this.job_id){
+                            this.job = job
+                          }
                         }
-                      }
-                      this.status = this.job.status
-                      //this.caseID = this.job.case.id
-                      this.caseID = 'af7fd241-e816-40e5-9a70-49598a452b7b'
-                      console.log(this.job.case.id)
-                      this.getCaseData()
-                    },
-                    error => {
-                      this.errorMessage = <any> error
-                    });
- }
+                        this.status = this.job.status
+                        //this.caseID = this.job.case.id
+                        this.caseID = 'af7fd241-e816-40e5-9a70-49598a452b7b'
+                        console.log(this.job.case.id)
+                        this.getCaseData()
+                      },
+                      error => {
+                        this.errorMessage = <any> error
+                      });
+  }
 
- chartCollapse() {
+  chartCollapse() {
      this.chart['collapse'] = !this.chart['collapse']
    }
 
- configCollapse() {
+  configCollapse() {
      this.config['collapse'] = !this.config['collapse']
    }
 
-   getCaseData () {
-     this.outputService.case
-                        .subscribe(
-                          allCases =>{
-                            console.log(allCases)
-                            console.log(this.caseID)
-                            for(let aCase of allCases){
-                              if(aCase.id==this.caseID){
-                                this.case = aCase
-                                console.log("Case")
-                                console.log(this.case)
-                                if(this.case.id != ""){
-                                  this.haveData = true
-                              }
-                              }
-                            }
-                          },
-                           error => {
-                             this.errorMessage = <any> error
-                           });
 
-                         }
-  }
+  getCaseData () {
+    this.outputService.case
+                      .subscribe(
+                        allCases =>{
+                          console.log(allCases)
+                          console.log(this.caseID)
+                          for(let aCase of allCases){
+                            if(aCase.id==this.caseID){
+                              this.case = aCase
+                              console.log("Case")
+                              console.log(this.case)
+                              if(this.case.id != ""){
+                                this.haveData = true
+                            }
+                            }
+                          }
+                        },
+                          error => {
+                            this.errorMessage = <any> error
+                          });
+
+                        }
+}
+
+

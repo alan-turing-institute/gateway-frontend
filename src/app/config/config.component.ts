@@ -169,7 +169,12 @@ export class ConfigComponent implements OnInit {
     for (var _i = 0; _i < tagToToggle.length; _i++) {
       tagToToggle[_i].collapse = !tagToToggle[_i].collapse
     }
+  }
 
-
+  isDisabled():boolean {
+    if (this.type === 'Output') 
+      return true
+    else
+      return false
   }
 }
