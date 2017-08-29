@@ -1,7 +1,6 @@
 <div class="animated fadeIn">
   <div *ngIf="haveData==true">
     <div class='container-fluid'>
-
       <div class="row">
         <div class="col-md-12">
             <tabset style="width:100%">
@@ -62,8 +61,8 @@
         <strong>Configuration</strong>
       </div>
       <div class = "card">
-        <p></p>
-        <div [ngClass] = "{'collapse':config.collapse}">
+        <div [ngClass] = "{'collapse':config.collapse}" >
+          <p></p>
           <config [type]='type' ></config>
         </div>
       </div>
