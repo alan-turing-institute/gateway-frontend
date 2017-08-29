@@ -7,12 +7,21 @@ import 'rxjs/add/operator/map';
 
 import {JobInfo} from '../dashboard/jobInfo';
 import {JobConfig} from './jobConfigComponent';
+import { CaseInfo } from '../cases/case/caseInfo';
+
 
 @Injectable()
 export class OutputService {
+  //url for getting job configuration information
   private infosUrl = require('../../assets/job_status.json');
-  private configsUrl = require('../../assets/job_output.json');
-  private caseTypesUrl = require('../../assets/case_types.json')
+
+  //url for getting job data used to plot the graph
+  //should be similar to above BUT with a data query added
+  private dataUrl = require('../../assets/job_output.json');
+
+  //url for getting generic information about the case type
+  //private caseUrl = require('../../assets/case_types.json')
+  private caseUrl = 'http://localhost:5000/api/cases';
   constructor (private http: Http) {}
 
   info = this.getJobInfo()
@@ -28,13 +37,13 @@ export class OutputService {
   }
 
   getOutputData(): Observable<Array<any>>{
-    return this.http.get(this.configsUrl)
+    return this.http.get(this.dataUrl)
                     .map(this.extractData)
                     .catch(this.handleError)
   }
 
-  getCaseInfo():Observable<Array<any>>{
-    return this.http.get(this.caseTypesUrl)
+  getCaseInfo():Observable<CaseInfo[]>{
+    return this.http.get(this.caseUrl)
                     .map(this.extractCases)
                     .catch(this.handleError)
   }
@@ -54,16 +63,6 @@ export class OutputService {
     return body.cases || { };
   }
 
-  // getJobConfig(): Observable<JobConfig[]>{
-  //   return this.http.get(this.configsUrl)
-  //                   .map(this.extractParameters)
-  //                   .catch(this.handleError)
-  // }
-  //
-  // private extractParameters(res: Response){
-  //   let body = res.json();
-  //   return body.parameters|| { };
-  // }
 
   private handleError (error: Response | any) {
     // In a real world app, you might use a remote logging infrastructure

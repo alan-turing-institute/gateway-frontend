@@ -16,10 +16,6 @@
     <div *ngIf="type!='Output'">
         <div class="row">
           <div class="col-md-9 col-md-push-3">
-            <button type="button" class="btn btn-primary" (click)="newJob()">
-              <i class="fa fa-file-text-o"></i>
-              <span class="actionText"><strong>New</strong></span>
-              </button>
             <button type="button" class="btn btn-primary" (click)="saveJob()">
               <i class="fa fa-floppy-o"></i>
                 <span class="actionText">
@@ -60,8 +56,8 @@
                             [(ngModel)]="component.value"
                             [attr.id]="component.name"
                             type="text"
-                            (keyup.enter)="update(component)"
-                            (blur)="update(component)"
+                            (keyup.enter)="update(tag,component)"
+                            (blur)="update(tag, component)"
                             [disabled]="component.disabled">
                           <span class="input-group-addon">{{component.units}}</span>
                         </div>
@@ -111,7 +107,7 @@
                         max={{component.max_value}}
                         postfix=" {{component.units}}"
                         data-step=0.01
-                        (onFinish)="updateSlider(component, $event)">
+                        (onFinish)="updateSlider(tag, component, $event)">
                       </ion-range-slider>
                     </div>
                     <div *ngIf="type == 'Output'">
@@ -123,7 +119,7 @@
                         max={{component.max_value}}
                         postfix=" {{component.units}}"
                         data-step=0.01
-                        from_fixed=true>
+                        disable=true>
                       </ion-range-slider>
                     </div>
                     </div>
@@ -149,7 +145,7 @@
                           max={{component.max_value}}
                           postfix=" {{component.units}}"
                           data-step=0.01
-                          from_fixed=true></ion-range-slider>
+                          disable=true></ion-range-slider>
                       </div>
                         <app-pipe [radius]="component.value"></app-pipe>
                     </div>

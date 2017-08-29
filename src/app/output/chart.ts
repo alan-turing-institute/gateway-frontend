@@ -15,7 +15,7 @@ import { OutputService } from './output.service';
             <ngx-charts-line-chart
 
             [scheme]="colorScheme"
-            [results]="graphData"
+            [results]="chartData"
             [gradient]=false
             [xAxis]=true
             [yAxis]=true
@@ -63,7 +63,7 @@ export class ChartsComponent implements OnInit{
   isDataAvailable:boolean = false;
   varX: string;
   varY: string;
-  graphData: Array<any>
+  chartData: Array<any>
 
   // ngx-charts options
 
@@ -107,7 +107,7 @@ export class ChartsComponent implements OnInit{
                             this.keys[1] = temp
                           }
 
-                          this.drawGraph()
+                          this.drawChart()
 
                           this.isDataAvailable = true;
 
@@ -119,8 +119,8 @@ export class ChartsComponent implements OnInit{
   }
 
 
-drawGraph(){
-  this.graphData = [{"name":"", "series":[]}]
+drawChart(){
+  this.chartData = [{"name":"", "series":[]}]
 
   let newData = [{"name":this.varY, "series":[]}]
   let type = typeof(this.jobData[this.varX][0])
@@ -141,17 +141,17 @@ drawGraph(){
   }
   this.xAxisLabel = this.varX
   this.yAxisLabel = this.varY
-  this.graphData = newData
+  this.chartData = newData
 }
 
 onChangeX(key){
   this.varX = key
-  this.drawGraph()
+  this.drawChart()
 }
 
 onChangeY(key){
   this.varY = key
-  this.drawGraph()
+  this.drawChart()
 }
 
 }

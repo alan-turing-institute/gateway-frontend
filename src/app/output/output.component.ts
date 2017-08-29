@@ -12,7 +12,7 @@ import { ChartsComponent } from './chart';
 
 
 @Component({
-  selector: 'output',
+  // selector: 'output',
   providers: [OutputService],
   templateUrl: './output.component.html',
   styles: [require('../../../node_modules/ion-rangeslider/css/ion.rangeSlider.css').toString(),
@@ -27,7 +27,7 @@ export class OutputComponent implements OnInit {
   //jobInfo: JobInfo [];
   job: JobInfo;
   job_id: string;
-  graph:{} = {collapse:false}
+  chart:{} = {collapse:false}
   config:{} = {collapse:false}
   errorMessage: string;
   caseID:string; //= "yy69843b-4939-6f37-96c7-c382c3e74b46";
@@ -41,8 +41,10 @@ export class OutputComponent implements OnInit {
   private configDataService:ConfigDataService) {}
 
   ngOnInit() {
-        this.job_id = this.activatedRoute.snapshot.params["id"];
-        console.log(!this.graph['collapse'])
+        //this.job_id = this.activatedRoute.snapshot.params["id"];
+        this.job_id = localStorage.getItem('job_id')
+        //this.job_id = "0a2ca1f2-1de3-4638-a70f-b3f23a4018ef"
+
         //get job status (same as in dashboard)
         this.getInfoData();
         this.case = new CaseInfo
@@ -63,8 +65,9 @@ getInfoData(){
                         }
                       }
                       this.status = this.job.status
-                      this.caseID = this.job.case.id
-                      console.log(this.job)
+                      //this.caseID = this.job.case.id
+                      this.caseID = 'af7fd241-e816-40e5-9a70-49598a452b7b'
+                      console.log(this.job.case.id)
                       this.getCaseData()
                     },
                     error => {
@@ -72,11 +75,11 @@ getInfoData(){
                     });
  }
 
- graphCollapse(graph) {
-     this.graph['collapse'] = !this.graph['collapse']
+ chartCollapse() {
+     this.chart['collapse'] = !this.chart['collapse']
    }
 
- configCollapse(graph) {
+ configCollapse() {
      this.config['collapse'] = !this.config['collapse']
    }
 
@@ -84,6 +87,8 @@ getInfoData(){
      this.outputService.case
                         .subscribe(
                           allCases =>{
+                            console.log(allCases)
+                            console.log(this.caseID)
                             for(let aCase of allCases){
                               if(aCase.id==this.caseID){
                                 this.case = aCase

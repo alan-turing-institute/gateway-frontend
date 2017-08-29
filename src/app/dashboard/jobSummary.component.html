@@ -18,7 +18,8 @@
     <div class="card-block">
         <div class="container-fluid card-block-container">
 
-            <a routerLinkActive = "active" [routerLink] = "['/output/output', {id: summary.id}]">
+            <!-- <a routerLinkActive = "active" [routerLink] = "['/output/output', {id: summary.id}]"> -->
+            <a [routerLink] = "['/output/output']" (click)="storeJobId()">
             <div class="row">
                 <div class="col-md-2"><img src={{summary.thumbnail}}  class="img-job"></div>
                 <div class="col-md-7">
@@ -47,4 +48,5 @@
             </a>
 
     </div>
+</div>
 </div>

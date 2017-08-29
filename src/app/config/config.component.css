@@ -30,17 +30,17 @@
 }
 
 .img-config {
-     max-width: 5rem;  
+     max-width: 5rem;
     vertical-align: top;
     margin-bottom: 1rem;
 }
 
 .case-panel {
-    vertical-align: top;    
+    vertical-align: top;
     /* margin: 1% 0% 2% 0%;  */
 
 }
 
-input[readonly] {
+/*input[readonly] {
   background-color: white;
-}
+}*/

@@ -23,6 +23,7 @@ export class ConfigComponent implements OnInit {
   job: any
   mode = 'Observable';
   errorMessage: string;
+  jobCreated: boolean
 
 
   constructor(private configDataService:ConfigDataService,
@@ -32,22 +33,41 @@ export class ConfigComponent implements OnInit {
   ngOnInit() {
     this.tags = []
     this.case = new CaseInfo
-    this.getTemplateData()
+    this.getTemplate()
     //this.getData()
+    console.log("init")
+    this.jobCreated = false
   }
 
-  newJob() {
-    console.log("init new job")
-    // this.getNewJobData()
-  }
-
+  
   saveJob() {
-    console.log("save job")
-    // this.saveJobData () {
-  }
-
-  startJob() {
-    console.log("run job")
+    console.log("saving")
+    if (this.jobCreated) {
+      console.log("save job")
+      let url = this.configDataService.getSaveJobURL(this.job['id'])
+      this.configDataService.saveJob(this.job, url)
+                        .subscribe(
+                          saveJob => {
+                            console.log(saveJob)
+                          },
+                          error => {
+                            this.errorMessage = <any> error
+                          });
+    }
+    else {
+      console.log("create job")
+      let url = this.configDataService.getCreateJobURL(this.job['id'])
+      this.configDataService.createJob(this.job, url)
+                      .subscribe(
+                        createJob => {
+                          console.log("created bloody job")
+                          this.jobCreated = true
+                          console.log(createJob)
+                        },
+                        error => {
+                          this.errorMessage = <any> error
+                        });
+    } 
   }
 
   getData () {
@@ -108,37 +128,15 @@ export class ConfigComponent implements OnInit {
                           });
   }
 
-  getTemplateData () {
-    console.log("Template ID: "+localStorage.getItem('template_id'));
+  getTemplate () {
+    console.log("getting template")
     this.configDataService.template
                         .subscribe(
                           template => {
                             this.tags = template['families']
-                            console.log(this.tags)
+                            console.log(template['id'])
                             this.case=template['case']
-                          },
-                          error => {
-                            this.errorMessage = <any> error
-                          });
-  }
-
-  getNewJobData () {
-    this.configDataService.newJob
-                        .subscribe(
-                          newJob => {
-                            this.tags = newJob['families']
-                            this.case=newJob['case']
-                          },
-                          error => {
-                            this.errorMessage = <any> error
-                          });
-  }
-
-  saveJobData () {
-    this.configDataService.saveJob
-                        .subscribe(
-                          saveJob => {
-                            console.log(saveJob)
+                            this.job = template
                           },
                           error => {
                             this.errorMessage = <any> error
@@ -155,10 +153,11 @@ export class ConfigComponent implements OnInit {
 
   updateSlider(tag, component, event) {
     let newValue = event.from;
-    this.configDataService.updateJobData(tag['parameters'], component.name, newValue)
+    this.configDataService.updateJobData(tag['parameters'], component.name, newValue.toString())
   }
 
   update(tag, component) {
+    console.log(component)
     if (component.type == "radio")
       component.value = !component.value
     this.configDataService.updateJobData(tag['parameters'], component.name,  component.value)
