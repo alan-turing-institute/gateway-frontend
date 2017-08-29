@@ -56,6 +56,8 @@
                             [(ngModel)]="component.value"
                             [attr.id]="component.name"
                             type="text"
+                            min="component.min_value"
+                            max="component.max_value"
                             (keyup.enter)="update(tag,component)"
                             (blur)="update(tag, component)"
                             [disabled]="component.disabled">
@@ -63,42 +65,42 @@
                         </div>
                       </div>
 
-                        <div *ngIf="type == 'Output'">
-                          <label [for]=component.name>{{component.label}}</label>
-                          <div class="input-group">
-                          <input
-                            [(ngModel)]="component.value"
-                            [attr.id]="component.name"
-                            type="text"
-                            [disabled]=true>
-                          <span class="input-group-addon">{{component.units}}</span>
-                        </div>
-
+                      <!-- <div *ngIf="type == 'Output'">
+                        <label [for]=component.name>{{component.label}}</label>
+                        <div class="input-group">
+                        <input
+                          [(ngModel)]="component.value"
+                          [attr.id]="component.name"
+                          type="text"
+                          [disabled]=true>
+                        <span class="input-group-addon">{{component.units}}</span>
                       </div>
+
+                      </div> -->
                   </div>
 
-                    <div *ngIf="component.type == 'radio'">
+                  <div *ngIf="component.type == 'radio'">
 
-                      <div *ngIf="type != 'Output'">
-                        <label class="switch switch-3d switch-danger">
-                          <input type="checkbox" class="switch-input" [ngModel] = "component.value" (ngModelChange)="update(tag, component)">
-                          <span class="switch-label"></span>
-                          <span class="switch-handle"></span>
-                        </label>
-                        {{component.units}}
-                      </div>
-                      <div *ngIf="type == 'Output'">
-                        <label class="switch switch-3d switch-danger">
-                          <input type="checkbox" class="switch-input" [ngModel] = "component.value" [disabled]=true>
-                          <span class="switch-label"></span>
-                          <span class="switch-handle"></span>
-                        </label>
-                        {{component.units}}
-                      </div>
+                    <div *ngIf="type != 'Output'">
+                      <label class="switch switch-3d switch-danger">
+                        <input type="checkbox" class="switch-input" [ngModel] = "component.value" (ngModelChange)="update(tag, component)">
+                        <span class="switch-label"></span>
+                        <span class="switch-handle"></span>
+                      </label>
+                      {{component.units}}
                     </div>
+                    <div *ngIf="type == 'Output'">
+                      <label class="switch switch-3d switch-danger">
+                        <input type="checkbox" class="switch-input" [ngModel] = "component.value" [disabled]=true>
+                        <span class="switch-label"></span>
+                        <span class="switch-handle"></span>
+                      </label>
+                      {{component.units}}
+                    </div>
+                  </div>
 
-                    <div *ngIf="component.type == 'slider'">
-                      <div *ngIf="type != 'Output'">
+                  <div *ngIf="component.type == 'slider'">
+                    <div *ngIf="type != 'Output'">
                       <label [for]=component.name>{{component.label}}</label>
                       <ion-range-slider
                         [attr.id]=component.name
@@ -122,7 +124,7 @@
                         from_fixed=true>
                       </ion-range-slider>
                     </div>
-                    </div>
+                  </div>
 
                     <div *ngIf="component.type == 'vtk'">
                         <label [for]=component.name>{{component.label}}</label>
