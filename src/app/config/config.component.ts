@@ -18,6 +18,7 @@ import { DescriptionComponent } from './description.component';
 
 export class ConfigComponent implements OnInit {
   @Input() type:string
+  validFormValues: boolean
   case:CaseInfo
   tags:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
   job: any
@@ -37,6 +38,7 @@ export class ConfigComponent implements OnInit {
     //this.getData()
     console.log("init")
     this.jobCreated = false
+    this.validFormValues = true
   }
 
   
@@ -134,6 +136,7 @@ export class ConfigComponent implements OnInit {
                         .subscribe(
                           template => {
                             this.tags = template['families']
+                            this.setValidValues (this.tags)
                             console.log(template['id'])
                             this.case=template['case']
                             this.job = template
@@ -151,16 +154,41 @@ export class ConfigComponent implements OnInit {
     return tag['parameters']
   }
 
+  setValidValues (tags) {
+    for (var t = 0; t < tags.length; t++) {
+      let parameters = tags[t]['parameters'];  
+      for (var p = 0; p < parameters.length; p++) {
+        parameters[p].valid = true;
+      }
+    }
+  }
+
   updateSlider(tag, component, event) {
     let newValue = event.from;
     this.configDataService.updateJobData(tag['parameters'], component.name, newValue.toString())
   }
 
   update(tag, component) {
-    console.log(component)
-    if (component.type == "radio")
-      component.value = !component.value
-    this.configDataService.updateJobData(tag['parameters'], component.name,  component.value)
+    
+    if (this.validateValue(component)) {
+      if (component.type == "radio")
+        component.value = !component.value
+
+      if (component.type == "text")
+      this.configDataService.updateJobData(tag['parameters'], component.name,  component.value)
+    }
+  }
+
+  validateValue(component):boolean {
+    if (component.type!='text')
+      return true;
+    else {
+      if ((component.value >= component.min_value) && (component.value <= component.max_value))
+          component.valid = true
+      else 
+          component.valid = false
+      return component.valid
+    }
   }
 
   toggleCollapse(tag) {
@@ -176,5 +204,9 @@ export class ConfigComponent implements OnInit {
       return true
     else
       return false
+  }
+
+  testMe() {
+    console.log("test");
   }
 }
