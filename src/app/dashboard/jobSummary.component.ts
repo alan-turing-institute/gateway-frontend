@@ -78,6 +78,8 @@ export class JobSummaryComponent implements OnInit{
             icon ="fa fa-exclamation-triangle fa-lg"
         if (this.summary.status == "Draft")
             icon ="fa fa-pencil-square fa-lg"
+        if (this.summary.status == "Queued")
+            icon ="fa fa-hourglass-half fa-lg"
         return icon
 
     }
@@ -86,13 +88,15 @@ export class JobSummaryComponent implements OnInit{
     getActionText() : string  {
         var text = ""
         if (this.summary.status == "Running")
-            text = "Logs"
+            text = "View"
         if (this.summary.status == "Complete")
             text ="View"
         if (this.summary.status == "Error")
             text ="Logs"
         if (this.summary.status == "Draft")
             text ="Edit"
+        if (this.summary.status == "Queued")
+            text ="View"
         return text
     }
 }

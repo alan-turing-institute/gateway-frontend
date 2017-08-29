@@ -6,12 +6,14 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import {JobInfo} from './jobInfo';
+import {ProgressInfo} from './progressInfo';
 
 @Injectable()
 export class DashboardService {
   private componentsUrl = require('../../assets/job_status.json');
-  //private componentsUrl = 'http://localhost:5000/api/job';
-
+  //private componentsUrl = 'http://localhost:5000/api/jobs';
+  private progressUrl = require('../../assets/progress.json')
+  //private progressUrl = 'http://localhost:5000/api/progress/';
   constructor (private http: Http) {}
 
   data = this.getJobData()
@@ -22,11 +24,24 @@ export class DashboardService {
                     .catch(this.handleError);
   }
 
+  getProgressInfo(jobId): Observable<ProgressInfo>{
+    var url = this.progressUrl + jobId
+    return this.http.get(url)
+                    .map(this.extractJsonData)
+                    .catch(this.handleError)
+  }
+
 
   private extractData(res: Response){
     let body = res.json();
     console.log(body)
     return body.jobs || { };
+  }
+
+  private extractJsonData(res: Response) {
+    console.log(res)
+    let body = res.json();
+    return body || { };
   }
 
   private handleError (error: Response | any) {

@@ -34,14 +34,14 @@ import { OutputService } from './output.service';
     <div class = "row">
       <div class = "col-md-6">
         <select class="form-control" (change)='onChangeX($event.target.value)' >
-          <!--<option selected>X-axis</option>-->
+          <option disabled selected>X-axis</option>
           <option *ngFor="let key of keys" >{{key}}</option>
         </select>
       </div>
 
       <div class = "col-md-6">
         <select class = "form-control" (change)='onChangeY($event.target.value)' >
-          <!--<option selected>Y-axis</option>-->
+          <option disabled selected>Y-axis</option>
           <option *ngFor="let y_var of y_vars" >{{y_var}}</option>
         </select>
       </div>
@@ -96,20 +96,21 @@ export class ChartsComponent implements OnInit{
                           }
 
                           //plot first 2 vars against each other
-                          this.varY = this.y_vars[0]
-                          if(this.keys[0] != this.y_vars[0]){
-                            this.varX = this.keys[0]
-                          }else{
-                            this.varX = this.keys[1]
-                            //reorder keys so that top choice in dropdown is name of X variable being plotted
-                            let temp = this.keys[0]
-                            this.keys[0] = this.keys[1]
-                            this.keys[1] = temp
-                          }
+                          this.varY = this.y_vars[1]
+                          this.varX = this.keys[0]
+                          // if(this.keys[0] != this.y_vars[0]){
+                          //   this.varX = this.keys[0]
+                          // }else{
+                          //   this.varX = this.keys[1]
+                          //   //reorder keys so that top choice in dropdown is name of X variable being plotted
+                          //   let temp = this.keys[0]
+                          //   this.keys[0] = this.keys[1]
+                          //   this.keys[1] = temp
+                          // }
 
                           this.drawChart()
 
-                          this.isDataAvailable = true;
+                          // this.isDataAvailable = true;
 
                         },
                         error => {
@@ -142,6 +143,7 @@ drawChart(){
   this.xAxisLabel = this.varX
   this.yAxisLabel = this.varY
   this.chartData = newData
+  this.isDataAvailable = true;
 }
 
 onChangeX(key){

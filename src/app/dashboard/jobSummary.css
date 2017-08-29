@@ -26,14 +26,19 @@
 }
 
 .badge-error {
-    
+
     color: #f86c6b;
 }
 
 .badge-complete {
     color: #20a8d8;
-    
 
+
+}
+
+.badge-queued{
+
+    color: black;
 }
 
 .wrapper {
