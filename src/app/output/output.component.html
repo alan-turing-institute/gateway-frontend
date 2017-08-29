@@ -43,7 +43,7 @@
            </tabset>
         </div>
       </div>
-
+    
       <p></p>
 
        <div *ngIf="status=='Complete' || status=='Running'">
@@ -56,8 +56,9 @@
           </div>
         </div>
       </div>
+      </div>
 
-      <div class="card-header" (click)="configCollapse()">
+       <!-- <div class="card-header" (click)="configCollapse()">
         <strong>Configuration</strong>
       </div>
       <div class = "card">
@@ -65,8 +66,9 @@
           <p></p>
           <config [type]='type' ></config>
         </div>
-      </div>
+      </div>  -->
+      <config [type]='type' ></config>
 
-    </div>
+    
   </div>
  </div>

@@ -1,39 +1,77 @@
 <div class="container-fluid">
 
-  <div class="row case-panel">
-    <div *ngIf="type!='Output'">
-      <div class="row case-panel">
-        <div class="col-md-4"><img src={{case.thumbnail}}  class="img-thumbnail">
-        </div>
-        <div class="col-md-8">
+  <div *ngIf="type!='Output'" class="row">
+    <div class="col-md-12">
+      <tabset>
+        <tab heading={{case.label}}>
           <div class="row">
-            <div class="col-md-12">
-              <h4>  {{case.label}}</h4>
-              <p>  {{case.description}}</p>
+            <div class="col-md-2">
+              <img src={{case.thumbnail}} class=img-config>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-9 col-md-push-3">
+            <div class="col-md-8">
+              <p class="descriptionText">{{case.description}}</p>
+            </div>
+            <div class="col-md-2">
               <button type="button" class="btn btn-primary" (click)="saveJob()" [disabled]=!validFormValues>
                 <i class="fa fa-floppy-o"></i>
                   <span class="actionText">
                     <strong>Save</strong></span>
                   </button>
-              <button type="button" class="btn btn-primary" (click)="startJob()" [disabled]=!validFormValues  [hidden]=!jobCreated>
+              <button type="button" class="btn btn-primary" (click)="startJob()" [disabled]=true  [hidden]=!jobCreated>
                 <i class="fa fa-rocket"></i>
                   <span class="actionText">
                     <strong>Submit Job</strong></span></button>
             </div>
           </div>
-        </div>
-      </div>
+        </tab>
+
+        <tab heading={{case.label}}>
+          <div class="row">
+            <div class="col-md-2">
+              <img src={{case.thumbnail}} class=img-config>
+            </div>
+            <div class="col-md-8">
+              <p class="descriptionText">{{case.description}}</p>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary" (click)="saveJob()" [disabled]=!validFormValues>
+                <i class="fa fa-floppy-o"></i>
+                  <span class="actionText">
+                    <strong>Save</strong></span>
+                  </button>
+              <button type="button" class="btn btn-primary" (click)="startJob()" [disabled]=true  [hidden]=!jobCreated>
+                <i class="fa fa-rocket"></i>
+                  <span class="actionText">
+                    <strong>Submit Job</strong></span></button>
+            </div>
+          </div>
+        </tab>
+
+        <!-- <tab heading="Job Information">
+          <div class="row">
+            <div class="col-md-2">
+              <img src={{case.thumbnail}} class=img-job>
+            </div>
+          <div class="col-md-10">
+            <p class="descriptionText">Status: {{job.status}}</p>
+            <p class="descriptionText">Start: {{job.start_datetime}} </p>
+            <p class="descriptionText">End: {{job.start_datetime}}</p>
+          </div>
+          </div>
+      </tab> -->
+      </tabset>
     </div>
   </div>
 
+  <p></p>
   <div class="row">
     <div class="col-md-12">
+      <div class="card-header">
+        <strong>Configuration</strong>
+      </div>
+      <div class = "card">
       <div [attr.id]="componentFamilyAccordion" role="tablist">
-        <div *ngFor="let tag of tags" class="card" >
+        <div *ngFor="let tag of tags" class="card card-family" >
           <div class="card-header config" role="tab" (click)="toggleCollapse(tag)">
             <h5 class="mb-0">
               <a data-toggle="collapse" data-target={{getDataTarget(tag)}} data-parent="#componentFamilyAccordion">
@@ -109,6 +147,8 @@
           </div>
         </div>
       </div>
+      </div>
     </div>
+
   </div>
 </div>

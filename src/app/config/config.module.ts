@@ -8,6 +8,8 @@ import { ConfigComponent } from './config.component';
 import { ConfigDataService } from './configData.service';
 import { PipeModule} from '../pipe.module';
 
+import { TabsModule } from 'ngx-bootstrap/tabs';
+
 // import { ParametersComponent} from './parameters.component';
 // import { DescriptionComponent} from './description.component';
 
@@ -17,7 +19,8 @@ import { PipeModule} from '../pipe.module';
     CommonModule,
     FormsModule,
     IonRangeSliderModule,
-    PipeModule
+    PipeModule,
+    TabsModule.forRoot()
   ],
   declarations: [ConfigComponent],
   providers: [ConfigDataService],
