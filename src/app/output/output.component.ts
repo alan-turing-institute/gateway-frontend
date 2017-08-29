@@ -27,7 +27,7 @@ export class OutputComponent implements OnInit {
   //jobInfo: JobInfo [];
   job: JobInfo;
   job_id: string;
-  graph:{} = {collapse:false}
+  chart:{} = {collapse:false}
   config:{} = {collapse:false}
   errorMessage: string;
   caseID:string; //= "yy69843b-4939-6f37-96c7-c382c3e74b46";
@@ -41,10 +41,10 @@ export class OutputComponent implements OnInit {
   private configDataService:ConfigDataService) {}
 
   ngOnInit() {
-        this.job_id = this.activatedRoute.snapshot.params["id"];
+        //this.job_id = this.activatedRoute.snapshot.params["id"];
+        this.job_id = localStorage.getItem('job_id')
         //this.job_id = "0a2ca1f2-1de3-4638-a70f-b3f23a4018ef"
-        console.log(this.job_id)
-        console.log(!this.graph['collapse'])
+
         //get job status (same as in dashboard)
         this.getInfoData();
         this.case = new CaseInfo
@@ -75,11 +75,11 @@ getInfoData(){
                     });
  }
 
- graphCollapse(graph) {
-     this.graph['collapse'] = !this.graph['collapse']
+ chartCollapse() {
+     this.chart['collapse'] = !this.chart['collapse']
    }
 
- configCollapse(graph) {
+ configCollapse() {
      this.config['collapse'] = !this.config['collapse']
    }
 

@@ -29,6 +29,10 @@ export class JobSummaryComponent implements OnInit{
     //     this.jobHoverHidden = !this.jobHoverHidden
     // }
 
+    storeJobId(): void {
+      localStorage.setItem('job_id', this.summary.id);
+    }
+
     getBadgeClass() : string {
         return "badge-"+this.summary.status.toLowerCase();
     }
