@@ -24,7 +24,7 @@ export class ConfigComponent implements OnInit {
   job: any
   mode = 'Observable';
   errorMessage: string;
-  jobCreated: boolean
+  jobCreated:boolean
 
 
   constructor(private configDataService:ConfigDataService,
@@ -163,19 +163,29 @@ export class ConfigComponent implements OnInit {
     }
   }
 
+  allValuesAreValid (tags):boolean {
+    for (var t = 0; t < tags.length; t++) {
+      let parameters = tags[t]['parameters'];  
+      for (var p = 0; p < parameters.length; p++) {
+        if (parameters[p].valid===false)
+          return false
+      }
+    }
+    return true;
+  }
+
   updateSlider(tag, component, event) {
     let newValue = event.from;
     this.configDataService.updateJobData(tag['parameters'], component.name, newValue.toString())
   }
 
   update(tag, component) {
-    
     if (this.validateValue(component)) {
       if (component.type == "radio")
         component.value = !component.value
 
       if (component.type == "text")
-      this.configDataService.updateJobData(tag['parameters'], component.name,  component.value)
+      this.configDataService.updateJobData(tag['parameters'], component.name,  component.value.toString())
     }
   }
 
@@ -187,6 +197,7 @@ export class ConfigComponent implements OnInit {
           component.valid = true
       else 
           component.valid = false
+      this.validFormValues = this.allValuesAreValid(this.tags)
       return component.valid
     }
   }
