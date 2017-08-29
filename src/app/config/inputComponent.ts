@@ -10,4 +10,5 @@ export declare interface InputComponent {
     options:string[];
     help: string;
     disabled: boolean;
+    valid: boolean;
 }
