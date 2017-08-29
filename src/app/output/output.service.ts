@@ -17,7 +17,7 @@ export class OutputService {
 
   //url for getting job data used to plot the graph
   //should be similar to above BUT with a data query added
-  private dataUrl = require('../../assets/job_output.json');
+  private dataUrl = require('../../assets/sample_data.json');
 
   //url for getting generic information about the case type
   //private caseUrl = require('../../assets/case_types.json')

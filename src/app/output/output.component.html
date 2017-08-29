@@ -33,9 +33,19 @@
                     <img src={{case.thumbnail}} class=img-job>
                   </div>
                 <div class="col-md-10">
+                  <div *ngIf="status=='Running'">
+                    <div class="progress" >
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                    </div>
+                  </div>
                   <p class="descriptionText">Status: {{job.status}}</p>
-                  <p class="descriptionText">Start: {{job.start_datetime}} </p>
-                  <p class="descriptionText">End: {{job.start_datetime}}</p>
+                  <p class="descriptionText">Created: {{job.creation_datetime}}</p>
+                  <div *ngIf="status=='Complete'||status=='Running'">
+                    <p class="descriptionText">Start: {{job.start_datetime}} </p>
+                  </div>
+                  <div *ngIf="status=='Complete'">
+                    <p class="descriptionText">End: {{job.end_datetime}}</p>
+                  </div>
                 </div>
                 </div>
             </tab>
