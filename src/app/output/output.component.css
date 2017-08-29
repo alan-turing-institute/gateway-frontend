@@ -1,6 +1,6 @@
-input[readonly] {
+/*input[readonly] {
   background-color: white;
-}
+}*/
 
 .card-header:hover {
   background-color: hsla(198,36%,75%,1);
@@ -9,4 +9,3 @@ input[readonly] {
 .card-header {
   background-color: #cfd8dc;
 }
-

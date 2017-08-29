@@ -12,7 +12,7 @@ import { ChartsComponent } from './chart';
 
 
 @Component({
-  selector: 'output',
+  // selector: 'output',
   providers: [OutputService],
   templateUrl: './output.component.html',
   styles: [require('../../../node_modules/ion-rangeslider/css/ion.rangeSlider.css').toString(),
