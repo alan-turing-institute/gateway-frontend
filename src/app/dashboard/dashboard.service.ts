@@ -11,14 +11,14 @@ import {ProgressInfo} from './progressInfo';
 @Injectable()
 export class DashboardService {
   private componentsUrl = require('../../assets/job_status.json');
-  //private componentsUrl = 'http://localhost:5000/api/jobs';
+  // private jobsUrl = 'http://localhost:5000/api/jobs';
   private progressUrl = require('../../assets/progress.json')
   //private progressUrl = 'http://localhost:5000/api/progress/';
   constructor (private http: Http) {}
 
-  data = this.getJobData()
+  data = this.getJobsData()
 
-  getJobData(): Observable<JobInfo[]>{
+  getJobsData(): Observable<JobInfo[]>{
     return this.http.get(this.componentsUrl)
                     .map(this.extractData)
                     .catch(this.handleError);

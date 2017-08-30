@@ -32,9 +32,21 @@
                         <div class="col-md-4 offset-md-4">
                             <button type="button"
                                     class="btn btn-primary btn-action"
+                                    (click)="storeJobId('Output')"
                                     [routerLink]="['/output/output']" routerLinkActive="active">
                                 <!-- <i [ngClass]="getActionIcon()"></i> -->
                                 <span class="actionText"><strong> {{getActionText()}}</strong></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top:3%">
+                        <div class="col-md-4 offset-md-4">
+                            <button type="button"
+                                    class="btn btn-primary btn-action"
+                                    (click)="storeJobId('Edit')"
+                                    [routerLink]="['/config/config']" routerLinkActive="active">
+                                <!-- <i [ngClass]="getActionIcon()"></i> -->
+                                <span class="actionText"><strong> Edit</strong></span>
                             </button>
                         </div>
                     </div>

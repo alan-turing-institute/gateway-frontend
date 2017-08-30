@@ -34,8 +34,16 @@ export class ConfigDataService {
   // save = this.saveJob()
 
   getTemplate(): Observable<InputComponent[]> {
-    console.log("in template")
     var url = this.templateUrl + localStorage.getItem('template_id') 
+    this.jobData = this.http.get(url)
+                    .map(this.extractJsonData)
+                    .catch(this.handleError);
+    
+    return this.jobData;
+  }
+
+  getJob(): Observable<InputComponent[]> {
+    var url = this.newJobUrl + localStorage.getItem('job_id') 
     this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
                     .catch(this.handleError);
@@ -45,7 +53,7 @@ export class ConfigDataService {
 
   getCreateJobURL(job_id): string {
     localStorage.setItem("job_id", job_id)
-    this.newJobUrl = this.newJobUrl //+ localStorage.getItem('job_id') 
+    this.newJobUrl = this.newJobUrl
     console.log(this.newJobUrl)
     return this.newJobUrl
   }

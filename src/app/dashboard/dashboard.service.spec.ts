@@ -82,7 +82,7 @@ it('should get job info', done => {
         dashboardService = getTestBed().get(DashboardService);
         expect(dashboardService).toBeDefined();
 
-        dashboardService.getJobData().subscribe((components: JobInfo []) => {
+        dashboardService.getJobsData().subscribe((components: JobInfo []) => {
             expect(components).toBeDefined();
             // expect(blogs.length).toEqual(1);
             // expect(blogs[0].id).toEqual(26);

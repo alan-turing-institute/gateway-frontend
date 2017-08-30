@@ -29,7 +29,8 @@ export class JobSummaryComponent implements OnInit{
     //     this.jobHoverHidden = !this.jobHoverHidden
     // }
 
-    storeJobId(): void {
+    storeJobId(type:string): void {
+      localStorage.setItem('action_type', type);  
       localStorage.setItem('job_id', this.summary.id);
     }
 
@@ -44,7 +45,8 @@ export class JobSummaryComponent implements OnInit{
     }
 
     getShortDescription(): string {
-    return this.summary.description.slice(0,200);
+        // return this.summary.description.slice(0,200);
+        return this.summary.description;
     }
 
     getProgressBarHidden(): boolean {
