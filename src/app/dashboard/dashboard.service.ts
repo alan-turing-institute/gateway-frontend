@@ -26,22 +26,20 @@ export class DashboardService {
 
   getProgressInfo(jobId): Observable<ProgressInfo>{
     var url = this.progressUrl + jobId
-    return this.http.get(url)
+    return this.http.get(this.progressUrl)
                     .map(this.extractJsonData)
-                    .catch(this.handleError)
+                    .catch(this.handleError);
   }
 
 
   private extractData(res: Response){
     let body = res.json();
-    console.log(body)
     return body.jobs || { };
   }
 
   private extractJsonData(res: Response) {
-    console.log(res)
     let body = res.json();
-    return body || { };
+    return body|| { };
   }
 
   private handleError (error: Response | any) {

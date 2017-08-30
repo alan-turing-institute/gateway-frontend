@@ -5,7 +5,7 @@
                 <div class="col-md-3">
                     <strong>{{summary.name}}</strong>
                 </div>
-                <div class="col-md-3"> 
+                <div class="col-md-3">
                     <div class="progress job-progress" [hidden]="getProgressBarHidden()">
                         <div class="progress-bar bg-job-success" role="progressbar" style="width: 25%;">25%</div>
                     </div>
@@ -29,7 +29,7 @@
                 <div class="col-md-3">
                     <div class="row" style="padding-top:3%">
                         <div class="col-md-4 offset-md-4">
-                            <button type="button" 
+                            <button type="button"
                                     class="btn btn-primary btn-action"
                                     [routerLink]="['/output/output']" routerLinkActive="active">
                                 <!-- <i [ngClass]="getActionIcon()"></i> -->
@@ -39,9 +39,9 @@
                     </div>
                     <div class="row" style="padding-top:3%">
                         <div class="col-md-4 offset-md-4">
-                            <button type="button" 
+                            <button type="button"
                                     class="btn btn-primary btn-action"
-                                    [routerLink]="['./../dashboard']" 
+                                    [routerLink]="['./../dashboard']"
                                     routerLinkActive="active" (click)="deleteMe()">
                                 <span class="actionText"><strong>Delete</strong></span>
                             </button>
