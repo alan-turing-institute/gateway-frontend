@@ -15,7 +15,8 @@
         <div class="container-fluid card-block-container">
             <a routerLinkActive = "active" [routerLink] = "['/config/config']" (click)="storeCaseType()">
             <div class="row">
-                <div class="col-md-2"><img src={{info.thumbnail}}  class="img-case"></div>  
+                <div class="col-md-2"><img src={{info.thumbnail}}  class="img-case">
+                </div>  
                 <div class="col-md-7">
                     <p class="descriptionText">{{getShortDescription()}}
                     </p>
