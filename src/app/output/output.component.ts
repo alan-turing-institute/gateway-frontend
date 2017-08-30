@@ -74,8 +74,6 @@ export class OutputComponent implements OnInit {
      })
    }
 
-
-
    downloadRawData(){
      console.log('downloading raw data')
      this.outputService.downloadFile().subscribe(blob=>{

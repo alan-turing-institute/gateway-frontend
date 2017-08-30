@@ -38,7 +38,7 @@ export class ConfigComponent implements OnInit {
     this.jobCreated = false
     this.validFormValues = true
   }
-  
+
   saveJob() {
     console.log("saving")
     if (this.jobCreated) {
@@ -66,7 +66,7 @@ export class ConfigComponent implements OnInit {
                         error => {
                           this.errorMessage = <any> error
                         });
-    } 
+    }
   }
 
   getTemplate () {
@@ -79,6 +79,8 @@ export class ConfigComponent implements OnInit {
                             console.log(template['id'])
                             this.case=template['case']
                             this.job = template
+                            console.log(this.job)
+                            console.log(this.tags)
                           },
                           error => {
                             this.errorMessage = <any> error
@@ -95,7 +97,7 @@ export class ConfigComponent implements OnInit {
 
   setValidValues (tags) {
     for (var t = 0; t < tags.length; t++) {
-      let parameters = tags[t]['parameters'];  
+      let parameters = tags[t]['parameters'];
       for (var p = 0; p < parameters.length; p++) {
         parameters[p].valid = true;
       }
@@ -104,7 +106,7 @@ export class ConfigComponent implements OnInit {
 
   allValuesAreValid (tags):boolean {
     for (var t = 0; t < tags.length; t++) {
-      let parameters = tags[t]['parameters'];  
+      let parameters = tags[t]['parameters'];
       for (var p = 0; p < parameters.length; p++) {
         if (parameters[p].valid===false)
           return false
@@ -128,13 +130,19 @@ export class ConfigComponent implements OnInit {
     }
   }
 
+  updateName(parameter) {
+    console.log('updating')
+      // this.configDataService.updateJobData(tag['parameters'], component.name,  component.value.toString())
+
+  }
+
   validateValue(component):boolean {
     if (component.type!='text')
       return true;
     else {
       if ((component.value >= component.min_value) && (component.value <= component.max_value))
           component.valid = true
-      else 
+      else
           component.valid = false
       this.validFormValues = this.allValuesAreValid(this.tags)
       return component.valid
@@ -150,7 +158,7 @@ export class ConfigComponent implements OnInit {
   }
 
   isDisabled():boolean {
-    if (this.type === 'Output') 
+    if (this.type === 'Output')
       return true
     else
       return false

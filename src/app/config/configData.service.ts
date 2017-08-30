@@ -35,24 +35,24 @@ export class ConfigDataService {
 
   getTemplate(): Observable<InputComponent[]> {
     console.log("in template")
-    var url = this.templateUrl + localStorage.getItem('template_id') 
+    var url = this.templateUrl + localStorage.getItem('template_id')
     this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
                     .catch(this.handleError);
-    
+
     return this.jobData;
   }
 
   getCreateJobURL(job_id): string {
     localStorage.setItem("job_id", job_id)
-    this.newJobUrl = this.newJobUrl //+ localStorage.getItem('job_id') 
+    this.newJobUrl = this.newJobUrl //+ localStorage.getItem('job_id')
     console.log(this.newJobUrl)
     return this.newJobUrl
   }
 
   getSaveJobURL(job_id): string {
     localStorage.setItem("job_id", job_id)
-    this.newJobUrl = this.newJobUrl +"/"+ localStorage.getItem('job_id') 
+    this.newJobUrl = this.newJobUrl +"/"+ localStorage.getItem('job_id')
     console.log(this.newJobUrl)
     return this.newJobUrl
   }
@@ -89,16 +89,18 @@ export class ConfigDataService {
     return -1;
   }
 
-    updateJobData(supersetComponents, componentKey, newValue) : void {
-        var index = this.arrayObjectIndexOf(supersetComponents, componentKey, 'name'); // 1
-        supersetComponents[index].value = newValue;
+  updateJobData(supersetComponents, componentKey, newValue) : void {
+    var index = this.arrayObjectIndexOf(supersetComponents, componentKey, 'name'); // 1
+    supersetComponents[index].value = newValue;
   }
+
+
 
   private extractJsonData(res: Response) {
     console.log(res)
     let body = res.json();
     this.response = body
-    
+
     return body || { };
   }
 

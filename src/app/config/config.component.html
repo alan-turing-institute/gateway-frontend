@@ -18,22 +18,60 @@
                   <button type="button" class="btn btn-primary btn-action" (click)="saveJob()" [disabled]=!validFormValues>
                     <span><strong>Save</strong></span>
                   </button>
-                </div>   
-              </div>  
+                </div>
+              </div>
               <div class="row">
-                <div class="col-md-12">     
+                <div class="col-md-12">
                   <!-- <button type="button" class="btn btn-primary" (click)="startJob()" [disabled]=!validFormValues  [hidden]=!jobCreated> -->
-                  <button type="button" 
-                          class="btn btn-primary btn-action" 
+                  <button type="button"
+                          class="btn btn-primary btn-action"
                           [routerLink]="['../../dashboard']"
-                          routerLinkActive="active"        
+                          routerLinkActive="active"
                           (click)="startJob()" [disabled]=!validFormValues>
                     <span><strong>Send Job</strong></span>
                   </button>
-                </div>   
-              </div>  
+                </div>
+              </div>
             </div>
           </div>
+        </tab>
+
+        <tab heading='Description'>
+          <div class = "row">
+            <div class="col-md-2">
+              <img src={{case.thumbnail}} class=img-config>
+            </div>
+            <div class="col-md-8">
+              <p>Name</p>
+              <input [(ngModel)]="job.name"
+              (keyup.enter)="updateName(job.name)">
+              <p>Description</p>
+              <input [(ngModel)]=job.description
+              (keyup.enter)="updateName(job.description)">
+            </div>
+
+          <div class="col-md-2">
+            <div class="row">
+               <div class="col-md-12">
+                <button type="button" class="btn btn-primary btn-action" (click)="saveJob()" [disabled]=!validFormValues>
+                  <span><strong>Save</strong></span>
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <!-- <button type="button" class="btn btn-primary" (click)="startJob()" [disabled]=!validFormValues  [hidden]=!jobCreated> -->
+                <button type="button"
+                        class="btn btn-primary btn-action"
+                        [routerLink]="['../../dashboard']"
+                        routerLinkActive="active"
+                        (click)="startJob()" [disabled]=!validFormValues>
+                  <span><strong>Send Job</strong></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
         </tab>
         <!-- <tab heading="Job Information">
           <div class="row">
