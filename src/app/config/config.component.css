@@ -3,6 +3,10 @@
     padding: 0%;
 }
 
+.card.card-family {
+    margin:20px;
+}
+
 .actionText {
     font: medium;
 }

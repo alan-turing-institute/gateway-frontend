@@ -99,4 +99,8 @@ export class JobSummaryComponent implements OnInit{
             text ="View"
         return text
     }
+
+    deleteMe() {
+        console.log("Delete a Job")
+    }
 }

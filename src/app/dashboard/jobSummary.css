@@ -22,7 +22,7 @@
 }
 
 .badge-running {
-    color: #4dbd74;
+    color: #20a8d8;   
 }
 
 .badge-error {
@@ -31,7 +31,8 @@
 }
 
 .badge-complete {
-    color: #20a8d8;
+    
+    color: #4dbd74;
 
 
 }
@@ -66,4 +67,19 @@
 
 .break-word {
     word-wrap: break-word;
+}
+
+.bg-job-success {
+    color: white;
+    background-color: #20a8d8;
+}
+
+.job-progress {
+    background-color: white;
+    display: inline-block;
+    width: 100%;
+}
+
+.btn.btn-primary.btn-action {
+    width: 5em;
 }
