@@ -67,5 +67,13 @@ export class OutputComponent implements OnInit {
      this.config['collapse'] = !this.config['collapse']
    }
 
+   downloadCsvData(){
+     console.log('downloading csv data')
+   }
+
+   downloadRawData(){
+     console.log('downloading raw data')
+   }
+
 
 }

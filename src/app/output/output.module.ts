@@ -12,7 +12,6 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ChartsComponent } from './chart';
-
 import {ConfigModule} from '../config/config.module';
 import {DashboardModule} from '../dashboard/dashboard.module'
 
