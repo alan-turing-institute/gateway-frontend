@@ -8,7 +8,7 @@ import { OutputService } from './output.service';
 import { ConfigDataService} from '../config/configData.service'
 
 import { ChartsComponent } from './chart';
-
+import * as FileSaver from 'file-saver';
 
 @Component({
   // selector: 'output',
@@ -69,10 +69,18 @@ export class OutputComponent implements OnInit {
 
    downloadCsvData(){
      console.log('downloading csv data')
+     this.outputService.downloadFile().subscribe(blob=>{
+       FileSaver.saveAs(blob, 'data.csv')
+     })
    }
+
+
 
    downloadRawData(){
      console.log('downloading raw data')
+     this.outputService.downloadFile().subscribe(blob=>{
+       FileSaver.saveAs(blob, 'data.csv')
+     })
    }
 
 
