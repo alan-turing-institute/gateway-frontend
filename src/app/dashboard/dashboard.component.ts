@@ -15,8 +15,9 @@ import { JobSummaryComponent } from './jobSummary.component';
 export class DashboardComponent implements OnInit {
 
   allJobs: JobInfo [];
-  jobs: {} [];
+  jobs: JobInfo [];
   errorMessage: string;
+  progress: {value:number, units:string};
 
   constructor(private dashboardService: DashboardService) { }
 
@@ -30,17 +31,22 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.data
                           .subscribe(
                             allJobs => {
-                              this.allJobs = allJobs
-                              for(var key in allJobs){
-                                var job = allJobs[key]
-                                if(job.status == 'Running'){
-                                  this.getProgressInfoData(job)
-                                }else{
-                                  job.progress = {'value':100, 'units':'%', 'range_min':0, 'range_max':100}
+                              this.jobs = allJobs
+                              // console.log(this.jobs)
+                               for(var index in this.jobs){
+                                  var job = this.jobs[index]
+                                // console.log(job)
+                                  if(job.status == 'Running'){
+                                    this.getProgressInfoData(job)
+                              //     //job.progress = this.progress
+                                  }else{
+                                    job.progress = {'value':100, 'units':'%'}
+                                  }
+                                  this.jobs[index] = job
+                              //   console.log(job)
+
                                 }
-                                this.jobs = this.jobs.concat(job)
-                              }
-                              console.log(this.jobs)
+
                             },
                             error => {
                               this.errorMessage = <any> error
@@ -48,10 +54,10 @@ export class DashboardComponent implements OnInit {
                           }
 
 getProgressInfoData(job) {
-  this.dashboardService.getProgressInfo(job)
+  this.dashboardService.getProgressInfo(job.id)
                         .subscribe(
                           progress => {
-                              job.progress = progress
+                              job.progress = {'value':progress.value, 'units':progress.units}
                           },
                           error => {
                             this.errorMessage = <any> error

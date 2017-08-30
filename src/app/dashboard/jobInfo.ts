@@ -12,9 +12,8 @@ export class JobInfo {
     end_datetime: string;
     status: string;
     thumbnail: string;
-    progress: {
-        value: number;
-        units: string;
-        range_min: number;
-        range_max: number;};
+    progress:{
+      value: number;
+      units: string;
+    };
 }
