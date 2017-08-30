@@ -33,20 +33,16 @@ export class DashboardComponent implements OnInit {
                           .subscribe(
                             allJobs => {
                               this.jobs = allJobs
-                              // console.log(this.jobs)
                                for(var index in this.jobs){
                                   var job = this.jobs[index]
-                                // console.log(job)
                                   if(job.status == 'Running'){
                                     this.getProgressInfoData(job)
-                              //     //job.progress = this.progress
                                   }else{
                                     job.progress = {'value':100, 'units':'%'}
                                   }
                                   this.jobs[index] = job
-                              //   console.log(job)
-
                                 }
+                                console.log(this.jobs)
 
                             },
                             error => {
