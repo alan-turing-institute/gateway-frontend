@@ -3,27 +3,6 @@
   <div *ngIf="type!='Output'" class="row">
     <div class="col-md-12">
       <tabset>
-        <tab heading={{case.label}}>
-          <div class="row">
-            <div class="col-md-2">
-              <img src={{case.thumbnail}} class=img-config>
-            </div>
-            <div class="col-md-8">
-              <p class="descriptionText">{{case.description}}</p>
-            </div>
-            <div class="col-md-2">
-              <button type="button" class="btn btn-primary" (click)="saveJob()" [disabled]=!validFormValues>
-                <i class="fa fa-floppy-o"></i>
-                  <span class="actionText">
-                    <strong>Save</strong></span>
-                  </button>
-              <button type="button" class="btn btn-primary" (click)="startJob()" [disabled]=true  [hidden]=!jobCreated>
-                <i class="fa fa-rocket"></i>
-                  <span class="actionText">
-                    <strong>Submit Job</strong></span></button>
-            </div>
-          </div>
-        </tab>
 
         <tab heading={{case.label}}>
           <div class="row">
@@ -34,19 +13,28 @@
               <p class="descriptionText">{{case.description}}</p>
             </div>
             <div class="col-md-2">
-              <button type="button" class="btn btn-primary" (click)="saveJob()" [disabled]=!validFormValues>
-                <i class="fa fa-floppy-o"></i>
-                  <span class="actionText">
-                    <strong>Save</strong></span>
+              <div class="row">
+                 <div class="col-md-12">
+                  <button type="button" class="btn btn-primary btn-action" (click)="saveJob()" [disabled]=!validFormValues>
+                    <span><strong>Save</strong></span>
                   </button>
-              <button type="button" class="btn btn-primary" (click)="startJob()" [disabled]=true  [hidden]=!jobCreated>
-                <i class="fa fa-rocket"></i>
-                  <span class="actionText">
-                    <strong>Submit Job</strong></span></button>
+                </div>   
+              </div>  
+              <div class="row">
+                <div class="col-md-12">     
+                  <!-- <button type="button" class="btn btn-primary" (click)="startJob()" [disabled]=!validFormValues  [hidden]=!jobCreated> -->
+                  <button type="button" 
+                          class="btn btn-primary btn-action" 
+                          [routerLink]="['../../dashboard']"
+                          routerLinkActive="active"        
+                          (click)="startJob()" [disabled]=!validFormValues>
+                    <span><strong>Send Job</strong></span>
+                  </button>
+                </div>   
+              </div>  
             </div>
           </div>
         </tab>
-
         <!-- <tab heading="Job Information">
           <div class="row">
             <div class="col-md-2">
