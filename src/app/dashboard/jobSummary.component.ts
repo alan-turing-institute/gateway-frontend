@@ -13,7 +13,6 @@ export class JobSummaryComponent implements OnInit{
     @Input() type: string;
     @Input() caseInfo:boolean;
     @Input() case:{};
-    @Input() progress:{};
 
     jobHoverHidden: boolean;
 

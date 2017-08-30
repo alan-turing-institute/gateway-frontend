@@ -17,13 +17,11 @@ export class DashboardComponent implements OnInit {
   allJobs: JobInfo [];
   jobs: {} [];
   errorMessage: string;
-  progress:{};
 
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
       this.jobs = []
-      this.progress = {}
       this.getJobData()
   }
 
@@ -35,24 +33,25 @@ export class DashboardComponent implements OnInit {
                               this.allJobs = allJobs
                               for(var key in allJobs){
                                 var job = allJobs[key]
-                                this.jobs = this.jobs.concat(job)
                                 if(job.status == 'Running'){
-                                  this.getProgressInfoData(job.id)
+                                  this.getProgressInfoData(job)
+                                }else{
+                                  job.progress = {'value':100, 'units':'%', 'range_min':0, 'range_max':100}
                                 }
+                                this.jobs = this.jobs.concat(job)
                               }
                               console.log(this.jobs)
-                              console.log(this.progress)
                             },
                             error => {
                               this.errorMessage = <any> error
                             });
                           }
 
-getProgressInfoData(jobId) {
-  this.dashboardService.getProgressInfo(jobId)
+getProgressInfoData(job) {
+  this.dashboardService.getProgressInfo(job)
                         .subscribe(
                           progress => {
-                              this.progress[jobId] = progress
+                              job.progress = progress
                           },
                           error => {
                             this.errorMessage = <any> error
