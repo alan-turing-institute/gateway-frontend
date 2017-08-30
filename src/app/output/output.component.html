@@ -5,13 +5,13 @@
         <div class="col-md-12">
              <tabset>
 
-              <tab heading={{case.label}}>
+              <tab heading={{job.case.label}}>
                 <div class="row">
                   <div class="col-md-2">
-                    <img src={{case.thumbnail}} class=img-job>
+                    <img src={{job.case.thumbnail}} class=img-job>
                   </div>
                 <div class="col-md-10">
-                  <p class="descriptionText">{{case.description}}</p>
+                  <p class="descriptionText">{{job.case.description}}</p>
                 </div>
                 </div>
               </tab>
@@ -19,7 +19,7 @@
               <tab heading={{job.name}}>
                 <div class="row">
                   <div class="col-md-2">
-                    <img src={{case.thumbnail}} class=img-job>
+                    <img src={{job.case.thumbnail}} class=img-job>
                   </div>
                 <div class="col-md-10">
                   <p class="descriptionText">{{job.description}}</p>
@@ -30,7 +30,7 @@
               <tab heading="Job Information">
                 <div class="row">
                   <div class="col-md-2">
-                    <img src={{case.thumbnail}} class=img-job>
+                    <img src={{job.case.thumbnail}} class=img-job>
                   </div>
                 <div class="col-md-10">
                   <div *ngIf="status=='Running'">

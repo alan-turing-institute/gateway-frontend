@@ -5,62 +5,46 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import {JobInfo} from '../dashboard/jobInfo';
-import {JobConfig} from './jobConfigComponent';
-import { CaseInfo } from '../cases/case/caseInfo';
-
+import {JobTemplate} from './jobTemplate';
 
 @Injectable()
 export class OutputService {
-  //url for getting job configuration information
-  private infosUrl = require('../../assets/job_status.json');
+  //url for getting job information
+  private jobUrl = require('../../assets/job_template.json');
+  //private jobUrl = 'http://localhost:5000/api/jobs/'
 
   //url for getting job data used to plot the graph
-  //should be similar to above BUT with a data query added
   private dataUrl = require('../../assets/sample_data.json');
+  //private dataUrl = 'http://localhost:5000/api/data/'
 
-  //url for getting generic information about the case type
-  //private caseUrl = require('../../assets/case_types.json')
-  private caseUrl = 'http://localhost:5000/api/cases';
   constructor (private http: Http) {}
 
   info = this.getJobInfo()
-  //config = this.getJobConfig()
   data = this.getOutputData()
 
-  case = this.getCaseInfo()
-
-  getJobInfo(): Observable<JobInfo[]>{
-      return this.http.get(this.infosUrl)
+  getJobInfo(): Observable<JobTemplate>{
+      var url = this.jobUrl + localStorage.getItem('job_id')
+      return this.http.get(this.jobUrl)
                       .map(this.extractJobs)
                       .catch(this.handleError)
   }
 
   getOutputData(): Observable<Array<any>>{
+    var url = this.dataUrl + localStorage.getItem('job_id')
     return this.http.get(this.dataUrl)
                     .map(this.extractData)
                     .catch(this.handleError)
   }
 
-  getCaseInfo():Observable<CaseInfo[]>{
-    return this.http.get(this.caseUrl)
-                    .map(this.extractCases)
-                    .catch(this.handleError)
-  }
 
   private extractJobs(res: Response){
     let body = res.json();
-    return body.jobs || { };
+    return body || { };
   }
 
   private extractData(res: Response){
     let body = res.json();
     return body.data || { };
-  }
-
-  private extractCases(res: Response){
-    let body = res.json();
-    return body.cases || { };
   }
 
 

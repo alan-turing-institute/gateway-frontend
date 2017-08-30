@@ -1,6 +1,6 @@
 export class ProgressInfo {
-    value: string;
+    value: number;
     units: string;
-    range_min: string;
-    range_max: string;
+    range_min: number;
+    range_max: number;
 }
