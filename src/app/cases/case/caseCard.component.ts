@@ -13,6 +13,7 @@ export class CaseCardComponent implements OnInit{
   caseHoverHidden: boolean;
   
   storeCaseType(): void {
+    localStorage.setItem('action_type', "Template");
     localStorage.setItem('template_id', this.info.id);
   }
 

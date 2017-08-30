@@ -25,10 +25,10 @@ export class DashboardComponent implements OnInit {
       console.log("in dashboard")
       localStorage.removeItem("job_id")
       this.jobs = []
-      this.getJobData()
+      this.getJobsData()
   }
 
-  getJobData() {
+  getJobsData() {
     this.dashboardService.data
       .subscribe(allJobs => {
         allJobs.map(job => {
