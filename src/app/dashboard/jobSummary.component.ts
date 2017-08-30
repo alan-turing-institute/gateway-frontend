@@ -100,7 +100,12 @@ export class JobSummaryComponent implements OnInit{
         return text
     }
 
+    getProgressValue(): Object {
+        return {'width':this.summary.progress.value.toString()+"%"}
+    }
+
     deleteMe() {
         console.log("Delete a Job")
+        window.location.reload()
     }
 }

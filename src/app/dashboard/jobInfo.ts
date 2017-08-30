@@ -1,3 +1,5 @@
+import { ProgressInfo } from './progressInfo';
+
 export class JobInfo {
     id: string;
     uri: string;
@@ -12,8 +14,5 @@ export class JobInfo {
     end_datetime: string;
     status: string;
     thumbnail: string;
-    progress:{
-      value: number;
-      units: string;
-    };
+    progress: ProgressInfo;
 }

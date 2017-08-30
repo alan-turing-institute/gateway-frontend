@@ -22,43 +22,33 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
+      console.log("in dashboard")
       localStorage.removeItem("job_id")
       this.jobs = []
       this.getJobData()
   }
 
-
   getJobData() {
     this.dashboardService.data
-                          .subscribe(
-                            allJobs => {
-                              this.jobs = allJobs
-                              // console.log(this.jobs)
-                               for(var index in this.jobs){
-                                  var job = this.jobs[index]
-                                // console.log(job)
-                                  if(job.status == 'Running'){
-                                    this.getProgressInfoData(job)
-                              //     //job.progress = this.progress
-                                  }else{
-                                    job.progress = {'value':100, 'units':'%'}
-                                  }
-                                  this.jobs[index] = job
-                              //   console.log(job)
-
-                                }
-
-                            },
-                            error => {
-                              this.errorMessage = <any> error
-                            });
-                          }
-
-getProgressInfoData(job) {
-  this.dashboardService.getProgressInfo(job.id)
+      .subscribe(allJobs => {
+        allJobs.map(job => {
+         this.dashboardService.getProgressInfo(job.id)
                         .subscribe(
                           progress => {
-                              job.progress = {'value':progress.value, 'units':progress.units}
+                              job.progress =  progress
+                              this.jobs.push(job)
+                          },
+                          error => {
+                            this.errorMessage = <any> error
+                          });
+                        })
+      })
+  }
+
+getProgressInfoData(id) {
+  this.dashboardService.getProgressInfo(id)
+                        .subscribe(
+                          progress => {
                           },
                           error => {
                             this.errorMessage = <any> error
