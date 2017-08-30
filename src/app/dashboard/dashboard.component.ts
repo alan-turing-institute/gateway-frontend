@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
+      localStorage.removeItem("job_id")
       this.jobs = []
       this.getJobData()
   }

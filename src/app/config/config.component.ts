@@ -35,12 +35,9 @@ export class ConfigComponent implements OnInit {
     this.tags = []
     this.case = new CaseInfo
     this.getTemplate()
-    //this.getData()
-    console.log("init")
     this.jobCreated = false
     this.validFormValues = true
   }
-
   
   saveJob() {
     console.log("saving")
@@ -72,63 +69,7 @@ export class ConfigComponent implements OnInit {
     } 
   }
 
-  getData () {
-    if (this.type == "Output") {
-      console.log(localStorage.getItem('template_id'));
-      this.configDataService.template
-                          .subscribe(
-                            template => {
-                              this.tags = template['families']
-                              console.log(this.tags)
-                              this.case=template['case']
-                              this.job = template
-                            },
-                            error => {
-                              this.errorMessage = <any> error
-                            });
-    }
-    if (this.type == "Template") {
-      console.log(localStorage.getItem('template_id'));
-      this.configDataService.template
-                          .subscribe(
-                            template => {
-                              this.tags = template['families']
-                              console.log(this.tags)
-                              this.case=template['case']
-                              this.job = template
-                            },
-                            error => {
-                              this.errorMessage = <any> error
-                            });
-    }
-    if (this.type == "Edit") {
-      console.log(localStorage.getItem('template_id'));
-      this.configDataService.template
-                          .subscribe(
-                            template => {
-                              this.tags = template['families']
-                              console.log(this.tags)
-                              this.case=template['case']
-                              this.job = template
-                            },
-                            error => {
-                              this.errorMessage = <any> error
-                            });
-    }
-
-    console.log(localStorage.getItem('template_id'));
-    this.configDataService.template
-                        .subscribe(
-                          template => {
-                            this.tags = template['families']
-                            console.log(this.tags)
-                            this.case=template['case']
-                            this.job = template
-                          },
-                          error => {
-                            this.errorMessage = <any> error
-                          });
-  }
+  
 
   getTemplate () {
     console.log("getting template")
@@ -220,4 +161,62 @@ export class ConfigComponent implements OnInit {
   testMe() {
     console.log("test");
   }
+
+  // getData2 () {
+  //   if (this.type == "Output") {
+  //     console.log(localStorage.getItem('template_id'));
+  //     this.configDataService.template
+  //                         .subscribe(
+  //                           template => {
+  //                             this.tags = template['families']
+  //                             console.log(this.tags)
+  //                             this.case=template['case']
+  //                             this.job = template
+  //                           },
+  //                           error => {
+  //                             this.errorMessage = <any> error
+  //                           });
+  //   }
+  //   if (this.type == "Template") {
+  //     console.log(localStorage.getItem('template_id'));
+  //     this.configDataService.template
+  //                         .subscribe(
+  //                           template => {
+  //                             this.tags = template['families']
+  //                             console.log(this.tags)
+  //                             this.case=template['case']
+  //                             this.job = template
+  //                           },
+  //                           error => {
+  //                             this.errorMessage = <any> error
+  //                           });
+  //   }
+  //   if (this.type == "Edit") {
+  //     console.log(localStorage.getItem('template_id'));
+  //     this.configDataService.template
+  //                         .subscribe(
+  //                           template => {
+  //                             this.tags = template['families']
+  //                             console.log(this.tags)
+  //                             this.case=template['case']
+  //                             this.job = template
+  //                           },
+  //                           error => {
+  //                             this.errorMessage = <any> error
+  //                           });
+  //   }
+
+  //   console.log(localStorage.getItem('template_id'));
+  //   this.configDataService.template
+  //                       .subscribe(
+  //                         template => {
+  //                           this.tags = template['families']
+  //                           console.log(this.tags)
+  //                           this.case=template['case']
+  //                           this.job = template
+  //                         },
+  //                         error => {
+  //                           this.errorMessage = <any> error
+  //                         });
+  // }
 }
