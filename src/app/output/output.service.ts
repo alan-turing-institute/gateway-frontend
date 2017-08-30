@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Headers, Response, RequestOptions, ResponseContentType } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import {JobTemplate} from './jobTemplate';
+
 
 @Injectable()
 export class OutputService {
@@ -16,6 +17,9 @@ export class OutputService {
   //url for getting job data used to plot the graph
   private dataUrl = require('../../assets/sample_data.json');
   //private dataUrl = 'http://localhost:5000/api/data/'
+
+   //private exampleFileUrl = require('../../../example.csv');
+    // private exampleFileUrl = 'https://github.com/RadkaJersak/Example/blob/master/example.csv'
 
   constructor (private http: Http) {}
 
@@ -62,4 +66,17 @@ export class OutputService {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
+
+
+
+  downloadFile(): Observable<Blob> {
+      let headers = new Headers({'Content-Type':'text/csv'});
+      let options = new RequestOptions({headers:headers, responseType: ResponseContentType.Blob });
+      return this.http.get('../../../example.csv', options)
+          .map(res => res.blob())
+          .catch(this.handleError)
+  }
+
+
+
 }
