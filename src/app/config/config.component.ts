@@ -69,8 +69,6 @@ export class ConfigComponent implements OnInit {
     } 
   }
 
-  
-
   getTemplate () {
     console.log("getting template")
     this.configDataService.template
@@ -160,6 +158,11 @@ export class ConfigComponent implements OnInit {
 
   testMe() {
     console.log("test");
+  }
+
+  startJob () {
+    console.log("Start a new job")
+    localStorage.removeItem("job_id")
   }
 
   // getData2 () {
