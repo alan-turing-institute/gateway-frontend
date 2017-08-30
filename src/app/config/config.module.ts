@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { IonRangeSliderModule } from "ng2-ion-range-slider";
 import { ConfigComponent } from './config.component';
 import { ConfigDataService } from './configData.service';
+import {OutputService} from '../output/output.service';
 import { PipeModule} from '../pipe.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
@@ -22,7 +23,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     TabsModule.forRoot()
   ],
   declarations: [ConfigComponent],
-  providers: [ConfigDataService],
+  providers: [ConfigDataService, OutputService],
   exports: [ConfigComponent]
 })
 

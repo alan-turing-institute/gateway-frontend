@@ -5,7 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { JobTemplate } from './jobTemplate';
 
 import { OutputService } from './output.service';
-import { ConfigDataService} from '../config/configData.service'
 
 import { ChartsComponent } from './chart';
 import * as FileSaver from 'file-saver';
@@ -34,8 +33,7 @@ export class OutputComponent implements OnInit {
 
 
   constructor(private activatedRoute: ActivatedRoute,
-  private outputService:OutputService,
-  private configDataService:ConfigDataService) {}
+  private outputService:OutputService) {}
 
   ngOnInit() {
         //this.job_id = localStorage.getItem('job_id')

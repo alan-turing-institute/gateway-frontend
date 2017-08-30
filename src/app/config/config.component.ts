@@ -4,6 +4,7 @@ import { InputComponent } from './inputComponent';
 import { CaseInfo } from '../cases/case/caseInfo';
 // import { InputComponentService } from './inputComponent.service';
 import { ConfigDataService } from './configData.service';
+import { OutputService } from '../output/output.service';
 import { DescriptionComponent } from './description.component';
 // import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
 
@@ -28,7 +29,7 @@ export class ConfigComponent implements OnInit {
 
 
   constructor(private configDataService:ConfigDataService,
-    // private inputComponentService:InputComponentService
+    private outputService:OutputService
   ) { }
 
   ngOnInit() {
@@ -184,7 +185,7 @@ export class ConfigComponent implements OnInit {
   getData () {
     if (this.type == "Output") {
       console.log(localStorage.getItem('job_id'));
-      this.configDataService.template
+      this.outputService.info
                           .subscribe(
                             template => {
                               this.tags = template['families']
