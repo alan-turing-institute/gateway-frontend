@@ -130,11 +130,18 @@ export class ConfigComponent implements OnInit {
     }
   }
 
-  updateName(parameter) {
-    console.log('updating')
-      // this.configDataService.updateJobData(tag['parameters'], component.name,  component.value.toString())
-
+  updateName(name) {
+    console.log('updating name')
+    this.job.name = name
+    console.log(this.job.name)
   }
+
+  updateDescription(description) {
+    console.log('updating job description')
+    this.job.description = description
+    console.log(this.job.description)
+  }
+
 
   validateValue(component):boolean {
     if (component.type!='text')
@@ -184,6 +191,7 @@ export class ConfigComponent implements OnInit {
                               console.log(this.tags)
                               this.case=template['case']
                               this.job = template
+                              console.log(this.job)
                             },
                             error => {
                               this.errorMessage = <any> error
@@ -206,7 +214,7 @@ export class ConfigComponent implements OnInit {
                             error => {
                               this.errorMessage = <any> error
                             });
-      } 
+      }
       else {
         let template_id = localStorage.getItem('template_id');
         console.log("template"+template_id)
@@ -218,13 +226,15 @@ export class ConfigComponent implements OnInit {
                               // console.log(this.tags)
                               this.case=template['case']
                               this.job = template
+                              console.log(this.tags)
+                              console.log(this.job)
                             },
                             error => {
                               this.errorMessage = <any> error
                             });
 
       }
-      
+
     }
   }
 }
