@@ -12,8 +12,8 @@ import {ProgressInfo} from './progressInfo';
 export class DashboardService {
   // private jobsUrl = require('../../assets/job_status.json');
   private jobsUrl = 'http://localhost:5000/api/jobs';
-  private progressUrl = require('../../assets/progress.json')
-  //private progressUrl = 'http://localhost:5000/api/progress/';
+//   private progressUrl = require('../../assets/progress.json')
+  private progressUrl = 'http://localhost:5000/api/progress/';
   constructor (private http: Http) {}
 
   data = this.getJobsData()
@@ -26,7 +26,7 @@ export class DashboardService {
 
   getProgressInfo(jobId): Observable<ProgressInfo>{
     var url = this.progressUrl + jobId
-    return this.http.get(this.progressUrl)
+    return this.http.get(url)
                     .map(this.extractJsonData)
                     .catch(this.handleError);
   }
