@@ -83,12 +83,12 @@
                     </div>
                   </div> -->
                   <p class="descriptionText">Status: {{job.status}}</p>
-                  <p class="descriptionText">Created: {{job.creation_datetime}}</p>
+                  <p class="descriptionText">Created: {{job.creation_datetime | date:"hh:mm:ss dd-MM-yyyy"}}</p>
                   <div *ngIf="status=='Complete'||status=='Running'">
-                    <p class="descriptionText">Start: {{job.start_datetime}} </p>
+                    <p class="descriptionText">Start: {{job.start_datetime | date:"hh:mm:ss dd-MM-yyyy"}} </p>
                   </div>
                   <div *ngIf="status=='Complete'">
-                    <p class="descriptionText">End: {{job.end_datetime}}</p>
+                    <p class="descriptionText">End: {{job.end_datetime | date:"hh:mm:ss dd-MM-yyyy"}}</p>
                   </div>
                 </div>
                 <div class="col-md-2">

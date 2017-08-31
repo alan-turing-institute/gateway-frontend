@@ -22,7 +22,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  
+
                   <button type="button"
                           class="btn btn-primary btn-action"
                           [routerLink]="['../../dashboard']"
@@ -34,9 +34,9 @@
               </div>
             </div>
           </div>
-        </tab> 
+        </tab>
 
-        <tab heading="Description">
+        <tab heading={{description}}>
           <div class = "row">
             <div class="col-md-2">
               <img src={{case.thumbnail}} class=img-config>
@@ -76,7 +76,7 @@
                         class="btn btn-primary btn-action"
                         [routerLink]="['../../dashboard']"
                         routerLinkActive="active"
-                        (click)="startJob()" 
+                        (click)="startJob()"
                         [disabled]=!validFormValues
                         [hidden]=!jobCreated>
                   <span><strong>Send Job</strong></span>
