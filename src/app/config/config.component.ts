@@ -167,10 +167,12 @@ export class ConfigComponent implements OnInit {
                           saveJob => {
                             console.log("saved bloody job")
                             console.log(saveJob)
+                            //run job api here
                           },
                           error => {
                             this.errorMessage = <any> error
                           });
+    
     localStorage.removeItem("job_id")
   }
 

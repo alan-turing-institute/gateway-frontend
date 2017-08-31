@@ -87,6 +87,10 @@ export class ConfigDataService {
     return response
   }
 
+  // runJob(): Observable<any> {
+  //
+  // }
+
   // getOutputData(): Observable<InputComponent[]> {
   //   // console.log("reading")
   //   return this.http.get(this.getOutputUrl)
