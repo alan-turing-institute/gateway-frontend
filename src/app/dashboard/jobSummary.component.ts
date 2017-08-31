@@ -89,17 +89,37 @@ export class JobSummaryComponent implements OnInit{
 
     getActionText() : string  {
         var text = ""
-        if (this.summary.status == "Running")
+        if (this.summary.status.toLowerCase() == "running")
             text = "View"
-        if (this.summary.status == "Complete")
+        if (this.summary.status.toLowerCase() == "new")
+            text = "Edit"
+        if (this.summary.status.toLowerCase() == "complete")
             text ="View"
-        if (this.summary.status == "Error")
+        if (this.summary.status.toLowerCase() == "error")
             text ="Logs"
-        if (this.summary.status == "Draft")
+        if (this.summary.status.toLowerCase() == "draft")
             text ="Edit"
-        if (this.summary.status == "Queued")
+        if (this.summary.status.toLowerCase() == "queued")
             text ="View"
         return text
+    }
+
+    routeToOutput() : boolean  {
+        if (this.summary.status.toLowerCase() == "running")
+            return true
+        if (this.summary.status.toLowerCase() == "complete")
+            return true
+        if (this.summary.status.toLowerCase() == "queued")
+            return true
+        return false
+    }
+
+    routeToInput() : boolean  {
+        if (this.summary.status.toLowerCase() == "new")
+            return true
+        if (this.summary.status.toLowerCase() == "draft")
+            return true
+        return false
     }
 
     getProgressValue(): Object {
