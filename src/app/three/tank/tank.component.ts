@@ -2,7 +2,7 @@ import { Component, OnInit, OnChanges, OnDestroy, ViewChild, ElementRef, Input, 
 
 import {
     Scene, PerspectiveCamera, WebGLRenderer, Mesh, Color, DoubleSide,
-    MeshToonMaterial, BoxGeometry, PointLight, AmbientLight
+    MeshPhongMaterial, BoxGeometry, PointLight, AmbientLight
 } from 'three/src/Three';
 
 import { TrackballControls } from '../TrackballControls';
@@ -16,6 +16,7 @@ import { STLLoader } from '../STLLoader';
 export class TankComponent implements ThreeComponent, OnInit, OnChanges {
 
     @ViewChild('tankDisplay') tankDiv: ElementRef;
+    @ViewChild('tankCanvas') tankCanvas: ElementRef;
 
     private renderer: THREE.WebGLRenderer;
     private scene: THREE.Scene;
@@ -25,25 +26,26 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
     private stirrers: { [type: string]: THREE.Mesh };
     private loader: STLLoader;
 
-    @Input() num_blades: number;
+    @Input() blades: number;
     @Input() angle: number;
 
     constructor() {
-        this.num_blades = 4;
+        this.blades = 4;
         this.angle = 0;
         this.loader = new STLLoader();
+        this.stirrers = {};
     }
 
     public ngOnInit(): void {
         // Set up a render window
-        this.renderer = new WebGLRenderer({ alpha: true });
+        this.renderer = new WebGLRenderer({ alpha: true, canvas: this.tankCanvas.nativeElement });
         this.tankDiv.nativeElement.appendChild(this.renderer.domElement);
 
         this.scene = new Scene();
         this.scene.background = new Color(0xffffff);
 
         let screenRatio = this.renderer.domElement.offsetWidth / this.renderer.domElement.offsetHeight;
-        console.log('Setting screen ratio to ' + screenRatio + ' width: ' + this.renderer.domElement.offsetWidth);
+
         this.camera = new PerspectiveCamera(75, screenRatio, 0.1, 1000);
 
         let lights = [];
@@ -68,26 +70,29 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
         const stirrerUrl = require('./stirrer.stl');
 
         this.loader.load(tankUrl, function (geometry: THREE.Geometry) {
-            let material = new MeshToonMaterial({ color: 0x222222, transparent: true, opacity: 0.5, side: DoubleSide });
+            let material = new MeshPhongMaterial({ color: 0x222222, transparent: true, opacity: 0.5, side: DoubleSide });
             geometry.computeBoundingBox();
             geometry.center();
+            geometry.rotateX(-Math.PI / 4);
             self.tank = new Mesh(geometry, material);
             self.scene.add(self.tank);
             self.render();
         });
 
         this.loader.load(stirrerUrl, function (geometry: THREE.Geometry) {
-            let material = new MeshToonMaterial({ color: 0x333333, side: DoubleSide });
+            let material = new MeshPhongMaterial({ color: 0x333333, side: DoubleSide });
             geometry.computeBoundingBox();
             geometry.center();
+            geometry.rotateX(-Math.PI / 4);
             self.stirrer = new Mesh(geometry, material);
             self.scene.add(self.stirrer);
             self.render();
         });
 
-        this.camera.position.y = -0.25;
+        this.camera.position.z = 0.25;
 
         this.render();
+
         let controls = new TrackballControls(this.camera, this.renderer.domElement, this);
     }
 
@@ -98,24 +103,10 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
     }
 
     public ngOnChanges(): void {
-        // Change which stirrer is being displayed
-        // if (this.tank === undefined) {
-        //     return;
-        // }
-        // const filename_end = this.num_blades + '_' + this.angle;
-        // const file_prefix = 'stirrer_';
-        // const file_extension = '.stl';
-
-        // if (this.stirrers[filename_end] === undefined) {
-        //     // load it
-        // } else {
-        //     const stirrerUrl = require(file_prefix + filename_end + file_extension);
-        //     const self: TankComponent = this;
-        //     this.loader.load(stirrerUrl, function(geometry: THREE.Geometry){
-        //         self.scene.remove(self.stirrer);
-        //         self.render();
-        //     });
-        // }
+        // Change the blades and angle of the stirrer displayed
+        if (this.tank === undefined) {
+            return;
+        }
     }
 
 

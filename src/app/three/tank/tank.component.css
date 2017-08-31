@@ -3,8 +3,3 @@
     height: 75%;
     padding: 2%;
 }
-
-:host >>> canvas {
-    width: 350px; 
-    height: 250px; 
-}

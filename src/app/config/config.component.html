@@ -164,7 +164,7 @@
                           min={{component.min_value}}
                           max={{component.max_value}}
                           postfix=" {{component.units}}"
-                          data-step=0.01
+                          data-step="1"
                           (onFinish)="updateSlider(tag, component, $event)"></ion-range-slider>
                     </div>
                     <div *ngIf="type == 'Output'">
@@ -174,10 +174,10 @@
                           min={{component.min_value}}
                           max={{component.max_value}}
                           postfix=" {{component.units}}"
-                          data-step=0.01
+                          data-step="1"
                           from_fixed=true></ion-range-slider>
                       </div>
-                      <app-tank></app-tank>
+                      <app-tank [blades]="component.value"></app-tank>
                   </div>
                   </div>
 

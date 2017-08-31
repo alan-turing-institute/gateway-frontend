@@ -84,6 +84,24 @@
         "help": "A description of surface tension?",
         "disabled":false
       }]
+    },
+    {
+      "label": "Tank Status",
+      "name": "tank_properties",
+      "collapse": false,
+      "parameters": [{
+        "name": "tank_radius",
+        "type": "tank",
+        "label": "Tank Radius",
+        "units": "Si",
+        "type_value": "float",
+        "min_value": "1",
+        "max_value": "10",
+        "options": ["0.0725"],
+        "value": "4",
+        "help": "A size for the tank",
+        "disabled":false
+      }]
     }
   ],
   "inputs": [{
