@@ -28,7 +28,7 @@
                     <p class="descriptionText">{{getShortDescription()}}</p>
                 </div>
                 <div class="col-md-3">
-                    <div class="row" style="padding-top:3%">
+                    <div class="row" style="padding-top:3%" [hidden]="routeToOutput()">
                         <div class="col-md-4 offset-md-2">
                             <button type="button"
                                     class="btn btn-primary btn-action"
@@ -39,14 +39,14 @@
                             </button>
                         </div>
                     </div>
-                    <div class="row" style="padding-top:3%">
+                    <div class="row" style="padding-top:3%" [hidden]="routeToInput()">
                         <div class="col-md-4 offset-md-2">
                             <button type="button"
                                     class="btn btn-primary btn-action"
                                     (click)="storeJobId('Edit')"
                                     [routerLink]="['/config/config']" routerLinkActive="active">
                                 <!-- <i [ngClass]="getActionIcon()"></i> -->
-                                <span class="actionText"><strong> Edit</strong></span>
+                                <span class="actionText"><strong> {{getActionText()}}</strong></span>
                             </button>
                         </div>
                     </div>
