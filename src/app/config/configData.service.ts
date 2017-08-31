@@ -43,7 +43,8 @@ export class ConfigDataService {
   }
 
   getJob(): Observable<InputComponent[]> {
-    var url = this.newJobUrl + localStorage.getItem('job_id')
+    var url = this.newJobUrl + "/"+localStorage.getItem('job_id')
+    console.log(url);
     this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
                     .catch(this.handleError);
@@ -66,6 +67,7 @@ export class ConfigDataService {
   }
 
   createJob(jobData:any, newJobUrl): Observable<InputComponent[]> {
+    console.log(jobData)
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     this.jobData = this.http.post(newJobUrl, jobData, options)
