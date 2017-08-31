@@ -32,17 +32,34 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.data
       .subscribe(allJobs => {
         allJobs.map(job => {
-         this.dashboardService.getProgressInfo(job.id)
-                        .subscribe(
-                          progress => {
-                              job.progress =  progress
-                              this.jobs.push(job)
-                              console.log(this.jobs)
-                          },
+          if (job.status.toLowerCase() == "running") {
+            this.dashboardService.getProgressInfo(job.id)
+                            .subscribe(
+                              progress => {
+                                  job.progress =  progress
+                                  // this.jobs.push(job)
+                              },
 
-                          error => {
-                            this.errorMessage = <any> error
-                          });
+                              error => {
+                                this.errorMessage = <any> error
+                              });
+          }
+          else {
+            job.progress = {value:0, units: "percent", range_min:0, range_max:100}
+          }
+          this.jobs.push(job)
+
+        //  this.dashboardService.getProgressInfo(job.id)
+        //                 .subscribe(
+        //                   progress => {
+        //                       job.progress =  progress
+        //                       this.jobs.push(job)
+        //                       console.log(this.jobs)
+        //                   },
+         //
+        //                   error => {
+        //                     this.errorMessage = <any> error
+        //                   });
                         })
       })
   }
@@ -67,7 +84,7 @@ deleteJob(event){
           console.log("deleted")
         },
         error => {
-          this.errorMessage = <any> error 
+          this.errorMessage = <any> error
         }
       )
   // console.log(this.jobs)
