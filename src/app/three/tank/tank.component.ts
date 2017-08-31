@@ -2,7 +2,8 @@ import { Component, OnInit, OnChanges, OnDestroy, ViewChild, ElementRef, Input, 
 
 import {
     Scene, PerspectiveCamera, WebGLRenderer, Mesh, Color, DoubleSide,
-    MeshPhongMaterial, BoxGeometry, PointLight, AmbientLight
+    MeshToonMaterial, BoxGeometry, PointLight, AmbientLight,
+    CylinderGeometry, CircleGeometry, Vector3
 } from 'three/src/Three';
 
 import { TrackballControls } from '../TrackballControls';
@@ -21,19 +22,24 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
     private renderer: THREE.WebGLRenderer;
     private scene: THREE.Scene;
     private camera: THREE.Camera;
-    private tank: THREE.Mesh;
-    private stirrer: THREE.Mesh;
-    private stirrers: { [type: string]: THREE.Mesh };
-    private loader: STLLoader;
 
-    @Input() blades: number;
-    @Input() angle: number;
+    @Input() num_blades: number;
+    @Input() blade_angle: number;
+
+    @Input() tank_radius: number;
+    @Input() tank_height: number;
+    @Input() tank_resolution: number;
+    @Input() num_tank_side_bar: number;
+    @Input() tank_side_bar_ratio: number;
 
     constructor() {
-        this.blades = 4;
-        this.angle = 0;
-        this.loader = new STLLoader();
-        this.stirrers = {};
+        this.num_blades = 4;
+        this.blade_angle = 0;
+        this.tank_radius = 10;
+        this.tank_height = 10;
+        this.tank_resolution = 50;
+        this.num_tank_side_bar = 4;
+        this.tank_side_bar_ratio = 15;
     }
 
     public ngOnInit(): void {
@@ -64,32 +70,9 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
         let ambLight = new AmbientLight(0xffffff);
         this.scene.add(ambLight);
 
-        let self: TankComponent = this;
+        this.camera.position.z = this.tank_radius * 2;
 
-        const tankUrl = require('./tank.stl');
-        const stirrerUrl = require('./stirrer.stl');
-
-        this.loader.load(tankUrl, function (geometry: THREE.Geometry) {
-            let material = new MeshPhongMaterial({ color: 0x222222, transparent: true, opacity: 0.5, side: DoubleSide });
-            geometry.computeBoundingBox();
-            geometry.center();
-            geometry.rotateX(-Math.PI / 4);
-            self.tank = new Mesh(geometry, material);
-            self.scene.add(self.tank);
-            self.render();
-        });
-
-        this.loader.load(stirrerUrl, function (geometry: THREE.Geometry) {
-            let material = new MeshPhongMaterial({ color: 0x333333, side: DoubleSide });
-            geometry.computeBoundingBox();
-            geometry.center();
-            geometry.rotateX(-Math.PI / 4);
-            self.stirrer = new Mesh(geometry, material);
-            self.scene.add(self.stirrer);
-            self.render();
-        });
-
-        this.camera.position.z = 0.25;
+        this.generateTank();
 
         this.render();
 
@@ -104,10 +87,37 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
 
     public ngOnChanges(): void {
         // Change the blades and angle of the stirrer displayed
-        if (this.tank === undefined) {
-            return;
-        }
     }
 
+    private generateTank(): Mesh {
+        let material = new MeshToonMaterial({ color: 0x222222, side: DoubleSide });
+
+        let bodyGeom = new CylinderGeometry(this.tank_radius, this.tank_radius, this.tank_height,
+                                        this.tank_resolution, 3, true);
+
+        let baseGeom = new CircleGeometry(this.tank_radius, this.tank_resolution);
+        // Base is generated vertically so rotate it
+        baseGeom.rotateX(Math.PI / 2);
+        baseGeom.translate(0, -this.tank_radius / 2, 0);
+
+        let sideBarWidth = this.tank_radius / this.tank_side_bar_ratio;
+
+        let angleStep = 2 * Math.PI / this.num_tank_side_bar;
+        let sideBarDir: THREE.Vector3 = new Vector3(-this.tank_radius + sideBarWidth / 2, 0, 0);
+        for (let i = 0 ; i < this.num_tank_side_bar; i++) {
+            let sideBarGeom = new BoxGeometry(sideBarWidth, this.tank_height, 0);
+
+            sideBarGeom.translate(sideBarDir.x, sideBarDir.y, sideBarDir.z);
+            sideBarGeom.rotateY(angleStep * i);
+            let sideBar = new Mesh( sideBarGeom, material);
+            this.scene.add(sideBar);
+        }
+
+        let body = new Mesh( bodyGeom, material);
+        let base = new Mesh( baseGeom, material);
+
+        this.scene.add(body);
+        this.scene.add(base);
+    }
 
 }
