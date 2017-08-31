@@ -30,9 +30,10 @@ export class JobSummaryComponent implements OnInit{
     // }
 
     storeJobId(type:string): void {
-      localStorage.setItem('action_type', type);  
+      localStorage.setItem('action_type', type);
       localStorage.setItem('job_id', this.summary.id);
     }
+
 
     getBadgeClass() : string {
         return "badge-"+this.summary.status.toLowerCase();
@@ -128,6 +129,8 @@ export class JobSummaryComponent implements OnInit{
 
     deleteMe() {
         console.log("Delete a Job")
-        window.location.reload()
+        console.log(this.summary.id)
+        localStorage.setItem('delete_job', this.summary.id);
+        // window.location.reload()
     }
 }
