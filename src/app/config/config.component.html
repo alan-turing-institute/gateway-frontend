@@ -4,7 +4,7 @@
     <div class="col-md-12">
       <tabset>
 
-        <tab heading={{case.label}}>
+         <tab heading={{case.label}}>
           <div class="row">
             <div class="col-md-2">
               <img src={{case.thumbnail}} class=img-config>
@@ -22,7 +22,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <!-- <button type="button" class="btn btn-primary" (click)="startJob()" [disabled]=!validFormValues  [hidden]=!jobCreated> -->
+                  
                   <button type="button"
                           class="btn btn-primary btn-action"
                           [routerLink]="['../../dashboard']"
@@ -34,9 +34,9 @@
               </div>
             </div>
           </div>
-        </tab>
+        </tab> 
 
-        <tab heading='Description'>
+        <tab heading="Description">
           <div class = "row">
             <div class="col-md-2">
               <img src={{case.thumbnail}} class=img-config>
@@ -47,15 +47,17 @@
               <input type="text"
               class="form-control"
               [(ngModel)]="job.name"
-              (keyup.enter)="updateName(job.name)">
+              (keyup.enter)="updateName(job.name)"
+              (blur)="updateName(job.name)">
             </div>
             <div class="form-group">
-              <label>Description:</label>
+              <label>Description</label>
               <textarea
               rows = "5"
               class="form-control"
               [(ngModel)]=job.description
-              (keyup.enter)="updateDescription(job.description)"></textarea>
+              (keyup.enter)="updateDescription(job.description)"
+              (blur)="updateDescription(job.description)"></textarea>
             </div>
             </div>
 
@@ -74,7 +76,9 @@
                         class="btn btn-primary btn-action"
                         [routerLink]="['../../dashboard']"
                         routerLinkActive="active"
-                        (click)="startJob()" [disabled]=!validFormValues>
+                        (click)="startJob()" 
+                        [disabled]=!validFormValues
+                        [hidden]=!jobCreated>
                   <span><strong>Send Job</strong></span>
                 </button>
               </div>

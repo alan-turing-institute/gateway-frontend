@@ -42,8 +42,7 @@ export class ConfigDataService {
     return this.jobData;
   }
 
-  getJob(): Observable<InputComponent[]> {
-    var url = this.newJobUrl + "/"+localStorage.getItem('job_id')
+  getJob(url): Observable<InputComponent[]> {
     console.log(url);
     this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
@@ -52,18 +51,19 @@ export class ConfigDataService {
     return this.jobData;
   }
 
+
+  getJobUrl(job_id): string {
+    var url = this.newJobUrl + "/"+job_id
+    console.log(url)
+    return url
+  }
+
   getCreateJobURL(job_id): string {
-    localStorage.setItem("job_id", job_id)
-    this.newJobUrl = this.newJobUrl
-    console.log(this.newJobUrl)
     return this.newJobUrl
   }
 
   getSaveJobURL(job_id): string {
-    localStorage.setItem("job_id", job_id)
-    this.newJobUrl = this.newJobUrl +"/"+ localStorage.getItem('job_id')
-    console.log(this.newJobUrl)
-    return this.newJobUrl
+    return this.newJobUrl +"/"+ localStorage.getItem('job_id')
   }
 
   createJob(jobData:any, newJobUrl): Observable<InputComponent[]> {

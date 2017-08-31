@@ -35,9 +35,9 @@ export class ConfigComponent implements OnInit {
   ngOnInit() {
     this.tags = []
     this.case = new CaseInfo
+    this.job = {'name': "Name of job here", 'Description of job here':""}
     this.getData()
     this.validFormValues = true
-    console.log(this.type)
   }
 
   saveJob() {
@@ -179,7 +179,7 @@ export class ConfigComponent implements OnInit {
 
   startJob () {
     this.job.status = "Queued"
-    console.log("Start a new job")
+    this.saveJob()
     localStorage.removeItem("job_id")
   }
 
@@ -206,8 +206,8 @@ export class ConfigComponent implements OnInit {
       if (action_type === 'Edit') {
         this.jobCreated = true
         let job_id = localStorage.getItem('job_id');
-        console.log("job"+job_id)
-        this.configDataService.getJob()
+        let url = this.configDataService.getJobUrl(job_id)
+        this.configDataService.getJob(url)
                           .subscribe(
                             config => {
                               this.job = config
