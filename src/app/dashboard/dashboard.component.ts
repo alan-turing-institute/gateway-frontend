@@ -58,9 +58,18 @@ getProgressInfoData(id) {
                         }
 
 deleteJob(event){
-  console.log(event)
-  console.log(this.jobs)
+  // console.log(event)
+  // console.log(this.jobs)
   this.jobs = this.jobs.filter(item => item.id !== event);
-  console.log(this.jobs)
-}
+  this.dashboardService.deleteJob(event)
+      .subscribe(
+        message => {
+          console.log("deleted")
+        },
+        error => {
+          this.errorMessage = <any> error 
+        }
+      )
+  // console.log(this.jobs)
+  }
 }

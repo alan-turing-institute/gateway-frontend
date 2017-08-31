@@ -31,6 +31,13 @@ export class DashboardService {
                     .catch(this.handleError);
   }
 
+  deleteJob(jobId): Observable<any>{
+    var url = this.jobsUrl + "/"+jobId
+    return this.http.delete(url)
+                    .map(this.extractJsonData)
+                    .catch(this.handleError);
+  }
+
 
   private extractData(res: Response){
     let body = res.json();

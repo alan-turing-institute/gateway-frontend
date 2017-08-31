@@ -71,24 +71,6 @@ export class ConfigComponent implements OnInit {
     }
   }
 
-  // getTemplate () {
-  //   console.log("getting template")
-  //   this.configDataService.getTemplate()
-  //                       .subscribe(
-  //                         template => {
-  //                           this.tags = template['families']
-  //                           this.setValidValues (this.tags)
-  //                           console.log(template['id'])
-  //                           this.case=template['case']
-  //                           this.job = template
-  //                           console.log(this.job)
-  //                           console.log(this.tags)
-  //                         },
-  //                         error => {
-  //                           this.errorMessage = <any> error
-  //                         });
-  // }
-
   getDataTarget(tag) {
     return "#" + tag.name
   }
@@ -213,7 +195,6 @@ export class ConfigComponent implements OnInit {
                               this.job = config
                               this.tags = config['families']
                               console.log(config)
-                              console.log(this.job.name)
                               this.case=config['case']
                             },
                             error => {
