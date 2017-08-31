@@ -49,7 +49,7 @@ export class OutputComponent implements OnInit {
                       allJobsInfo => {
                         this.job = allJobsInfo
                         this.status = this.job.status
-                        this.status = "Running"
+                        // this.status = "Running"
                         this.haveData = true
                       },
                       error => {

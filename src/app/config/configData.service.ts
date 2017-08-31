@@ -28,13 +28,13 @@ export class ConfigDataService {
   private response = {}
   constructor (private http: Http) {}
 
-  template = this.getTemplate()
+  // template = this.getTemplate()
   // output = this.getOutputData()
   // create = this.createJob()
   // save = this.saveJob()
 
-  getTemplate(): Observable<InputComponent[]> {
-    var url = this.templateUrl + localStorage.getItem('template_id')
+  getTemplate(template_id): Observable<InputComponent[]> {
+    var url = this.templateUrl + template_id
     this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
                     .catch(this.handleError);
@@ -63,7 +63,7 @@ export class ConfigDataService {
   }
 
   getSaveJobURL(job_id): string {
-    return this.newJobUrl +"/"+ localStorage.getItem('job_id')
+    return this.newJobUrl +"/"+ job_id
   }
 
   createJob(jobData:any, newJobUrl): Observable<InputComponent[]> {

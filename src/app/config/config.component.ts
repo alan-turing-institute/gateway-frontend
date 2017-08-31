@@ -116,15 +116,11 @@ export class ConfigComponent implements OnInit {
   }
 
   updateName(name) {
-    console.log('updating name')
     this.job.name = name
-    console.log(this.job.name)
   }
 
   updateDescription(description) {
-    console.log('updating job description')
     this.job.description = description
-    console.log(this.job.description)
   }
 
 
@@ -162,7 +158,10 @@ export class ConfigComponent implements OnInit {
 
   startJob () {
     this.job.status = "Queued"
-    let url = this.configDataService.getSaveJobURL(this.job['id'])
+    let url = this.configDataService.getSaveJobURL(this.job.id)
+    console.log(url)
+    console.log(this.job.status)
+    console.log(this.job.id)
       this.configDataService.saveJob(this.job, url)
                         .subscribe(
                           saveJob => {
@@ -215,7 +214,7 @@ export class ConfigComponent implements OnInit {
         this.jobCreated = false
         let template_id = localStorage.getItem('template_id');
         console.log("template"+template_id)
-        this.configDataService.template
+        this.configDataService.getTemplate(template_id)
                           .subscribe(
                             template => {
                               this.tags = template['families']
