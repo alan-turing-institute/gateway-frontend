@@ -16,6 +16,7 @@ import { PipeGeometry } from './pipeSource';
 export class PipeComponent implements ThreeComponent, OnInit, OnChanges, OnDestroy, DoCheck {
 
     @ViewChild('pipeDisplay') pipeDiv: ElementRef;
+    @ViewChild('pipeCanvas') pipeCanvas: ElementRef;
     @Input() radius: number;
     @Input() length: number;
     @Input() shellWidth: number;
@@ -30,12 +31,12 @@ export class PipeComponent implements ThreeComponent, OnInit, OnChanges, OnDestr
         this.radius = 5;
         this.length = 10;
         this.shellWidth = 1;
-        this.resolution = 10;
+        this.resolution = 50;
     }
 
     public ngOnInit(): void {
         // Set up a render window
-        this.renderer = new WebGLRenderer({alpha: true});
+        this.renderer = new WebGLRenderer({alpha: true, canvas: this.pipeCanvas.nativeElement});
         this.pipeDiv.nativeElement.appendChild(this.renderer.domElement);
 
         this.scene = new Scene();
