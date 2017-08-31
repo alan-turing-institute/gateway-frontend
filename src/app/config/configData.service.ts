@@ -9,29 +9,31 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import {InputComponent} from './inputComponent';
-
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ConfigDataService {
-  private getTemplateUrl = require('../../assets/job_template.json');
-  private templateUrl = 'http://localhost:5000/api/cases/';
+  // private getTemplateUrl = require('../../assets/job_template.json');
+  // private templateUrl = 'http://localhost:5000/api/cases/';
   // private templateData;
 
-  private getNewJobUrl = require('../../assets/job_template.json');
-  private newJobUrl = 'http://localhost:5000/api/jobs';
+  // private getNewJobUrl = require('../../assets/job_template.json');
+  // private newJobUrl = 'http://localhost:5000/api/jobs';
   private jobData;
 
-  private saveJobUrl = require('../../assets/job_template.json');
+  // private saveJobUrl = require('../../assets/job_template.json');
   // private getNewJobUrl = require('http://localhost:5000/api/jobs/');
 
   // private getOutputUrl = require('../../assets/job_output.json');
+
+   // apiUrl: 'http://dev-science-gateway-middleware.azurewebsites.net/api/',
+   private templateUrl = environment.apiUrl+"cases/";
+   private newJobUrl = environment.apiUrl+"jobs";
+
   private response = {}
   constructor (private http: Http) {}
 
-  // template = this.getTemplate()
-  // output = this.getOutputData()
-  // create = this.createJob()
-  // save = this.saveJob()
+
 
   getTemplate(template_id): Observable<InputComponent[]> {
     var url = this.templateUrl + template_id

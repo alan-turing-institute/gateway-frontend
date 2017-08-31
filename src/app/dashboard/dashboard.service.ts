@@ -7,13 +7,19 @@ import 'rxjs/add/operator/map';
 
 import {JobInfo} from './jobInfo';
 import {ProgressInfo} from './progressInfo';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class DashboardService {
   // private jobsUrl = require('../../assets/job_status.json');
-  private jobsUrl = 'http://localhost:5000/api/jobs';
-//   private progressUrl = require('../../assets/progress.json')
-  private progressUrl = 'http://localhost:5000/api/progress/';
+  // private jobsUrl = 'http://localhost:5000/api/jobs';
+  // apiUrl: 'http://dev-science-gateway-middleware.azurewebsites.net/api/',
+  // private progressUrl = require('../../assets/progress.json')
+  //private progressUrl = 'http://localhost:5000/api/progress/';
+  private jobsUrl = environment.apiUrl+"jobs"
+  private progressUrl = environment.apiUrl+"progress/"
+
+  
   constructor (private http: Http) {}
 
   data = this.getJobsData()
@@ -44,9 +50,14 @@ export class DashboardService {
     return body.jobs || { };
   }
 
+private extractJsonData(res: Response){
+    let body = res.json();
+    return body || { };
+  }
+
   private extractProgressJsonData(res: Response) {
     let body = res.json();
-    return body.progress || { };
+    return body.progress|| { };
   }
 
   private handleError (error: Response | any) {
