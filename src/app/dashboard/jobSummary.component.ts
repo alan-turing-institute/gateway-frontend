@@ -1,4 +1,4 @@
-import { Component, Input, OnInit} from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import { JobInfo } from './jobInfo';
 
 @Component({
@@ -13,6 +13,9 @@ export class JobSummaryComponent implements OnInit{
     @Input() type: string;
     @Input() caseInfo:boolean;
     @Input() case:{};
+    @Output() jobDeleted: EventEmitter<string> = new EventEmitter();
+
+
 
     jobHoverHidden: boolean;
 
@@ -30,9 +33,10 @@ export class JobSummaryComponent implements OnInit{
     // }
 
     storeJobId(type:string): void {
-      localStorage.setItem('action_type', type);  
+      localStorage.setItem('action_type', type);
       localStorage.setItem('job_id', this.summary.id);
     }
+
 
     getBadgeClass() : string {
         return "badge-"+this.summary.status.toLowerCase();
@@ -128,6 +132,6 @@ export class JobSummaryComponent implements OnInit{
 
     deleteMe() {
         console.log("Delete a Job")
-        window.location.reload()
+        this.jobDeleted.emit(this.summary.id)
     }
 }

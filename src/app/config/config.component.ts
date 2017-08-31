@@ -213,6 +213,7 @@ export class ConfigComponent implements OnInit {
                               this.job = config
                               this.tags = config['families']
                               console.log(config)
+                              console.log(this.job.name)
                               this.case=config['case']
                             },
                             error => {

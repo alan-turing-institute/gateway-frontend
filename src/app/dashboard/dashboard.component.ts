@@ -37,7 +37,9 @@ export class DashboardComponent implements OnInit {
                           progress => {
                               job.progress =  progress
                               this.jobs.push(job)
+                              console.log(this.jobs)
                           },
+
                           error => {
                             this.errorMessage = <any> error
                           });
@@ -54,4 +56,11 @@ getProgressInfoData(id) {
                             this.errorMessage = <any> error
                           });
                         }
+
+deleteJob(event){
+  console.log(event)
+  console.log(this.jobs)
+  this.jobs = this.jobs.filter(item => item.id !== event);
+  console.log(this.jobs)
+}
 }
