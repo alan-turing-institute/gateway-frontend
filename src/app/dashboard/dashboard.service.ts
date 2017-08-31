@@ -46,7 +46,7 @@ export class DashboardService {
 
   private extractJsonData(res: Response) {
     let body = res.json();
-    return body|| { };
+    return body.progress || { };
   }
 
   private handleError (error: Response | any) {
