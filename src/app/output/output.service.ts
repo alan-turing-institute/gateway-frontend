@@ -11,12 +11,14 @@ import {JobTemplate} from './jobTemplate';
 @Injectable()
 export class OutputService {
   //url for getting job information
-  private jobUrl = require('../../assets/job_template.json');
-  //private jobUrl = 'http://localhost:5000/api/jobs/'
+  // private jobUrl = require('../../assets/job_template.json');
+  private jobUrl = 'http://localhost:5000/api/jobs'
 
   //url for getting job data used to plot the graph
-  private dataUrl = require('../../assets/sample_data.json');
-  //private dataUrl = 'http://localhost:5000/api/data/'
+  // private dataUrl = require('../../assets/sample_data.json');
+  private dataUrl = 'http://localhost:5000/api/data'
+
+  private csvUrl = '../../../example.csv'
 
    //private exampleFileUrl = require('../../../example.csv');
     // private exampleFileUrl = 'https://github.com/RadkaJersak/Example/blob/master/example.csv'
@@ -27,15 +29,15 @@ export class OutputService {
   data = this.getOutputData()
 
   getJobInfo(): Observable<JobTemplate>{
-      var url = this.jobUrl + localStorage.getItem('job_id')
-      return this.http.get(this.jobUrl)
+      var url = this.jobUrl + "/" + localStorage.getItem('job_id')
+      return this.http.get(url)
                       .map(this.extractJobs)
                       .catch(this.handleError)
   }
 
   getOutputData(): Observable<Array<any>>{
-    var url = this.dataUrl + localStorage.getItem('job_id')
-    return this.http.get(this.dataUrl)
+    var url = this.dataUrl + "/" + localStorage.getItem('job_id')
+    return this.http.get(url)
                     .map(this.extractData)
                     .catch(this.handleError)
   }
@@ -72,7 +74,7 @@ export class OutputService {
   downloadFile(): Observable<Blob> {
       let headers = new Headers({'Content-Type':'text/csv'});
       let options = new RequestOptions({headers:headers, responseType: ResponseContentType.Blob });
-      return this.http.get('../../../example.csv', options)
+      return this.http.get(this.csvUrl, options)
           .map(res => res.blob())
           .catch(this.handleError)
   }
