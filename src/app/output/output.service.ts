@@ -1,66 +1,56 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Headers, Response, RequestOptions, ResponseContentType } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import {JobInfo} from '../dashboard/jobInfo';
-import {JobConfig} from './jobConfigComponent';
-import { CaseInfo } from '../cases/case/caseInfo';
+import {JobTemplate} from './jobTemplate';
 
 
 @Injectable()
 export class OutputService {
-  //url for getting job configuration information
-  private infosUrl = require('../../assets/job_status.json');
+  //url for getting job information
+  // private jobUrl = require('../../assets/job_template.json');
+  private jobUrl = 'http://localhost:5000/api/jobs'
 
   //url for getting job data used to plot the graph
-  //should be similar to above BUT with a data query added
-  private dataUrl = require('../../assets/job_output.json');
+  // private dataUrl = require('../../assets/sample_data.json');
+  private dataUrl = 'http://localhost:5000/api/data'
 
-  //url for getting generic information about the case type
-  //private caseUrl = require('../../assets/case_types.json')
-  private caseUrl = 'http://localhost:5000/api/cases';
+  private csvUrl = '../../../example.csv'
+
+   //private exampleFileUrl = require('../../../example.csv');
+    // private exampleFileUrl = 'https://github.com/RadkaJersak/Example/blob/master/example.csv'
+
   constructor (private http: Http) {}
 
   info = this.getJobInfo()
-  //config = this.getJobConfig()
   data = this.getOutputData()
 
-  case = this.getCaseInfo()
-
-  getJobInfo(): Observable<JobInfo[]>{
-      return this.http.get(this.infosUrl)
+  getJobInfo(): Observable<JobTemplate>{
+      var url = this.jobUrl + "/" + localStorage.getItem('job_id')
+      return this.http.get(url)
                       .map(this.extractJobs)
                       .catch(this.handleError)
   }
 
   getOutputData(): Observable<Array<any>>{
-    return this.http.get(this.dataUrl)
+    var url = this.dataUrl + "/" + localStorage.getItem('job_id')
+    return this.http.get(url)
                     .map(this.extractData)
                     .catch(this.handleError)
   }
 
-  getCaseInfo():Observable<CaseInfo[]>{
-    return this.http.get(this.caseUrl)
-                    .map(this.extractCases)
-                    .catch(this.handleError)
-  }
 
   private extractJobs(res: Response){
     let body = res.json();
-    return body.jobs || { };
+    return body || { };
   }
 
   private extractData(res: Response){
     let body = res.json();
     return body.data || { };
-  }
-
-  private extractCases(res: Response){
-    let body = res.json();
-    return body.cases || { };
   }
 
 
@@ -78,4 +68,17 @@ export class OutputService {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
+
+
+
+  downloadFile(): Observable<Blob> {
+      let headers = new Headers({'Content-Type':'text/csv'});
+      let options = new RequestOptions({headers:headers, responseType: ResponseContentType.Blob });
+      return this.http.get(this.csvUrl, options)
+          .map(res => res.blob())
+          .catch(this.handleError)
+  }
+
+
+
 }

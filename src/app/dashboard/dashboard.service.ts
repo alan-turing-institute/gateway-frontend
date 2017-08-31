@@ -6,27 +6,47 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import {JobInfo} from './jobInfo';
+import {ProgressInfo} from './progressInfo';
 
 @Injectable()
 export class DashboardService {
-  private componentsUrl = require('../../assets/job_status.json');
-  //private componentsUrl = 'http://localhost:5000/api/job';
-
+  // private jobsUrl = require('../../assets/job_status.json');
+  private jobsUrl = 'http://localhost:5000/api/jobs';
+  private progressUrl = require('../../assets/progress.json')
+  //private progressUrl = 'http://localhost:5000/api/progress/';
   constructor (private http: Http) {}
 
-  data = this.getJobData()
+  data = this.getJobsData()
 
-  getJobData(): Observable<JobInfo[]>{
-    return this.http.get(this.componentsUrl)
+  getJobsData(): Observable<JobInfo[]>{
+    return this.http.get(this.jobsUrl)
                     .map(this.extractData)
+                    .catch(this.handleError);
+  }
+
+  getProgressInfo(jobId): Observable<ProgressInfo>{
+    var url = this.progressUrl + jobId
+    return this.http.get(this.progressUrl)
+                    .map(this.extractJsonData)
+                    .catch(this.handleError);
+  }
+
+  deleteJob(jobId): Observable<any>{
+    var url = this.jobsUrl + "/"+jobId
+    return this.http.delete(url)
+                    .map(this.extractJsonData)
                     .catch(this.handleError);
   }
 
 
   private extractData(res: Response){
     let body = res.json();
-    console.log(body)
     return body.jobs || { };
+  }
+
+  private extractJsonData(res: Response) {
+    let body = res.json();
+    return body|| { };
   }
 
   private handleError (error: Response | any) {

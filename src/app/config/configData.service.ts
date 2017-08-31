@@ -24,40 +24,50 @@ export class ConfigDataService {
   private saveJobUrl = require('../../assets/job_template.json');
   // private getNewJobUrl = require('http://localhost:5000/api/jobs/');
 
-  private getOutputUrl = require('../../assets/job_output.json');
+  // private getOutputUrl = require('../../assets/job_output.json');
   private response = {}
   constructor (private http: Http) {}
 
-  template = this.getTemplate()
-  output = this.getOutputData()
+  // template = this.getTemplate()
+  // output = this.getOutputData()
   // create = this.createJob()
   // save = this.saveJob()
 
-  getTemplate(): Observable<InputComponent[]> {
-    console.log("in template")
-    var url = this.templateUrl + localStorage.getItem('template_id') 
+  getTemplate(template_id): Observable<InputComponent[]> {
+    var url = this.templateUrl + template_id
     this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
                     .catch(this.handleError);
-    
+
     return this.jobData;
   }
 
+  getJob(url): Observable<InputComponent[]> {
+    console.log(url);
+    this.jobData = this.http.get(url)
+                    .map(this.extractJsonData)
+                    .catch(this.handleError);
+
+    return this.jobData;
+  }
+
+
+  getJobUrl(job_id): string {
+    var url = this.newJobUrl + "/"+job_id
+    console.log(url)
+    return url
+  }
+
   getCreateJobURL(job_id): string {
-    localStorage.setItem("job_id", job_id)
-    this.newJobUrl = this.newJobUrl //+ localStorage.getItem('job_id') 
-    console.log(this.newJobUrl)
     return this.newJobUrl
   }
 
   getSaveJobURL(job_id): string {
-    localStorage.setItem("job_id", job_id)
-    this.newJobUrl = this.newJobUrl +"/"+ localStorage.getItem('job_id') 
-    console.log(this.newJobUrl)
-    return this.newJobUrl
+    return this.newJobUrl +"/"+ job_id
   }
 
   createJob(jobData:any, newJobUrl): Observable<InputComponent[]> {
+    console.log(jobData)
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     this.jobData = this.http.post(newJobUrl, jobData, options)
@@ -75,12 +85,12 @@ export class ConfigDataService {
     return response
   }
 
-  getOutputData(): Observable<InputComponent[]> {
-    // console.log("reading")
-    return this.http.get(this.getOutputUrl)
-                    .map(this.extractJsonData)
-                    .catch(this.handleError);
-  }
+  // getOutputData(): Observable<InputComponent[]> {
+  //   // console.log("reading")
+  //   return this.http.get(this.getOutputUrl)
+  //                   .map(this.extractJsonData)
+  //                   .catch(this.handleError);
+  // }
 
   private arrayObjectIndexOf(myArray, searchTerm, property) {
     for(var i = 0, len = myArray.length; i < len; i++) {
@@ -89,16 +99,18 @@ export class ConfigDataService {
     return -1;
   }
 
-    updateJobData(supersetComponents, componentKey, newValue) : void {
-        var index = this.arrayObjectIndexOf(supersetComponents, componentKey, 'name'); // 1
-        supersetComponents[index].value = newValue;
+  updateJobData(supersetComponents, componentKey, newValue) : void {
+    var index = this.arrayObjectIndexOf(supersetComponents, componentKey, 'name'); // 1
+    supersetComponents[index].value = newValue;
   }
+
+
 
   private extractJsonData(res: Response) {
     console.log(res)
     let body = res.json();
     this.response = body
-    
+
     return body || { };
   }
 

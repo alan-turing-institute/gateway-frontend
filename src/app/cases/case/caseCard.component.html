@@ -5,20 +5,31 @@
                 <div class="col-md-6">
                     <strong>{{info.label}}</strong>
                 </div>
+                <div class="col-md-2 offset-md-4">
+                     <span><strong>Template</strong></span>
+                </div>
             </div>
         </div>
     </div>
     <div class="card-block">
         <div class="container-fluid card-block-container">
-            <a routerLinkActive = "active" [routerLink] = "['/config/config']" (click)="storeCaseType()">
+            <a routerLinkActive = "active"
+            [routerLink] = "['/config/config']"
+            (click)="storeCaseType()">
             <div class="row">
-                <div class="col-md-2"><img src={{info.thumbnail}}  class="img-case"></div>  
+                <div class="col-md-2"><img src={{info.thumbnail}}  class="img-case">
+                </div>
                 <div class="col-md-7">
-                    <p class="descriptionText break-word ">{{getShortDescription()}} (...) 
-                    </p>
+                    <p class="descriptionText">{{getShortDescription()}}</p>
                 </div>
                 <div class="col-md-3">
-                <button type="button" class="btn btn-primary">Template</button>
+                    <div class="row" style="padding-top:3%">
+                        <div class="col-md-4 offset-md-4">
+                            <button type="button" class="btn btn-primary btn-action">
+                                <span><strong> View </strong></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
             </a>

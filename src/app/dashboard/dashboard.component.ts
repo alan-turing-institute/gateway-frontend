@@ -15,29 +15,61 @@ import { JobSummaryComponent } from './jobSummary.component';
 export class DashboardComponent implements OnInit {
 
   allJobs: JobInfo [];
-  jobs: {} [];
+  jobs: JobInfo [];
   errorMessage: string;
+  progress: {value:number, units:string};
 
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
+      console.log("in dashboard")
+      localStorage.removeItem("job_id")
       this.jobs = []
-      this.getJobData()
+      this.getJobsData()
   }
 
-  getJobData(){
+  getJobsData() {
     this.dashboardService.data
-                          .subscribe(
-                            allJobs => {
-                              this.allJobs = allJobs
-                              for(var key in allJobs){
-                                this.jobs = this.jobs.concat(allJobs[key])
-                              }
+      .subscribe(allJobs => {
+        allJobs.map(job => {
+         this.dashboardService.getProgressInfo(job.id)
+                        .subscribe(
+                          progress => {
+                              job.progress =  progress
+                              this.jobs.push(job)
                               console.log(this.jobs)
-                            },
-                            error => {
-                              this.errorMessage = <any> error
-                            });
-                          }
+                          },
 
+                          error => {
+                            this.errorMessage = <any> error
+                          });
+                        })
+      })
+  }
+
+getProgressInfoData(id) {
+  this.dashboardService.getProgressInfo(id)
+                        .subscribe(
+                          progress => {
+                          },
+                          error => {
+                            this.errorMessage = <any> error
+                          });
+                        }
+
+deleteJob(event){
+  // console.log(event)
+  // console.log(this.jobs)
+  this.jobs = this.jobs.filter(item => item.id !== event);
+  this.dashboardService.deleteJob(event)
+      .subscribe(
+        message => {
+          console.log("deleted")
+        },
+        error => {
+          this.errorMessage = <any> error 
+        }
+      )
+  // console.log(this.jobs)
+  }
 }

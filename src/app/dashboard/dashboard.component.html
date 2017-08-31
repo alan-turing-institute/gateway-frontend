@@ -1,5 +1,5 @@
 <div class="card-deck">
-    <div *ngFor="let job of jobs" class='card-jobs'>
-        <jobSummary [summary]="job" [type]='Dashboard' ></jobSummary>
+    <div *ngFor="let job of jobs" class='card-jobs container-fluid' style="width:100%">
+        <jobSummary [summary]="job" [type]='Dashboard' (jobDeleted)="deleteJob($event)"></jobSummary>
     </div>
 </div>
