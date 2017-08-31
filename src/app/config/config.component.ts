@@ -26,7 +26,7 @@ export class ConfigComponent implements OnInit {
   mode = 'Observable';
   errorMessage: string;
   jobCreated:boolean
-
+  description:string="Description"
 
   constructor(private configDataService:ConfigDataService,
     private outputService:OutputService
