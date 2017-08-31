@@ -104,7 +104,7 @@ export class JobSummaryComponent implements OnInit{
         return text
     }
 
-    routeToOutput() : boolean  {
+    routeToInput() : boolean  {
         if (this.summary.status.toLowerCase() == "running")
             return true
         if (this.summary.status.toLowerCase() == "complete")
@@ -114,7 +114,7 @@ export class JobSummaryComponent implements OnInit{
         return false
     }
 
-    routeToInput() : boolean  {
+    routeToOutput() : boolean  {
         if (this.summary.status.toLowerCase() == "new")
             return true
         if (this.summary.status.toLowerCase() == "draft")
