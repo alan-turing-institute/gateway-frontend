@@ -6,17 +6,20 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import {JobTemplate} from './jobTemplate';
+import { environment } from '../../environments/environment';
 
 
 @Injectable()
 export class OutputService {
   //url for getting job information
   // private jobUrl = require('../../assets/job_template.json');
-  private jobUrl = 'http://localhost:5000/api/jobs'
+  // private jobUrl = 'http://localhost:5000/api/jobs'
+  private jobUrl = environment.apiUrl + "jobs"
 
   //url for getting job data used to plot the graph
   // private dataUrl = require('../../assets/sample_data.json');
-  private dataUrl = 'http://localhost:5000/api/data'
+  // private dataUrl = 'http://localhost:5000/api/data'
+  private dataUrl = environment.apiUrl+'data'
 
   private csvUrl = '../../../example.csv'
 
