@@ -36,13 +36,13 @@ export class ConfigComponent implements OnInit {
     this.tags = []
     this.case = new CaseInfo
     this.getData()
-    this.jobCreated = false
     this.validFormValues = true
     console.log(this.type)
   }
 
   saveJob() {
     if (this.jobCreated) {
+      console.log("editing job")
       this.job.status = "Draft"
       let url = this.configDataService.getSaveJobURL(this.job['id'])
       this.configDataService.saveJob(this.job, url)
@@ -55,6 +55,7 @@ export class ConfigComponent implements OnInit {
                           });
     }
     else {
+      console.log("creating job")
       this.job.status = "Draft"
       let url = this.configDataService.getCreateJobURL(this.job['id'])
       this.configDataService.createJob(this.job, url)
@@ -70,23 +71,23 @@ export class ConfigComponent implements OnInit {
     }
   }
 
-  getTemplate () {
-    console.log("getting template")
-    this.configDataService.getTemplate()
-                        .subscribe(
-                          template => {
-                            this.tags = template['families']
-                            this.setValidValues (this.tags)
-                            console.log(template['id'])
-                            this.case=template['case']
-                            this.job = template
-                            console.log(this.job)
-                            console.log(this.tags)
-                          },
-                          error => {
-                            this.errorMessage = <any> error
-                          });
-  }
+  // getTemplate () {
+  //   console.log("getting template")
+  //   this.configDataService.getTemplate()
+  //                       .subscribe(
+  //                         template => {
+  //                           this.tags = template['families']
+  //                           this.setValidValues (this.tags)
+  //                           console.log(template['id'])
+  //                           this.case=template['case']
+  //                           this.job = template
+  //                           console.log(this.job)
+  //                           console.log(this.tags)
+  //                         },
+  //                         error => {
+  //                           this.errorMessage = <any> error
+  //                         });
+  // }
 
   getDataTarget(tag) {
     return "#" + tag.name
@@ -202,21 +203,23 @@ export class ConfigComponent implements OnInit {
       let action_type = localStorage.getItem('action_type');
       console.log(action_type)
       if (action_type === 'Edit') {
+        this.jobCreated = true
         let job_id = localStorage.getItem('job_id');
         console.log("job"+job_id)
         this.configDataService.getJob()
                           .subscribe(
-                            template => {
-                              this.tags = template['families']
-                              console.log(this.tags)
-                              this.case=template['case']
-                              this.job = template
+                            config => {
+                              this.job = config
+                              this.tags = config['families']
+                              console.log(config)
+                              this.case=config['case']
                             },
                             error => {
                               this.errorMessage = <any> error
                             });
       }
       else {
+        this.jobCreated = false
         let template_id = localStorage.getItem('template_id');
         console.log("template"+template_id)
         this.configDataService.template
