@@ -24,12 +24,12 @@ export class ConfigDataService {
   private saveJobUrl = require('../../assets/job_template.json');
   // private getNewJobUrl = require('http://localhost:5000/api/jobs/');
 
-  private getOutputUrl = require('../../assets/job_output.json');
+  // private getOutputUrl = require('../../assets/job_output.json');
   private response = {}
   constructor (private http: Http) {}
 
   template = this.getTemplate()
-  output = this.getOutputData()
+  // output = this.getOutputData()
   // create = this.createJob()
   // save = this.saveJob()
 
@@ -85,12 +85,12 @@ export class ConfigDataService {
     return response
   }
 
-  getOutputData(): Observable<InputComponent[]> {
-    // console.log("reading")
-    return this.http.get(this.getOutputUrl)
-                    .map(this.extractJsonData)
-                    .catch(this.handleError);
-  }
+  // getOutputData(): Observable<InputComponent[]> {
+  //   // console.log("reading")
+  //   return this.http.get(this.getOutputUrl)
+  //                   .map(this.extractJsonData)
+  //                   .catch(this.handleError);
+  // }
 
   private arrayObjectIndexOf(myArray, searchTerm, property) {
     for(var i = 0, len = myArray.length; i < len; i++) {

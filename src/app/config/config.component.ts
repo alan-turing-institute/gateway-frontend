@@ -190,6 +190,7 @@ export class ConfigComponent implements OnInit {
                           .subscribe(
                             template => {
                               this.tags = template['families']
+                              console.log('calling output service from config component')
                               console.log(this.tags)
                               this.case=template['case']
                               this.job = template
