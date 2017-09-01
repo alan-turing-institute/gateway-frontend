@@ -25,8 +25,8 @@ export class ConfigComponent implements OnInit {
   job: any
   mode = 'Observable';
   errorMessage: string;
-  jobCreated:boolean
-  description:string="Description"
+  jobCreated:boolean;
+  jobName:string="Description"
 
   constructor(private configDataService:ConfigDataService,
     private outputService:OutputService
@@ -35,7 +35,7 @@ export class ConfigComponent implements OnInit {
   ngOnInit() {
     this.tags = []
     this.case = new CaseInfo
-    this.job = {'name': "Name of job here", 'Description of job here':""}
+    this.job = {'name': "Name of job here", 'description':"Description of job here"}
     this.getData()
     this.validFormValues = true
   }
@@ -117,6 +117,7 @@ export class ConfigComponent implements OnInit {
 
   updateName(name) {
     this.job.name = name
+    this.jobName = this.job.name
   }
 
   updateDescription(description) {
@@ -172,7 +173,7 @@ export class ConfigComponent implements OnInit {
                           error => {
                             this.errorMessage = <any> error
                           });
-    
+
     localStorage.removeItem("job_id")
   }
 
@@ -207,6 +208,7 @@ export class ConfigComponent implements OnInit {
                               this.tags = config['families']
                               console.log(config)
                               this.case=config['case']
+                              this.jobName = this.job.name
                             },
                             error => {
                               this.errorMessage = <any> error
@@ -224,8 +226,6 @@ export class ConfigComponent implements OnInit {
                               // console.log(this.tags)
                               this.case=template['case']
                               this.job = template
-                              console.log(this.tags)
-                              console.log(this.job)
                             },
                             error => {
                               this.errorMessage = <any> error
