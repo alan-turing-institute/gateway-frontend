@@ -13,27 +13,14 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ConfigDataService {
-  // private getTemplateUrl = require('../../assets/job_template.json');
-  // private templateUrl = 'http://localhost:5000/api/cases/';
-  // private templateData;
-
-  // private getNewJobUrl = require('../../assets/job_template.json');
-  // private newJobUrl = 'http://localhost:5000/api/jobs';
+  
   private jobData;
-
-  // private saveJobUrl = require('../../assets/job_template.json');
-  // private getNewJobUrl = require('http://localhost:5000/api/jobs/');
-
-  // private getOutputUrl = require('../../assets/job_output.json');
-
-   // apiUrl: 'http://dev-science-gateway-middleware.azurewebsites.net/api/',
-   private templateUrl = environment.apiUrl+"cases/";
-   private newJobUrl = environment.apiUrl+"jobs";
+  private templateUrl = environment.apiUrl+"cases/";
+  private jobsUrl = environment.apiUrl+"jobs";
+  private runUrl = environment.apiUrl+"run/";
 
   private response = {}
   constructor (private http: Http) {}
-
-
 
   getTemplate(template_id): Observable<InputComponent[]> {
     var url = this.templateUrl + template_id
@@ -55,21 +42,21 @@ export class ConfigDataService {
 
 
   getJobUrl(job_id): string {
-    var url = this.newJobUrl + "/"+job_id
+    var url = this.jobsUrl + "/"+job_id
     console.log(url)
     return url
   }
 
   getCreateJobURL(job_id): string {
-    return this.newJobUrl
+    return this.jobsUrl
   }
 
   getSaveJobURL(job_id): string {
-    return this.newJobUrl +"/"+ job_id
+    return this.jobsUrl +"/"+ job_id
   }
 
   createJob(jobData:any, newJobUrl): Observable<InputComponent[]> {
-    console.log(jobData)
+    // console.log(jobData)
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     this.jobData = this.http.post(newJobUrl, jobData, options)
@@ -87,12 +74,16 @@ export class ConfigDataService {
     return response
   }
 
-  // getOutputData(): Observable<InputComponent[]> {
-  //   // console.log("reading")
-  //   return this.http.get(this.getOutputUrl)
-  //                   .map(this.extractJsonData)
-  //                   .catch(this.handleError);
-  // }
+  runJob(jobData:any): Observable<any> {
+    console.log("in run")
+    let url = this.runUrl + jobData['id']
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let response = this.http.post(url, jobData, options)
+                    .catch(this.handleError);
+    return response  
+  }
+
 
   private arrayObjectIndexOf(myArray, searchTerm, property) {
     for(var i = 0, len = myArray.length; i < len; i++) {

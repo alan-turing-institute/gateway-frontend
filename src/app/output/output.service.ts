@@ -23,8 +23,6 @@ export class OutputService {
 
   private csvUrl = '../../../example.csv'
 
-   //private exampleFileUrl = require('../../../example.csv');
-    // private exampleFileUrl = 'https://github.com/RadkaJersak/Example/blob/master/example.csv'
 
   constructor (private http: Http) {}
 
@@ -51,9 +49,17 @@ export class OutputService {
     return body || { };
   }
 
+  // private extractData(res: Response){
+  //   let body = res.json();
+  //   return body.data || { };
+  // }
+
   private extractData(res: Response){
     let body = res.json();
-    return body.data || { };
+    let gatewayData = body.stdout;
+    console.log(body);
+    console.log(gatewayData.data);
+    return gatewayData.data || { };
   }
 
 

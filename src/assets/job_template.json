@@ -1,6 +1,6 @@
 {
   "families": [{
-      "label": "Viscosity information",
+      "label": "Viscosity properties",
       "name": "viscosity_properties",
       "collapse": true,
       "parameters": [{
@@ -77,8 +77,8 @@
         "label": "Pipe Radius",
         "units": "m",
         "type_value": "float",
-        "min_value": "0.01",
-        "max_value": "0.10",
+        "min_value": "1.0",
+        "max_value": "10.0",
         "options": ["0.0725"],
         "value": "0.0725",
         "help": "A description of surface tension?",
