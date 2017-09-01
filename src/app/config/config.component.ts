@@ -78,15 +78,19 @@ export class ConfigComponent implements OnInit {
       this.configDataService.saveJob(this.job, url)
                         .subscribe(
                           saveJob => {
-                            console.log("saved bloody job")
-                            console.log(saveJob)
-                            //run job api here
+                            this.configDataService.runJob(this.job)
+                              .subscribe(
+                                ranJob => {
+                                  console.log("ran job")
+                                  console.log(ranJob)
+                                },
+                                error => {
+                                  this.errorMessage = <any> error
+                                }); 
                           },
                           error => {
                             this.errorMessage = <any> error
                           });
-    
-    // localStorage.removeItem("job_id")
   }
 
   getDataTarget(tag) {

@@ -13,27 +13,14 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ConfigDataService {
-  // private getTemplateUrl = require('../../assets/job_template.json');
-  // private templateUrl = 'http://localhost:5000/api/cases/';
-  // private templateData;
-
-  // private getNewJobUrl = require('../../assets/job_template.json');
-  // private newJobUrl = 'http://localhost:5000/api/jobs';
+  
   private jobData;
-
-  // private saveJobUrl = require('../../assets/job_template.json');
-  // private getNewJobUrl = require('http://localhost:5000/api/jobs/');
-
-  // private getOutputUrl = require('../../assets/job_output.json');
-
-   // apiUrl: 'http://dev-science-gateway-middleware.azurewebsites.net/api/',
-   private templateUrl = environment.apiUrl+"cases/";
-   private jobsUrl = environment.apiUrl+"jobs";
+  private templateUrl = environment.apiUrl+"cases/";
+  private jobsUrl = environment.apiUrl+"jobs";
+  private runUrl = environment.apiUrl+"run/";
 
   private response = {}
   constructor (private http: Http) {}
-
-
 
   getTemplate(template_id): Observable<InputComponent[]> {
     var url = this.templateUrl + template_id
@@ -87,9 +74,15 @@ export class ConfigDataService {
     return response
   }
 
-  // runJob(): Observable<any> {
-  //
-  // }
+  runJob(jobData:any): Observable<any> {
+    console.log("in run")
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let response = this.http.post(this.runUrl, jobData, options)
+                    .catch(this.handleError);
+    return response  
+  
+  }
 
 
   private arrayObjectIndexOf(myArray, searchTerm, property) {
