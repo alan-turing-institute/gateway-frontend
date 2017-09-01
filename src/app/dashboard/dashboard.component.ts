@@ -38,32 +38,20 @@ export class DashboardComponent implements OnInit {
                               progress => {
                                   job.progress =  progress
                                   // this.jobs.push(job)
+                                  console.log("Inprogress")
+                                  console.log(job)
+                                  this.jobs.push(job)
                               },
-
-
                               error => {
                                 this.errorMessage = <any> error
                               });
           }
           else {
             job.progress = {value:0, units: "percent", range_min:0, range_max:100}
+            this.jobs.push(job)
           }
-          this.jobs.push(job)
-
-        //  this.dashboardService.getProgressInfo(job.id)
-        //                 .subscribe(
-        //                   progress => {
-        //                       job.progress =  progress
-        //                       this.jobs.push(job)
-        //                       console.log(this.jobs)
-        //                   },
-         //
-        //                   error => {
-        //                     this.errorMessage = <any> error
-        //                   });
-                        })
+        })
       })
-      console.log(this.jobs)
   }
 
 getProgressInfoData(id) {
