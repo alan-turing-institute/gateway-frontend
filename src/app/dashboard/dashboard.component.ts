@@ -37,8 +37,8 @@ export class DashboardComponent implements OnInit {
                             .subscribe(
                               progress => {
                                   job.progress =  progress
-                                  // this.jobs.push(job)
                                   console.log("Inprogress")
+                                  console.log(progress)
                                   console.log(job)
                                   this.jobs.push(job)
                               },
@@ -64,11 +64,9 @@ getProgressInfoData(id) {
                           });
                         }
 
-deleteJob(event){
-  // console.log(event)
-  // console.log(this.jobs)
-  this.jobs = this.jobs.filter(item => item.id !== event);
-  this.dashboardService.deleteJob(event)
+deleteJob(id){
+  this.jobs = this.jobs.filter(item => item.id !== id);
+  this.dashboardService.deleteJob(id)
       .subscribe(
         message => {
           console.log("deleted")
@@ -77,6 +75,5 @@ deleteJob(event){
           this.errorMessage = <any> error
         }
       )
-  // console.log(this.jobs)
   }
 }
