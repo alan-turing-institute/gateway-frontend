@@ -8,7 +8,6 @@
                 <div class="col-md-3">
                     <div class="progress job-progress" [hidden]="getProgressBarHidden()">
                         <div class="progress-bar bg-job-success" role="progressbar" [ngStyle]="{'width':summary.progress.value+'%'}" >{{summary.progress.value}} {{summary.progress.units}}</div>
-                        <!-- <div class="progress-bar bg-job-success" role="progressbar" style="width: 25%;">25%</div> -->
                     </div>
                 </div>
                 <div class="col-md-2 offset-md-4">
@@ -52,24 +51,15 @@
                     </div>
                     <div class="row" style="padding-top:3%">
                         <div class="col-md-4 offset-md-2">
-                            <!-- <button type="button"
-                                    class="btn btn-primary btn-action"
-                                     [routerLink]="['./../dashboard']"
-                                    routerLinkActive="active" (click)="deleteMe()">
-                                <span class="actionText"><strong>Delete</strong></span>
-                            </button> -->
                             <button type="button"
                                     class="btn btn-primary btn-action"
                                     (click)="deleteMe()">
                                 <i class="fa fa-trash-o fa-lg"></i>
-                                <!-- <span class="actionText"><strong> Delete</strong></span> -->
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- </a> -->
-
     </div>
   </div>
 </div>
