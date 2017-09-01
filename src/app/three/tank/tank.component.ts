@@ -23,6 +23,8 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
     private scene: THREE.Scene;
     private camera: THREE.Camera;
 
+    private objects: THREE.Mesh[];
+
     @Input() num_blades: number;
     @Input() blade_angle: number;
 
@@ -33,6 +35,9 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
     @Input() tank_side_bar_ratio: number;
 
     constructor() {
+        this.objects = [];
+
+        // Set default values
         this.num_blades = 4;
         this.blade_angle = 0;
         this.tank_radius = 10;
@@ -73,6 +78,7 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
         this.camera.position.z = this.tank_radius * 2;
 
         this.generateTank();
+        this.generateStirrer();
 
         this.render();
 
@@ -86,10 +92,18 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
     }
 
     public ngOnChanges(): void {
-        // Change the blades and angle of the stirrer displayed
+        // Ensure all variables are numbers
+
+        if (this.scene === undefined) {
+            return;
+        }
+        this.clearScene();
+        this.generateTank();
+        this.generateStirrer();
+        this.render();
     }
 
-    private generateTank(): Mesh {
+    private generateTank(): void {
         let material = new MeshToonMaterial({ color: 0x222222, side: DoubleSide });
 
         let bodyGeom = new CylinderGeometry(this.tank_radius, this.tank_radius, this.tank_height,
@@ -98,7 +112,7 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
         let baseGeom = new CircleGeometry(this.tank_radius, this.tank_resolution);
         // Base is generated vertically so rotate it
         baseGeom.rotateX(Math.PI / 2);
-        baseGeom.translate(0, -this.tank_radius / 2, 0);
+        baseGeom.translate(0, -this.tank_height / 2, 0);
 
         let sideBarWidth = this.tank_radius / this.tank_side_bar_ratio;
 
@@ -110,14 +124,28 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
             sideBarGeom.translate(sideBarDir.x, sideBarDir.y, sideBarDir.z);
             sideBarGeom.rotateY(angleStep * i);
             let sideBar = new Mesh( sideBarGeom, material);
-            this.scene.add(sideBar);
+            this.addToScene(sideBar);
         }
 
         let body = new Mesh( bodyGeom, material);
         let base = new Mesh( baseGeom, material);
 
-        this.scene.add(body);
-        this.scene.add(base);
+        this.addToScene(body);
+        this.addToScene(base);
+    }
+
+    private generateStirrer(): void {
+
+    }
+
+    private addToScene(mesh: THREE.Mesh): void {
+        this.objects.push(mesh);
+        this.scene.add(mesh);
+    }
+
+    private clearScene(): void {
+        this.objects.map((obj: THREE.Mesh) => this.scene.remove(obj));
+        this.objects = [];
     }
 
 }
