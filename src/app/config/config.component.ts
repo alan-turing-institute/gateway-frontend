@@ -74,6 +74,7 @@ export class ConfigComponent implements OnInit {
 
   runJob () {
     this.job.status = "Queued"
+    localStorage.setItem('job_id', this.job.id);
     let url = this.configDataService.getSaveJobURL(this.job['id'])
       this.configDataService.saveJob(this.job, url)
                         .subscribe(
