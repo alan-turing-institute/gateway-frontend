@@ -56,7 +56,7 @@ export class ConfigDataService {
   }
 
   createJob(jobData:any, newJobUrl): Observable<InputComponent[]> {
-    console.log(jobData)
+    // console.log(jobData)
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     this.jobData = this.http.post(newJobUrl, jobData, options)
@@ -76,12 +76,12 @@ export class ConfigDataService {
 
   runJob(jobData:any): Observable<any> {
     console.log("in run")
+    let url = this.runUrl + jobData['id']
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    let response = this.http.post(this.runUrl, jobData, options)
+    let response = this.http.post(url, jobData, options)
                     .catch(this.handleError);
     return response  
-  
   }
 
 

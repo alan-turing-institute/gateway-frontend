@@ -23,8 +23,6 @@ export class OutputService {
 
   private csvUrl = '../../../example.csv'
 
-   //private exampleFileUrl = require('../../../example.csv');
-    // private exampleFileUrl = 'https://github.com/RadkaJersak/Example/blob/master/example.csv'
 
   constructor (private http: Http) {}
 

@@ -4,44 +4,13 @@
     <div class="col-md-12">
       <tabset>
 
-         <tab heading={{case.label}}>
-          <div class="row">
-            <div class="col-md-2">
-              <img src={{case.thumbnail}} class=img-config>
-            </div>
-            <div class="col-md-8">
-              <p class="descriptionText">{{case.description}}</p>
-            </div>
-            <div class="col-md-2">
-              <div class="row">
-                 <div class="col-md-12">
-                  <button type="button" class="btn btn-primary btn-action" (click)="saveJob()" [disabled]=!validFormValues>
-                    <span><strong>Save</strong></span>
-                  </button>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
 
-                  <button type="button"
-                          class="btn btn-primary btn-action"
-                          [routerLink]="['../../output/output']"
-                          routerLinkActive="active"
-                          (click)="runJob()" [disabled]=!validFormValues [hidden]=!jobCreated>
-                    <span><strong>Run</strong></span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </tab>
-
-        <tab heading={{description}}>
+        <tab heading=Description>
           <div class = "row">
             <div class="col-md-2">
               <img src={{case.thumbnail}} class=img-config>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-7">
               <div class="form-group">
               <label>Name:</label>
               <input type="text"
@@ -61,25 +30,18 @@
             </div>
             </div>
 
-          <div class="col-md-2">
+          <div class="col-md-3">
             <div class="row">
-               <div class="col-md-12">
+               <div class="col-md-4 offset-md-2">
                 <button type="button" class="btn btn-primary btn-action" (click)="saveJob()" [disabled]=!validFormValues>
                   <span><strong>Save</strong></span>
                 </button>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-12">
-                <!-- <button type="button"
-                        class="btn btn-primary btn-action"
-                        [routerLink]="['../../dashboard']"
-                        routerLinkActive="active"
-                        (click)="runJob()"
-                        [disabled]=!validFormValues
-                        [hidden]=!jobCreated>
-                  <span><strong>Run</strong></span>
-                </button> -->
+
+              <div class="col-md-4 offset-md-2">
+                <!-- <button type="button" class="btn btn-primary" (click)="startJob()" [disabled]=!validFormValues  [hidden]=!jobCreated> -->
                 <button type="button"
                         class="btn btn-primary btn-action"
                         [routerLink]="['../../output/output']"
@@ -94,6 +56,38 @@
           </div>
         </div>
         </tab>
+
+        <tab heading={{case.label}}>
+         <div class="row">
+           <div class="col-md-2">
+             <img src={{case.thumbnail}} class=img-config>
+           </div>
+           <div class="col-md-7">
+             <p class="descriptionText">{{case.description}}</p>
+           </div>
+           <div class="col-md-3">
+             <div class="row">
+                <div class="col-md-4 offset-md-2">
+                 <button type="button" class="btn btn-primary btn-action" (click)="saveJob()" [disabled]=!validFormValues>
+                   <span><strong>Save</strong></span>
+                 </button>
+               </div>
+             </div>
+             <div class="row">
+               <div class="col-md-4 offset-md-2">
+
+                 <button type="button"
+                         class="btn btn-primary btn-action"
+                         [routerLink]="['../../output/output']"
+                         routerLinkActive="active"
+                         (click)="runJob()" [disabled]=!validFormValues [hidden]=!jobCreated>
+                   <span><strong>Run</strong></span>
+                 </button>
+               </div>
+             </div>
+           </div>
+         </div>
+       </tab>
         <!-- <tab heading="Job Information">
           <div class="row">
             <div class="col-md-2">

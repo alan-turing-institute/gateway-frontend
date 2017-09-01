@@ -25,8 +25,8 @@ export class ConfigComponent implements OnInit {
   job: any
   mode = 'Observable';
   errorMessage: string;
-  jobCreated:boolean
-  description:string="Description"
+  jobCreated:boolean;
+  jobName:string="Description"
 
   constructor(private configDataService:ConfigDataService,
     private outputService:OutputService
@@ -35,36 +35,36 @@ export class ConfigComponent implements OnInit {
   ngOnInit() {
     this.tags = []
     this.case = new CaseInfo
-    this.job = {'name': "Name of job here", 'Description of job here':""}
+    this.job = {'name': "Name of job here", 'description':"Description of job here"}
     this.getData()
     this.validFormValues = true
   }
 
   saveJob() {
     if (this.jobCreated) {
-      console.log("editing job")
+      // console.log("editing job")
       this.job.status = "Draft"
       let url = this.configDataService.getSaveJobURL(this.job['id'])
       this.configDataService.saveJob(this.job, url)
                         .subscribe(
                           saveJob => {
-                            console.log("saved bloody job")
-                            console.log(saveJob)
+                            // console.log("saved bloody job")
+                            // console.log(saveJob)
                           },
                           error => {
                             this.errorMessage = <any> error
                           });
     }
     else {
-      console.log("creating job")
+      // console.log("creating job")
       this.job.status = "Draft"
       let url = this.configDataService.getCreateJobURL(this.job['id'])
       this.configDataService.createJob(this.job, url)
                       .subscribe(
                         createJob => {
-                          console.log("created bloody job")
+                          // console.log("created bloody job")
                           this.jobCreated = true
-                          console.log(createJob)
+                          // console.log(createJob)
                         },
                         error => {
                           this.errorMessage = <any> error
@@ -73,7 +73,8 @@ export class ConfigComponent implements OnInit {
   }
 
   runJob () {
-    this.job.status = "Queued"
+    // this.job.status = "Queued"
+    localStorage.setItem('job_id', this.job.id);
     let url = this.configDataService.getSaveJobURL(this.job['id'])
       this.configDataService.saveJob(this.job, url)
                         .subscribe(
@@ -138,6 +139,7 @@ export class ConfigComponent implements OnInit {
 
   updateName(name) {
     this.job.name = name
+    this.jobName = this.job.name
   }
 
   updateDescription(description) {
@@ -208,6 +210,8 @@ export class ConfigComponent implements OnInit {
                               this.tags = config['families']
                               console.log(config)
                               this.case=config['case']
+                              if(this.job.name != null || this.job.name != ""){
+                                this.jobName = this.job.name}
                             },
                             error => {
                               this.errorMessage = <any> error
@@ -225,8 +229,6 @@ export class ConfigComponent implements OnInit {
                               // console.log(this.tags)
                               this.case=template['case']
                               this.job = template
-                              console.log(this.tags)
-                              console.log(this.job)
                             },
                             error => {
                               this.errorMessage = <any> error

@@ -5,6 +5,53 @@
         <div class="col-md-12">
              <tabset>
 
+               <tab heading="Job Information">
+                 <div class="row">
+                   <div class="col-md-2">
+                     <img src={{job.case.thumbnail}} class=img-job>
+                   </div>
+                   <div class="col-md-8">
+                     <!-- <div *ngIf="status=='Running'">
+                       <div class="progress" >
+                           <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                       </div>
+                     </div> -->
+                     <p class="descriptionText">Status: {{job.status}}</p>
+                     <p class="descriptionText">Created: {{job.creation_datetime | date:"hh:mm:ss dd-MM-yyyy"}}</p>
+                     <div *ngIf="status=='Complete'||status=='Running'">
+                       <p class="descriptionText">Start: {{job.start_datetime | date:"hh:mm:ss dd-MM-yyyy"}} </p>
+                     </div>
+                     <div *ngIf="status=='Complete'">
+                       <p class="descriptionText">End: {{job.end_datetime | date:"hh:mm:ss dd-MM-yyyy"}}</p>
+                     </div>
+                   </div>
+                   <div class="col-md-2">
+                     <div *ngIf="status=='Complete' || status=='Running'">
+                     <div class="row">
+                       <div class="col-md-12">
+                         <button type="button"
+                                 class="btn btn-primary btn-action"
+                                 (click)='downloadCsvData()'>
+
+                             <span class="actionText"><strong>csv data</strong></span>
+                         </button>
+                       </div>
+                     </div>
+                     <div class="row">
+                       <div class="col-md-12">
+                         <button type="button"
+                                 class="btn btn-primary btn-action"
+                                 (click)='downloadRawData()'>
+
+                             <span class="actionText"><strong>raw data</strong></span>
+                         </button>
+                       </div>
+                     </div>
+                   </div>
+                   </div>
+                 </div>
+               </tab>
+
               <tab heading={{job.case.label}}>
                 <div class="row">
                   <div class="col-md-2">
@@ -71,52 +118,7 @@
               </div>
             </tab>
 
-            <tab heading="Job Information">
-              <div class="row">
-                <div class="col-md-2">
-                  <img src={{job.case.thumbnail}} class=img-job>
-                </div>
-                <div class="col-md-8">
-                  <!-- <div *ngIf="status=='Running'">
-                    <div class="progress" >
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-                    </div>
-                  </div> -->
-                  <p class="descriptionText">Status: {{job.status}}</p>
-                  <p class="descriptionText">Created: {{job.creation_datetime | date:"hh:mm:ss dd-MM-yyyy"}}</p>
-                  <div *ngIf="status=='Complete'||status=='Running'">
-                    <p class="descriptionText">Start: {{job.start_datetime | date:"hh:mm:ss dd-MM-yyyy"}} </p>
-                  </div>
-                  <div *ngIf="status=='Complete'">
-                    <p class="descriptionText">End: {{job.end_datetime | date:"hh:mm:ss dd-MM-yyyy"}}</p>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div *ngIf="status=='Complete' || status=='Running'">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <button type="button"
-                              class="btn btn-primary btn-action"
-                              (click)='downloadCsvData()'>
 
-                          <span class="actionText"><strong>csv data</strong></span>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <button type="button"
-                              class="btn btn-primary btn-action"
-                              (click)='downloadRawData()'>
-
-                          <span class="actionText"><strong>raw data</strong></span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                </div>
-              </div>
-            </tab>
 
            </tabset>
         </div>
