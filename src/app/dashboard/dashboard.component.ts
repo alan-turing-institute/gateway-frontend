@@ -29,9 +29,11 @@ export class DashboardComponent implements OnInit {
   }
 
   getJobsData() {
+    console.log('getting job data')
     this.dashboardService.data
       .subscribe(allJobs => {
         allJobs.map(job => {
+          console.log("job" + job)
           if (job.status.toLowerCase() == "running") {
             this.dashboardService.getProgressInfo(job.id)
                             .subscribe(
