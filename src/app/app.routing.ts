@@ -7,11 +7,12 @@ import { AppComponent } from './app.component';
 import { AccountModule } from './account/account.module';
 import { CasesModule } from './cases/cases.module';
 import { ConfigModule } from './config/config.module';
+import { LoginModule } from './login/login.module';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'account',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
@@ -24,6 +25,10 @@ export const routes: Routes = [
       {
         path: 'account',
         loadChildren: './account/account.module#AccountModule'
+      },
+      {
+        path: 'login',
+        loadChildren: './login/login.module#LoginModule'
       },
       {
         path: 'dashboard',
