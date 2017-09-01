@@ -42,29 +42,29 @@ export class ConfigComponent implements OnInit {
 
   saveJob() {
     if (this.jobCreated) {
-      console.log("editing job")
+      // console.log("editing job")
       this.job.status = "Draft"
       let url = this.configDataService.getSaveJobURL(this.job['id'])
       this.configDataService.saveJob(this.job, url)
                         .subscribe(
                           saveJob => {
-                            console.log("saved bloody job")
-                            console.log(saveJob)
+                            // console.log("saved bloody job")
+                            // console.log(saveJob)
                           },
                           error => {
                             this.errorMessage = <any> error
                           });
     }
     else {
-      console.log("creating job")
+      // console.log("creating job")
       this.job.status = "Draft"
       let url = this.configDataService.getCreateJobURL(this.job['id'])
       this.configDataService.createJob(this.job, url)
                       .subscribe(
                         createJob => {
-                          console.log("created bloody job")
+                          // console.log("created bloody job")
                           this.jobCreated = true
-                          console.log(createJob)
+                          // console.log(createJob)
                         },
                         error => {
                           this.errorMessage = <any> error
@@ -160,13 +160,15 @@ export class ConfigComponent implements OnInit {
   startJob () {
     this.job.status = "Queued"
     let url = this.configDataService.getSaveJobURL(this.job.id)
-    console.log(url)
-    console.log(this.job.status)
-    console.log(this.job.id)
+    // console.log(url)
+    // console.log(this.job.status)
+    // console.log(this.job.id)
+      console.log('sending job')
       this.configDataService.saveJob(this.job, url)
                         .subscribe(
                           saveJob => {
-                            console.log("saved bloody job")
+                            // console.log(this.job)
+                            // console.log("saved bloody job")
                             console.log(saveJob)
                             //run job api here
                           },
@@ -208,7 +210,8 @@ export class ConfigComponent implements OnInit {
                               this.tags = config['families']
                               console.log(config)
                               this.case=config['case']
-                              this.jobName = this.job.name
+                              if(this.job.name != null || this.job.name != ""){
+                                this.jobName = this.job.name}
                             },
                             error => {
                               this.errorMessage = <any> error

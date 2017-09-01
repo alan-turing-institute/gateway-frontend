@@ -69,7 +69,7 @@ export class ConfigDataService {
   }
 
   createJob(jobData:any, newJobUrl): Observable<InputComponent[]> {
-    console.log(jobData)
+    // console.log(jobData)
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     this.jobData = this.http.post(newJobUrl, jobData, options)

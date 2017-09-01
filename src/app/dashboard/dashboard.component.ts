@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit {
                                   // this.jobs.push(job)
                               },
 
+
                               error => {
                                 this.errorMessage = <any> error
                               });
@@ -62,6 +63,7 @@ export class DashboardComponent implements OnInit {
         //                   });
                         })
       })
+      console.log(this.jobs)
   }
 
 getProgressInfoData(id) {
