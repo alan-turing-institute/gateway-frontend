@@ -85,7 +85,6 @@ export class ConfigComponent implements OnInit {
                                 ranJob => {
                                   console.log("ran job")
                                   console.log(ranJob)
-                                  console.log('should be number 1')
                                   this.router.navigate(['../../output/output'])
                                 },
                                 error => {
@@ -95,7 +94,6 @@ export class ConfigComponent implements OnInit {
                           error => {
                             this.errorMessage = <any> error
                           });
-    console.log('should be number 2')
 
   }
 
