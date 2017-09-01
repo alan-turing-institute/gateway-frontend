@@ -91,12 +91,6 @@ export class ConfigDataService {
   //
   // }
 
-  // getOutputData(): Observable<InputComponent[]> {
-  //   // console.log("reading")
-  //   return this.http.get(this.getOutputUrl)
-  //                   .map(this.extractJsonData)
-  //                   .catch(this.handleError);
-  // }
 
   private arrayObjectIndexOf(myArray, searchTerm, property) {
     for(var i = 0, len = myArray.length; i < len; i++) {

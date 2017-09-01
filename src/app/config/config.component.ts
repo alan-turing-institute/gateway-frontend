@@ -72,6 +72,23 @@ export class ConfigComponent implements OnInit {
     }
   }
 
+  runJob () {
+    this.job.status = "Queued"
+    let url = this.configDataService.getSaveJobURL(this.job['id'])
+      this.configDataService.saveJob(this.job, url)
+                        .subscribe(
+                          saveJob => {
+                            console.log("saved bloody job")
+                            console.log(saveJob)
+                            //run job api here
+                          },
+                          error => {
+                            this.errorMessage = <any> error
+                          });
+    
+    // localStorage.removeItem("job_id")
+  }
+
   getDataTarget(tag) {
     return "#" + tag.name
   }
@@ -154,26 +171,6 @@ export class ConfigComponent implements OnInit {
 
   testMe() {
     console.log("test");
-  }
-
-  startJob () {
-    this.job.status = "Queued"
-    let url = this.configDataService.getSaveJobURL(this.job.id)
-    console.log(url)
-    console.log(this.job.status)
-    console.log(this.job.id)
-      this.configDataService.saveJob(this.job, url)
-                        .subscribe(
-                          saveJob => {
-                            console.log("saved bloody job")
-                            console.log(saveJob)
-                            //run job api here
-                          },
-                          error => {
-                            this.errorMessage = <any> error
-                          });
-    
-    localStorage.removeItem("job_id")
   }
 
   getData () {
