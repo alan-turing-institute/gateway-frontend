@@ -1,66 +1,89 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { RequestOptions } from '@angular/http';
+import {Headers} from '@angular/http';
+// import { HttpModule } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import {InputComponent} from './inputComponent';
-
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ConfigDataService {
-  private getTemplateUrl = require('../../assets/job_template.json');
-  // private getTemplateUrl = require('http://localhost:5000/api/cases/');
-  private templateData;
-
-  private getNewJobUrl = require('../../assets/job_template.json');
-  // private getNewJobUrl = require('http://localhost:5000/api/jobs/');
+  
   private jobData;
+  private templateUrl = environment.apiUrl+"cases/";
+  private jobsUrl = environment.apiUrl+"jobs";
+  private runUrl = environment.apiUrl+"run/";
 
-  private saveJobUrl = require('../../assets/job_template.json');
-  // private getNewJobUrl = require('http://localhost:5000/api/jobs/');
-
-  private getOutputUrl = require('../../assets/job_output.json');
   private response = {}
   constructor (private http: Http) {}
 
-  template = this.getTemplateData()
-  output = this.getOutputData()
-  newJob = this.getNewJobData()
-  saveJob = this.saveJobData()
-
-  getTemplateData(): Observable<InputComponent[]> {
-    let url = this.getTemplateUrl;
-    // let url = this.getTemplateUrl + localStorage.getItem('template_id') 
-    this.templateData = this.http.get(this.getTemplateUrl)
+  getTemplate(template_id): Observable<InputComponent[]> {
+    var url = this.templateUrl + template_id
+    this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
                     .catch(this.handleError);
-    return this.templateData;
+
+    return this.jobData;
   }
 
-  getNewJobData(): Observable<InputComponent[]> {
-    let url = this.getNewJobUrl;
-    this.jobData = this.http.post(url, this.templateData)
+  getJob(url): Observable<InputComponent[]> {
+    console.log(url);
+    this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
                     .catch(this.handleError);
-    return this.jobData
+
+    return this.jobData;
   }
 
-  saveJobData(): Observable<InputComponent[]> {
-    let url = this.saveJobUrl;
-    let response = this.http.patch(url, this.jobData)
+
+  getJobUrl(job_id): string {
+    var url = this.jobsUrl + "/"+job_id
+    console.log(url)
+    return url
+  }
+
+  getCreateJobURL(job_id): string {
+    return this.jobsUrl
+  }
+
+  getSaveJobURL(job_id): string {
+    return this.jobsUrl +"/"+ job_id
+  }
+
+  createJob(jobData:any, newJobUrl): Observable<InputComponent[]> {
+    // console.log(jobData)
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    this.jobData = this.http.post(newJobUrl, jobData, options)
                     .map(this.extractJsonData)
+                    .catch(this.handleError);
+    return  this.jobData
+  }
+
+  saveJob(jobData:any, newJobUrl): Observable<InputComponent[]> {
+    console.log("in save")
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let response = this.http.patch(newJobUrl, jobData, options)
                     .catch(this.handleError);
     return response
   }
 
-  getOutputData(): Observable<InputComponent[]> {
-    // console.log("reading")
-    return this.http.get(this.getOutputUrl)
-                    .map(this.extractJsonData)
+  runJob(jobData:any): Observable<any> {
+    console.log("in run")
+    let url = this.runUrl + jobData['id']
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let response = this.http.post(url, jobData, options)
                     .catch(this.handleError);
+    return response  
   }
+
 
   private arrayObjectIndexOf(myArray, searchTerm, property) {
     for(var i = 0, len = myArray.length; i < len; i++) {
@@ -69,16 +92,18 @@ export class ConfigDataService {
     return -1;
   }
 
-    updateJobData(supersetComponents, componentKey, newValue) : void {
-        var index = this.arrayObjectIndexOf(supersetComponents, componentKey, 'name'); // 1
-        supersetComponents[index].value = newValue;
+  updateJobData(supersetComponents, componentKey, newValue) : void {
+    var index = this.arrayObjectIndexOf(supersetComponents, componentKey, 'name'); // 1
+    supersetComponents[index].value = newValue;
   }
 
+
+
   private extractJsonData(res: Response) {
+    console.log(res)
     let body = res.json();
     this.response = body
-    // console.log("making a call")
-    // console.log(body.parameters)
+
     return body || { };
   }
 

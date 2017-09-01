@@ -2,13 +2,15 @@
     <div class="card-header" >
         <div class="container-fluid card-block-container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <strong>{{summary.name}}</strong>
                 </div>
+                <div class="col-md-3">
+                    <div class="progress job-progress" [hidden]="getProgressBarHidden()">
+                        <div class="progress-bar bg-job-success" role="progressbar" [ngStyle]="{'width':summary.progress.value+'%'}" >{{summary.progress.value}} {{summary.progress.units}}</div>
+                    </div>
+                </div>
                 <div class="col-md-2 offset-md-4">
-                    <span class="badge" [ngClass]="getBadgeClass()">
-                        <i [ngClass]="getSpanIcon()"></i>
-                    </span>
                      <span [ngClass]="getBadgeClass()"><strong>{{summary.status}}</strong></span>
                 </div>
             </div>
@@ -17,34 +19,47 @@
 
     <div class="card-block">
         <div class="container-fluid card-block-container">
-
-            <a routerLinkActive = "active" [routerLink] = "['/output/output', {id: summary.id}]">
+            <!-- <a routerLinkActive = "active" [routerLink] = "['/output/output', {id: summary.id}]"> -->
+            <!-- <a [routerLink] = "['/output/output']" (click)="storeJobId()"> -->
             <div class="row">
                 <div class="col-md-2"><img src={{summary.thumbnail}}  class="img-job"></div>
                 <div class="col-md-7">
                     <p class="descriptionText">{{getShortDescription()}}</p>
-
                 </div>
                 <div class="col-md-3">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="progress" [hidden]="getProgressBarHidden()">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-                            </div>
+                    <div class="row" style="padding-top:3%" [hidden]="routeToOutput()">
+                        <div class="col-md-4 offset-md-2">
+                            <button type="button"
+                                    class="btn btn-primary btn-action"
+                                    (click)="storeJobId('Output')"
+                                    [routerLink]="['/output/output']" routerLinkActive="active">
+                                <!-- <i [ngClass]="getActionIcon()"></i> -->
+                                <span class="actionText"><strong> {{getActionText()}}</strong></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top:3%" [hidden]="routeToInput()">
+                        <div class="col-md-4 offset-md-2">
+                            <button type="button"
+                                    class="btn btn-primary btn-action"
+                                    (click)="storeJobId('Edit')"
+                                    [routerLink]="['/config/config']" routerLinkActive="active">
+                                <!-- <i [ngClass]="getActionIcon()"></i> -->
+                                <span class="actionText"><strong> {{getActionText()}}</strong></span>
+                            </button>
                         </div>
                     </div>
                     <div class="row" style="padding-top:3%">
-                        <div class="col-md-4 offset-md-4">
-
-                            <button type="button" class="btn btn-primary">
-                                <i [ngClass]="getActionIcon()"></i>
-                                <span class="actionText"><strong> {{getActionText()}}</strong></span>
+                        <div class="col-md-4 offset-md-2">
+                            <button type="button"
+                                    class="btn btn-primary btn-action"
+                                    (click)="deleteMe()">
+                                <i class="fa fa-trash-o fa-lg"></i>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            </a>
-
     </div>
+  </div>
 </div>

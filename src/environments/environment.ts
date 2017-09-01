@@ -4,5 +4,8 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrlOnline: 'http://dev-science-gateway-middleware.azurewebsites.net/api/',
+  apiUrlLocal: "http://localhost:5000/api/",
+  apiUrl:"http://localhost:5000/api/",
 };

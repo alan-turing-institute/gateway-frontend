@@ -6,16 +6,20 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import {CaseInfo} from './case/caseInfo';
+import { environment } from '../../environments/environment';
+
 
 @Injectable()
 export class CasesService {
-  private componentsUrl = require('../../assets/case_types.json');
+  // private templateUrl = require('../../assets/case_types.json');
+  // private templateUrl = 'http://localhost:5000/api/cases';
+  private templateUrl = environment.apiUrl+"cases";
   constructor (private http: Http) {}
 
-  data = this.getCases()
+  cases = this.getCases()
 
   getCases(): Observable<CaseInfo[]>{
-    return this.http.get(this.componentsUrl)
+    return this.http.get(this.templateUrl)
                     .map(this.extractData)
                     .catch(this.handleError);
   }

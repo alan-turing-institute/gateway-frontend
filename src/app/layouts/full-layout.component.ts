@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './full-layout.component.html',
   styleUrls: ['./layout.css']
 })
-export class FullLayoutComponent {
+export class FullLayoutComponent implements OnInit{
 
   // constructor() { }
 
@@ -22,5 +22,6 @@ export class FullLayoutComponent {
   //   this.status.isopen = !this.status.isopen;
   // }
 
-  // ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 }

@@ -15,7 +15,7 @@ import { OutputService } from './output.service';
             <ngx-charts-line-chart
 
             [scheme]="colorScheme"
-            [results]="graphData"
+            [results]="chartData"
             [gradient]=false
             [xAxis]=true
             [yAxis]=true
@@ -34,16 +34,16 @@ import { OutputService } from './output.service';
     <div class = "row">
 
       <div class = "col-md-6">
-        <select class = "form-control" (change)='onChangeY($event.target.value)' >
-          <!--<option selected>Y-axis</option>-->
-          <option *ngFor="let y_var of number_vars" >{{y_var}}</option>
+        <select class="form-control" (change)='onChangeX($event.target.value)' >
+          <option disabled selected>X-axis</option>
+          <option *ngFor="let key of keys" >{{key}}</option>
         </select>
       </div>
 
       <div class = "col-md-6">
-        <select class="form-control" (change)='onChangeX($event.target.value)' >
-          <!--<option selected>X-axis</option>-->
-          <option *ngFor="let key of keys" >{{key}}</option>
+        <select class = "form-control" (change)='onChangeY($event.target.value)' >
+          <option disabled selected>Y-axis</option>
+          <option *ngFor="let y_var of y_vars" >{{y_var}}</option>
         </select>
       </div>
 
@@ -65,7 +65,7 @@ export class ChartsComponent implements OnInit{
   isDataAvailable:boolean = false;
   varX: string;
   varY: string;
-  graphData: Array<any>
+  chartData: Array<any>
 
   // ngx-charts options
 
@@ -107,7 +107,7 @@ export class ChartsComponent implements OnInit{
                           this.number_vars[0] = this.number_vars[1]
                           this.number_vars[1] = temp
 
-                          this.drawGraph()
+                          this.drawChart()
 
                           this.isDataAvailable = true;
 
@@ -118,7 +118,7 @@ export class ChartsComponent implements OnInit{
                       )
   }
 
-drawGraph(){
+drawChart(){
 
   // At this point varX and varY are known (both are key strings
   // specifying the X and Y variables to plot)
@@ -159,19 +159,19 @@ drawGraph(){
   }
   this.xAxisLabel = this.varX
   this.yAxisLabel = this.varY
-  this.graphData = [newData]
+  this.chartData = [newData]
 
-  console.log("graphData", this.graphData)
+  console.log("graphData", this.chartData)
 }
 
 onChangeX(key){
   this.varX = key
-  this.drawGraph()
+  this.drawChart()
 }
 
 onChangeY(key){
   this.varY = key
-  this.drawGraph()
+  this.drawChart()
 }
 
 }

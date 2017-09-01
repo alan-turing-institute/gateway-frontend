@@ -1,18 +1,16 @@
 import 'rxjs/add/operator/switchMap';
 import { Component, OnInit, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CaseInfo } from '../cases/case/caseInfo';
 
-import { JobInfo } from '../dashboard/jobInfo';
+import { JobTemplate } from './jobTemplate';
 
 import { OutputService } from './output.service';
-import { ConfigDataService} from '../config/configData.service'
 
 import { ChartsComponent } from './chart';
-
+import * as FileSaver from 'file-saver';
 
 @Component({
-  selector: 'output',
+  // selector: 'output',
   providers: [OutputService],
   templateUrl: './output.component.html',
   styles: [require('../../../node_modules/ion-rangeslider/css/ion.rangeSlider.css').toString(),
@@ -23,81 +21,64 @@ import { ChartsComponent } from './chart';
 })
 
 export class OutputComponent implements OnInit {
-  case:CaseInfo;
-  //jobInfo: JobInfo [];
-  job: JobInfo;
+
+  job:JobTemplate;
   job_id: string;
-  graph:{} = {collapse:false}
+  chart:{} = {collapse:false}
   config:{} = {collapse:false}
   errorMessage: string;
-  caseID:string; //= "yy69843b-4939-6f37-96c7-c382c3e74b46";
   type:string = 'Output';
   status: string = 'Error';
   haveData:boolean;
 
 
   constructor(private activatedRoute: ActivatedRoute,
-  private outputService:OutputService,
-  private configDataService:ConfigDataService) {}
+  private outputService:OutputService) {}
 
   ngOnInit() {
-        this.job_id = this.activatedRoute.snapshot.params["id"];
-        console.log(!this.graph['collapse'])
-        //get job status (same as in dashboard)
+        //this.job_id = localStorage.getItem('job_id')
+        //this.job_id = "d769843b-6f37-4939-96c7-c382c3e74b46"
         this.getInfoData();
-        this.case = new CaseInfo
-        //this.getCaseData()
       }
 
 
-//Get all the data
-getInfoData(){
-  this.outputService.info
-                  .subscribe(
-                    allJobsInfo => {
-                      //get all jobs
-                      //find which job want to plot
-                      for(let job of allJobsInfo){
-                        if(job.id == this.job_id){
-                          this.job = job
-                        }
-                      }
-                      this.status = this.job.status
-                      this.caseID = this.job.case.id
-                      console.log(this.job)
-                      this.getCaseData()
-                    },
-                    error => {
-                      this.errorMessage = <any> error
-                    });
- }
+  //Get all the data
+  getInfoData(){
+    this.outputService.info
+                    .subscribe(
+                      allJobsInfo => {
+                        this.job = allJobsInfo
+                        this.status = this.job.status
+                        console.log("status: " + this.job.status)
+                        // this.status = "Running"
+                        this.haveData = true
+                      },
+                      error => {
+                        this.errorMessage = <any> error
+                      });
+  }
 
- graphCollapse(graph) {
-     this.graph['collapse'] = !this.graph['collapse']
+  chartCollapse() {
+     this.chart['collapse'] = !this.chart['collapse']
    }
 
- configCollapse(graph) {
+  configCollapse() {
      this.config['collapse'] = !this.config['collapse']
    }
 
-   getCaseData () {
-     this.outputService.case
-                        .subscribe(
-                          allCases =>{
-                            for(let aCase of allCases){
-                              if(aCase.id==this.caseID){
-                                this.case = aCase
-                                console.log("Case")
-                                console.log(this.case)
-                                if(this.case.id != ""){
-                                  this.haveData = true
-                              }
-                              }
-                            }
-                          },
-                           error => {
-                             this.errorMessage = <any> error
-                           });
+   downloadCsvData(){
+     console.log('downloading csv data')
+     this.outputService.downloadFile().subscribe(blob=>{
+       FileSaver.saveAs(blob, 'data.csv')
+     })
+   }
 
-                         }
-  }
+   downloadRawData(){
+     console.log('downloading raw data')
+     this.outputService.downloadFile().subscribe(blob=>{
+       FileSaver.saveAs(blob, 'data.csv')
+     })
+   }
+
+
+}

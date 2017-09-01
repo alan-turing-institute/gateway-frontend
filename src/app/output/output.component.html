@@ -1,72 +1,154 @@
-<div class="animated fadeIn">
+ <div class="animated fadeIn">
   <div *ngIf="haveData==true">
-    <div class='container-fluid card-block-container'>
-
+    <div class='container-fluid' >
       <div class="row">
         <div class="col-md-12">
-            <tabset style="width:100%">
+             <tabset>
 
-              <tab heading={{case.label}}>
+               <tab heading="Job Information">
+                 <div class="row">
+                   <div class="col-md-2">
+                     <img src={{job.case.thumbnail}} class=img-job>
+                   </div>
+                   <div class="col-md-8">
+                     <!-- <div *ngIf="status=='Running'">
+                       <div class="progress" >
+                           <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                       </div>
+                     </div> -->
+                     <p class="descriptionText">Status: {{job.status}}</p>
+                     <p class="descriptionText">Created: {{job.creation_datetime | date:"hh:mm:ss dd-MM-yyyy"}}</p>
+                     <div *ngIf="status=='Complete'||status=='Running'">
+                       <p class="descriptionText">Start: {{job.start_datetime | date:"hh:mm:ss dd-MM-yyyy"}} </p>
+                     </div>
+                     <div *ngIf="status=='Complete'">
+                       <p class="descriptionText">End: {{job.end_datetime | date:"hh:mm:ss dd-MM-yyyy"}}</p>
+                     </div>
+                   </div>
+                   <div class="col-md-2">
+                     <div *ngIf="status=='Complete' || status=='Running'">
+                     <div class="row">
+                       <div class="col-md-12">
+                         <button type="button"
+                                 class="btn btn-primary btn-action"
+                                 (click)='downloadCsvData()'>
+
+                             <span class="actionText"><strong>csv data</strong></span>
+                         </button>
+                       </div>
+                     </div>
+                     <div class="row">
+                       <div class="col-md-12">
+                         <button type="button"
+                                 class="btn btn-primary btn-action"
+                                 (click)='downloadRawData()'>
+
+                             <span class="actionText"><strong>raw data</strong></span>
+                         </button>
+                       </div>
+                     </div>
+                   </div>
+                   </div>
+                 </div>
+               </tab>
+
+              <tab heading={{job.case.label}}>
                 <div class="row">
                   <div class="col-md-2">
-                    <img src={{case.thumbnail}} class=img-job>
+                    <img src={{job.case.thumbnail}} class=img-job>
                   </div>
-                <div class="col-md-10">
-                  <p class="descriptionText">{{case.description}}</p>
-                </div>
-                </div>
-              </tab>
-
-              <tab heading={{job.name}}>
-                <div class="row">
+                  <div class="col-md-8">
+                    <p class="descriptionText">{{job.case.description}}</p>
+                  </div>
                   <div class="col-md-2">
-                    <img src={{case.thumbnail}} class=img-job>
+                    <div *ngIf="status=='Complete' || status=='Running'">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <button type="button"
+                              class="btn btn-primary btn-action"
+                              (click)='downloadCsvData()'>
+                          <span class="actionText"><strong>csv data</strong></span>
+                      </button>
+                    </div>
                   </div>
-                <div class="col-md-10">
-                  <p class="descriptionText">{{job.description}}</p>
-                </div>
-                </div>
-              </tab>
-
-              <tab heading="Job Information">
-                <div class="row">
-                  <div class="col-md-2">
-                    <img src={{case.thumbnail}} class=img-job>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <button type="button"
+                              class="btn btn-primary btn-action"
+                              (click)='downloadRawData()'>
+                          <span class="actionText"><strong>raw data</strong></span>
+                      </button>
+                    </div>
                   </div>
-                <div class="col-md-10">
-                  <p class="descriptionText">Status: {{job.status}}</p>
-                  <p class="descriptionText">Start: {{job.start_datetime}} </p>
-                  <p class="descriptionText">End: {{job.start_datetime}}</p>
+                  </div>
                 </div>
-                </div>
+              </div>
             </tab>
 
-          </tabset>
+            <tab heading={{job.name}}>
+              <div class="row">
+                <div class="col-md-2">
+                  <img src={{job.case.thumbnail}} class=img-job>
+                </div>
+                <div class="col-md-8">
+                  <p class="descriptionText">{{job.description}}</p>
+                </div>
+                <div class="col-md-2">
+                <div *ngIf="status=='Complete' || status=='Running'">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <button type="button"
+                            class="btn btn-primary btn-action"
+                            (click)='downloadCsvData()'>
+                        <span class="actionText"><strong>csv data</strong></span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <button type="button"
+                              class="btn btn-primary btn-action"
+                              (click)='downloadRawData()'>
+                          <span class="actionText"><strong>raw data</strong></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </tab>
+
+
+
+           </tabset>
         </div>
       </div>
 
       <p></p>
 
-      <div *ngIf="status=='Complete' || status=='Running'">
+       <div *ngIf="status=='Complete' || status=='Running'">
         <div class = "card" >
           <div class="card-header" (click)="graphCollapse()">
             <strong>Results</strong>
           </div>
-          <div [ngClass] = "{'collapse': graph.collapse}">
+          <div [ngClass] = "{'collapse': chart.collapse}">
             <chart></chart>
           </div>
         </div>
       </div>
+      </div>
 
-      <div class="card-header" (click)="configCollapse()">
+       <!-- <div class="card-header" (click)="configCollapse()">
         <strong>Configuration</strong>
       </div>
       <div class = "card">
-        <div [ngClass] = "{'collapse':config.collapse}">
+        <div [ngClass] = "{'collapse':config.collapse}" >
+          <p></p>
           <config [type]='type' ></config>
         </div>
-      </div>
+      </div>  -->
+      <config [type]='type' ></config>
 
-    </div>
+
   </div>
-</div>
+ </div>

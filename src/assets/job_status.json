@@ -1,6 +1,6 @@
 {
 	"jobs": [{
-			"id": "47684a76-2841-4626-a3de-dfa532c1d012",
+			"id": "0a2ca1f2-1de3-4638-a70f-b3f23a4018ef",
 			"uri": "https://science-gate-way-middleware.azurewebstes.net/job/47684a76-2841-4626-a3de-dfa532c1d012",
 			"name": "Talcum powder to flour",
                         "description": "Spicy jalapeno bacon ipsum dolor amet burgdoggen tenderloin cow ribeye kielbasa boudin. Kevin salami bacon venison landjaeger capicola frankfurter jerky ham hock hamburger tenderloin kielbasa rump porchetta. Tenderloin cow short loin, jowl brisket alcatra meatball burgdoggen doner ground round. Short ribs pancetta corned beef shankle, alcatra pastrami chicken biltong meatloaf t-bone ground round sausage bresaola ham. Drumstick chuck pork burgdoggen",
@@ -57,6 +57,21 @@
 			"start_datetime": null,
 			"end_datetime": null,
 			"status": "Draft",
+			"thumbnail": "./src/assets/img/stirred_tank.png"
+		},
+		{
+			"id": "488fa829-1abd-4e1d-9c1c-77be2b532e55",
+			"uri": "https://science-gateway-middleware.azurewebsites.net/job/488fa829-1abd-4e1d-9c1c-77be2b532e51",
+			"name": "Talcum powder to flour",
+						"description": "Spicy jalapeno bacon ipsum dolor amet burgdoggen tenderloin cow ribeye kielbasa boudin. Kevin salami bacon venison landjaeger capicola frankfurter jerky ham hock hamburger tenderloin kielbasa rump porchetta. Tenderloin cow short loin, jowl brisket alcatra meatball burgdoggen doner ground round. Short ribs pancetta corned beef shankle, alcatra pastrami chicken biltong meatloaf t-bone ground round sausage bresaola ham. Drumstick chuck pork burgdoggen",
+			"case": {
+				"id": "d769843b-6f37-4939-96c7-c382c3e74b46",
+				"uri": "https://science-gate-way-middleware.azurewebstes.net/case/d769843b-6f37-4939-96c7-c382c3e74b46",
+				"label": "Stirred Tank"
+			},
+			"start_datetime": null,
+			"end_datetime": null,
+			"status": "Queued",
 			"thumbnail": "./src/assets/img/stirred_tank.png"
 		}
 	]
