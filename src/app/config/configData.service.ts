@@ -28,7 +28,7 @@ export class ConfigDataService {
 
    // apiUrl: 'http://dev-science-gateway-middleware.azurewebsites.net/api/',
    private templateUrl = environment.apiUrl+"cases/";
-   private newJobUrl = environment.apiUrl+"jobs";
+   private jobsUrl = environment.apiUrl+"jobs";
 
   private response = {}
   constructor (private http: Http) {}
@@ -55,17 +55,17 @@ export class ConfigDataService {
 
 
   getJobUrl(job_id): string {
-    var url = this.newJobUrl + "/"+job_id
+    var url = this.jobsUrl + "/"+job_id
     console.log(url)
     return url
   }
 
   getCreateJobURL(job_id): string {
-    return this.newJobUrl
+    return this.jobsUrl
   }
 
   getSaveJobURL(job_id): string {
-    return this.newJobUrl +"/"+ job_id
+    return this.jobsUrl +"/"+ job_id
   }
 
   createJob(jobData:any, newJobUrl): Observable<InputComponent[]> {
