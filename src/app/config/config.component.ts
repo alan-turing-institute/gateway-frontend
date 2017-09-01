@@ -1,5 +1,5 @@
 import { Component, Injectable, OnInit, Input} from '@angular/core';
-// import { ActivatedRoute} from '@angular/router';
+import { Router} from '@angular/router';
 import { InputComponent } from './inputComponent';
 import { CaseInfo } from '../cases/case/caseInfo';
 // import { InputComponentService } from './inputComponent.service';
@@ -29,7 +29,8 @@ export class ConfigComponent implements OnInit {
   jobName:string="New Job"
 
   constructor(private configDataService:ConfigDataService,
-    private outputService:OutputService
+    private outputService:OutputService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -84,14 +85,18 @@ export class ConfigComponent implements OnInit {
                                 ranJob => {
                                   console.log("ran job")
                                   console.log(ranJob)
+                                  console.log('should be number 1')
+                                  this.router.navigate(['../../output/output'])
                                 },
                                 error => {
                                   this.errorMessage = <any> error
-                                }); 
+                                });
                           },
                           error => {
                             this.errorMessage = <any> error
                           });
+    console.log('should be number 2')
+
   }
 
   getDataTarget(tag) {
