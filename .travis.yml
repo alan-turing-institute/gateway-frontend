@@ -3,7 +3,7 @@ dist: trusty
 language: node_js
 node_js:
 - 6.9.1
-addons: 
+addons:
 apt:
   sources:
   - google-chrome
@@ -20,13 +20,17 @@ before_script:
 - npm run build
 script:
 - npm run test -- --single-run=true --browsers Chrome --code-coverage
-before_deploy: 
+before_deploy:
 - rm .gitignore
 - echo 'start deploying!'
 deploy:
-  provider: azure_web_apps
+- provider: azure_web_apps
+  slot: science-gateway-inputs-staging
   verbose: true
   skip_cleanup: true
-  on: 
-    all_branches: true 
+- provider: azure_web_apps
+  slot: science-gateway-inputs-dev
+  on: deploy-azure-dev
+  verbose: true
+  skip_cleanup: true
 after_deploy: echo 'done deploying!'

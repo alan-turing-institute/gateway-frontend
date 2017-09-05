@@ -5,5 +5,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://dev-science-gateway-middleware.azurewebsites.net/api/',
+  // apiUrlOnline: 'http://dev-science-gateway-middleware.azurewebsites.net/api/',
+  // apiUrlLocal: "http://localhost:5000/api/",
+  apiUrl:"http://dev-science-gateway-middleware.azurewebsites.net/api/",
 };

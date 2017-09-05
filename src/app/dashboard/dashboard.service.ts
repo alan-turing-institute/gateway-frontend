@@ -57,7 +57,7 @@ private extractJsonData(res: Response){
 
   private extractProgressJsonData(res: Response) {
     let body = res.json();
-    return body.progress|| { };
+    return body.stdout.progress|| { };
   }
 
   private handleError (error: Response | any) {

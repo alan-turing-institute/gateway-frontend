@@ -29,38 +29,30 @@ export class DashboardComponent implements OnInit {
   }
 
   getJobsData() {
+    console.log('getting job data')
     this.dashboardService.data
       .subscribe(allJobs => {
         allJobs.map(job => {
+          console.log("job" + job)
           if (job.status.toLowerCase() == "running") {
             this.dashboardService.getProgressInfo(job.id)
                             .subscribe(
                               progress => {
                                   job.progress =  progress
-                                  // this.jobs.push(job)
+                                  console.log("Inprogress")
+                                  console.log(progress)
+                                  console.log(job)
+                                  this.jobs.push(job)
                               },
-
                               error => {
                                 this.errorMessage = <any> error
                               });
           }
           else {
             job.progress = {value:0, units: "percent", range_min:0, range_max:100}
+            this.jobs.push(job)
           }
-          this.jobs.push(job)
-
-        //  this.dashboardService.getProgressInfo(job.id)
-        //                 .subscribe(
-        //                   progress => {
-        //                       job.progress =  progress
-        //                       this.jobs.push(job)
-        //                       console.log(this.jobs)
-        //                   },
-         //
-        //                   error => {
-        //                     this.errorMessage = <any> error
-        //                   });
-                        })
+        })
       })
   }
 
@@ -74,11 +66,9 @@ getProgressInfoData(id) {
                           });
                         }
 
-deleteJob(event){
-  // console.log(event)
-  // console.log(this.jobs)
-  this.jobs = this.jobs.filter(item => item.id !== event);
-  this.dashboardService.deleteJob(event)
+deleteJob(id){
+  this.jobs = this.jobs.filter(item => item.id !== id);
+  this.dashboardService.deleteJob(id)
       .subscribe(
         message => {
           console.log("deleted")
@@ -87,6 +77,5 @@ deleteJob(event){
           this.errorMessage = <any> error
         }
       )
-  // console.log(this.jobs)
   }
 }
