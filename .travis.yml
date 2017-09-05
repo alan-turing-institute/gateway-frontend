@@ -25,14 +25,6 @@ before_deploy:
 - echo 'start deploying!'
 deploy:
   - provider: azure_web_apps
-    on:
-      branch: master
-    verbose: true
-    skip_cleanup: true
-  - provider: azure_web_apps
-    slot: science-gateway-inputs-dev
-    on:
-      branch: deploy-azure-dev
     verbose: true
     skip_cleanup: true
 after_deploy: echo 'done deploying!'
