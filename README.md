@@ -1,25 +1,28 @@
-# science-gateway-inputs
+# Science-gateway-inputs
 
-This script creates a web-app with the following properties
-1) App hosted on [science-gateway-web](http://science-gateway-inputs.azurewebsites.net)
-2) Creates resource group called Science-Gateway-Web
-3) Priced onto the account set 
+## Overview
+
+Science gateway inputs is an Angular application for generating user interfaces for arbitrary research codes.
+
+## Local deployment
 
 ```
+npm install
+npm run start
+```
+
+## Azure deployment
+
+```shell
+APP_NAME=Science-Gateway-Inputs  # share the same app name for the url and resource group
+
 az login
-az account list
-az account set --subscription <id>
+az webapp deployment user set --user-name <username> --password <password>
+az group create --name $APP_NAME --location westeurope
 
-az group create \
-  --name Science-Gateway-Web --location "West Europe"
+az appservice plan create --name $APP_NAME --resource-group $APP_NAME --sku S1  # use S1 sku or higher is required for use of deployment "slots"
+az webapp create --name $APP_NAME --resource-group $APP_NAME --plan $APP_NAME
+az webapp config appsettings set --name $APP_NAME --resource-group $APP_NAME --settings PROJECT=./dist  # only copy "dist" files from the azure repository copy to azure wwwroot
 
-az group deployment validate \
-  --resource-group "Science-Gateway-Web" \
-  --template-file azuredeploy.json \
-  --parameters @azuredeploy.parameters.json
-
-az group deployment create  \
-  --name "Science-Gateway-Web" \
-  --resource-group "Science-Gateway-Web" \
-  --template-file azuredeploy.json --parameters @azuredeploy.parameters.json
-  ```
+# we rely on automated deployment from travis
+```
