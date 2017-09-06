@@ -27,6 +27,6 @@ deploy:
   - provider: azure_web_apps
     verbose: true
     skip_cleanup: true
-    # on: master
-    # slot: science-gateway-inputs-dev
+    on: master
+    slot: science-gateway-inputs-dev
 after_deploy: echo 'done deploying!'
