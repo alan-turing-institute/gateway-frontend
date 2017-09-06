@@ -23,6 +23,7 @@ script:
 before_deploy:
 - rm .gitignore
 - rm -rf node_modules
+- git filter-branch -- --all
 - echo 'start deploying!'
 deploy:
   - provider: azure_web_apps
