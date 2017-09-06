@@ -35,7 +35,7 @@ deploy:
   - provider: azure_web_apps
     verbose: true
     skip_cleanup: true
- 	on: master
+ 	  on: master
     slot: science-gateway-inputs-dev
 ```
 
@@ -46,7 +46,7 @@ deploy:
   - provider: azure_web_apps
     verbose: true
     skip_cleanup: true
- 	on: staging
+ 	  on: staging
     slot: science-gateway-inputs-staging
 ```
 
@@ -71,4 +71,3 @@ npm run build
 rm -rf node_modules  
 dpl --provider=AzureWebApps --verbose --skip_cleanup --slot science-gateway-inputs-dev
 ```
-
