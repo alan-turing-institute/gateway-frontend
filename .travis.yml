@@ -1,5 +1,8 @@
 sudo: required
 dist: trusty
+
+# Azure requires the full git tree
+# (therefore set a large cloning depth here)
 git:
   depth: 999999
 
@@ -23,11 +26,30 @@ before_script:
 - npm run build
 script:
 - npm run test -- --single-run=true --browsers Chrome --code-coverage
+
+
+# set multiple providers, so that a single .travis.yml file
+# can be shared across multiple branches (i.e. avoid merge conflicts)
+# Note: the travis log will raise warnings for all provider branches
+# other than the present branch
+# For example, if we push to the "master" branch, then travis will raise a deploy
+# warning for the redundant "staging" branch information below
+# (visa versa if we push to "staging", we will expect a warning for "master")
+
 before_deploy:
 - rm -rf node_modules
 - echo 'start deploying!'
+
 deploy:
   - provider: azure_web_apps
     verbose: true
     skip_cleanup: true
+    on: master
+    slot: science-gateway-inputs-dev
+  - provider: azure_web_apps
+    verbose: true
+    skip_cleanup: true
+    on: staging
+    slot: science-gateway-inputs-staging
+
 after_deploy: echo 'done deploying!'
