@@ -60,11 +60,15 @@ Hence, multiple URLs are available for testing:
 Note: Travis uses `dpl` internally. Hence, a manual deployment to the development Azure slot could be triggered using
 
 ```shell
+# example deployment to development "slot"
 sudo gem install dpl
-AZURE_WA_PASSWORD=<password>
-AZURE_WA_USERNAME=<user-name>
-AZURE_WA_SITE=science-gateway-inputs
-AZURE_WA_SLOT=science-gateway-inputs-dev
-dpl --provider=AzureWebApps --verbose --skip_cleanup
+export AZURE_WA_PASSWORD=<password>
+export AZURE_WA_USERNAME=<user-name>
+export AZURE_WA_SITE=science-gateway-inputs
+npm install
+npm run build
+# no need to commit "node_modules" to Azure (we only really want --skip_cleanup to commit "dist")
+rm -rf node_modules  
+dpl --provider=AzureWebApps --verbose --skip_cleanup --slot science-gateway-inputs-dev
 ```
 

@@ -22,6 +22,7 @@ script:
 - npm run test -- --single-run=true --browsers Chrome --code-coverage
 before_deploy:
 - rm .gitignore
+- rm -rf node_modules
 - echo 'start deploying!'
 deploy:
   - provider: azure_web_apps
