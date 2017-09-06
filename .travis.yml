@@ -1,5 +1,6 @@
 sudo: required
 dist: trusty
+
 language: node_js
 node_js:
 - 6.9.1
@@ -19,9 +20,9 @@ before_script:
 - npm install
 - npm run build
 script:
+- git fetch --unshallow
 - npm run test -- --single-run=true --browsers Chrome --code-coverage
 before_deploy:
-# - rm .gitignore
 - rm -rf node_modules
 - echo 'start deploying!'
 deploy:
