@@ -57,8 +57,8 @@ export class OutputService {
   private extractData(res: Response){
     let body = res.json();
     let gatewayData = body.stdout;
-    console.log(body);
-    console.log(gatewayData.data);
+    // console.log(body);
+    // console.log(gatewayData.data);
     return gatewayData.data || { };
   }
 
