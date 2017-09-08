@@ -14,12 +14,12 @@ export class OutputService {
   //url for getting job information
   // private jobUrl = require('../../assets/job_template.json');
   // private jobUrl = 'http://localhost:5000/api/jobs'
-  private jobUrl = environment.apiUrl + "jobs"
+  private jobUrl = environment.apiRoot + "jobs"
 
   //url for getting job data used to plot the graph
   // private dataUrl = require('../../assets/sample_data.json');
   // private dataUrl = 'http://localhost:5000/api/data'
-  private dataUrl = environment.apiUrl+'data'
+  private dataUrl = environment.apiRoot+'data'
 
   private csvUrl = '../../../example.csv'
 

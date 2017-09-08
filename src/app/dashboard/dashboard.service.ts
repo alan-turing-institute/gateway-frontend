@@ -13,11 +13,11 @@ import { environment } from '../../environments/environment';
 export class DashboardService {
   // private jobsUrl = require('../../assets/job_status.json');
   // private jobsUrl = 'http://localhost:5000/api/jobs';
-  // apiUrl: 'http://dev-science-gateway-middleware.azurewebsites.net/api/',
+  // apiRoot: 'http://dev-science-gateway-middleware.azurewebsites.net/api/',
   // private progressUrl = require('../../assets/progress.json')
   //private progressUrl = 'http://localhost:5000/api/progress/';
-  private jobsUrl = environment.apiUrl+"jobs"
-  private progressUrl = environment.apiUrl+"progress/"
+  private jobsUrl = environment.apiRoot+"jobs"
+  private progressUrl = environment.apiRoot+"progress/"
 
   
   constructor (private http: Http) {}
