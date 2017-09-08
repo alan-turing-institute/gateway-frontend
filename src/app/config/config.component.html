@@ -165,8 +165,8 @@
                     from={{component.value}}
                     min={{component.min_value}}
                     max={{component.max_value}}
+                    data-step={{component.step}}
                     postfix=" {{component.units}}"
-                    data-step=0.01
                     (onFinish)="updateSlider(tag, component, $event)"
                     [disable]="isDisabled()">
                   </ion-range-slider>
@@ -179,8 +179,8 @@
                     from={{component.value}}
                     min={{component.min_value}}
                     max={{component.max_value}}
+                    data-step={{component.step}}
                     postfix=" {{component.units}}"
-                    data-step=0.01
                     [disable]="isDisabled()"
                     (onFinish)="updateSlider(tag, component, $event)">
                   </ion-range-slider>
