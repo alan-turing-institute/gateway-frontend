@@ -33,7 +33,12 @@ module.exports = webpackMerge(commonConfig, {
       htmlLoader: {
         minimize: false // workaround for ng2
       }
-    })
+    }),
+    new webpack.NormalModuleReplacementPlugin(/\.\/environment\.dev/, './environment.prod')
   ]
 });
 
+
+
+// "build": "rimraf dist && webpack --env.APP_TARGET prod --config config/webpack.prod.js --progress --profile"
+// "build:dev": "rimraf dist && webpack --config config/webpack.dev.js --progress --profile"

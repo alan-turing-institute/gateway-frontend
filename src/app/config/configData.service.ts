@@ -15,9 +15,9 @@ import { environment } from '../../environments/environment';
 export class ConfigDataService {
   
   private jobData;
-  private templateUrl = environment.apiUrl+"cases/";
-  private jobsUrl = environment.apiUrl+"jobs";
-  private runUrl = environment.apiUrl+"run/";
+  private templateUrl = environment.apiRoot+"cases/";
+  private jobsUrl = environment.apiRoot+"jobs";
+  private runUrl = environment.apiRoot+"run/";
 
   private response = {}
   constructor (private http: Http) {}
