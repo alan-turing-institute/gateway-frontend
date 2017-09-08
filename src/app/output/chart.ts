@@ -25,7 +25,7 @@ import { OutputService } from './output.service';
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel"
             [autoScale]=true
-            [tooltipDisabled]=false>
+            [tooltipDisabled]=false>œ
           </ngx-charts-line-chart>
         </div>
       </div>
@@ -35,16 +35,16 @@ import { OutputService } from './output.service';
 
       <div class = "col-md-6">
         <select class = "form-control" (change)='onChangeY($event.target.value)' >
-          <option selected>Y-axis</option>
           <option *ngFor="let y_var of number_vars" >{{keyLabel[y_var]}}</option>
         </select>
+        <div>(y axis)</div>
       </div>
 
       <div class = "col-md-6">
         <select class="form-control" (change)='onChangeX($event.target.value)' >
-          <option selected>X-axis</option>
           <option *ngFor="let key of keys" >{{keyLabel[key]}}</option>
         </select>
+        <div>(x axis)</div>
       </div>
 
     </div>

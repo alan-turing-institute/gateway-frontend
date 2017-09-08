@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {CaseInfo} from './case/caseInfo';
+import { CaseInfo } from './case/caseInfo';
 import { CasesService } from './cases.service';
 
 @Component({
