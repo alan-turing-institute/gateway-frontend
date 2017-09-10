@@ -206,7 +206,7 @@ export class ConfigComponent implements OnInit {
     }
     else {
       let action_type = localStorage.getItem('action_type');
-      console.log(action_type)
+
       if (action_type === 'Edit') {
         this.jobCreated = true
         let job_id = localStorage.getItem('job_id');
@@ -229,6 +229,7 @@ export class ConfigComponent implements OnInit {
         this.jobCreated = false
         let template_id = localStorage.getItem('template_id');
         console.log("template"+template_id)
+
         this.configDataService.getTemplate(template_id)
                           .subscribe(
                             template => {

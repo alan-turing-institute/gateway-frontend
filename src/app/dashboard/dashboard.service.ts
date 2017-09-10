@@ -9,6 +9,8 @@ import {JobInfo} from './jobInfo';
 import {ProgressInfo} from './progressInfo';
 import { environment } from '../../environments/environment';
 
+import * as urljoin from 'url-join';
+
 @Injectable()
 export class DashboardService {
   // private jobsUrl = require('../../assets/job_status.json');
@@ -16,10 +18,10 @@ export class DashboardService {
   // apiRoot: 'http://dev-science-gateway-middleware.azurewebsites.net/api/',
   // private progressUrl = require('../../assets/progress.json')
   //private progressUrl = 'http://localhost:5000/api/progress/';
-  private jobsUrl = environment.apiRoot+"jobs"
-  private progressUrl = environment.apiRoot+"progress/"
+  private jobsUrl = urljoin(environment.apiRoot, "jobs")
+  private progressUrl = urljoin(environment.apiRoot, "progress")
 
-  
+
   constructor (private http: Http) {}
 
   data = this.getJobsData()

@@ -8,18 +8,19 @@ import 'rxjs/add/operator/map';
 import {JobTemplate} from './jobTemplate';
 import { environment } from '../../environments/environment';
 
+import * as urljoin from 'url-join';
 
 @Injectable()
 export class OutputService {
   //url for getting job information
   // private jobUrl = require('../../assets/job_template.json');
   // private jobUrl = 'http://localhost:5000/api/jobs'
-  private jobUrl = environment.apiRoot + "jobs"
+  private jobUrl = urljoin(environment.apiRoot, "jobs")
 
   //url for getting job data used to plot the graph
   // private dataUrl = require('../../assets/sample_data.json');
   // private dataUrl = 'http://localhost:5000/api/data'
-  private dataUrl = environment.apiRoot+'data'
+  private dataUrl = urljoin(environment.apiRoot, 'data')
 
   private csvUrl = '../../../example.csv'
 
@@ -30,14 +31,14 @@ export class OutputService {
   data = this.getOutputData()
 
   getJobInfo(): Observable<JobTemplate>{
-      var url = this.jobUrl + "/" + localStorage.getItem('job_id')
+      var url = urljoin(this.jobUrl, localStorage.getItem('job_id'))
       return this.http.get(url)
                       .map(this.extractJobs)
                       .catch(this.handleError)
   }
 
   getOutputData(): Observable<Array<any>>{
-    var url = this.dataUrl + "/" + localStorage.getItem('job_id')
+    var url = urljoin(this.dataUrl, localStorage.getItem('job_id'))
     return this.http.get(url)
                     .map(this.extractData)
                     .catch(this.handleError)
