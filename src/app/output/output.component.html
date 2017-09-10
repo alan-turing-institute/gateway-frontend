@@ -117,26 +117,40 @@
                 </div>
               </div>
             </tab>
-
-
-
            </tabset>
         </div>
       </div>
 
       <p></p>
 
-       <div *ngIf="status=='Complete' || status=='Running'">
+      <div *ngIf="status=='Complete' || status=='Running'">
         <div class = "card" >
-          <div class="card-header" (click)="graphCollapse()">
-            <strong>Results</strong>
+          <div class="card-header">
+            <strong>Diagnostics</strong>
           </div>
-          <div [ngClass] = "{'collapse': chart.collapse}">
+          <div>
             <chart></chart>
           </div>
         </div>
       </div>
+
+      <div *ngIf="status=='Complete'">
+
+        <div *ngFor="let output of job.outputs">
+          <div *ngIf="output.type =='video'">
+            <div class = "card" >
+              <div class="card-header">
+                <strong>Videos</strong>
+              </div>
+              <div>
+                <app-video [videoUrl]='output.destination_path'></app-video>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+    </div>
 
        <!-- <div class="card-header" (click)="configCollapse()">
         <strong>Configuration</strong>
@@ -147,8 +161,7 @@
           <config [type]='type' ></config>
         </div>
       </div>  -->
-      <config [type]='type' ></config>
-
+    <config [type]='type' ></config>
 
   </div>
- </div>
+</div>
