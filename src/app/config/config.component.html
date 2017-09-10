@@ -125,66 +125,93 @@
           </div>
           <div [attr.id]=tag.name [ngClass]="{'collapse': tag.collapse }"role="tabpanel">
             <div class="card-block">
-              <div *ngFor="let component of getVisibleComponents(tag)">
-                <div *ngIf="component.type == 'text'">
-                  <label [for]=component.name>{{component.label}} <span [hidden]="component.valid" [ngClass]="{'invalidValue': component.valid === false}">*Valid values ranges between {{component.min_value}} and {{component.max_value}}</span>
-                  </label>
-                  <div class="input-group"  >
-                    <input
-                      [(ngModel)]="component.value"
-                      (ngModelChange) = "validateValue(component)"
-                      [attr.id]="component.name"
-                      type="number"
-                      [ngClass]="{'invalidValue': component.valid === false}"
-                      (keyup.enter)="update(tag,component)"
-                      (blur)="update(tag, component)"
-                      [disabled]="isDisabled()"
-                    >
-                    <span class="input-group-addon">{{component.units}}</span>
+
+              <div *ngIf="tag.name == 'tank_properties'">
+
+                <app-tank [data]="tag.parameters"></app-tank>
+                
+                <div *ngFor="let component of getVisibleComponents(tag)">
+                  <div *ngIf="component.type == 'slider'">
+
+                    <label [for]=component.name>{{component.label}}</label>
+                    <ion-range-slider
+                      [attr.id]=component.name
+                      from={{component.value}}
+                      min={{component.min_value}}
+                      max={{component.max_value}}
+                      data-step={{component.step}}
+                      postfix=" {{component.units}}"
+                      (onFinish)="updateSlider(tag, component, $event)"
+                      [disable]="isDisabled()">
+                    </ion-range-slider>
+
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="tag.name != 'tank_properties'">
+                <div *ngFor="let component of getVisibleComponents(tag)">
+
+                  <div *ngIf="component.type == 'text'">
+                    <label [for]=component.name>{{component.label}} <span [hidden]="component.valid" [ngClass]="{'invalidValue': component.valid === false}">*Valid values ranges between {{component.min_value}} and {{component.max_value}}</span>
+                    </label>
+                    <div class="input-group"  >
+                      <input
+                        [(ngModel)]="component.value"
+                        (ngModelChange) = "validateValue(component)"
+                        [attr.id]="component.name"
+                        type="number"
+                        [ngClass]="{'invalidValue': component.valid === false}"
+                        (keyup.enter)="update(tag,component)"
+                        (blur)="update(tag, component)"
+                        [disabled]="isDisabled()"
+                      >
+                      <span class="input-group-addon">{{component.units}}</span>
+                    </div>
                   </div>
 
-                </div>
+                  <div *ngIf="component.type == 'radio'">
+                    <label class="switch switch-3d switch-danger">
+                      <input type="checkbox"
+                        class="switch-input"
+                        [ngModel] = "component.value"
+                        (ngModelChange)="update(tag, component)"
+                        [disabled]="isDisabled()">
+                      <span class="switch-label"></span>
+                      <span class="switch-handle"></span>
+                    </label>
+                    {{component.units}}
+                  </div>
 
-                <div *ngIf="component.type == 'radio'">
-                  <label class="switch switch-3d switch-danger">
-                    <input type="checkbox"
-                      class="switch-input"
-                      [ngModel] = "component.value"
-                      (ngModelChange)="update(tag, component)"
-                      [disabled]="isDisabled()">
-                    <span class="switch-label"></span>
-                    <span class="switch-handle"></span>
-                  </label>
-                  {{component.units}}
-                </div>
+                  <div *ngIf="component.type == 'slider'">
+                    <label [for]=component.name>{{component.label}}</label>
+                    <ion-range-slider
+                      [attr.id]=component.name
+                      from={{component.value}}
+                      min={{component.min_value}}
+                      max={{component.max_value}}
+                      data-step={{component.step}}
+                      postfix=" {{component.units}}"
+                      (onFinish)="updateSlider(tag, component, $event)"
+                      [disable]="isDisabled()">
+                    </ion-range-slider>
+                  </div>
 
-                <div *ngIf="component.type == 'slider'">
-                  <label [for]=component.name>{{component.label}}</label>
-                  <ion-range-slider
-                    [attr.id]=component.name
-                    from={{component.value}}
-                    min={{component.min_value}}
-                    max={{component.max_value}}
-                    data-step={{component.step}}
-                    postfix=" {{component.units}}"
-                    (onFinish)="updateSlider(tag, component, $event)"
-                    [disable]="isDisabled()">
-                  </ion-range-slider>
-                </div>
+                  <div *ngIf="component.type == 'vtk'">
+                    <label [for]=component.name>{{component.label}}</label>
+                    <ion-range-slider
+                      [attr.id]=component.name
+                      from={{component.value}}
+                      min={{component.min_value}}
+                      max={{component.max_value}}
+                      data-step={{component.step}}
+                      postfix=" {{component.units}}"
+                      [disable]="isDisabled()"
+                      (onFinish)="updateSlider(tag, component, $event)">
+                    </ion-range-slider>
+                    <app-pipe [radius]="component.value"></app-pipe>
+                  </div>
 
-                <div *ngIf="component.type == 'vtk'">
-                  <label [for]=component.name>{{component.label}}</label>
-                  <ion-range-slider
-                    [attr.id]=component.name
-                    from={{component.value}}
-                    min={{component.min_value}}
-                    max={{component.max_value}}
-                    data-step={{component.step}}
-                    postfix=" {{component.units}}"
-                    [disable]="isDisabled()"
-                    (onFinish)="updateSlider(tag, component, $event)">
-                  </ion-range-slider>
-                  <app-pipe [radius]="component.value"></app-pipe>
                 </div>
               </div>
             </div>
