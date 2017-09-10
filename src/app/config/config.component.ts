@@ -128,6 +128,11 @@ export class ConfigComponent implements OnInit {
   updateSlider(tag, component, event) {
     let newValue = event.from;
     this.configDataService.updateJobData(tag['parameters'], component.name, newValue.toString())
+    // overwrite with an array copy via .slice() method
+    // to trigger angular change detection ngOnChanges()
+    for (var i in this.tags) {
+      this.tags[i].parameters = this.tags[i].parameters.slice()
+    }
   }
 
   update(tag, component) {

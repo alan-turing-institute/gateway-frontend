@@ -25,6 +25,10 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
 
     private objects: THREE.Mesh[];
 
+    @Input() data: any [];
+    private nameToIndex: any;
+    private indexToName: any;
+
     // Stirrer properties
     @Input() axle_radius: number;
     @Input() axle_height: number;
@@ -55,6 +59,10 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
     constructor() {
         this.objects = [];
 
+        this.data = [];
+        this.nameToIndex = {};
+        this.indexToName = {};
+
         // Set default values
         this.axle_radius = 2;
         this.axle_height = 5;
@@ -83,6 +91,14 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
     }
 
     public ngOnInit(): void {
+
+        // build lookup objects
+        // (not yet used, but may prove useful for accessing parameter values)
+        for (let p in this.data) {
+          this.indexToName[p] = this.data[p].name
+          this.nameToIndex[this.data[p].name] = p
+        }
+
         // Set up a render window
         this.renderer = new WebGLRenderer({ alpha: true, canvas: this.tankCanvas.nativeElement });
         this.tankDiv.nativeElement.appendChild(this.renderer.domElement);
@@ -128,6 +144,17 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
 
     public ngOnChanges(): void {
         // Ensure all variables are numbers
+
+        console.log('ngOnChanges() this.data', this.data)
+
+        for (let p in this.data) {
+          if (this.data[p].name == "tank_radius") {
+            this.tank_radius = this.data[p].value
+          }
+          else if (this.data[p].name == "tank_height") {
+            this.tank_height = this.data[p].value
+          }
+        }
 
         if (this.scene === undefined) {
             return;
