@@ -9,3 +9,7 @@ declare module '*.scss' {
     const content: any;
     export default content;
 }
+
+declare interface ThreeComponent {
+    render(): void;
+}
