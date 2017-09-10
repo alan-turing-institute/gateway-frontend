@@ -44,7 +44,7 @@ deploy:
   - provider: azure_web_apps
     verbose: true
     skip_cleanup: true
-    on: master
+    on: develop
     slot: science-gateway-inputs-dev
   - provider: azure_web_apps
     verbose: true
