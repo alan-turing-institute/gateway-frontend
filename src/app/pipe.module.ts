@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PipeComponent } from './three/pipe/pipe.component';
+import { TankComponent } from './three/tank/tank.component';
 
 import { CasesModule } from './cases/cases.module';
 import { OutputModule } from './output/output.module';
@@ -11,8 +12,9 @@ import { OutputModule } from './output/output.module';
     CommonModule
   ],
   declarations: [
-    PipeComponent
+    PipeComponent,
+    TankComponent
   ],
-  exports : [PipeComponent]
+  exports : [PipeComponent, TankComponent]
 })
 export class PipeModule { }
