@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import {JobTemplate} from './jobTemplate';
+import { JobTemplate } from './jobTemplate';
 import { environment } from '../../environments/environment';
 
 import * as urljoin from 'url-join';
@@ -13,16 +13,10 @@ import * as urljoin from 'url-join';
 @Injectable()
 export class OutputService {
   //url for getting job information
-  // private jobUrl = require('../../assets/job_template.json');
-  // private jobUrl = 'http://localhost:5000/api/jobs'
   private jobUrl = urljoin(environment.apiRoot, "jobs")
 
   //url for getting job data used to plot the graph
-  // private dataUrl = require('../../assets/sample_data.json');
-  // private dataUrl = 'http://localhost:5000/api/data'
   private dataUrl = urljoin(environment.apiRoot, 'data')
-
-  private csvUrl = '../../../example.csv'
 
 
   constructor (private http: Http) {}
@@ -80,15 +74,12 @@ export class OutputService {
   }
 
 
-
-  downloadFile(): Observable<Blob> {
+  downloadFile(fileUrl): Observable<Blob> {
       let headers = new Headers({'Content-Type':'text/csv'});
       let options = new RequestOptions({headers:headers, responseType: ResponseContentType.Blob });
-      return this.http.get(this.csvUrl, options)
+      return this.http.get(fileUrl, options)
           .map(res => res.blob())
           .catch(this.handleError)
   }
-
-
 
 }

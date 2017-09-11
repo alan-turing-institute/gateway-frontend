@@ -13,11 +13,15 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ChartsComponent } from './chart';
+
 import { ConfigModule } from '../config/config.module';
 import { DashboardModule } from '../dashboard/dashboard.module'
 
 import { VideoComponent } from './video/video.component';
+import { DownloadComponent } from './download/download.component';
+
 import { TabsModule } from 'ngx-bootstrap/tabs';
+
 
 @NgModule({
   imports: [
@@ -35,7 +39,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
   declarations: [
     OutputComponent,
     ChartsComponent,
-    VideoComponent
+    VideoComponent,
+    DownloadComponent
   ],
   providers: [
     OutputService
