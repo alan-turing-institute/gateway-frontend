@@ -8,12 +8,12 @@ import 'rxjs/add/operator/map';
 import {CaseInfo} from './case/caseInfo';
 import { environment } from '../../environments/environment';
 
+import * as urljoin from 'url-join';
 
 @Injectable()
 export class CasesService {
-  // private templateUrl = require('../../assets/case_types.json');
-  // private templateUrl = 'http://localhost:5000/api/cases';
-  private templateUrl = environment.apiRoot+"cases";
+
+  private templateUrl = urljoin(environment.apiRoot, "cases");
   constructor (private http: Http) {}
 
   cases = this.getCases()

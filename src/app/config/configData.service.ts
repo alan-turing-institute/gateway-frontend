@@ -11,19 +11,21 @@ import 'rxjs/add/operator/map';
 import {InputComponent} from './inputComponent';
 import { environment } from '../../environments/environment';
 
+import * as urljoin from 'url-join';
+
 @Injectable()
 export class ConfigDataService {
-  
+
   private jobData;
-  private templateUrl = environment.apiRoot+"cases/";
-  private jobsUrl = environment.apiRoot+"jobs";
-  private runUrl = environment.apiRoot+"run/";
+  private templateUrl = urljoin(environment.apiRoot, "cases");
+  private jobsUrl = urljoin(environment.apiRoot, "jobs");
+  private runUrl = urljoin(environment.apiRoot, "run");
 
   private response = {}
   constructor (private http: Http) {}
 
   getTemplate(template_id): Observable<InputComponent[]> {
-    var url = this.templateUrl + template_id
+    var url = urljoin(this.templateUrl, template_id)
     this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
                     .catch(this.handleError);
@@ -42,7 +44,7 @@ export class ConfigDataService {
 
 
   getJobUrl(job_id): string {
-    var url = this.jobsUrl + "/"+job_id
+    var url = urljoin(this.jobsUrl, job_id)
     console.log(url)
     return url
   }
@@ -52,7 +54,7 @@ export class ConfigDataService {
   }
 
   getSaveJobURL(job_id): string {
-    return this.jobsUrl +"/"+ job_id
+    return urljoin(this.jobsUrl, job_id)
   }
 
   createJob(jobData:any, newJobUrl): Observable<InputComponent[]> {
@@ -81,7 +83,7 @@ export class ConfigDataService {
     let options = new RequestOptions({ headers: headers });
     let response = this.http.post(url, jobData, options)
                     .catch(this.handleError);
-    return response  
+    return response
   }
 
 

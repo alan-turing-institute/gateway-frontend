@@ -8,6 +8,6 @@ if (environment.production) {
   enableProdMode();
 }
 
-console.log(environment.apiRoot)
+console.log("API set to", environment.apiRoot)
 
 platformBrowserDynamic().bootstrapModule(AppModule);
