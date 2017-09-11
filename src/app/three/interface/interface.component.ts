@@ -2,8 +2,9 @@ import { Component, OnInit, OnChanges, OnDestroy, ViewChild, ElementRef, Input, 
 
 import {
     Scene, PerspectiveCamera, WebGLRenderer, Mesh, Color, DoubleSide,
-    MeshToonMaterial, BoxGeometry, PointLight, AmbientLight,
-    CylinderGeometry, CircleGeometry, Vector3
+    MeshToonMaterial, BoxGeometry, PointLight, AmbientLight, DirectionalLight,
+    CylinderGeometry, CircleGeometry, Vector3,
+    MeshPhongMaterial, FogExp2, AxisHelper
 } from 'three/src/Three';
 
 import { TrackballControls } from '../TrackballControls';
@@ -22,6 +23,12 @@ export class InterfaceComponent implements ThreeComponent, OnInit, OnChanges {
     private renderer: THREE.WebGLRenderer;
     private scene: THREE.Scene;
     private camera: THREE.Camera;
+    private helper: THREE.AxisHelper;
+
+    private axisRenderer: THREE.WebGLRenderer;
+    private axisScene: THREE.Scene;
+    private axisCamera: THREE.Camera;
+    private axisHelper: THREE.AxisHelper;
 
     private objects: THREE.Mesh[];
 
@@ -37,49 +44,57 @@ export class InterfaceComponent implements ThreeComponent, OnInit, OnChanges {
 
         // Set up a render window
         this.renderer = new WebGLRenderer({ alpha: true, canvas: this.interfaceCanvas.nativeElement });
+        this.renderer.setPixelRatio( window.devicePixelRatio )
         this.interfaceDiv.nativeElement.appendChild(this.renderer.domElement);
 
         this.scene = new Scene();
-        this.scene.background = new Color(0xffffff);
+        // this.scene.background = new Color(0xffffff);
+        this.scene.background = new Color(0xcccccc);
+        this.scene.fog = new FogExp2( 0xcccccc, 0.002 );
+
+        this.helper = new AxisHelper( 5 );
+        this.scene.add( this.helper );
 
         let screenRatio = this.renderer.domElement.offsetWidth / this.renderer.domElement.offsetHeight;
 
-        this.camera = new PerspectiveCamera(75, screenRatio, 0.1, 1000);
+        this.camera = new PerspectiveCamera(40, screenRatio, 0.1, 1000);
+        this.camera.position.x = 4;
+        this.camera.position.y = 0.4;
+        this.camera.position.z = 3.15;
 
         let lights = [];
-        lights[0] = new PointLight(0xffffff, 1, 0);
-        lights[1] = new PointLight(0xffffff, 1, 0);
-        lights[2] = new PointLight(0xffffff, 1, 0);
 
-        lights[0].position.set(0, 200, 0);
-        lights[1].position.set(100, 200, 100);
-        lights[2].position.set(- 100, - 200, - 100);
+        lights[0] = new DirectionalLight( 0xffffff );
+				lights[0].position.set( 1, 1, 1 );
+
+        lights[1] = new DirectionalLight( 0x002288 );
+        lights[1].position.set( -1, -1, -1 );
+
+        lights[2] = new AmbientLight( 0x222222 );
 
         this.scene.add(lights[0]);
         this.scene.add(lights[1]);
         this.scene.add(lights[2]);
 
-        let ambLight = new AmbientLight(0xffffff);
-        this.scene.add(ambLight);
-
-        this.camera.position.z = 10 * 2;
+        let controls = new TrackballControls(this.camera, this.renderer.domElement, this);
 
         this.generateInterface();
-
         this.render();
+        this.ngOnChanges();
 
-        let controls = new TrackballControls(this.camera, this.renderer.domElement, this);
     }
 
     public render(): void {
         if (this.renderer !== undefined) {
             this.renderer.render(this.scene, this.camera);
         }
+        if (this.axisRenderer !== undefined) {
+            this.axisRenderer.render(this.axisScene, this.axisCamera);
+        }
     }
 
     public ngOnChanges(): void {
         // Ensure all variables are numbers
-
         if (this.scene === undefined) {
             return;
         }
@@ -89,34 +104,36 @@ export class InterfaceComponent implements ThreeComponent, OnInit, OnChanges {
     }
 
     private generateInterface(): void {
-        // let material = new MeshToonMaterial({ color: this.tank_colour, side: DoubleSide });
-        //
-        // let bodyGeom = new CylinderGeometry(this.tank_radius, this.tank_radius, this.tank_height,
-        //                                 this.tank_resolution, 3, true);
-        //
-        // let baseGeom = new CircleGeometry(this.tank_radius, this.tank_resolution);
-        // // Base is generated vertically so rotate it
-        // baseGeom.rotateX(Math.PI / 2);
-        // baseGeom.translate(0, -this.tank_height / 2, 0);
-        //
-        // let angleStep = 2 * Math.PI / this.num_baffles;
-        // let sideBarDir: THREE.Vector3 = new Vector3(-this.tank_radius + this.baffle_width / 2, 0, 0);
-        // for (let i = 0 ; i < this.num_baffles; i++) {
-        //     let sideBarGeom = new BoxGeometry(this.baffle_width, this.tank_height, this.baffle_thickness);
-        //
-        //     sideBarGeom.translate(sideBarDir.x, sideBarDir.y, sideBarDir.z);
-        //     sideBarGeom.rotateY(angleStep * i);
-        //
-        //     this.addToScene(sideBarGeom, material);
-        // }
-        //
-        // this.addToScene(bodyGeom, material);
-        // this.addToScene(baseGeom, material);
+
+      let loader = new STLLoader();
+
+      let interfaceMaterial = new MeshPhongMaterial( {
+          color: 0xAAAAAA,
+          specular: 0x111111,
+          shininess: 200,
+          transparent: true,
+          opacity: 0.5
+        } );
+
+      let that = this
+      // loader.load( 'src/assets/interface/stirred_tank_centred.stl', function (geometry) {
+      loader.load( 'https://sgmiddleware.blob.core.windows.net/blue/stirred_tank_centred.stl', function (geometry) {
+          let mesh = new Mesh( geometry, interfaceMaterial );
+
+          //(red, green (up), blue)
+          mesh.position.set( 0, 0, 0 );
+          mesh.rotation.set( - Math.PI / 2, 0, 0 );
+          mesh.scale.set( 15, 15, 15 );
+          mesh.castShadow = false;
+          mesh.receiveShadow = true;
+          console.log(mesh.position.x, mesh.position.y, mesh.position.z)
+
+          that.addToScene(mesh);
+          that.render();
+        });
     }
 
-    private addToScene(geom: THREE.Geometry, material: THREE.Material): void {
-        let mesh = new Mesh(geom, material);
-
+    private addToScene(mesh: THREE.Mesh): void {
         this.objects.push(mesh);
         this.scene.add(mesh);
     }
