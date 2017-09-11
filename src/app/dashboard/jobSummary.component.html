@@ -16,6 +16,21 @@
       </div>
     </div>
 
+    <div class="progress job-progress" [hidden]="getProgressBarHidden()">
+      <div class="progress-bar bg-job-success" role="progressbar" [ngStyle]="{'width':summary.progress.value+'%'}">{{summary.progress.value}} {{summary.progress.units}}</div>
+    </div>
+
+    <!-- Only show progress for running jobs -->
+    <div *ngIf="summary.status =='Running'">
+      <div class="card-block">
+        <div class="h6 m-0">{{summary.progress.value+'%'}}</div>
+        <div>Runing on cx1</div>
+        <div class="progress progress-xs my-1">
+          <div class="progress-bar bg-warning" role="progressbar" [ngStyle]="{'width':summary.progress.value+'%'}" aria-valuenow="summary.progress.value" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+    </div>
+
   </div>
   <div class="card-footer">
 
@@ -37,8 +52,3 @@
 
   </div>
 </div>
-
-
-<!-- <div class="progress job-progress" [hidden]="getProgressBarHidden()">
-  <div class="progress-bar bg-job-success" role="progressbar" [ngStyle]="{'width':summary.progress.value+'%'}">{{summary.progress.value}} {{summary.progress.units}}</div>
-</div> -->

@@ -28,6 +28,7 @@ export class JobSummaryComponent implements OnInit{
 
     ngOnInit(): void {
         this.jobHoverHidden = true
+        console.log('summary', this.summary)
     }
 
     // setJobHoverHidden(): void {
