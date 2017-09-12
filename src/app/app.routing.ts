@@ -23,7 +23,7 @@ export const routes: Routes = [
     {
       path: '',
       component: FullLayoutComponent,
-      // canActivate: [AuthGuard],
+      canActivate: [AuthGuard],
       data: {
         title: 'Home'
       },
@@ -50,19 +50,19 @@ export const routes: Routes = [
         }
       ]
     },
-  // {
-  //   path: '',
-  //   component: LoginLayoutComponent,
-  //   children: [
-  //     {
-  //       path: 'login',
-  //       component: LoginComponent
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '**', redirectTo: ''
-  // }
+    {
+      path: '',
+      component: LoginLayoutComponent,
+      children: [
+        {
+          path: 'login',
+          component: LoginComponent
+        }
+      ]
+    },
+    {
+      path: '**', redirectTo: ''
+    }
 
 ];
 
