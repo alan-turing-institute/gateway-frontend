@@ -9,7 +9,7 @@ import { JobSummaryComponent } from './jobSummary.component';
   selector: "dashboard",
   providers: [DashboardService],
   templateUrl: 'dashboard.component.html',
-  styleUrls:['dashboard.css']
+  styleUrls:['dashboard.component.css']
 })
 
 export class DashboardComponent implements OnInit {

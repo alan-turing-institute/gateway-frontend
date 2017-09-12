@@ -33,14 +33,14 @@ export class DashboardService {
   }
 
   getProgressInfo(jobId): Observable<ProgressInfo>{
-    var url = this.progressUrl + jobId
+    var url = urljoin(this.progressUrl, jobId)
     return this.http.get(url)
                     .map(this.extractProgressJsonData)
                     .catch(this.handleError);
   }
 
   deleteJob(jobId): Observable<any>{
-    var url = this.jobsUrl + "/"+jobId
+    var url = urljoin(this.jobsUrl, jobId);
     return this.http.delete(url)
                     .map(this.extractJsonData)
                     .catch(this.handleError);

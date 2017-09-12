@@ -16,48 +16,53 @@ import { ConfigModule } from './config/config.module';
 
 export const routes: Routes = [
     {
-    path: '',
-    component: FullLayoutComponent,
-    canActivate: [AuthGuard],
-    data: {
-      title: 'Home'
+      path: '',
+      redirectTo: 'account',
+      pathMatch: 'full'
     },
-    children: [
-      {
-        path: 'account',
-        loadChildren: './account/account.module#AccountModule'
+    {
+      path: '',
+      component: FullLayoutComponent,
+      // canActivate: [AuthGuard],
+      data: {
+        title: 'Home'
       },
-      {
-        path: 'dashboard',
-        loadChildren: './dashboard/dashboard.module#DashboardModule'
-      },
-      {
-        path: 'output',
-        loadChildren: './output/output.module#OutputModule'
-      },
-      {
-        path: 'cases',
-        loadChildren: './cases/cases.module#CasesModule'
-      },
-      {
-        path: 'config',
-        loadChildren: './config/config.module#ConfigModule'
-      }
-    ]
-  },
-  {
-    path: '',
-    component: LoginLayoutComponent,
-    children: [
-      {
-        path: 'login',
-        component: LoginComponent
-      }
-    ]
-  },
-  {
-    path: '**', redirectTo: ''
-  }
+      children: [
+        {
+          path: 'account',
+          loadChildren: './account/account.module#AccountModule'
+        },
+        {
+          path: 'dashboard',
+          loadChildren: './dashboard/dashboard.module#DashboardModule'
+        },
+        {
+          path: 'output',
+          loadChildren: './output/output.module#OutputModule'
+        },
+        {
+          path: 'cases',
+          loadChildren: './cases/cases.module#CasesModule'
+        },
+        {
+          path: 'config',
+          loadChildren: './config/config.module#ConfigModule'
+        }
+      ]
+    },
+  // {
+  //   path: '',
+  //   component: LoginLayoutComponent,
+  //   children: [
+  //     {
+  //       path: 'login',
+  //       component: LoginComponent
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '**', redirectTo: ''
+  // }
 
 ];
 

@@ -1,6 +1,6 @@
 <!-- Add creation date in subtitle -->
 
-<div class="card" style="width: 20rem;">
+<div class="card">
   <div class="card-body">
     <span [ngClass]="getBadgeClass()" class="badge float-right">{{summary.status}}</span>
     <h5 class="card-title">{{summary.name}}</h5>
@@ -8,7 +8,7 @@
     <p class="card-subtitle mb-2 text-muted">{{relativeCreationTime()}}</p>
 
     <div class="row">
-      <div class="col-sm-3 col-md-3">
+      <div class="col-sm-4 col-md-3">
         <img style="height: 3em" src={{summary.case.thumbnail}} class="img-job">
       </div>
       <div class="col-sm-8 col-md-8">
