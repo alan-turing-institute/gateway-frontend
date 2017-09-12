@@ -9,7 +9,6 @@ import { DescriptionComponent } from './description.component';
 // import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
 
 // import { ModalDirective } from 'ngx-bootstrap/modal/modal.component';
-
 // import {ModalDirective} from 'ngx-bootstrap';
 
 
@@ -32,8 +31,6 @@ export class ConfigComponent implements OnInit {
   errorMessage: string;
   jobCreated:boolean;
   jobName:string="New Job"
-
-  public runModal;
 
   constructor(private configDataService:ConfigDataService,
     private outputService:OutputService,
