@@ -13,11 +13,12 @@ import * as moment from 'moment';
 export class JobSummaryComponent implements OnInit{
     @Input() summary: JobInfo;
     @Input() type: string;
-    @Input() caseInfo:boolean;
+    @Input() caseInfo: boolean;
     @Input() case:{};
     @Output() jobDeleted: EventEmitter<string> = new EventEmitter();
 
-
+    private formattedProgressValue: string;
+    private formattedProgressUnits: string;
 
     jobHoverHidden: boolean;
 
@@ -29,6 +30,22 @@ export class JobSummaryComponent implements OnInit{
     ngOnInit(): void {
         this.jobHoverHidden = true
         console.log('summary', this.summary)
+
+
+        // handle case that progress is not available
+        // immediately after job submission
+        if (typeof this.summary.progress.value == "undefined") {
+          this.formattedProgressValue = "0"
+        } else {
+            this.formattedProgressValue = this.summary.progress.value.toFixed(2);
+        }
+
+        if (typeof this.summary.progress.units == "undefined") {
+          this.formattedProgressUnits = "%"
+        } else {
+            this.formattedProgressUnits = this.summary.progress.units;
+        }
+
     }
 
     // setJobHoverHidden(): void {
@@ -52,7 +69,7 @@ export class JobSummaryComponent implements OnInit{
       let badgeClass = 'badge-success';
 
       if (this.summary.status.toLowerCase() == 'complete')
-        badgeClass = 'badge-success'
+        badgeClass = 'badge-primary'
       if (this.summary.status.toLowerCase() == 'running')
         badgeClass = 'badge-success'
       if (this.summary.status.toLowerCase() == 'queued')
@@ -155,9 +172,9 @@ export class JobSummaryComponent implements OnInit{
       return moment(this.summary.creation_datetime).fromNow()
     }
 
-    getProgressValue(): Object {
-        return {'width':this.summary.progress.value.toString()+"%"}
-    }
+    // getProgressValue(): Object {
+    //     return {'width':this.summary.progress.value.toString()+"%"}
+    // }
 
     deleteMe() {
         console.log("Delete a Job")

@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
                               });
           }
           else {
-            job.progress = {value:0, units: "percent", range_min:0, range_max:100}
+            job.progress = {value:0, units: "%", range_min:0, range_max:100}
             this.jobs.push(job)
           }
         })

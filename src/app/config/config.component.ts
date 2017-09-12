@@ -8,6 +8,11 @@ import { OutputService } from '../output/output.service';
 import { DescriptionComponent } from './description.component';
 // import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
 
+// import { ModalDirective } from 'ngx-bootstrap/modal/modal.component';
+
+// import {ModalDirective} from 'ngx-bootstrap';
+
+
 @Component({
   selector:"config",
   // providers:[InputComponentService],
@@ -27,6 +32,8 @@ export class ConfigComponent implements OnInit {
   errorMessage: string;
   jobCreated:boolean;
   jobName:string="New Job"
+
+  public runModal;
 
   constructor(private configDataService:ConfigDataService,
     private outputService:OutputService,

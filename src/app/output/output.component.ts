@@ -7,7 +7,9 @@ import { JobTemplate } from './jobTemplate';
 import { OutputService } from './output.service';
 
 import { ChartsComponent } from './chart';
+
 import * as FileSaver from 'file-saver';
+import * as moment from 'moment';
 
 @Component({
   // selector: 'output',
@@ -22,18 +24,23 @@ import * as FileSaver from 'file-saver';
 
 export class OutputComponent implements OnInit {
 
-  job:JobTemplate;
+  job: JobTemplate;
   job_id: string;
   chart:{} = {collapse:false}
   config:{} = {collapse:false}
   errorMessage: string;
-  type:string = 'Output';
+  type: string = 'Output';
   status: string = 'Error';
-  haveData:boolean;
+  haveData: boolean;
+  relativeCreationTime: string;
+  relativeStartTime: string;
+  relativeEndTime: string;
+
 
   constructor(
       private activatedRoute: ActivatedRoute,
-      private outputService:OutputService) {}
+      private outputService: OutputService
+    ) {}
 
   ngOnInit() {
         //this.job_id = localStorage.getItem('job_id')
@@ -49,6 +56,7 @@ export class OutputComponent implements OnInit {
                       allJobsInfo => {
                         this.job = allJobsInfo
                         this.status = this.job.status
+                        this.relativeTimes()
                         console.log("status: " + this.job.status)
                         // this.status = "Running"
                         this.haveData = true
@@ -56,6 +64,14 @@ export class OutputComponent implements OnInit {
                       error => {
                         this.errorMessage = <any> error
                       });
+  }
+
+  relativeTimes() {
+    this.relativeCreationTime = moment(this.job.creation_datetime).fromNow()
+    this.relativeStartTime = moment(this.job.start_datetime).fromNow()
+    this.relativeEndTime = moment(this.job.end_datetime).fromNow()
+    console.log('this.job.creation_datetime', this.job.creation_datetime)
+    console.log('this.relativeCreationTime', this.relativeCreationTime)
   }
 
   chartCollapse() {
