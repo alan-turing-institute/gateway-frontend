@@ -10,6 +10,7 @@ export class JobInfo {
         uri: string;
         label: string;
     };
+    creation_datetime: string;
     start_datetime: string;
     end_datetime: string;
     status: string;

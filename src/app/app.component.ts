@@ -11,7 +11,7 @@ import './layouts/layout.css'
     template: '<router-outlet></router-outlet>',
     styleUrls: []
 })
-export class AppComponent { 
+export class AppComponent {
     constructor() {
     }
     title = 'Code Blue';

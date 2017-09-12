@@ -1,5 +1,49 @@
-<div class="card-deck">
-    <div *ngFor="let job of jobs" class='card-jobs container-fluid' style="width:100%">
-        <jobSummary [summary]="job" [type]='Dashboard' (jobDeleted)="deleteJob($event)"></jobSummary>
+<div class="row">
+
+  <div class="col-sm-4 col-md-4">
+
+    <div class="statusHeading">
+      <h6>Draft simulations</h6>
     </div>
+
+    <div class="card-deck">
+      <div *ngFor="let job of jobs" class='card-jobs container-fluid' style="width:100%">
+        <div *ngIf="job.status=='Draft'">
+          <jobSummary [summary]="job" [type]='Dashboard' (jobDeleted)="deleteJob($event)"></jobSummary>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4 col-md-4">
+
+    <div class="statusHeading">
+      <h6>Running simulations</h6>
+    </div>
+
+
+    <div class="card-deck">
+      <div *ngFor="let job of jobs" class='card-jobs container-fluid' style="width:100%">
+        <div *ngIf="job.status=='Queued' || job.status=='Running' ">
+          <jobSummary [summary]="job" [type]='Dashboard' (jobDeleted)="deleteJob($event)"></jobSummary>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4 col-md-4">
+
+    <div class="statusHeading">
+      <h6>Completed simulations</h6>
+    </div>
+
+    <div class="card-deck">
+      <div *ngFor="let job of jobs" class='card-jobs container-fluid' style="width:100%">
+        <div *ngIf="job.status=='Complete'">
+          <jobSummary [summary]="job" [type]='Dashboard' (jobDeleted)="deleteJob($event)"></jobSummary>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

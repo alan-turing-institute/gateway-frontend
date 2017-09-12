@@ -1,11 +1,13 @@
 import { Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import { JobInfo } from './jobInfo';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'jobSummary',
 
   templateUrl: './jobSummary.component.html',
-    styleUrls: ['jobSummary.css']
+  styleUrls: ['jobSummary.css']
 })
 
 export class JobSummaryComponent implements OnInit{
@@ -26,6 +28,7 @@ export class JobSummaryComponent implements OnInit{
 
     ngOnInit(): void {
         this.jobHoverHidden = true
+        console.log('summary', this.summary)
     }
 
     // setJobHoverHidden(): void {
@@ -38,8 +41,28 @@ export class JobSummaryComponent implements OnInit{
     }
 
 
+    // getBadgeClass() : string {
+    //     return "badge-"+this.summary.status.toLowerCase();
+    // }
+
     getBadgeClass() : string {
-        return "badge-"+this.summary.status.toLowerCase();
+
+      // return class for core-ui badges
+
+      let badgeClass = 'badge-success';
+
+      if (this.summary.status.toLowerCase() == 'complete')
+        badgeClass = 'badge-success'
+      if (this.summary.status.toLowerCase() == 'running')
+        badgeClass = 'badge-success'
+      if (this.summary.status.toLowerCase() == 'queued')
+        badgeClass = 'badge-warning'
+      if (this.summary.status.toLowerCase() == 'draft')
+        badgeClass = 'badge-info'
+      if (this.summary.status.toLowerCase() == 'error')
+        badgeClass = 'badge-danger'
+
+      return badgeClass;
     }
 
     getHeaderClass() : string {
@@ -100,7 +123,7 @@ export class JobSummaryComponent implements OnInit{
         if (this.summary.status.toLowerCase() == "complete")
             text ="View"
         if (this.summary.status.toLowerCase() == "error")
-            text ="Logs"
+            text ="Error"
         if (this.summary.status.toLowerCase() == "draft")
             text ="Edit"
         if (this.summary.status.toLowerCase() == "queued")
@@ -124,6 +147,12 @@ export class JobSummaryComponent implements OnInit{
         if (this.summary.status.toLowerCase() == "draft")
             return true
         return false
+    }
+
+    relativeCreationTime() : string {
+      // use moment.js to get relative time
+      // for example "40 minutes ago"
+      return moment(this.summary.creation_datetime).fromNow()
     }
 
     getProgressValue(): Object {

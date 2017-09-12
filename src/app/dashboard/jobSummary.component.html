@@ -1,65 +1,54 @@
-<div class="card card-job">
-    <div class="card-header" >
-        <div class="container-fluid card-block-container">
-            <div class="row">
-                <div class="col-md-3">
-                    <strong>{{summary.name}}</strong>
-                </div>
-                <div class="col-md-3">
-                    <div class="progress job-progress" [hidden]="getProgressBarHidden()">
-                        <div class="progress-bar bg-job-success" role="progressbar" [ngStyle]="{'width':summary.progress.value+'%'}" >{{summary.progress.value}} {{summary.progress.units}}</div>
-                    </div>
-                </div>
-                <div class="col-md-2 offset-md-4">
-                     <span [ngClass]="getBadgeClass()"><strong>{{summary.status}}</strong></span>
-                </div>
-            </div>
-        </div>
+<!-- Add creation date in subtitle -->
+
+<div class="card" style="width: 20rem;">
+  <div class="card-body">
+    <span [ngClass]="getBadgeClass()" class="badge float-right">{{summary.status}}</span>
+    <h5 class="card-title">{{summary.name}}</h5>
+
+    <p class="card-subtitle mb-2 text-muted">{{relativeCreationTime()}}</p>
+
+    <div class="row">
+      <div class="col-sm-3 col-md-3">
+        <img style="height: 3em" src={{summary.case.thumbnail}} class="img-job">
+      </div>
+      <div class="col-sm-8 col-md-8">
+        <p class="card-text">{{getShortDescription()}}</p>
+      </div>
     </div>
 
-    <div class="card-block">
-        <div class="container-fluid card-block-container">
-            <!-- <a routerLinkActive = "active" [routerLink] = "['/output/output', {id: summary.id}]"> -->
-            <!-- <a [routerLink] = "['/output/output']" (click)="storeJobId()"> -->
-            <div class="row">
-                <div class="col-md-2"><img src={{summary.thumbnail}}  class="img-job"></div>
-                <div class="col-md-7">
-                    <p class="descriptionText">{{getShortDescription()}}</p>
-                </div>
-                <div class="col-md-3">
-                    <div class="row" style="padding-top:3%" [hidden]="routeToOutput()">
-                        <div class="col-md-4 offset-md-2">
-                            <button type="button"
-                                    class="btn btn-primary btn-action"
-                                    (click)="storeJobId('Output')"
-                                    [routerLink]="['/output/output']" routerLinkActive="active">
-                                <!-- <i [ngClass]="getActionIcon()"></i> -->
-                                <span class="actionText"><strong> {{getActionText()}}</strong></span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row" style="padding-top:3%" [hidden]="routeToInput()">
-                        <div class="col-md-4 offset-md-2">
-                            <button type="button"
-                                    class="btn btn-primary btn-action"
-                                    (click)="storeJobId('Edit')"
-                                    [routerLink]="['/config/config']" routerLinkActive="active">
-                                <!-- <i [ngClass]="getActionIcon()"></i> -->
-                                <span class="actionText"><strong> {{getActionText()}}</strong></span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row" style="padding-top:3%">
-                        <div class="col-md-4 offset-md-2">
-                            <button type="button"
-                                    class="btn btn-primary btn-action"
-                                    (click)="deleteMe()">
-                                <i class="fa fa-trash-o fa-lg"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="progress job-progress" [hidden]="getProgressBarHidden()">
+      <div class="progress-bar bg-job-success" role="progressbar" [ngStyle]="{'width':summary.progress.value+'%'}">{{summary.progress.value}} {{summary.progress.units}}</div>
     </div>
+
+    <!-- Only show progress for running jobs -->
+    <div *ngIf="summary.status =='Running'">
+      <div class="card-block">
+        <div class="h6 m-0">{{summary.progress.value+'%'}}</div>
+        <div>Runing on cx1</div>
+        <div class="progress progress-xs my-1">
+          <div class="progress-bar bg-warning" role="progressbar" [ngStyle]="{'width':summary.progress.value+'%'}" aria-valuenow="summary.progress.value" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="card-footer">
+
+    <!-- <div class="clearfix">
+    </div> -->
+
+    <!-- "View" button -->
+    <button type="button" [hidden]="routeToOutput()" class="btn btn-outline-primary btn-action btn-sm" (click)="storeJobId('Output')" [routerLink]="['/output/output']" routerLinkActive="active">
+               <span class="actionText">{{getActionText()}}</span>
+          </button>
+
+    <button type="button" [hidden]="routeToInput()" class="btn btn-outline-primary btn-action btn-sm" (click)="storeJobId('Edit')" [routerLink]="['/config/config']" routerLinkActive="active">
+                      <span class="actionText">{{getActionText()}}</span>
+                  </button>
+
+    <!-- "Delete" button -->
+    <button type="button" class="btn btn-link btn-action btn-sm" (click)="deleteMe()"><i class="fa fa-trash-o fa-lg"></i>  Delete
+          </button>
+
   </div>
 </div>

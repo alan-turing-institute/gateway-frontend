@@ -31,9 +31,9 @@ export class OutputComponent implements OnInit {
   status: string = 'Error';
   haveData:boolean;
 
-
-  constructor(private activatedRoute: ActivatedRoute,
-  private outputService:OutputService) {}
+  constructor(
+      private activatedRoute: ActivatedRoute,
+      private outputService:OutputService) {}
 
   ngOnInit() {
         //this.job_id = localStorage.getItem('job_id')
@@ -66,19 +66,11 @@ export class OutputComponent implements OnInit {
      this.config['collapse'] = !this.config['collapse']
    }
 
-   downloadCsvData(){
-     console.log('downloading csv data')
-     this.outputService.downloadFile().subscribe(blob=>{
-       FileSaver.saveAs(blob, 'data.csv')
-     })
-   }
-
-   downloadRawData(){
-     console.log('downloading raw data')
-     this.outputService.downloadFile().subscribe(blob=>{
-       FileSaver.saveAs(blob, 'data.csv')
-     })
-   }
-
+  downloadFile(fileUrl) {
+    console.log('downloading csv data')
+      this.outputService.downloadFile(fileUrl).subscribe(blob=>{
+       FileSaver.saveAs(blob, 'output.csv')
+    })
+  }
 
 }

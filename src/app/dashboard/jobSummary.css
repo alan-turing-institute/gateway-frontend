@@ -1,7 +1,12 @@
 
 .card-job {
-    margin:1% 1% 1% 1%;
+    /*margin:1% 1% 1% 1%;*/
     /* max-width: 70vh; */
+}
+
+/* text within cards*/
+.card-body {
+    margin:1em;
 }
 
 .card-block-container {
@@ -22,7 +27,7 @@
 }
 
 .badge-running {
-    color: #20a8d8;   
+    color: #20a8d8;
 }
 
 .badge-error {
@@ -31,9 +36,8 @@
 }
 
 .badge-complete {
-    
-    color: #4dbd74;
 
+    color: #4dbd74;
 
 }
 
@@ -80,7 +84,14 @@
     width: 100%;
 }
 
+
 .btn.btn-primary.btn-action {
     width: 7em;
     margin: 0.25em;
+}
+
+
+.btn-outline-primary {
+  width: 7em;
+  margin: 0.25em;
 }

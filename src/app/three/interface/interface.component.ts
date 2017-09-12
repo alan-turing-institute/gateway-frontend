@@ -32,12 +32,11 @@ export class InterfaceComponent implements ThreeComponent, OnInit, OnChanges {
 
     private objects: THREE.Mesh[];
 
-    @Input() fileUrl: string ;
+    @Input() interfaceUrl: string ;
 
     constructor() {
         this.objects = [];
-
-        this.fileUrl = "";
+        this.interfaceUrl = "";
     }
 
     public ngOnInit(): void {
@@ -116,8 +115,7 @@ export class InterfaceComponent implements ThreeComponent, OnInit, OnChanges {
         } );
 
       let that = this
-      // loader.load( 'src/assets/interface/stirred_tank_centred.stl', function (geometry) {
-      loader.load( 'https://sgmiddleware.blob.core.windows.net/blue/stirred_tank_centred.stl', function (geometry) {
+      loader.load( this.interfaceUrl, function (geometry) {
           let mesh = new Mesh( geometry, interfaceMaterial );
 
           //(red, green (up), blue)
