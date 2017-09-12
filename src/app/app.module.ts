@@ -13,12 +13,19 @@ import { BreadcrumbsComponent } from './shared/breadcrumb.component';
 
 import { AppRoutingModule } from './app.routing';
 import { FullLayoutComponent } from './layouts/full-layout.component';
+import { LoginLayoutComponent } from './layouts/login-layout.component';
+import { LoginComponent } from './login/login.component';
+
 import { HttpModule, JsonpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { IonRangeSliderModule } from "ng2-ion-range-slider";
 import { Routes, RouterModule } from '@angular/router';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AuthGuard } from './auth/auth.guard';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   imports: [
@@ -28,6 +35,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpModule,
     JsonpModule,
     FormsModule,
+    ReactiveFormsModule,
     IonRangeSliderModule,
     RouterModule,
     BrowserAnimationsModule
@@ -35,6 +43,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [
     AppComponent,
     FullLayoutComponent,
+    LoginLayoutComponent,
+    LoginComponent,
     NAV_DROPDOWN_DIRECTIVES,
     //DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,
@@ -44,7 +54,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   providers: [{
       provide: LocationStrategy,
       useClass: HashLocationStrategy
-    }
+    },
+    AuthService,
+    AuthGuard
   ],
   bootstrap: [ AppComponent ]
 })
