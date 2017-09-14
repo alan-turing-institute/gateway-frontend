@@ -2,14 +2,36 @@ import { Component, Injectable, OnInit, Input} from '@angular/core';
 import { Router} from '@angular/router';
 import { InputComponent } from './inputComponent';
 import { CaseInfo } from '../cases/case/caseInfo';
-// import { InputComponentService } from './inputComponent.service';
+
 import { ConfigDataService } from './configData.service';
 import { OutputService } from '../output/output.service';
 import { DescriptionComponent } from './description.component';
-// import {IonRangeSliderComponent} from 'ng2-ion-range-slider';
 
-// import { ModalDirective } from 'ngx-bootstrap/modal/modal.component';
-// import {ModalDirective} from 'ngx-bootstrap';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+
+// Modal component for use on config page "Run" job
+// TODO: this component should be made globally available
+// via app level declaration
+
+@Component({
+  selector: 'modal-content',
+  template: `
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Submitting simulation</h4>
+    </div>
+    <div class="modal-body">
+    <p>Submitting simulation to Imperial College "cx1" cluster.</p>
+    <p>(Please be patient...)</p>
+    </div>
+  `
+})
+
+
+export class ModalContentComponent {
+  public title: string;
+  public list: any[] = [];
+  constructor(public bsModalRef: BsModalRef) {}
+}
 
 
 @Component({
@@ -32,9 +54,13 @@ export class ConfigComponent implements OnInit {
   jobCreated:boolean;
   jobName:string="New Job"
 
-  constructor(private configDataService:ConfigDataService,
+  bsModalRef: BsModalRef;
+
+  constructor(
+    private configDataService:ConfigDataService,
     private outputService:OutputService,
-    private router: Router
+    private router: Router,
+    private modalService: BsModalService
   ) { }
 
   ngOnInit() {
@@ -43,6 +69,14 @@ export class ConfigComponent implements OnInit {
     this.job = {'name': "Name of job here", 'description':"Description of job here"}
     this.getData()
     this.validFormValues = true
+  }
+
+  public showRunMessage() {
+    this.bsModalRef = this.modalService.show(ModalContentComponent);
+  }
+
+  public hideRunMessage() {
+    this.bsModalRef.hide();
   }
 
   saveJob() {
@@ -81,24 +115,27 @@ export class ConfigComponent implements OnInit {
     // this.job.status = "Queued"
     localStorage.setItem('job_id', this.job.id);
     let url = this.configDataService.getSaveJobURL(this.job['id'])
-      this.configDataService.saveJob(this.job, url)
-                        .subscribe(
-                          saveJob => {
-                            this.configDataService.runJob(this.job)
-                              .subscribe(
-                                ranJob => {
-                                  console.log("ran job")
-                                  console.log(ranJob)
-                                  // this.router.navigate(['../../output/output'])
-                                  this.router.navigate(['../../dashboard'])
-                                },
-                                error => {
-                                  this.errorMessage = <any> error
-                                });
-                          },
-                          error => {
-                            this.errorMessage = <any> error
-                          });
+
+    let that = this;
+    that.showRunMessage();
+    this.configDataService.saveJob(this.job, url).subscribe(
+                        saveJob => {
+                          this.configDataService.runJob(this.job)
+                            .subscribe(
+                              ranJob => {
+                                console.log("ran job")
+                                console.log(ranJob)
+                                that.hideRunMessage()
+                                // this.router.navigate(['../../output/output'])
+                                this.router.navigate(['../../dashboard'])
+                              },
+                              error => {
+                                this.errorMessage = <any> error
+                              });
+                        },
+                        error => {
+                          this.errorMessage = <any> error
+                      });
 
   }
 
