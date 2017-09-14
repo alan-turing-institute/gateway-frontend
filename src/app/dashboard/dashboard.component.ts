@@ -56,26 +56,28 @@ export class DashboardComponent implements OnInit {
       })
   }
 
-getProgressInfoData(id) {
-  this.dashboardService.getProgressInfo(id)
-                        .subscribe(
-                          progress => {
-                          },
-                          error => {
-                            this.errorMessage = <any> error
-                          });
-                        }
+  getProgressInfoData(id) {
+    this.dashboardService.getProgressInfo(id)
+                          .subscribe(
+                            progress => {
+                            },
+                            error => {
+                              this.errorMessage = <any> error
+                            });
+                          }
 
-deleteJob(id){
-  this.jobs = this.jobs.filter(item => item.id !== id);
-  this.dashboardService.deleteJob(id)
-      .subscribe(
-        message => {
-          console.log("deleted")
-        },
-        error => {
-          this.errorMessage = <any> error
-        }
-      )
+  cancelJob(id){
+    this.dashboardService.cancelJob(id).subscribe(
+      message => {console.log("cancelled")},
+      error => {this.errorMessage = <any> error}
+    )
+  }
+
+  deleteJob(id){
+    this.jobs = this.jobs.filter(item => item.id !== id);
+    this.dashboardService.deleteJob(id).subscribe(
+      message => {console.log("deleted")},
+      error => {this.errorMessage = <any> error}
+    )
   }
 }

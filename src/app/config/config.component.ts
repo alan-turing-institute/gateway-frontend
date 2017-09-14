@@ -21,7 +21,6 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap';
     </div>
     <div class="modal-body">
     <p>Submitting simulation to Imperial College "cx1" cluster.</p>
-    <p>(Please be patient...)</p>
     </div>
   `
 })

@@ -15,7 +15,9 @@ export class JobSummaryComponent implements OnInit{
     @Input() type: string;
     @Input() caseInfo: boolean;
     @Input() case:{};
+
     @Output() jobDeleted: EventEmitter<string> = new EventEmitter();
+    @Output() jobCancelled: EventEmitter<string> = new EventEmitter();
 
     private formattedProgressValue: string;
     private formattedProgressUnits: string;
@@ -177,7 +179,12 @@ export class JobSummaryComponent implements OnInit{
     // }
 
     deleteMe() {
-        console.log("Delete a Job")
-        this.jobDeleted.emit(this.summary.id)
+      console.log("Delete a Job")
+      this.jobDeleted.emit(this.summary.id)
+    }
+
+    cancelMe() {
+      console.log("Canel a Job")
+      this.jobCancelled.emit(this.summary.id)
     }
 }
