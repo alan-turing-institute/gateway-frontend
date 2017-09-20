@@ -24,11 +24,52 @@ import {
 
 const GMESH_VERSION = '2.2'
 
+const GMESH_NODES_TO_READ = {
+    1: 2,
+    2: 3,
+    3: 4,
+    4: 4,
+    5: 8,
+    6: 6,
+    7: 5,
+    8: 3,
+    9: 6,
+    10: 9,
+    11: 10,
+    12: 27,
+    13: 18,
+    14: 14,
+    15: 1,
+    16: 8,
+    17: 20,
+    18: 15,
+    19: 13,
+    20: 9,
+    21: 10,
+    22: 12,
+    23: 15,
+    24: 15,
+    25: 21,
+    26: 4,
+    27: 5,
+    28: 6,
+    29: 20,
+    30: 35,
+    31: 56,
+    92: 65,
+    93: 125
+}
+
 enum FILE_TYPES {
     ASCII = 0,
     BINARY = 1
 }
 
+enum ENDIANNESS {
+    NONE = 0,
+    BIG_ENDIAN = 1,
+    LITTLE_ENDIAN = 2
+}
 interface GmeshHeader {
     /**
      * Version of the Gmesh format.
@@ -46,6 +87,13 @@ interface GmeshHeader {
      * They are always 8 byte doubles in the current version.
      */
     data_size: number; // Always 8
+
+    endianess: ENDIANNESS;
+}
+
+interface HeaderBlock {
+    header: GmeshHeader;
+    rest: string;
 }
 
 // tslint:disable:no-bitwise
@@ -71,18 +119,21 @@ export class GmeshLoader {
 
     }
 
-    public parse(data: string): BufferGeometry {
+    public parse(data): BufferGeometry {
+
+        console.log(data)
 
         let sData = this.ensureString(data);
 
-        let sections = this.splitSections(sData);
-        let namedSections = this.processNames(sections);
-        let header = this.getHeader(namedSections);
+        let headerBlock = this.getHeader(sData);
 
-        if (header.ASCII) {
+        if (headerBlock.header.ASCII) {
+            let sections = this.splitSections(headerBlock.rest);
+            let namedSections = this.processNames(sections);
             return this.parseASCII(namedSections);
         }
 
+        this.parseBinary(data);
         throw 'Binary parsing not yet implemented';
     }
 
@@ -121,15 +172,26 @@ export class GmeshLoader {
         return block;
     }
 
-    private getHeader(block: { [key: string]: string}): GmeshHeader {
-        let headerData = block.MeshFormat.split(/\s+/mg)
-        if (headerData.length !== 3) {
-            throw 'Header must contain exactly three elements, but is: ' + headerData;
+    private getHeader(blob: string): HeaderBlock {
+        blob = blob.trim();
+
+        let headerSeparator = /^\$MeshFormat\s*\n(.|\n)*\$EndMeshFormat\s*$/mgi
+        let results = headerSeparator.exec(blob);
+        if (results === null || results['index'] !== 0) {
+            throw 'Did not find header in msh file!';
+        }
+        let headerBlock = results[0];
+        blob = blob.substring(headerBlock.length).trim();
+
+        let headerData = headerBlock.replace(/\$(End)?MeshFormat\s*/g, '').trim().split(/\s+/mg)
+
+        if (headerData.length !== 3 && headerData.length !== 4) {
+            throw 'Header must contain exactly three or four elements, but is: ' + headerData;
         }
         if (headerData[0] !== GMESH_VERSION) {
             throw 'Only GMESH version ' + GMESH_VERSION + ' supported, but file is ' + headerData[0];
         }
-        let ascii: number = +(headerData[1]);
+        let ascii: number = parseInt(headerData[1], 10);
         if (ascii !== 1 && ascii !== 0 ) {
             throw 'File type must be either 0 or 1, but is ' + ascii;
         }
@@ -137,109 +199,121 @@ export class GmeshLoader {
         if (data_size !== 8) {
             throw 'Data size must be 8 but is ' + data_size;
         }
+
+        let endian = ENDIANNESS.NONE;
+        if (!ascii) {
+            if (headerData[3][0] === '\u0001') {
+                endian = ENDIANNESS.LITTLE_ENDIAN;
+            } else {
+                endian = ENDIANNESS.BIG_ENDIAN;
+            }
+        }
         return {
-            version_number: headerData[0],
-            ASCII: (ascii === 0),
-            data_size: data_size
-            };
+            rest: blob,
+            header: {
+                version_number: headerData[0],
+                ASCII: (ascii === 0),
+                data_size: data_size,
+                endianess: endian
+            }
+        };
     }
 
-    private parseBinary(data: ArrayBuffer): BufferGeometry {
+    private parseBinary(data: HeaderBlock): BufferGeometry {
 
-        let reader = new DataView(data);
-        let faces = reader.getUint32(80, true);
-
-        let r, g, b, hasColors = false, colors;
-        let defaultR, defaultG, defaultB, alpha;
-
-        // process STL header
-        // check for default color in header ("COLOR=rgba" sequence).
-
-        for (let index = 0; index < 80 - 10; index++) {
-
-            if ((reader.getUint32(index, false) === 0x434F4C4F /*COLO*/) &&
-                (reader.getUint8(index + 4) === 0x52 /*'R'*/) &&
-                (reader.getUint8(index + 5) === 0x3D /*'='*/)) {
-
-                hasColors = true;
-                colors = [];
-
-                defaultR = reader.getUint8(index + 6) / 255;
-                defaultG = reader.getUint8(index + 7) / 255;
-                defaultB = reader.getUint8(index + 8) / 255;
-                alpha = reader.getUint8(index + 9) / 255;
-
-            }
-
+        // First lets get the Nodes. So we can do something with them
+        let nodesStartRegex = /^\$Nodes\s*\n/mg
+        let nodesEndRegex = /\n\$EndNodes\s*$/mg
+        let nodesStart = nodesStartRegex.exec(data.rest);
+        let nodesEnd = nodesEndRegex.exec(data.rest);
+        if (nodesStart === null || nodesEnd === null) {
+            throw 'Did not find nodes start in msh file!';
         }
+        console.log(nodesStart)
+        console.log(nodesEnd)
+        let nodesBlock = data.rest.substring(nodesStart.index, nodesEnd.index);
+        // First line is the nodes header
+        let cutPoint = nodesBlock.indexOf('\n')
+        nodesBlock = nodesBlock.substring(cutPoint + 1, nodesBlock.length);
 
-        let dataOffset = 84;
-        let faceLength = 12 * 4 + 2;
+        // Second line is the count of nodes
+        cutPoint = nodesBlock.indexOf('\n')
+        let nNodes = parseInt(nodesBlock.substring(0, cutPoint), 10);
 
-        let geometry: THREE.BufferGeometry = new BufferGeometry();
+        // Rest is binary content
+        let nodesData = nodesBlock.substring(cutPoint + 1, nodesBlock.length);
+
+        let reader = new DataView(this.ensureBinary(nodesData));
+        console.log('Preparing to read ' + nNodes + ' nodes from ' + reader.byteLength  + ' bytes');
 
         let vertices = [];
-        let normals = [];
+        let vertexMap = {};
+        let sizeNodeBlock = 4 + 3 * data.header.data_size;
+        for (let index = 0; index < nNodes; index++) {
+            let nodeId = reader.getUint32(sizeNodeBlock * index, data.header.endianess === ENDIANNESS.LITTLE_ENDIAN);
 
-        for (let face = 0; face < faces; face++) {
+            vertexMap[nodeId] = index;
 
-            let start = dataOffset + face * faceLength;
-            let normalX = reader.getFloat32(start, true);
-            let normalY = reader.getFloat32(start + 4, true);
-            let normalZ = reader.getFloat32(start + 8, true);
-
-            if (hasColors) {
-
-                let packedColor = reader.getUint16(start + 48, true);
-
-                if ((packedColor & 0x8000) === 0) {
-
-                    // facet has its own unique color
-
-                    r = (packedColor & 0x1F) / 31;
-                    g = ((packedColor >> 5) & 0x1F) / 31;
-                    b = ((packedColor >> 10) & 0x1F) / 31;
-
-                } else {
-
-                    r = defaultR;
-                    g = defaultG;
-                    b = defaultB;
-
-                }
-
+            for (let i = 0; i < 3 ; i++) {
+                vertices.push(reader.getFloat64(sizeNodeBlock * index + 4 + i * data.header.data_size,
+                                                data.header.endianess === ENDIANNESS.LITTLE_ENDIAN));
             }
-
-            for (let i = 1; i <= 3; i++) {
-
-                let vertexstart = start + i * 12;
-
-                vertices.push(reader.getFloat32(vertexstart, true));
-                vertices.push(reader.getFloat32(vertexstart + 4, true));
-                vertices.push(reader.getFloat32(vertexstart + 8, true));
-
-                normals.push(normalX, normalY, normalZ);
-
-                if (hasColors) {
-
-                    colors.push(r, g, b);
-
-                }
-
-            }
-
         }
 
+        // First lets get the Elements. So we can do something with them
+        let elementsStartRegex = /^\$Elements\s*\n/mgi
+        let elementsEndRegex = /^\$EndElements\s*$/mgi
+        let elementsStart = elementsStartRegex.exec(data.rest);
+        let elementsEnd = elementsEndRegex.exec(data.rest);
+        if (elementsStart === null || elementsEnd === null) {
+            throw 'Did not find element in msh file!';
+        }
+        let elementsBlock = data.rest.substring(elementsStart.index, elementsEnd.index);
+        // First line is the elements header
+        // Second line is the count of elements
+        // Rest is binary content
+
+        let elementsData = elementsBlock.split('\n', 3);
+
+        let nElements = parseInt(elementsData[1], 10);
+        console.log('Preparing to read ' + nElements + ' elements');
+
+        reader = new DataView(this.ensureBinary(elementsData[2]));
+
+        let faces = []
+        let readSoFar = 0;
+        for (let index = 0; index < nElements;) {
+            let elementType = reader.getUint32(readSoFar, data.header.endianess === ENDIANNESS.LITTLE_ENDIAN);
+            let followElements = reader.getUint32(readSoFar + 4, data.header.endianess === ENDIANNESS.LITTLE_ENDIAN);
+            let numTags = reader.getUint32(readSoFar + 8, data.header.endianess === ENDIANNESS.LITTLE_ENDIAN);
+
+            let elementSize = GMESH_NODES_TO_READ[elementType];
+            readSoFar += 12;
+            for (let i = 0; i < followElements ; i++) {
+                let elementNumber  = reader.getUint32(readSoFar, data.header.endianess === ENDIANNESS.LITTLE_ENDIAN);
+                readSoFar += 4;
+                for (let t = 0; t < numTags; t++) {
+                    // Read in and drop all the tags
+                    reader.getUint32(readSoFar, data.header.endianess === ENDIANNESS.LITTLE_ENDIAN);
+                    readSoFar += 4;
+                }
+                // Now read in the actual nodes
+                for (let f = 0; f < elementSize; f++) {
+                    let face = reader.getUint32(readSoFar, data.header.endianess === ENDIANNESS.LITTLE_ENDIAN);
+                    readSoFar += 4;
+                    if (elementType === 2) {
+                        faces.push(vertexMap[face]);
+                    }
+                }
+                // We read in a face, so count it
+                index++;
+            }
+        }
+
+        let geometry: THREE.BufferGeometry = new BufferGeometry();
         geometry.addAttribute('position', new BufferAttribute(new Float32Array(vertices), 3));
-        geometry.addAttribute('normal', new BufferAttribute(new Float32Array(normals), 3));
-
-        if (hasColors) {
-
-            geometry.addAttribute('color', new BufferAttribute(new Float32Array(colors), 3));
-            (geometry as any).hasColors = true;
-            (geometry as any).alpha = alpha;
-
-        }
+        geometry.setIndex(new BufferAttribute(new Uint32Array(faces), 1));
+        geometry.computeVertexNormals();
 
         return geometry;
 
@@ -281,30 +355,18 @@ export class GmeshLoader {
             // Skip over tags
             for (let i = 0; i < numTags; i++) { faceData.shift(); }
 
-            let toSkip = 0;
-            switch (elemType) {
-                case 1:
-                    toSkip = 2;
-                    break;
-                case 2:
-                    // This is a triangle, actually read it.
+            let toSkip = GMESH_NODES_TO_READ[elemType];
+            if (elemType === 2) {
+                toSkip = 0;
+                // This is a triangle, actually read it.
+                for (let i = 0; i < 3; i++) {
                     faces.push(vertexMap[parseInt(faceData.shift(), 10)]);
-                    faces.push(vertexMap[parseInt(faceData.shift(), 10)]);
-                    faces.push(vertexMap[parseInt(faceData.shift(), 10)]);
-                    break;
-                case 3:
-                case 4:
-                    toSkip = 4;
-                    break;
-                case 5:
-                    toSkip = 8;
-                    break;
-                case 6:
-                    toSkip = 6;
-                    break;
-                default:
-                    throw 'Found a face of unknown type (aborting): ' + elemType;
+                }
+
+            } else if (toSkip === undefined) {
+                throw 'Found a face of unknown type (aborting): ' + elemType;
             }
+
             // Skip not understood elements
             if ( toSkip !== 0 ) {
                 console.log('Line not supported - skipped');
@@ -314,8 +376,6 @@ export class GmeshLoader {
             }
         }
 
-        console.log(faces)
-
         geometry.addAttribute('position', new BufferAttribute(new Float32Array(vertices), 3));
         geometry.setIndex(new BufferAttribute(new Uint32Array(faces), 1));
         geometry.computeVertexNormals();
@@ -324,12 +384,9 @@ export class GmeshLoader {
 
     }
 
-    private ensureString(buf: string | ArrayBuffer): string {
-
+    private ensureString(buf: ArrayBuffer): string {
         if (typeof buf !== 'string') {
-
             let array_buffer = new Uint8Array(buf);
-
             if ((window as any).TextDecoder !== undefined) {
                 return new TextDecoder().decode(array_buffer);
             }
@@ -337,17 +394,12 @@ export class GmeshLoader {
             let str = '';
 
             for (let i = 0, il = buf.byteLength; i < il; i++) {
-
                 str += String.fromCharCode(array_buffer[i]); // implicitly assumes little-endian
-
             }
 
             return str;
-
         } else {
-
             return buf;
-
         }
 
     }
