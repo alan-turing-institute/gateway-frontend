@@ -110,19 +110,16 @@ export class GmeshLoader {
         let self: GmeshLoader = this;
         let loader: THREE.FileLoader = new FileLoader(this.manager);
 
-        loader.setResponseType('string');
-        loader.load(url, function (text: string) {
+        loader.setResponseType('arraybuffer');
+        loader.load(url, function (text) {
 
-            onLoad(self.parse(text));
+            onLoad(self.parse(text as any));
 
         }, onProgress, onError);
 
     }
 
-    public parse(data): BufferGeometry {
-
-        console.log(data)
-
+    public parse(data: ArrayBuffer): BufferGeometry {
         let sData = this.ensureString(data);
 
         let headerBlock = this.getHeader(sData);
@@ -133,8 +130,7 @@ export class GmeshLoader {
             return this.parseASCII(namedSections);
         }
 
-        this.parseBinary(data);
-        throw 'Binary parsing not yet implemented';
+        return this.parseBinary(headerBlock.header, data);
     }
 
     private splitSections(blob: string): string[] {
@@ -201,7 +197,7 @@ export class GmeshLoader {
         }
 
         let endian = ENDIANNESS.NONE;
-        if (!ascii) {
+        if (ascii === 1) {
             if (headerData[3][0] === '\u0001') {
                 endian = ENDIANNESS.LITTLE_ENDIAN;
             } else {
@@ -219,87 +215,76 @@ export class GmeshLoader {
         };
     }
 
-    private parseBinary(data: HeaderBlock): BufferGeometry {
+    private parseBinary(header: GmeshHeader, data: ArrayBuffer): BufferGeometry {
+
+        let reader = new DataView(data);
 
         // First lets get the Nodes. So we can do something with them
-        let nodesStartRegex = /^\$Nodes\s*\n/mg
-        let nodesEndRegex = /\n\$EndNodes\s*$/mg
-        let nodesStart = nodesStartRegex.exec(data.rest);
-        let nodesEnd = nodesEndRegex.exec(data.rest);
-        if (nodesStart === null || nodesEnd === null) {
+        let nodesDataStartIdx = this.getEndIndexOfHeader(reader, '$Nodes');
+
+        if (nodesDataStartIdx < 0 ) {
             throw 'Did not find nodes start in msh file!';
         }
-        console.log(nodesStart)
-        console.log(nodesEnd)
-        let nodesBlock = data.rest.substring(nodesStart.index, nodesEnd.index);
-        // First line is the nodes header
-        let cutPoint = nodesBlock.indexOf('\n')
-        nodesBlock = nodesBlock.substring(cutPoint + 1, nodesBlock.length);
+        console.log('Nodes block starts at: ' + nodesDataStartIdx)
 
         // Second line is the count of nodes
-        cutPoint = nodesBlock.indexOf('\n')
-        let nNodes = parseInt(nodesBlock.substring(0, cutPoint), 10);
+        let numResult = this.readInteger(reader, nodesDataStartIdx);
+        let nNodes = numResult.value;
 
-        // Rest is binary content
-        let nodesData = nodesBlock.substring(cutPoint + 1, nodesBlock.length);
-
-        let reader = new DataView(this.ensureBinary(nodesData));
-        console.log('Preparing to read ' + nNodes + ' nodes from ' + reader.byteLength  + ' bytes');
+        // Shift offset to after number
+        nodesDataStartIdx = numResult.index;
+        console.log('Preparing to read ' + nNodes + ' nodes from ' + nodesDataStartIdx);
 
         let vertices = [];
         let vertexMap = {};
-        let sizeNodeBlock = 4 + 3 * data.header.data_size;
+        let sizeNodeBlock = 4 + 3 * header.data_size;
         for (let index = 0; index < nNodes; index++) {
-            let nodeId = reader.getUint32(sizeNodeBlock * index, data.header.endianess === ENDIANNESS.LITTLE_ENDIAN);
+            let nodeId = reader.getUint32(nodesDataStartIdx + sizeNodeBlock * index, header.endianess === ENDIANNESS.LITTLE_ENDIAN);
 
             vertexMap[nodeId] = index;
 
             for (let i = 0; i < 3 ; i++) {
-                vertices.push(reader.getFloat64(sizeNodeBlock * index + 4 + i * data.header.data_size,
-                                                data.header.endianess === ENDIANNESS.LITTLE_ENDIAN));
+                vertices.push(reader.getFloat64(nodesDataStartIdx + sizeNodeBlock * index + 4 + i * header.data_size,
+                                                header.endianess === ENDIANNESS.LITTLE_ENDIAN));
             }
         }
 
         // First lets get the Elements. So we can do something with them
-        let elementsStartRegex = /^\$Elements\s*\n/mgi
-        let elementsEndRegex = /^\$EndElements\s*$/mgi
-        let elementsStart = elementsStartRegex.exec(data.rest);
-        let elementsEnd = elementsEndRegex.exec(data.rest);
-        if (elementsStart === null || elementsEnd === null) {
-            throw 'Did not find element in msh file!';
+        let elementsStartDataIdx = this.getEndIndexOfHeader(reader, '$Elements', nodesDataStartIdx + nNodes * sizeNodeBlock);
+
+        if (elementsStartDataIdx === null) {
+            throw 'Did not find $Elements in msh file!';
         }
-        let elementsBlock = data.rest.substring(elementsStart.index, elementsEnd.index);
+
+        numResult = this.readInteger(reader, elementsStartDataIdx);
         // First line is the elements header
         // Second line is the count of elements
         // Rest is binary content
 
-        let elementsData = elementsBlock.split('\n', 3);
+        let nElements = numResult.value;
 
-        let nElements = parseInt(elementsData[1], 10);
-        console.log('Preparing to read ' + nElements + ' elements');
-
-        reader = new DataView(this.ensureBinary(elementsData[2]));
+        console.log('Preparing to read ' + nElements + ' elements from: ' + numResult.index);
 
         let faces = []
-        let readSoFar = 0;
+        let readSoFar = numResult.index;
         for (let index = 0; index < nElements;) {
-            let elementType = reader.getUint32(readSoFar, data.header.endianess === ENDIANNESS.LITTLE_ENDIAN);
-            let followElements = reader.getUint32(readSoFar + 4, data.header.endianess === ENDIANNESS.LITTLE_ENDIAN);
-            let numTags = reader.getUint32(readSoFar + 8, data.header.endianess === ENDIANNESS.LITTLE_ENDIAN);
+            let elementType = reader.getUint32(readSoFar, header.endianess === ENDIANNESS.LITTLE_ENDIAN);
+            let followElements = reader.getUint32(readSoFar + 4, header.endianess === ENDIANNESS.LITTLE_ENDIAN);
+            let numTags = reader.getUint32(readSoFar + 8, header.endianess === ENDIANNESS.LITTLE_ENDIAN);
 
             let elementSize = GMESH_NODES_TO_READ[elementType];
             readSoFar += 12;
             for (let i = 0; i < followElements ; i++) {
-                let elementNumber  = reader.getUint32(readSoFar, data.header.endianess === ENDIANNESS.LITTLE_ENDIAN);
+                let elementNumber  = reader.getUint32(readSoFar, header.endianess === ENDIANNESS.LITTLE_ENDIAN);
                 readSoFar += 4;
                 for (let t = 0; t < numTags; t++) {
                     // Read in and drop all the tags
-                    reader.getUint32(readSoFar, data.header.endianess === ENDIANNESS.LITTLE_ENDIAN);
+                    reader.getUint32(readSoFar, header.endianess === ENDIANNESS.LITTLE_ENDIAN);
                     readSoFar += 4;
                 }
                 // Now read in the actual nodes
                 for (let f = 0; f < elementSize; f++) {
-                    let face = reader.getUint32(readSoFar, data.header.endianess === ENDIANNESS.LITTLE_ENDIAN);
+                    let face = reader.getUint32(readSoFar, header.endianess === ENDIANNESS.LITTLE_ENDIAN);
                     readSoFar += 4;
                     if (elementType === 2) {
                         faces.push(vertexMap[face]);
@@ -388,7 +373,7 @@ export class GmeshLoader {
         if (typeof buf !== 'string') {
             let array_buffer = new Uint8Array(buf);
             if ((window as any).TextDecoder !== undefined) {
-                return new TextDecoder().decode(array_buffer);
+                return new (window as any).TextDecoder().decode(array_buffer);
             }
 
             let str = '';
@@ -407,21 +392,80 @@ export class GmeshLoader {
     private ensureBinary(buf) {
 
         if (typeof buf === 'string') {
-
-            let array_buffer = new Uint8Array(buf.length);
+            const buffer = new ArrayBuffer(buf.length * 2);
+            let array_buffer = new Uint16Array(buffer);
             for (let i = 0; i < buf.length; i++) {
-
-                array_buffer[i] = buf.charCodeAt(i) & 0xff; // implicitly assumes little-endian
-
+                array_buffer[i] = buf.charCodeAt(i); // implicitly assumes little-endian
             }
             return array_buffer.buffer || array_buffer;
-
         } else {
-
             return buf;
-
         }
-
     }
 
+    private getEndIndexOfHeader(reader: DataView, expr: string, start = 0): number {
+        let index = -1;
+
+        outer: for (let readerIndex = start; readerIndex < reader.byteLength; readerIndex ++) {
+            for (let exprIndex = 0; exprIndex < expr.length; exprIndex++) {
+                const rValue = reader.getUint8(readerIndex + exprIndex);
+                const eValue = expr.charCodeAt(exprIndex);
+                if (rValue !== eValue) {
+                    continue outer;
+                }
+            }
+            index = readerIndex + expr.length;
+            let char = reader.getUint8(index);
+            // TODO: Fix this can read past the end of the line
+            while (this.isWhiteSpace(char)) {
+                index++;
+                char = reader.getUint8(index);
+            }
+            return index;
+        }
+
+        return index;
+    }
+
+    private isWhiteSpace(char: number): boolean {
+        switch (char) {
+            case 9:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+            case 20:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private isDigit(char: number): boolean {
+        return char >= 48 && char <= 57;
+    }
+
+    private readInteger(reader: DataView, offset: number): { value: number, index: number} {
+        let number: number[] = [];
+        let idx = offset
+        let char = reader.getUint8(idx);
+        while (this.isWhiteSpace(char)) {
+            idx++;
+            char = reader.getUint8(idx);
+        }
+        while (this.isDigit(char)) {
+            number.push(char);
+            idx ++;
+            char = reader.getUint8(idx);
+        }
+        // TODO: Fix this can read past the end of the line
+        while (this.isWhiteSpace(char)) {
+            idx++;
+            char = reader.getUint8(idx);
+        }
+        return {
+            value: parseInt(String.fromCharCode(...number), 10),
+            index: idx
+        };
+    }
 }
