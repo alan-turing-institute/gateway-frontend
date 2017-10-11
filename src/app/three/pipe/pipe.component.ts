@@ -17,10 +17,13 @@ export class PipeComponent implements ThreeComponent, OnInit, OnChanges, OnDestr
 
     @ViewChild('pipeDisplay') pipeDiv: ElementRef;
     @ViewChild('pipeCanvas') pipeCanvas: ElementRef;
-    @Input() radius: number;
-    @Input() length: number;
-    @Input() shellWidth: number;
-    @Input() resolution: number;
+
+    @Input() data: any [];
+
+    private radius: number;
+    private length: number;
+    private shellWidth: number;
+    private resolution: number;
 
     private renderer: THREE.WebGLRenderer;
     private scene: any;
@@ -28,10 +31,12 @@ export class PipeComponent implements ThreeComponent, OnInit, OnChanges, OnDestr
     private geometry: PipeGeometry;
 
     constructor() {
-        this.radius = 5;
-        this.length = 10;
-        this.shellWidth = 1;
-        this.resolution = 50;
+      this.data = [];
+
+      this.radius = 5;
+      this.length = 10;
+      this.shellWidth = 0.01;
+      this.resolution = 100;
     }
 
     public ngOnInit(): void {
@@ -82,10 +87,21 @@ export class PipeComponent implements ThreeComponent, OnInit, OnChanges, OnDestr
     }
 
     public ngOnChanges(): void {
-        if (this.geometry !== undefined) {
-            this.geometry.update(+this.radius, +this.shellWidth, +this.length, +this.resolution);
-            this.render();
+
+      for (let p in this.data) {
+        if (this.data[p].name == "pipe_radius") {
+          this.radius = this.data[p].value
         }
+        else if (this.data[p].name == "pipe_length") {
+          this.length = this.data[p].value
+        }
+      }
+
+      if (this.geometry !== undefined) {
+          this.geometry.update(+this.radius, +this.shellWidth, +this.length, +this.resolution);
+          this.render();
+      }
+
     }
 
     public ngOnDestroy(): void {

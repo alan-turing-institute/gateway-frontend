@@ -12,10 +12,10 @@
               <div class="col-md-8">
                 <p class="descriptionText"><strong>Status:</strong> {{job.status}}</p>
                 <p class="descriptionText"><strong>Description:</strong> {{job.description}}</p>
-                <p class="descriptionText"><strong>Created:</strong> {{job.creation_datetime | date:"hh:mm:ss dd-MM-yyyy"}}</p>
-                <p class="descriptionText"><strong>Queued:</strong> {{job.start_datetime | date:"hh:mm:ss dd-MM-yyyy"}} </p>
+                <p class="descriptionText"><strong>Created:</strong> {{relativeCreationTime}} </p>
+                <p class="descriptionText"><strong>Queued:</strong> {{relativeStartTime}} </p>
                 <div *ngIf="status=='Complete'">
-                  <p class="descriptionText"><strong>Completed:</strong> {{job.end_datetime | date:"hh:mm:ss dd-MM-yyyy"}}</p>
+                  <p class="descriptionText"><strong>Completed:</strong> {{relativeEndTime}}</p>
                 </div>
               </div>
             </div>
@@ -32,7 +32,8 @@
            </tab>
          </tabset>
        </div><!--/.col-->
-       <div class="col-md-6 mb-4">
+
+       <div *ngIf="status=='Complete'" class="col-md-6 mb-4">
          <!-- Nav tabs -->
          <tabset>
            <tab>
@@ -85,7 +86,7 @@
           <div *ngIf="output.type =='interface'">
             <div class = "card" >
               <div class="card-header">
-                <strong>Interface</strong>
+                <strong>Interface snapshot</strong>
               </div>
               <div>
                 <app-interface [interfaceUrl]='output.destination_path'></app-interface>

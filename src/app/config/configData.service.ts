@@ -78,7 +78,7 @@ export class ConfigDataService {
 
   runJob(jobData:any): Observable<any> {
     console.log("in run")
-    let url = this.runUrl + jobData['id']
+    let url = urljoin(this.runUrl, jobData['id']);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let response = this.http.post(url, jobData, options)

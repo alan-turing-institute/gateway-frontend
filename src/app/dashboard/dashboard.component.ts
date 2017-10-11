@@ -9,7 +9,7 @@ import { JobSummaryComponent } from './jobSummary.component';
   selector: "dashboard",
   providers: [DashboardService],
   templateUrl: 'dashboard.component.html',
-  styleUrls:['dashboard.css']
+  styleUrls:['dashboard.component.css']
 })
 
 export class DashboardComponent implements OnInit {
@@ -49,33 +49,35 @@ export class DashboardComponent implements OnInit {
                               });
           }
           else {
-            job.progress = {value:0, units: "percent", range_min:0, range_max:100}
+            job.progress = {value:0, units: "%", range_min:0, range_max:100}
             this.jobs.push(job)
           }
         })
       })
   }
 
-getProgressInfoData(id) {
-  this.dashboardService.getProgressInfo(id)
-                        .subscribe(
-                          progress => {
-                          },
-                          error => {
-                            this.errorMessage = <any> error
-                          });
-                        }
+  getProgressInfoData(id) {
+    this.dashboardService.getProgressInfo(id)
+                          .subscribe(
+                            progress => {
+                            },
+                            error => {
+                              this.errorMessage = <any> error
+                            });
+                          }
 
-deleteJob(id){
-  this.jobs = this.jobs.filter(item => item.id !== id);
-  this.dashboardService.deleteJob(id)
-      .subscribe(
-        message => {
-          console.log("deleted")
-        },
-        error => {
-          this.errorMessage = <any> error
-        }
-      )
+  cancelJob(id){
+    this.dashboardService.cancelJob(id).subscribe(
+      message => {console.log("cancelled")},
+      error => {this.errorMessage = <any> error}
+    )
+  }
+
+  deleteJob(id){
+    this.jobs = this.jobs.filter(item => item.id !== id);
+    this.dashboardService.deleteJob(id).subscribe(
+      message => {console.log("deleted")},
+      error => {this.errorMessage = <any> error}
+    )
   }
 }

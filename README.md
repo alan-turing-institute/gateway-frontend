@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/alan-turing-institute/science-gateway-inputs.svg?branch=master)](https://travis-ci.org/alan-turing-institute/science-gateway-inputs)
 
-## Overview 
+## Overview  
 
 Science gateway inputs is an Angular application for generating user interfaces for arbitrary research codes.
 

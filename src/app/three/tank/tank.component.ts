@@ -64,28 +64,28 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
         this.indexToName = {};
 
         // Set default values
-        this.axle_radius = 2;
-        this.axle_height = 5;
+        this.axle_radius = 0.0025;
+        this.axle_height = 0.01;
         this.axle_resolution = 50;
-        this.axle_clearance = 1;
+        this.axle_clearance = 0.035;
 
-        this.hub_thickness = 2;
-        this.hub_radius = 5;
+        this.hub_thickness = 0.009;
+        this.hub_radius = 0.005;
         this.hub_resolution = 50;
 
         this.num_blades = 4;
-        this.blade_angle = Math.PI / 8;
-        this.blade_width = 1;
-        this.blade_height = 1;
-        this.blade_depth = 0.1;
+        this.blade_angle = 45 * Math.PI / 180;
+        this.blade_width = 0.02; // protrusion out
+        this.blade_height = 0.002;
+        this.blade_depth = 0.002;
 
         this.stirrer_colour = 0x444444;
 
-        this.tank_radius = 10;
-        this.tank_height = 10;
+        this.tank_radius = 0.0425;
+        this.tank_height = 0.065;
         this.tank_resolution = 50;
         this.num_baffles = 4;
-        this.baffle_width = 1;
+        this.baffle_width = 0.01;
         this.baffle_thickness = 0.001;
         this.tank_colour = 0x222222;
     }
@@ -108,7 +108,7 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
 
         let screenRatio = this.renderer.domElement.offsetWidth / this.renderer.domElement.offsetHeight;
 
-        this.camera = new PerspectiveCamera(75, screenRatio, 0.1, 1000);
+        this.camera = new PerspectiveCamera(75, screenRatio, 0.001, 1000);
 
         let lights = [];
         lights[0] = new PointLight(0xffffff, 1, 0);
@@ -146,13 +146,46 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
         // Ensure all variables are numbers
 
         console.log('ngOnChanges() this.data', this.data)
-
         for (let p in this.data) {
-          if (this.data[p].name == "tank_radius") {
-            this.tank_radius = this.data[p].value
+          if (this.data[p].name == "tank_height") {
+            // this.tank_height = this.data[p].value
+            console.log(this.data[p].name)
+            console.log(this.data[p].value)
           }
-          else if (this.data[p].name == "tank_height") {
+        }
+
+        // unpack data structure
+        for (let p in this.data) {
+          if (this.data[p].name == "tank_axle_radius") {
+            this.axle_radius = this.data[p].value
+          } else if (this.data[p].name == "tank_axle_height") {
+            this.axle_height = this.data[p].value
+          } else if (this.data[p].name == "tank_axle_clearance") {
+            this.axle_clearance = this.data[p].value
+          } else if (this.data[p].name == "tank_hub_thickness") {
+            this.hub_thickness = this.data[p].value
+          } else if (this.data[p].name == "tank_hub_radius") {
+            this.hub_radius = this.data[p].value
+          } else if (this.data[p].name == "tank_num_blades") {
+            this.num_blades = this.data[p].value
+          } else if (this.data[p].name == "tank_blade_angle") {
+            this.blade_angle = this.data[p].value
+          } else if (this.data[p].name == "tank_blade_width") {
+            this.blade_width = this.data[p].value
+          } else if (this.data[p].name == "tank_blade_height") {
+            this.blade_height = this.data[p].value
+          } else if (this.data[p].name == "tank_blade_depth") {
+            this.blade_depth = this.data[p].value
+          } else if (this.data[p].name == "tank_radius") {
+            this.tank_radius = this.data[p].value
+          } else if (this.data[p].name == "tank_height") {
             this.tank_height = this.data[p].value
+          } else if (this.data[p].num_baffles == "tank_num_baffles") {
+            this.num_baffles = this.data[p].value
+          } else if (this.data[p].name == "tank_baffle_width") {
+            this.baffle_width = this.data[p].value
+          } else if (this.data[p].name == "tank_baffle_thickness") {
+            this.baffle_thickness = this.data[p].value
           }
         }
 
@@ -166,7 +199,11 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
     }
 
     private generateTank(): void {
-        let material = new MeshToonMaterial({ color: this.tank_colour, side: DoubleSide });
+        let material = new MeshToonMaterial({
+          color: this.tank_colour,
+          side: DoubleSide,
+          transparent: true,
+          opacity: 0.5});
 
         let bodyGeom = new CylinderGeometry(this.tank_radius, this.tank_radius, this.tank_height,
                                         this.tank_resolution, 3, true);

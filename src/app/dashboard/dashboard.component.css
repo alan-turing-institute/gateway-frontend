@@ -1,0 +1,17 @@
+.card-jobs{
+    /* margin: 1%; */
+    /*width: 75vh;*/
+}
+
+.statusHeading {
+  margin-bottom: 2em;
+}
+
+.card-jobs {
+  width:100%;
+  /*transform: translate(-50px);*/
+}
+
+.card-deck {
+  padding-top: 2em;
+}

@@ -1,6 +1,6 @@
 <!-- Add creation date in subtitle -->
 
-<div class="card" style="width: 20rem;">
+<div class="card">
   <div class="card-body">
     <span [ngClass]="getBadgeClass()" class="badge float-right">{{summary.status}}</span>
     <h5 class="card-title">{{summary.name}}</h5>
@@ -8,7 +8,7 @@
     <p class="card-subtitle mb-2 text-muted">{{relativeCreationTime()}}</p>
 
     <div class="row">
-      <div class="col-sm-3 col-md-3">
+      <div class="col-sm-4 col-md-3">
         <img style="height: 3em" src={{summary.case.thumbnail}} class="img-job">
       </div>
       <div class="col-sm-8 col-md-8">
@@ -16,15 +16,11 @@
       </div>
     </div>
 
-    <div class="progress job-progress" [hidden]="getProgressBarHidden()">
-      <div class="progress-bar bg-job-success" role="progressbar" [ngStyle]="{'width':summary.progress.value+'%'}">{{summary.progress.value}} {{summary.progress.units}}</div>
-    </div>
-
     <!-- Only show progress for running jobs -->
     <div *ngIf="summary.status =='Running'">
       <div class="card-block">
-        <div class="h6 m-0">{{summary.progress.value+'%'}}</div>
-        <div>Runing on cx1</div>
+        <div class="h6 m-0">{{formattedProgressValue+formattedProgressUnits}} completed</div>
+        <div>Running on cx1 cluster</div>
         <div class="progress progress-xs my-1">
           <div class="progress-bar bg-warning" role="progressbar" [ngStyle]="{'width':summary.progress.value+'%'}" aria-valuenow="summary.progress.value" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
@@ -46,9 +42,14 @@
                       <span class="actionText">{{getActionText()}}</span>
                   </button>
 
+
+    <!-- "Cancel" button -->
+    <!-- <button type="button" class="btn btn-link btn-action btn-sm" (click)="cancelMe()"><i class="fa fa-stop fa-lg"></i>  Stop</button> -->
+    <button type="button" class="btn btn-link btn-action btn-sm" (click)="cancelMe()">Stop</button>
+
     <!-- "Delete" button -->
-    <button type="button" class="btn btn-link btn-action btn-sm" (click)="deleteMe()"><i class="fa fa-trash-o fa-lg"></i>  Delete
-          </button>
+    <!-- <button type="button" class="btn btn-link btn-action btn-sm" (click)="deleteMe()"><i class="fa fa-trash-o fa-lg"></i>  Delete</button> -->
+    <button type="button" class="btn btn-link btn-action btn-sm" (click)="deleteMe()">Delete</button>
 
   </div>
 </div>
