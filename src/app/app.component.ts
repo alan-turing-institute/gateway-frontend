@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import "../assets/css/font-awesome.min.css"
 import "../assets/css/simple-line-icons.css"
 import '../scss/style.scss'
-import './layouts/layout.css'
+import './layout/main.css'
 
 @Component({
     selector: 'body',

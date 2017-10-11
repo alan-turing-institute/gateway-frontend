@@ -1,0 +1,47 @@
+<header class="app-header navbar" style="overflow-y: visible; min-height:5vh">
+    <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">&#9776;</button>
+    <ul class="nav navbar-nav hidden-md-down">
+      <li class="nav-item">
+        <a class="nav-link navbar-toggler sidebar-toggler" href="#">&#9776;</a>
+      </li>
+    </ul>
+
+    <ul class="nav navbar-nav ml-auto">
+    <li class="nav-item dropdown" dropdown (onToggle)="toggled($event)">
+      <a href class="nav-link dropdown-toggle" dropdownToggle (click)="false">
+        <span class="d-md-down-none"><i class="icon-list"></i></span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+
+        <div class="dropdown-header text-center"><strong>Settings</strong></div>
+        <a class="dropdown-item" href="#" (click)="onLogout()"><i class="fa fa-lock"></i> Logout</a>
+      </div>
+    </li>
+
+  </ul>
+
+</header>
+
+<div class="app-body" style="overflow-y: hidden; min-height:90vh">
+  <div class="sidebar">
+    <nav class="sidebar-nav">
+      <ul class="nav">
+        <li class="nav-item"><a class="nav-link" routerLinkActive="active" [routerLink]="['/account']"><i class="icon-user"></i> Account </a></li>
+        <!-- <li class="nav-item"><a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']"> Dashboard </a></li>
+        <li class="nav-item"><a class="nav-link" routerLinkActive="active" [routerLink]="['/cases']"> New Simulation </a></li> -->
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Main content -->
+  <main class="main" style="overflow-y: visible; min-height:90vh">
+    <div class="container-fluid" style="overflow-y: scroll; min-height:87vh;" >
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+</div>
+
+<footer class="app-footer" style="overflow-y: hidden; min-height:5vh">
+  <a href="/">Code Blue</a> &copy; 2017
+</footer>
