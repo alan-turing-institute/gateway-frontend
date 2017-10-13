@@ -1,0 +1,40 @@
+.card-case {
+    margin:1% 1% 1% 1%;  
+}
+
+.card-block-container {
+    padding: 0%;
+}
+
+.card-header.case {
+    color: white;
+    background-color: #f8cb00;
+    font-size: medium;
+}
+/* 
+.wrapper {
+   position: relative;
+}
+
+.wrapper i {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+} */
+.img-case {
+    max-width:5rem;
+}
+
+.break-word {
+    word-wrap: break-word;
+}
+
+.descriptionText, a:focus, a:hover {
+    color: #263238;
+    text-decoration: none;
+}
+
+.btn.btn-primary.btn-action {
+    width: 7em;
+    margin:0.25em;
+}

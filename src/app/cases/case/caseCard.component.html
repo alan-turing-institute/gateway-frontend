@@ -1,0 +1,35 @@
+<div class="card card-case">
+    <div class="card-header" >
+        <div class="container-fluid card-block-container">
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>{{info.label}}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-block">
+        <div class="container-fluid card-block-container">
+            <a routerLinkActive = "active"
+            [routerLink] = "['/config/config']"
+            (click)="storeCaseType()">
+            <div class="row">
+                <div class="col-md-2"><img src={{info.thumbnail}}  class="img-case">
+                </div>
+                <div class="col-md-7">
+                    <p class="descriptionText">{{getShortDescription()}}</p>
+                </div>
+                <div class="col-md-3">
+                    <div class="row" style="padding-top:3%">
+                        <div class="col-md-4 offset-md-2">
+                            <button type="button" class="btn btn-primary btn-action">
+                                <span>Create</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+</div>

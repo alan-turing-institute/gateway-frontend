@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './layout/main.component';
+import { CasesModule } from './cases/cases.module';
 // import { LoginLayoutComponent } from './layouts/login-layout.component';
 
 // import { LoginComponent } from './login/login.component';
 
 // import { AppComponent } from './app.component';
 // import { AccountModule } from './account/account.module';
-// import { CasesModule } from './cases/cases.module';
+
 // import { ConfigModule } from './config/config.module';
 
 
@@ -27,7 +28,12 @@ export const routes: Routes = [
         {
           path: 'account',
           loadChildren: './account/account.module#AccountModule'
-        }
+        },
+        {
+          path: 'cases',
+          loadChildren: './cases/cases.module#CasesModule'
+        },
+        
         // {
         //   path: 'dashboard',
         //   loadChildren: './dashboard/dashboard.module#DashboardModule'
@@ -35,10 +41,6 @@ export const routes: Routes = [
         // {
         //   path: 'output',
         //   loadChildren: './output/output.module#OutputModule'
-        // },
-        // {
-        //   path: 'cases',
-        //   loadChildren: './cases/cases.module#CasesModule'
         // },
         // {
         //   path: 'config',
@@ -64,7 +66,7 @@ export const routes: Routes = [
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {enableTracing:false})],
+  imports: [RouterModule.forRoot(routes, {enableTracing:true})],
   // exports: [ RouterModule ]
 })
 export class AppRoutingModule { }
