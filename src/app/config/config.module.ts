@@ -7,7 +7,7 @@ import { IonRangeSliderModule } from "ng2-ion-range-slider";
 import { ConfigComponent } from './config.component';
 import { CaseDescriptionComponent } from '../components/description/description.component';
 import { ConfigDataService } from './configData.service';
-// import { OutputService } from '../output/output.service';
+import { TextInputComponent } from '../components/text/text.component';
 import { PipeModule} from '../pipe/pipe.module';
 // import { TabsModule } from 'ngx-bootstrap/tabs';
 
@@ -29,7 +29,8 @@ import { PipeModule} from '../pipe/pipe.module';
   ],
   declarations: [
     ConfigComponent,
-    CaseDescriptionComponent
+    CaseDescriptionComponent,
+    TextInputComponent
     // ModalContentComponent
   ],
   providers: [

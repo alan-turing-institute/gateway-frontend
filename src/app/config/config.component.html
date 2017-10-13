@@ -111,7 +111,8 @@
               <div *ngIf="!(['tank_properties', 'pipe_properties'].includes(tag.name))">
                 <div class="row">
                   <div *ngFor="let component of getVisibleComponents(tag)" class="col-md-6">
-                      <div *ngIf="component.type == 'text'">
+                    <textInput [aComponent]="component"></textInput>
+                      <!-- <div *ngIf="component.type == 'text'">
                         <label [for]=component.name>{{component.label}} <span [hidden]="component.valid" [ngClass]="{'invalidValue': component.valid === false}">*Valid values ranges between {{component.min_value}} and {{component.max_value}}</span>
                         </label>
                         <div class="input-group"  >
@@ -127,7 +128,7 @@
                           >
                           <span class="input-group-addon">{{component.units}}</span>
                         </div>
-                      </div>
+                      </div> -->
                       <div *ngIf="component.type == 'radio'">
                         <label class="switch switch-3d switch-danger">
                           <input type="checkbox"

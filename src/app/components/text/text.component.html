@@ -1,0 +1,19 @@
+<div *ngIf="component.type == 'text'">
+        <label [for]=component.name>{{component.label}} 
+            <span [hidden]="component.valid" [ngClass]="{'invalidValue': component.valid === false}">
+                *Valid values ranges between {{component.min_value}} and {{component.max_value}}
+            </span>
+        </label>
+        <div class="input-group"  >
+          <input
+            [(ngModel)]="component.value"
+            (ngModelChange) = "validateValue(component)"
+            [attr.id]="component.name"
+            type="number"
+            [ngClass]="{'invalidValue': component.valid === false}"
+            (keyup.enter)="update(tag,component)"
+            (blur)="update(tag, component)"
+            [disabled]="isDisabled()"
+          >
+          <span class="input-group-addon">{{component.units}}</span>
+        </div>

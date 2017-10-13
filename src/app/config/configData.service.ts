@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import {InputComponent} from './inputComponent';
+import {InputComponent} from '../components/inputComponent';
 import { environment } from '../../environments/environment';
 
 import * as urljoin from 'url-join';
