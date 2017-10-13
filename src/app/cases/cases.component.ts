@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CaseInfo } from './case/caseInfo';
+import { CaseInfo } from '../components/description/caseInfo';
 import { CasesService } from './cases.service';
 
 @Component({
@@ -22,11 +22,11 @@ export class CasesComponent implements OnInit {
     }
 
     getCaseTypes() {
-        this.casesService.cases
+        this.casesService.getCases()
                             .subscribe(
                                 cases => {
                                     this.cases = cases
-                                    console.log(this.cases)
+                                    // console.log(this.cases)
                                 },
                                 error => {
                                     this.errorMessage = <any> error

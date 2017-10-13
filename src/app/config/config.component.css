@@ -1,0 +1,40 @@
+
+.card-block-container {
+    padding: 0%;
+}
+
+.card.card-family {
+    margin:20px;
+}
+
+.actionText {
+    font: medium;
+}
+
+.card-header.config:hover {
+  background-color: hsla(198,36%,75%,1);
+}
+
+.card-header.config {
+  background-color: #cfd8dc;
+}
+
+.img-config {
+     max-width: 5rem;
+    vertical-align: top;
+    margin-bottom: 1rem;
+}
+
+.case-panel {
+    vertical-align: top;
+}
+
+.invalidValue {
+    color:red
+}
+
+.btn.btn-primary.btn-action {
+    width: 7em;
+    margin:0.25em;
+}
+

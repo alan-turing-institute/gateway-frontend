@@ -1,5 +1,5 @@
 import { Component, Input, OnInit} from '@angular/core';
-import { CaseInfo } from './caseInfo';
+import { CaseInfo } from '../../components/description/caseInfo';
 import { Router } from '@angular/router';
 
 @Component({

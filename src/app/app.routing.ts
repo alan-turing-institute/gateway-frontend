@@ -42,10 +42,10 @@ export const routes: Routes = [
         //   path: 'output',
         //   loadChildren: './output/output.module#OutputModule'
         // },
-        // {
-        //   path: 'config',
-        //   loadChildren: './config/config.module#ConfigModule'
-        // }
+        {
+          path: 'config',
+          loadChildren: './config/config.module#ConfigModule'
+        }
       ]
     },
     // {
