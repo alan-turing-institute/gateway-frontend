@@ -87,17 +87,17 @@ export class ConfigDataService {
   }
 
 
-  private arrayObjectIndexOf(myArray, searchTerm, property) {
-    for(var i = 0, len = myArray.length; i < len; i++) {
-        if (myArray[i][property] === searchTerm) return i;
-    }
-    return -1;
-  }
+  // private arrayObjectIndexOf(myArray, searchTerm, property) {
+  //   for(var i = 0, len = myArray.length; i < len; i++) {
+  //       if (myArray[i][property] === searchTerm) return i;
+  //   }
+  //   return -1;
+  // }
 
-  updateJobData(supersetComponents, componentKey, newValue) : void {
-    var index = this.arrayObjectIndexOf(supersetComponents, componentKey, 'name'); // 1
-    supersetComponents[index].value = newValue;
-  }
+  // updateJobData(supersetComponents, componentKey, newValue) : void {
+  //   var index = this.arrayObjectIndexOf(supersetComponents, componentKey, 'name'); // 1
+  //   supersetComponents[index].value = newValue;
+  // }
 
 
 

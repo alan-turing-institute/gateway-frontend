@@ -147,7 +147,7 @@ export class TankComponent implements ThreeComponent, OnInit, OnChanges {
 
         console.log('ngOnChanges() this.data', this.data)
         for (let p in this.data) {
-          if (this.data[p].name == "tank_height") {
+          if (this.data[p].name == "tank_num_blades") {
             // this.tank_height = this.data[p].value
             console.log(this.data[p].name)
             console.log(this.data[p].value)

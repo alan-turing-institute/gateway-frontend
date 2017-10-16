@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ConfigComponent } from './config.component';
 import { IonRangeSliderComponent } from 'ng2-ion-range-slider';
-import { PipeComponent } from '../three/pipe/pipe.component';
+import { PipeComponent } from '../components/pipe/three/pipe/pipe.component';
 import { ConfigDataService } from './configData.service';
 import { HttpModule } from '@angular/http';
 import { TabsModule } from 'ngx-bootstrap/tabs';

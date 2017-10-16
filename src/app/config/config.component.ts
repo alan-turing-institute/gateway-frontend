@@ -7,15 +7,13 @@ import { ConfigDataService } from './configData.service';
 @Component({
   selector:"config",
   templateUrl: './config.component.html',
-  styles:[require('../../../node_modules/ion-rangeslider/css/ion.rangeSlider.css').toString(),
-    require('../../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinFlat.css').toString(),
-    require('./config.component.css').toString()]
+  styles:[require('./config.component.css').toString()]
 })
 
 export class ConfigComponent implements OnInit {
   validFormValues: boolean
   case:CaseInfo
-  tags:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
+  families:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
   job: any
   mode = 'Observable';
   errorMessage: string;
@@ -28,7 +26,7 @@ export class ConfigComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.tags = []
+    this.families = []
     this.case = new CaseInfo
     this.job = {'name': "Name of job here", 'description':"Description of job here"}
     this.getData()
@@ -83,26 +81,26 @@ export class ConfigComponent implements OnInit {
 
   }
 
-  getDataTarget(tag) {
-    return "#" + tag.name
+  getDataTarget(family) {
+    return "#" + family.name
   }
 
-  getVisibleComponents(tag) {
-    return tag['parameters']
+  getComponentsOf(family) {
+    return family['parameters']
   }
 
-  setValidValues (tags) {
-    for (var t = 0; t < tags.length; t++) {
-      let parameters = tags[t]['parameters'];
+  setValidValues (families) {
+    for (var t = 0; t < families.length; t++) {
+      let parameters = families[t]['parameters'];
       for (var p = 0; p < parameters.length; p++) {
         parameters[p].valid = true;
       }
     }
   }
 
-  allValuesAreValid (tags):boolean {
-    for (var t = 0; t < tags.length; t++) {
-      let parameters = tags[t]['parameters'];
+  allValuesAreValid (families):boolean {
+    for (var t = 0; t < families.length; t++) {
+      let parameters = families[t]['parameters'];
       for (var p = 0; p < parameters.length; p++) {
         if (parameters[p].valid===false)
           return false
@@ -111,22 +109,15 @@ export class ConfigComponent implements OnInit {
     return true;
   }
 
-  updateSlider(tag, component, event) {
-    let newValue = event.from;
-    this.configDataService.updateJobData(tag['parameters'], component.name, newValue.toString())
-    for (var i in this.tags) {
-      this.tags[i].parameters = this.tags[i].parameters.slice()
+  onUpdated(component, value:string) {
+    // console.log("Parent receive new value: "+value)
+    component.value = value
+    // overwrite with an array copy via .slice() method
+    // to trigger angular change detection ngOnChanges()
+    for (var i in this.families) {
+      this.families[i].parameters = this.families[i].parameters.slice()
     }
-  }
-
-  update(tag, component) {
-    if (this.validateValue(component)) {
-      if (component.type == "radio")
-        component.value = !component.value
-
-      if (component.type == "text")
-      this.configDataService.updateJobData(tag['parameters'], component.name,  component.value.toString())
-    }
+    console.log("Component new value: "+component.value)
   }
 
   updateName(name) {
@@ -147,16 +138,16 @@ export class ConfigComponent implements OnInit {
           component.valid = true
       else
           component.valid = false
-      this.validFormValues = this.allValuesAreValid(this.tags)
+      this.validFormValues = this.allValuesAreValid(this.families)
       return component.valid
     }
   }
 
-  toggleCollapse(tag) {
-    let element = document.getElementById(tag.name)
-    let tagToToggle = this.tags.filter(function(x) { if (x.name === tag.name) return x });
-    for (var _i = 0; _i < tagToToggle.length; _i++) {
-      tagToToggle[_i].collapse = !tagToToggle[_i].collapse
+  toggleCollapse(family) {
+    let element = document.getElementById(family.name)
+    let familyToToggle = this.families.filter(function(x) { if (x.name === family.name) return x });
+    for (var _i = 0; _i < familyToToggle.length; _i++) {
+      familyToToggle[_i].collapse = !familyToToggle[_i].collapse
     }
   }
 
@@ -181,7 +172,7 @@ export class ConfigComponent implements OnInit {
                         .subscribe(
                           config => {
                             this.job = config
-                            this.tags = config['families']
+                            this.families = config['families']
                             console.log(config)
                             this.case=config['case']
                             if(this.job.name != null || this.job.name != ""){
@@ -199,9 +190,9 @@ export class ConfigComponent implements OnInit {
       this.configDataService.getTemplate(template_id)
                         .subscribe(
                           template => {
-                            this.tags = template['families']
-                            this.setValidValues (this.tags)
-                            // console.log(this.tags)
+                            this.families = template['families']
+                            this.setValidValues (this.families)
+                            // console.log(this.familys)
                             this.case=template['case']
                             this.job = template
                           },

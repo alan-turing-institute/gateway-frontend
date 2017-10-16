@@ -8,7 +8,8 @@ import { ConfigComponent } from './config.component';
 import { CaseDescriptionComponent } from '../components/description/description.component';
 import { ConfigDataService } from './configData.service';
 import { TextInputComponent } from '../components/text/text.component';
-import { PipeModule} from '../pipe/pipe.module';
+import { SliderInputComponent } from '../components/slider/slider.component';
+import { PipeModule} from '../components/pipe/pipe.module';
 // import { TabsModule } from 'ngx-bootstrap/tabs';
 
 // import { ModalModule } from 'ngx-bootstrap/modal';
@@ -30,7 +31,8 @@ import { PipeModule} from '../pipe/pipe.module';
   declarations: [
     ConfigComponent,
     CaseDescriptionComponent,
-    TextInputComponent
+    TextInputComponent,
+    SliderInputComponent,
     // ModalContentComponent
   ],
   providers: [
