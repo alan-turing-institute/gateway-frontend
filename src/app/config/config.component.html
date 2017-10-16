@@ -9,28 +9,25 @@
           <div class="row">
             <div class="col-md-12">
                 <label>Name:</label>
-                <input type="text"
-                class="form-control"
-                [(ngModel)]="job.name"
-                (keyup.enter)="updateName(job.name)"
-                (change) = "updateName(job.name)"
-                (blur)="updateName(job.name)">
+                <input type="text" class="form-control" placeholder="Name"
+                       [(ngModel)]="job.name" 
+                       (keydown)="setMinimalJobInfoCollected()">
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">  
               <label>Description</label>
-              <textarea
-              rows = "3"
-              class="form-control"
-              [(ngModel)]=job.description
-              (keyup.enter)="updateDescription(job.description)"
-              (blur)="updateDescription(job.description)"></textarea>
+              <textarea rows = "3" class="form-control" placeholder="Description"
+                        [(ngModel)]=job.description 
+                        (keydown)="setMinimalJobInfoCollected()"></textarea>
             </div>
           </div>
           <div class="row">
             <div class="col-md-3">
-              <button type="button" class="btn btn-primary btn-action" (click)="saveJob()" [disabled]=!validFormValues>
+              <button type="button" 
+                      class="btn btn-primary btn-action" 
+                      (click)="saveJob()" 
+                      [disabled]=!minimalJobInfoCollected>
                 <span>Save</span>
               </button>
             <div class="col-md-4">
@@ -38,8 +35,8 @@
                         class="btn btn-primary btn-action"
                         routerLinkActive="active"
                         (click)="runJob()"
-                        [disabled]=!validFormValues
-                        [hidden]=!jobCreated>
+                        [disabled]="!minimalJobInfoCollected"
+                        [hidden]=!minimalJobInfoCollected>
                   <span>Run</span>
                 </button>
               </div>
@@ -57,7 +54,7 @@
       <div class = "card">
       <div [attr.id]="componentFamilyAccordion" role="tablist">
         <div *ngFor="let family of families" class="card card-family" >
-          <div class="card-header config" role="tab" (click)="toggleCollapse(tag)">
+          <div class="card-header config" role="tab" (click)="toggleCollapse(family)">
             <h5 class="mb-0">
               <a data-toggle="collapse" data-target={{getDataTarget(family)}} data-parent="#componentFamilyAccordion">
                 {{family.label}}
