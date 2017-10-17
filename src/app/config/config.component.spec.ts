@@ -1,11 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ConfigRoutingModule } from './config-routing.module';
 import { ConfigComponent } from './config.component';
-import { IonRangeSliderComponent } from 'ng2-ion-range-slider';
-import { PipeComponent } from '../components/pipe/three/pipe/pipe.component';
+
+import { IonRangeSliderModule } from "ng2-ion-range-slider";
+import { PipeModule} from '../components/pipe/pipe.module';
+
+import { DescriptionModule } from '../components/description/description.module';
+import { InputModule } from '../components/input/input.module';
+// import { TextComponent } from '../components/input/text/text.component';
+// import { SliderComponent } from '../components/input/slider/slider.component';
 import { ConfigDataService } from './configData.service';
+
 import { HttpModule } from '@angular/http';
-import { TabsModule } from 'ngx-bootstrap/tabs';
 import { Routes, RouterModule } from '@angular/router';
 
 describe('ConfigComponent', () => {
@@ -23,10 +31,15 @@ describe('ConfigComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, HttpModule,TabsModule.forRoot(),RouterModule.forChild(routes)],
+      imports: [
+        ConfigRoutingModule,
+        CommonModule,
+        FormsModule,
+        DescriptionModule,
+        PipeModule,InputModule],
       providers:[ConfigDataService, ],
       declarations: [ ConfigComponent, 
-      IonRangeSliderComponent, PipeComponent]
+        , PipeModule]
     })
     .compileComponents();
   }));

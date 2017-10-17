@@ -1,0 +1,83 @@
+<div class="animated fadeIn">
+  <div class='container-fluid' >
+    <div class="row">
+      <div class="col-md-6">
+          <div class="card">  
+              <caseDescription *ngIf="job" [info] = "job?.case"></caseDescription>
+          </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">    
+            <jobDescription *ngIf="job" [info] = "job"></jobDescription>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div *ngIf="status=='Complete'" class="col-md-6 mb-4">
+         <!-- Nav tabs -->
+         <!-- <tabset>
+           <tab>
+            <ng-template tabHeading>Downloads</ng-template>
+
+            <div class="downloads">
+              <div *ngFor="let output of job.outputs">
+                <div *ngIf="output.type =='csv'">
+                  <output-download [data]="output"></output-download>
+                </div>
+              </div>
+              <div *ngFor="let output of job.outputs">
+                <div *ngIf="output.type =='interface'">
+                  <output-download [data]="output"></output-download>
+                </div>
+              </div>
+            </div>
+           </tab>
+         </tabset> -->
+      </div><!--/.col-->
+    </div>
+    
+
+    <div class="row">
+        <div *ngIf="status=='Complete' || status=='Running'">
+            <div class = "card" >
+              <div class="card-header">
+                <strong>Diagnostics</strong>
+              </div>
+              <div>
+                <chart></chart>
+              </div>
+            </div>
+          </div>
+    </div>
+
+    <div class="row">
+      <div *ngIf="status=='Complete'">    
+        <div *ngFor="let output of job.outputs">
+          <div *ngIf="output.type =='video'">
+            <div class = "card" >
+              <div class="card-header">
+                <strong>Videos</strong>
+              </div>
+              <div>
+                <app-video [videoUrl]='output.destination_path'></app-video>
+              </div>
+            </div>
+          </div>
+          
+          <div *ngIf="output.type =='interface'">
+            <div class = "card" >
+              <div class="card-header">
+                <strong>Interface snapshot</strong>
+              </div>
+              <div>
+                <app-interface [interfaceUrl]='output.destination_path'></app-interface>
+              </div>
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>  
+
+  </div>
+</div>

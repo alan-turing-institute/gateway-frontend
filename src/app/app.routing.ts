@@ -33,15 +33,14 @@ export const routes: Routes = [
           path: 'cases',
           loadChildren: './cases/cases.module#CasesModule'
         },
-        
-        // {
-        //   path: 'dashboard',
-        //   loadChildren: './dashboard/dashboard.module#DashboardModule'
-        // },
-        // {
-        //   path: 'output',
-        //   loadChildren: './output/output.module#OutputModule'
-        // },
+        {
+          path: 'dashboard',
+          loadChildren: './dashboard/dashboard.module#DashboardModule'
+        },
+        {
+          path: 'output',
+          loadChildren: './output/output.module#OutputModule'
+        },
         {
           path: 'config',
           loadChildren: './config/config.module#ConfigModule'

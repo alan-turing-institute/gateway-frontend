@@ -5,10 +5,10 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
 import { Routes, RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule, JsonpModule } from '@angular/http';
 
 import { MainComponent } from './layout/main.component'
-// import { CasesModule } from './cases/cases.module'
 
 @NgModule({
   imports: [
@@ -16,8 +16,8 @@ import { MainComponent } from './layout/main.component'
     RouterModule,
     HttpModule,
     JsonpModule,
-    // CasesModule,
     AppRoutingModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     AppComponent,

@@ -4,8 +4,8 @@ import { CaseInfo } from './caseInfo';
 
 @Component({
   selector: 'caseDescription',
-  templateUrl: 'description.component.html',
-  styleUrls: ['description.css']
+  templateUrl: 'caseDescription.component.html',
+  styleUrls: ['caseDescription.css']
 })
 
 export class CaseDescriptionComponent{

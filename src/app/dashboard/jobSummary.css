@@ -1,0 +1,97 @@
+
+.card-job {
+    /*margin:1% 1% 1% 1%;*/
+    /* max-width: 70vh; */
+}
+
+/* text within cards*/
+.card-body {
+    margin:1em;
+}
+
+.card-block-container {
+    padding: 0%;
+}
+
+
+.card-header-name {
+    color: #263238;
+}
+
+.card-header, a:focus, a:hover {
+    /* background-color: #a8c8d6; */
+}
+
+.badge-draft {
+    color: #f8cb00;
+}
+
+.badge-running {
+    color: #20a8d8;
+}
+
+.badge-error {
+
+    color: #f86c6b;
+}
+
+.badge-complete {
+
+    color: #4dbd74;
+
+}
+
+.badge-queued{
+
+    color: black;
+}
+
+.wrapper {
+   position: relative;
+   background-color: white;
+}
+
+.wrapper i {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+}
+
+.img-job {
+    max-width:5rem;
+    /* max-height:5rem; */
+    /* padding-right: 1rem;
+    padding-left: 1rem; */
+}
+
+.descriptionText, a:focus, a:hover {
+    color: #263238;
+    text-decoration: none;
+}
+
+.break-word {
+    word-wrap: break-word;
+}
+
+.bg-job-success {
+    color: white;
+    background-color: #20a8d8;
+}
+
+.job-progress {
+    background-color: white;
+    display: inline-block;
+    width: 100%;
+}
+
+
+.btn.btn-primary.btn-action {
+    width: 7em;
+    margin: 0.25em;
+}
+
+
+.btn-outline-primary {
+  width: 7em;
+  margin: 0.25em;
+}

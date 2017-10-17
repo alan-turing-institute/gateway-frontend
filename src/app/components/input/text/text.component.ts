@@ -8,7 +8,7 @@ import { InputComponent } from '../inputComponent';
   styleUrls: ['text.css']
 })
 
-export class TextInputComponent implements OnInit{
+export class TextComponent implements OnInit{
   @Input() data: InputComponent; 
   @Output() onUpdated = new EventEmitter<string>();
   

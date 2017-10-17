@@ -1,0 +1,53 @@
+<div class="card">
+  <div class="card-body">
+    <!-- <span [ngClass]="jobStatusBadgeClass" class="badge float-right">{{summary.status}}</span> -->
+    <h5 class="card-title">{{summary.name}}</h5>
+    <p class="card-subtitle mb-2 text-muted">{{jobTemporalDistanceFromCreation}}</p>
+
+    <div class="row">
+      <div class="col-sm-4 col-md-3">
+        <img style="height: 3em" src={{summary.case.thumbnail}} class="img-job">
+      </div>
+      <div class="col-sm-8 col-md-8">
+        <p class="card-text">{{jobShortDescription}}</p>
+      </div>
+    </div>
+
+    <div *ngIf="summary.status =='Running'">
+      <div class="card-block">
+        <div class="h6 m-0">{{jobProgress}} completed</div>
+        <div>Running on cx1 cluster</div>
+        <div class="progress progress-xs my-1">
+          <div class="progress-bar bg-warning" role="progressbar" 
+          [ngStyle]="{'width':summary.progress.value+'%'}" 
+          aria-valuenow="summary.progress.value" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button *ngIf = "routeToOutput" 
+            type="button" class="btn btn-outline-primary btn-action btn-sm" 
+            (click)="storeJobId('Output')" 
+            [routerLink]="['/output/output']" routerLinkActive="active">
+      <span class="actionText">{{actionButtonText}}</span>
+    </button>
+
+    <button *ngIf = "routeToConfig" 
+            type="button" class="btn btn-outline-primary btn-action btn-sm"
+            [hidden]="routeToConfigHidden"  
+            (click)="storeJobId('Edit')" 
+            [routerLink]="['/config/config']" routerLinkActive="active">
+      <span class="actionText">{{actionButtonText}}</span>
+    </button>
+
+    <button *ngIf ="stopJobOption"
+            type="button" class="btn btn-link btn-action btn-sm" 
+            (click)="stopJob()">Stop</button>
+
+    <button type="button" class="btn btn-link btn-action btn-sm" 
+            (click)="deleteJob()">Delete</button>
+
+  </div>
+</div>

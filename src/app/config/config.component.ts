@@ -1,6 +1,6 @@
 import { Component, Injectable, OnInit, Input} from '@angular/core';
 import { Router} from '@angular/router';
-import { InputComponent } from '../components/inputComponent';
+import { InputComponent } from '../components/input/inputComponent';
 import { CaseInfo } from '../components/description/caseInfo';
 import { ConfigDataService } from './configData.service';
 
@@ -95,6 +95,8 @@ export class ConfigComponent implements OnInit {
                             this.case=template['case']
                             this.job.status = template['status']
                             this.job.id = template['id']
+                            // Do not load name or description, as API template doesn't give desirable values
+                            // Keep as empty
                           },
                           error => {
                             this.errorMessage = <any> error

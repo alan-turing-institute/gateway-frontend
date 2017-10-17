@@ -11,7 +11,7 @@ import {
 
 import {ResponseOptions} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
-import {InputComponent} from '../components/inputComponent';
+import {InputComponent} from '../components/input/inputComponent';
 import { ConfigDataService } from './configData.service';
 
 describe('Job Service', () => {
