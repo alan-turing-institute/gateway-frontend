@@ -30,7 +30,7 @@ module.exports = {
         loader: 'html-loader'
       },
       {
-        test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|vtp|json|stl)$/,
+        test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|vtp|json|stl|msh)$/,
         loader: 'file-loader?name=assets/[name].[hash].[ext]'
       },
       {
