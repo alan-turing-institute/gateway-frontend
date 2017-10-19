@@ -12,9 +12,8 @@ import {
 
 import {ResponseOptions} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
-import {JobInfo} from '../dashboard/jobInfo';
-import {JobTemplate} from './jobTemplate';
-import { JobConfig } from './jobConfigComponent';
+import {JobInfo} from '../types/jobInfo';
+// import {JobTemplate} from '../types/jobTemplate';
 import { OutputService } from './output.service';
 
 describe('Output Service', () => {
@@ -84,13 +83,9 @@ describe('Output Service', () => {
           outputService = getTestBed().get(OutputService);
           expect(outputService).toBeDefined();
 
-          outputService.getJobInfo().subscribe((components: JobTemplate) => {
+          outputService.getJob().subscribe((components: JobInfo) => {
             expect(components).toBeDefined();
           })
-
-          //outputService.getJobConfig().subscribe((components: JobConfig []) => {
-          //    expect(components).toBeDefined();
-        //});
 
         done();
     });

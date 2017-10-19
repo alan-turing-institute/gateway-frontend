@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './auth/auth.guard';
-
-//Layouts
-import { FullLayoutComponent } from './layouts/full-layout.component';
-import { LoginLayoutComponent } from './layouts/login-layout.component';
-
-import { LoginComponent } from './login/login.component';
-
-import { AppComponent } from './app.component';
-import { AccountModule } from './account/account.module';
+import { MainComponent } from './layout/main.component';
 import { CasesModule } from './cases/cases.module';
-import { ConfigModule } from './config/config.module';
+// import { LoginLayoutComponent } from './layouts/login-layout.component';
+
+// import { LoginComponent } from './login/login.component';
+
+// import { AppComponent } from './app.component';
+// import { AccountModule } from './account/account.module';
+
+// import { ConfigModule } from './config/config.module';
 
 
 export const routes: Routes = [
@@ -22,8 +20,7 @@ export const routes: Routes = [
     },
     {
       path: '',
-      component: FullLayoutComponent,
-      canActivate: [AuthGuard],
+      component: MainComponent,
       data: {
         title: 'Home'
       },
@@ -31,6 +28,10 @@ export const routes: Routes = [
         {
           path: 'account',
           loadChildren: './account/account.module#AccountModule'
+        },
+        {
+          path: 'cases',
+          loadChildren: './cases/cases.module#CasesModule'
         },
         {
           path: 'dashboard',
@@ -41,25 +42,21 @@ export const routes: Routes = [
           loadChildren: './output/output.module#OutputModule'
         },
         {
-          path: 'cases',
-          loadChildren: './cases/cases.module#CasesModule'
-        },
-        {
           path: 'config',
           loadChildren: './config/config.module#ConfigModule'
         }
       ]
     },
-    {
-      path: '',
-      component: LoginLayoutComponent,
-      children: [
-        {
-          path: 'login',
-          component: LoginComponent
-        }
-      ]
-    },
+    // {
+    //   path: '',
+    //   component: LoginLayoutComponent,
+    //   children: [
+    //     {
+    //       path: 'login',
+    //       component: LoginComponent
+    //     }
+    //   ]
+    // },
     {
       path: '**', redirectTo: ''
     }

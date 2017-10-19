@@ -1,190 +1,141 @@
 import { Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
-import { JobInfo } from './jobInfo';
+import { JobInfo } from '../types/jobInfo';
+import { ProgressInfo } from '../types/progressInfo';
 
 import * as moment from 'moment';
 
 @Component({
   selector: 'jobSummary',
-
   templateUrl: './jobSummary.component.html',
   styleUrls: ['jobSummary.css']
 })
 
 export class JobSummaryComponent implements OnInit{
-    @Input() summary: JobInfo;
-    @Input() type: string;
-    @Input() caseInfo: boolean;
-    @Input() case:{};
-
+    @Input() jobInfo: JobInfo;
+    @Input() progressInfo: ProgressInfo;
     @Output() jobDeleted: EventEmitter<string> = new EventEmitter();
-    @Output() jobCancelled: EventEmitter<string> = new EventEmitter();
-
-    private formattedProgressValue: string;
-    private formattedProgressUnits: string;
-
+    @Output() jobStopped: EventEmitter<string> = new EventEmitter();
+    
     jobHoverHidden: boolean;
+    actionButtonText: string;
+    jobShortDescription:string;
+    jobStatusBadgeClass:string;
+    jobTemporalDistanceFromCreation:string;
+    jobProgress:string;
+    routeToConfig:boolean
+    routeToOutput:boolean
+    stopJobOption:boolean
 
-    dashboard:boolean = true;
-    testMe(): void {
-        console.log(this.summary);
-    }
+    getBadgeClass() : string {    
+        let badgeClass = 'badge-success';
 
-    ngOnInit(): void {
-        this.jobHoverHidden = true
-        console.log('summary', this.summary)
-
-
-        // handle case that progress is not available
-        // immediately after job submission
-        if (typeof this.summary.progress.value == "undefined") {
-          this.formattedProgressValue = "0"
-        } else {
-            this.formattedProgressValue = this.summary.progress.value.toFixed(2);
-        }
-
-        if (typeof this.summary.progress.units == "undefined") {
-          this.formattedProgressUnits = "%"
-        } else {
-            this.formattedProgressUnits = this.summary.progress.units;
-        }
-
-    }
-
-    // setJobHoverHidden(): void {
-    //     this.jobHoverHidden = !this.jobHoverHidden
-    // }
-
-    storeJobId(type:string): void {
-      localStorage.setItem('action_type', type);
-      localStorage.setItem('job_id', this.summary.id);
-    }
-
-
-    // getBadgeClass() : string {
-    //     return "badge-"+this.summary.status.toLowerCase();
-    // }
-
-    getBadgeClass() : string {
-
-      // return class for core-ui badges
-
-      let badgeClass = 'badge-success';
-
-      if (this.summary.status.toLowerCase() == 'complete')
+        if (this.jobInfo.status.toLowerCase() == 'complete')
         badgeClass = 'badge-primary'
-      if (this.summary.status.toLowerCase() == 'running')
+        if (this.jobInfo.status.toLowerCase() == 'running')
         badgeClass = 'badge-success'
-      if (this.summary.status.toLowerCase() == 'queued')
+        if (this.jobInfo.status.toLowerCase() == 'queued')
         badgeClass = 'badge-warning'
-      if (this.summary.status.toLowerCase() == 'draft')
+        if (this.jobInfo.status.toLowerCase() == 'draft')
         badgeClass = 'badge-info'
-      if (this.summary.status.toLowerCase() == 'error')
+        if (this.jobInfo.status.toLowerCase() == 'error')
         badgeClass = 'badge-danger'
 
-      return badgeClass;
+        return badgeClass;
     }
-
-    getHeaderClass() : string {
-        //   console.log("card-outline-"+this.summary.status.toLowerCase());
-        return "card-header-"+this.summary.status.toLowerCase();
-
-    }
-
-    getShortDescription(): string {
-        // return this.summary.description.slice(0,200);
-        return this.summary.description;
-    }
-
-    getProgressBarHidden(): boolean {
-        if (this.summary.status == "Running")
-            return false
-        else
-            return true
-
-    }
-
-    getSpanIcon() : string  {
-        var icon = ""
-        if (this.summary.status == "Running")
-            icon = "fa fa-circle-o-notch fa-spin fa-lg"
-        // if (this.summary.status == "Complete")
-        //     icon ="fa fa-line-chart fa-lg"
-        // if (this.summary.status == "Error")
-        //     icon ="fa fa-exclamation-triangle fa-lg"
-        // if (this.summary.status == "Draft")
-        //     icon ="fa fa-pencil-square fa-lg"
-        return icon
-    }
-
-    getActionIcon() : string  {
-        var icon = ""
-        if (this.summary.status == "Running")
-            icon = "fa fa-circle-o-notch fa-spin fa-lg"
-        if (this.summary.status == "Complete")
-            icon ="fa fa-line-chart fa-lg"
-        if (this.summary.status == "Error")
-            icon ="fa fa-exclamation-triangle fa-lg"
-        if (this.summary.status == "Draft")
-            icon ="fa fa-pencil-square fa-lg"
-        if (this.summary.status == "Queued")
-            icon ="fa fa-hourglass-half fa-lg"
-        return icon
-
-    }
-
 
     getActionText() : string  {
         var text = ""
-        if (this.summary.status.toLowerCase() == "running")
+        if (this.jobInfo.status.toLowerCase() == "running")
             text = "View"
-        if (this.summary.status.toLowerCase() == "new")
+        if (this.jobInfo.status.toLowerCase() == "new")
             text = "Edit"
-        if (this.summary.status.toLowerCase() == "complete")
+        if (this.jobInfo.status.toLowerCase() == "complete")
             text ="View"
-        if (this.summary.status.toLowerCase() == "error")
+        if (this.jobInfo.status.toLowerCase() == "error")
             text ="Error"
-        if (this.summary.status.toLowerCase() == "draft")
+        if (this.jobInfo.status.toLowerCase() == "draft")
             text ="Edit"
-        if (this.summary.status.toLowerCase() == "queued")
+        if (this.jobInfo.status.toLowerCase() == "queued")
             text ="View"
         return text
     }
 
-    routeToInput() : boolean  {
-        if (this.summary.status.toLowerCase() == "running")
-            return true
-        if (this.summary.status.toLowerCase() == "complete")
-            return true
-        if (this.summary.status.toLowerCase() == "queued")
-            return true
-        return false
+    getShortDescription(): string {
+        // return this.jobInfo.description.slice(0,200);
+        return this.jobInfo.description;
     }
 
-    routeToOutput() : boolean  {
-        if (this.summary.status.toLowerCase() == "new")
-            return true
-        if (this.summary.status.toLowerCase() == "draft")
-            return true
-        return false
+    getRelativeCreationTime() : string {
+        // use moment.js to get relative time
+        // for example "40 minutes ago"
+        return moment(this.jobInfo.creation_datetime).fromNow()
     }
 
-    relativeCreationTime() : string {
-      // use moment.js to get relative time
-      // for example "40 minutes ago"
-      return moment(this.summary.creation_datetime).fromNow()
+    getProgress(): string {
+        let formattedProgressValue = "";
+        let formattedProgressUnits= "";
+
+        if (typeof this.progressInfo.value == "undefined") 
+            formattedProgressValue = "0"
+        else 
+            formattedProgressValue = this.progressInfo.value.toFixed(2);
+            
+        if (typeof this.progressInfo.units == "undefined") {
+            formattedProgressUnits = "%"
+        } else {
+            formattedProgressUnits = this.progressInfo.units;
+        }
+        return formattedProgressValue+formattedProgressUnits
     }
 
-    // getProgressValue(): Object {
-    //     return {'width':this.summary.progress.value.toString()+"%"}
-    // }
-
-    deleteMe() {
-      console.log("Delete a Job")
-      this.jobDeleted.emit(this.summary.id)
+    drawRouteToConfig() : boolean  {
+        switch (this.jobInfo.status.toLowerCase()) {
+            case "draft": return true;
+            default: return false;
+        }
     }
 
-    cancelMe() {
-      console.log("Canel a Job")
-      this.jobCancelled.emit(this.summary.id)
+    drawRouteToOutput() : boolean  {
+        switch (this.jobInfo.status.toLowerCase()) {
+            case "complete": return true;
+            case "running": return true;
+            case "queued": return true;
+            default: return false;
+        }
+    }
+
+    drawPauseOption() : boolean  {
+        switch (this.jobInfo.status.toLowerCase()) {
+            case "running": return true;
+            default: return false;
+        }
+    }
+
+    ngOnInit(): void {
+        console.log(this.jobInfo)
+        this.jobHoverHidden = true
+        this.actionButtonText = this.getActionText()
+        this.jobShortDescription = this.getShortDescription()
+        this.jobStatusBadgeClass = this.getBadgeClass()
+        this.jobTemporalDistanceFromCreation = this.getRelativeCreationTime()
+        this.jobProgress = this.getProgress()
+        this.routeToConfig=this.drawRouteToConfig()
+        this.routeToOutput =this.drawRouteToOutput()
+        this.stopJobOption = this.drawPauseOption()
+    }
+
+    deleteJob() {
+      console.log("Child wants to delete a Job")
+      this.jobDeleted.emit(this.jobInfo.id)
+    }
+
+    stopJob() {
+      console.log("Child wants to cancel a Job")
+      this.jobStopped.emit(this.jobInfo.id)
+    }
+
+    storeJobId(type:string): void {
+        localStorage.setItem('action_type', type);
+        localStorage.setItem('job_id', this.jobInfo.id);
     }
 }

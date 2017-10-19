@@ -18,6 +18,6 @@ import { JobSummaryComponent } from './jobSummary.component';
   providers: [
     DashboardService
   ],
-  exports : [JobSummaryComponent]
+  exports : []
 })
 export class DashboardModule { }

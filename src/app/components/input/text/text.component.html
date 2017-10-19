@@ -1,0 +1,18 @@
+<div *ngIf="data.type == 'text'">
+  <label [for]=data.name>{{data.label}} 
+      <span [hidden]="data.valid" [ngClass]="{'invalidValue': data.valid === false}">
+          *Valid values ranges between {{component.min_value}} and {{component.max_value}}
+      </span>
+  </label>
+  <div class="input-group"  >
+    <input
+      [(ngModel)]="data.value"
+      (ngModelChange) = "validateValue(data)"
+      [attr.id]="data.name"
+      [ngClass]="{'invalidValue': data.valid === false}"
+      (keyup.enter)="update($event)"
+      (blur)="update($event)"
+    >
+    <span class="input-group-addon">{{data.units}}</span>
+  </div>
+</div>

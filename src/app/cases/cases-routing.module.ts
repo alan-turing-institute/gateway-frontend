@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CasesComponent } from './cases.component';
 
-const routes: Routes = [
+const casesRoutes: Routes = [
   {
     path: '',
     component: CasesComponent,
@@ -13,7 +13,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(casesRoutes)],
   exports: [RouterModule]
 })
 export class CasesRoutingModule {}

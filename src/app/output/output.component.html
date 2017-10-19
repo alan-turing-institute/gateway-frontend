@@ -1,41 +1,22 @@
- <div class="animated fadeIn">
-  <div *ngIf="haveData==true">
-    <div class='container-fluid' >
+<div class="animated fadeIn">
+  <div class='container-fluid' >
+    <div class="row">
+      <div class="col-md-6">
+          <div class="card">  
+              <caseDescription *ngIf="job" [info] = "job?.case"></caseDescription>
+          </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">    
+            <jobDescription *ngIf="job" [info] = "job"></jobDescription>
+        </div>
+      </div>
+    </div>
 
-      <div class="row">
-        <div class="col-md-6 mb-4">
+    <div class="row">
+      <div *ngIf="status=='Complete'" class="col-md-6 mb-4">
          <!-- Nav tabs -->
-         <tabset>
-           <tab heading="Job Information">
-             <div class="row">
-              <div class="col-md-4"><img src={{job.case.thumbnail}} class=img-job></div>
-              <div class="col-md-8">
-                <p class="descriptionText"><strong>Status:</strong> {{job.status}}</p>
-                <p class="descriptionText"><strong>Description:</strong> {{job.description}}</p>
-                <p class="descriptionText"><strong>Created:</strong> {{relativeCreationTime}} </p>
-                <p class="descriptionText"><strong>Queued:</strong> {{relativeStartTime}} </p>
-                <div *ngIf="status=='Complete'">
-                  <p class="descriptionText"><strong>Completed:</strong> {{relativeEndTime}}</p>
-                </div>
-              </div>
-            </div>
-           </tab>
-           <tab heading="Case Information">
-             <div class="row">
-               <div class="col-md-4">
-                 <img src={{job.case.thumbnail}} class=img-job>
-               </div>
-               <div class="col-md-8">
-                 <p class="descriptionText">{{job.case.description}}</p>
-               </div>
-           </div>
-           </tab>
-         </tabset>
-       </div><!--/.col-->
-
-       <div *ngIf="status=='Complete'" class="col-md-6 mb-4">
-         <!-- Nav tabs -->
-         <tabset>
+         <!-- <tabset>
            <tab>
             <ng-template tabHeading>Downloads</ng-template>
 
@@ -52,25 +33,26 @@
               </div>
             </div>
            </tab>
-         </tabset>
-       </div><!--/.col-->
-      </div>
+         </tabset> -->
+      </div><!--/.col-->
+    </div>
+    
 
-      <p></p>
-
-      <div *ngIf="status=='Complete' || status=='Running'">
-        <div class = "card" >
-          <div class="card-header">
-            <strong>Diagnostics</strong>
+    <div class="row">
+        <div *ngIf="status=='Complete' || status=='Running'">
+            <div class = "card" >
+              <div class="card-header">
+                <strong>Diagnostics</strong>
+              </div>
+              <div>
+                <chart></chart>
+              </div>
+            </div>
           </div>
-          <div>
-            <chart></chart>
-          </div>
-        </div>
-      </div>
+    </div>
 
-      <div *ngIf="status=='Complete'">
-
+    <div class="row">
+      <div *ngIf="status=='Complete'">    
         <div *ngFor="let output of job.outputs">
           <div *ngIf="output.type =='video'">
             <div class = "card" >
@@ -82,7 +64,7 @@
               </div>
             </div>
           </div>
-
+          
           <div *ngIf="output.type =='interface'">
             <div class = "card" >
               <div class="card-header">
@@ -92,24 +74,10 @@
                 <app-interface [interfaceUrl]='output.destination_path'></app-interface>
               </div>
             </div>
-          </div>
-
+          </div>  
         </div>
-
       </div>
-
-    </div>
-
-       <!-- <div class="card-header" (click)="configCollapse()">
-        <strong>Configuration</strong>
-      </div>
-      <div class = "card">
-        <div [ngClass] = "{'collapse':config.collapse}" >
-          <p></p>
-          <config [type]='type' ></config>
-        </div>
-      </div>  -->
-    <config [type]='type' ></config>
+    </div>  
 
   </div>
 </div>

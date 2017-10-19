@@ -8,7 +8,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import {InputComponent} from './inputComponent';
+import { JobInfo } from '../types/jobInfo';
+import {InputComponent} from '../components/input/inputComponent';
 import { environment } from '../../environments/environment';
 
 import * as urljoin from 'url-join';
@@ -20,11 +21,10 @@ export class ConfigDataService {
   private templateUrl = urljoin(environment.apiRoot, "cases");
   private jobsUrl = urljoin(environment.apiRoot, "jobs");
   private runUrl = urljoin(environment.apiRoot, "run");
-
   private response = {}
   constructor (private http: Http) {}
 
-  getTemplate(template_id): Observable<InputComponent[]> {
+  getTemplate(template_id): Observable<JobInfo> {
     var url = urljoin(this.templateUrl, template_id)
     this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
@@ -33,8 +33,7 @@ export class ConfigDataService {
     return this.jobData;
   }
 
-  getJob(url): Observable<InputComponent[]> {
-    console.log(url);
+  getJob(url): Observable<JobInfo> {
     this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
                     .catch(this.handleError);
@@ -45,7 +44,6 @@ export class ConfigDataService {
 
   getJobUrl(job_id): string {
     var url = urljoin(this.jobsUrl, job_id)
-    console.log(url)
     return url
   }
 
@@ -85,21 +83,6 @@ export class ConfigDataService {
                     .catch(this.handleError);
     return response
   }
-
-
-  private arrayObjectIndexOf(myArray, searchTerm, property) {
-    for(var i = 0, len = myArray.length; i < len; i++) {
-        if (myArray[i][property] === searchTerm) return i;
-    }
-    return -1;
-  }
-
-  updateJobData(supersetComponents, componentKey, newValue) : void {
-    var index = this.arrayObjectIndexOf(supersetComponents, componentKey, 'name'); // 1
-    supersetComponents[index].value = newValue;
-  }
-
-
 
   private extractJsonData(res: Response) {
     console.log(res)

@@ -1,0 +1,13 @@
+<div *ngIf="data.type == 'slider'">
+    <label [for]=data.name>{{data.label}}</label>
+    <ion-range-slider
+        [attr.id]=data.name
+        from={{data.value}}
+        min={{data.min_value}}
+        max={{data.max_value}}
+        data-step={{data.step}}
+        postfix=" {{data.units}}"
+        (onFinish)="update($event)">
+    </ion-range-slider>
+</div>
+      
