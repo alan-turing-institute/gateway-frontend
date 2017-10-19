@@ -1,7 +1,8 @@
 import { Component, Injectable, OnInit, Input} from '@angular/core';
 import { Router} from '@angular/router';
 import { InputComponent } from '../components/input/inputComponent';
-import { CaseInfo } from '../components/description/caseInfo';
+import { CaseInfo } from '../types/caseInfo';
+import { JobInfo } from '../types/jobInfo';
 import { ConfigDataService } from './configData.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { ConfigDataService } from './configData.service';
 export class ConfigComponent implements OnInit {
   case:CaseInfo
   families:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
-  job: {name:string, status:string, description:string, id:string}
+  job: JobInfo
   errorMessage: string;
   jobExistsOnServer:boolean;
   minimalJobInfoCollected:boolean;
@@ -28,7 +29,7 @@ export class ConfigComponent implements OnInit {
     this.case = new CaseInfo
     this.minimalJobInfoCollected = false
     this.jobExistsOnServer = false
-    this.job = {'name': "", 'description':"", 'status':"", id:""}
+    this.job = new JobInfo
     this.getData()
   }
 
@@ -74,6 +75,7 @@ export class ConfigComponent implements OnInit {
       this.configDataService.getJob(url)
                         .subscribe(
                           config => {
+                            this.job = config
                             this.families = config['families']
                             this.case=config['case']
                             this.job.name = config['name']
@@ -91,10 +93,14 @@ export class ConfigComponent implements OnInit {
       this.configDataService.getTemplate(template_id)
                         .subscribe(
                           template => {
+                            this.job = template
+                            this.job.name=""
+                            this.job.description=""
                             this.families = template['families']
                             this.case=template['case']
                             this.job.status = template['status']
                             this.job.id = template['id']
+                            
                             // Do not load name or description, as API template doesn't give desirable values
                             // Keep as empty
                           },

@@ -1,6 +1,6 @@
 import { Component, Input} from '@angular/core';
 import { Router } from '@angular/router';
-import { CaseInfo } from './caseInfo';
+import { CaseInfo } from '../../types/caseInfo';
 
 @Component({
   selector: 'caseDescription',

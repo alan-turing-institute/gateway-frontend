@@ -1,6 +1,6 @@
 import { Component, Input} from '@angular/core';
 import { Router } from '@angular/router';
-import { JobInfo } from '../../dashboard/jobInfo';
+import { JobInfo } from '../../types/jobInfo';
 
 @Component({
   selector: 'jobDescription',

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 // import 'rxjs/add/operator/catch';
 // import 'rxjs/add/operator/map';
 
-import { CaseInfo } from '../components/description/caseInfo';
+import { CaseInfo } from '../types/caseInfo';
 import { environment } from '../../environments/environment';
 
 import * as urljoin from 'url-join';

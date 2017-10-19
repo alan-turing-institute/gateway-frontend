@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
+import { JobInfo } from '../types/jobInfo';
 import {InputComponent} from '../components/input/inputComponent';
 import { environment } from '../../environments/environment';
 
@@ -23,7 +24,7 @@ export class ConfigDataService {
   private response = {}
   constructor (private http: Http) {}
 
-  getTemplate(template_id): Observable<InputComponent[]> {
+  getTemplate(template_id): Observable<JobInfo> {
     var url = urljoin(this.templateUrl, template_id)
     this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
@@ -32,7 +33,7 @@ export class ConfigDataService {
     return this.jobData;
   }
 
-  getJob(url): Observable<InputComponent[]> {
+  getJob(url): Observable<JobInfo> {
     this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
                     .catch(this.handleError);

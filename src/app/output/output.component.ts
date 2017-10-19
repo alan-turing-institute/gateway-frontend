@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/switchMap';
 import { Component, OnInit, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { JobTemplate } from './jobTemplate';
+import { JobInfo } from '../types/jobInfo'
 import { OutputService } from './output.service';
 
 import { ChartComponent } from './chart/chart.component';
@@ -16,7 +16,7 @@ import * as moment from 'moment';
 })
 
 export class OutputComponent implements OnInit {
-  job: JobTemplate;
+  job: JobInfo;
   job_id: string;
   chart:{} = {collapse:false}
   config:{} = {collapse:false}

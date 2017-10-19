@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { environment } from '../../../environments/environment';
+import { JobInfo } from '../../types/jobInfo';
 
 import * as urljoin from 'url-join';
 
@@ -13,7 +14,7 @@ export class ChartService {
   private dataUrl = urljoin(environment.apiRoot, 'data')
   constructor (private http: Http) {}
 
-  getData(): Observable<Array<any>>{
+  getData(): Observable<Array<JobInfo>>{
     var url = urljoin(this.dataUrl, localStorage.getItem('job_id'))
     return this.http.get(url)
                     .map(this.extractData)

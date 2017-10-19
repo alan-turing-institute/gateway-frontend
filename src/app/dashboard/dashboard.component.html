@@ -6,8 +6,8 @@
       <div class="card-body">
         <div class="card-deck">
           <div *ngFor="let job of jobs" class='card-jobs container-fluid'>
-            <div *ngIf="job.status=='Complete'">
-              <jobSummary [summary]="job" 
+            <div *ngIf="job.info.status=='Complete'">
+              <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
                 (jobDeleted)="deleteJob($event)">
               </jobSummary>
             </div>
@@ -23,8 +23,8 @@
       <div class="card-body">
         <div class="card-deck">
           <div *ngFor="let job of jobs" class='card-jobs container-fluid'>
-            <div *ngIf="job.status=='Queued' || job.status=='Running' ">
-              <jobSummary [summary]="job" 
+            <div *ngIf="job.info.status=='Queued' || job.info.status=='Running' ">
+              <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
                           (jobDeleted)="deleteJob($event)" 
                           (jobStopped)="cancelJob($event)">
               </jobSummary>
@@ -41,8 +41,8 @@
       <div class="card-body">
         <div class="card-deck">
           <div *ngFor="let job of jobs" class='card-jobs container-fluid'>
-            <div *ngIf="job.status=='Draft'">
-              <jobSummary [summary]="job" 
+            <div *ngIf="job.info.status=='Draft'">
+              <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
                           (jobDeleted)="deleteJob($event)"
               ></jobSummary>
             </div>

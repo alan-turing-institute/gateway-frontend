@@ -5,8 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import { JobInfo } from './jobInfo';
-import { ProgressInfo } from './progressInfo';
+import { JobInfo } from '../types/jobInfo';
+import { ProgressInfo } from '../types/progressInfo';
 import { environment } from '../../environments/environment';
 
 import * as urljoin from 'url-join';

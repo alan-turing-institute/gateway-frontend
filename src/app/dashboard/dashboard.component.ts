@@ -1,6 +1,7 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { JobInfo } from './jobInfo';
+import { JobInfo } from '../types/jobInfo';
+import { ProgressInfo } from '../types/progressInfo';
 import { DashboardService } from './dashboard.service';
 import { JobSummaryComponent } from './jobSummary.component';
 
@@ -13,10 +14,8 @@ import { JobSummaryComponent } from './jobSummary.component';
 })
 
 export class DashboardComponent implements OnInit {
-
-  jobs: JobInfo [];
+  jobs:{info: JobInfo, progress:ProgressInfo} []
   errorMessage: string;
-  progress: {value:number, units:string};
 
   constructor(private dashboardService: DashboardService) { }
 
@@ -35,16 +34,19 @@ export class DashboardComponent implements OnInit {
             this.dashboardService.getProgressInfo(job.id)
                             .subscribe(
                               progress => {
-                                  job.progress =  progress
-                                  this.jobs.push(job)
+                                  this.jobs.push({"info": job, "progress":progress})
                               },
                               error => {
                                 this.errorMessage = <any> error
                               });
           }
           else {
-            job.progress = {value:0, units: "%", range_min:0, range_max:100}
-            this.jobs.push(job)
+            var progressPlaceHolder:ProgressInfo = {"value": 0, "units": "%", "range_min":0, "range_max":100}
+            // progressPlaceHolder.value = 0
+            // progressPlaceHolder.units = "%"
+            // progressPlaceHolder.range_min = 0
+            // progressPlaceHolder.range_max = 100
+            this.jobs.push({"info": job, "progress":progressPlaceHolder})
           }
         })
       })
@@ -58,7 +60,7 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteJob(id){
-    this.jobs = this.jobs.filter(item => item.id !== id);
+    this.jobs = this.jobs.filter(item => item.info.id !== id);
     this.dashboardService.deleteJob(id).subscribe(
       message => {console.log("deleted")},
       error => {this.errorMessage = <any> error}
