@@ -1,7 +1,21 @@
 <div class="card">
-  <div class="card-body">
-    <!-- <span [ngClass]="jobStatusBadgeClass" class="badge float-right">{{job_info.status}}</span> -->
-    <h5 class="card-title">{{jobInfo.name}}</h5>
+    <div class="card-header">
+        {{jobInfo.name}}
+    </div>
+    <div class="card-img">
+        <img style="height: 3em" src={{jobInfo.case.thumbnail}} class="img-job">
+    </div>
+    <div class="card-block">
+        <p class="card-text">
+            {{jobShortDescription}}
+        </p>
+        <p class="card-subtitle mb-2 text-muted">{{jobTemporalDistanceFromCreation}}</p>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-sm btn-link">Action</button>
+    </div>
+
+    <!-- <h5 class="card-title">{{jobInfo.name}}</h5>
     <p class="card-subtitle mb-2 text-muted">{{jobTemporalDistanceFromCreation}}</p>
 
     <div class="row">
@@ -23,10 +37,10 @@
           aria-valuenow="progressInfo.value" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
       </div>
-    </div>
-  </div>
+    </div> -->
+  
 
-  <div class="card-footer">
+  <!-- <div class="card-footer">
     <button *ngIf = "routeToOutput" 
             type="button" class="btn btn-outline-primary btn-action btn-sm" 
             (click)="storeJobId('Output')" 
@@ -49,5 +63,5 @@
     <button type="button" class="btn btn-link btn-action btn-sm" 
             (click)="deleteJob()">Delete</button>
 
-  </div>
+  </div> -->
 </div>

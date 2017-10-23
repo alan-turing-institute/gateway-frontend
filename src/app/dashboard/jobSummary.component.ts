@@ -112,7 +112,7 @@ export class JobSummaryComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        console.log(this.jobInfo)
+        // console.log(this.jobInfo)
         this.jobHoverHidden = true
         this.actionButtonText = this.getActionText()
         this.jobShortDescription = this.getShortDescription()

@@ -1,10 +1,10 @@
 
 <div class="row">
   <div class="col-sm-12 col-md-12 col-lg-4">
-    <div class="card">
+    <!-- <div class="card">
       <div class="card-header">Completed</div>
       <div class="card-body">
-        <div class="card-deck">
+        <div class="card-deck">-->
           <div *ngFor="let job of jobs" class='card-jobs container-fluid'>
             <div *ngIf="job.info.status=='Complete'">
               <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
@@ -12,9 +12,9 @@
               </jobSummary>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        <!-- </div> -->
+      <!-- </div> -->
+    <!-- </div> -->
   </div>
 
   <div class="col-sm-12 col-md-12 col-lg-4">

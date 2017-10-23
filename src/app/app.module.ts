@@ -8,6 +8,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule, JsonpModule } from '@angular/http';
 
+import { ClarityModule } from "clarity-angular";
+
 import { MainComponent } from './layout/main.component'
 
 @NgModule({
@@ -17,7 +19,8 @@ import { MainComponent } from './layout/main.component'
     HttpModule,
     JsonpModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ClarityModule.forRoot()
   ],
   declarations: [
     AppComponent,
