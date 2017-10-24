@@ -1,64 +1,44 @@
 <div class="animated fadeIn">
   <div class='container-fluid' >
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="card">  
-              <caseDescription *ngIf="job" [info] = "job?.case"></caseDescription>
+              <div class="card-header">{{job?.name}}</div>
+              <div class="card-block">
+                  <div class="card-media-block">
+                      <img src={{job?.case.thumbnail}} class="card-media-image">
+                      <div class="card-media-description">
+                        <span class="card-media-title">{{job?.case.label}}</span>
+                        <span class="card-media-text">{{job?.case.description}}</span>
+                      </div>
+                  </div>
+                  <div class="card-text">{{job?.description}}</div>
+              </div>
+              <div class="card-footer">
+                  <div *ngFor="let output of job?.outputs">
+                    <output-download [data]="output"></output-download>
+                  </div>
+              </div>
+              
           </div>
       </div>
-      <div class="col-md-6">
-        <div class="card">    
-            <jobDescription *ngIf="job" [info] = "job"></jobDescription>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class = "card" >
+          <div class="card-header">Diagnostics</div>
+          <div class="card-block"><chart></chart></div>
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div *ngIf="status=='Complete'" class="col-md-6 mb-4">
-         <!-- Nav tabs -->
-         <!-- <tabset>
-           <tab>
-            <ng-template tabHeading>Downloads</ng-template>
-
-            <div class="downloads">
-              <div *ngFor="let output of job.outputs">
-                <div *ngIf="output.type =='csv'">
-                  <output-download [data]="output"></output-download>
-                </div>
-              </div>
-              <div *ngFor="let output of job.outputs">
-                <div *ngIf="output.type =='interface'">
-                  <output-download [data]="output"></output-download>
-                </div>
-              </div>
-            </div>
-           </tab>
-         </tabset> -->
-      </div><!--/.col-->
-    </div>
-    
-
-    <div class="row">
-        <div *ngIf="status=='Complete' || status=='Running'">
-            <div class = "card" >
-              <div class="card-header">
-                <strong>Diagnostics</strong>
-              </div>
-              <div>
-                <chart></chart>
-              </div>
-            </div>
-          </div>
-    </div>
-
-    <div class="row">
-      <div *ngIf="status=='Complete'">    
+      <div *ngIf="status=='Complete'" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">    
         <div *ngFor="let output of job.outputs">
           <div *ngIf="output.type =='video'">
-            <div class = "card" >
-              <div class="card-header">
-                <strong>Videos</strong>
-              </div>
+            <div class="card" >
+              <div class="card-header">Videos</div>
               <div>
                 <app-video [videoUrl]='output.destination_path'></app-video>
               </div>
@@ -75,6 +55,15 @@
               </div>
             </div>
           </div>  
+        </div>
+      </div>
+    </div>  
+
+    <div class="row">  
+      <div class = "card" >
+        <div class="card-header">Parameters</div>
+        <div class="card-block">
+            <job-parameters [parameters]="flatParametersList"></job-parameters>
         </div>
       </div>
     </div>  

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { OutputService } from '../output.service';
 import * as FileSaver from 'file-saver';
+import "clarity-icons";
 
 @Component({
     providers: [OutputService],
@@ -20,6 +21,27 @@ export class DownloadComponent implements OnInit {
 
     public ngOnInit(): void {
       this.fileUrl = this.data.destination_path;
+      switch (this.data.type) {
+        case 'interface': {
+          this.downloadFilename = 'interface.stl'
+          this.buttonLabel = 'Interface STL'
+          break;
+        }
+        case 'csv': {
+          this.downloadFilename = 'output.csv'
+          this.buttonLabel = 'Diagnostics CSV'
+          break;
+        }
+        case 'video': {
+          this.downloadFilename = 'video.mp4'
+          this.buttonLabel = 'Simulation Video'
+          break;
+        }
+        default: {
+          this.downloadFilename = "Unknown file type"
+        }
+      }
+
       if (this.data.type=='interface') {
         this.downloadFilename = 'interface.stl'
         this.buttonLabel = 'Interface STL'

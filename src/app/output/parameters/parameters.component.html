@@ -1,0 +1,19 @@
+<table class="table">
+        <thead>
+            <tr>
+                <th>Famiy</th>
+                <th>Parameter</th>
+                <th>Unit</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let parameter of parameters">
+                <td>{{parameter.family}}</td>
+                <td>{{parameter.name}}</td>
+                <td>{{parameter.unit}}</td>
+                <td>{{parameter.value}}</td>
+            </tr>
+        </tbody>
+    </table>
+    

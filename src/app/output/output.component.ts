@@ -12,7 +12,7 @@ import * as moment from 'moment';
 @Component({
   providers: [OutputService],
   templateUrl: './output.component.html',
-  styles: [require('./output.component.css').toString()]
+  // styles: [require('./output.component.css').toString()]
 })
 
 export class OutputComponent implements OnInit {
@@ -27,6 +27,7 @@ export class OutputComponent implements OnInit {
   relativeCreationTime: string;
   relativeStartTime: string;
   relativeEndTime: string;
+  flatParametersList: Array<any>;
 
   constructor(
       private activatedRoute: ActivatedRoute,
@@ -34,7 +35,23 @@ export class OutputComponent implements OnInit {
     ) {}
 
   ngOnInit() {
+    this.flatParametersList=[]
     this.getData();
+  }
+
+  flattenFamiliesStructure() {
+    this.job.families.forEach(family => {
+      family.parameters.forEach(parameter => {
+        let parameterList = {"family":family.label, 
+          "name":parameter.label, 
+          "unit":parameter.units,
+          "value":parameter.value,
+          "default":parameter.value,
+        }  
+        this.flatParametersList.push(parameterList);
+      })
+    })
+    console.log(this.flatParametersList)
   }
 
   getData(){
@@ -45,6 +62,7 @@ export class OutputComponent implements OnInit {
                         this.status = this.job.status
                         this.temporalDistanceFromCreation()
                         this.haveData = true
+                        this.flattenFamiliesStructure()
                       },
                       error => {
                         this.errorMessage = <any> error

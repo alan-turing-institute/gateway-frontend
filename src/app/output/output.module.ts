@@ -17,6 +17,7 @@ import { PipeModule } from '../components/pipe/pipe.module';
 import { DashboardModule } from '../dashboard/dashboard.module'
 import { VideoComponent } from './video/video.component';
 import { DownloadComponent } from './download/download.component';
+import { JobParametersComponent } from './parameters/parameters.component';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { DownloadComponent } from './download/download.component';
     ChartComponent,
     VideoComponent,
     DownloadComponent,
+    JobParametersComponent
   ],
   providers: [
     OutputService
