@@ -24,32 +24,22 @@ export class DownloadComponent implements OnInit {
       switch (this.data.type) {
         case 'interface': {
           this.downloadFilename = 'interface.stl'
-          this.buttonLabel = 'Interface STL'
+          this.buttonLabel = 'Interface (.stl)'
           break;
         }
         case 'csv': {
           this.downloadFilename = 'output.csv'
-          this.buttonLabel = 'Diagnostics CSV'
+          this.buttonLabel = 'Diagnostics (.csv)'
           break;
         }
         case 'video': {
           this.downloadFilename = 'video.mp4'
-          this.buttonLabel = 'Simulation Video'
+          this.buttonLabel = 'Video (.mp4)'
           break;
         }
         default: {
           this.downloadFilename = "Unknown file type"
         }
-      }
-
-      if (this.data.type=='interface') {
-        this.downloadFilename = 'interface.stl'
-        this.buttonLabel = 'Interface STL'
-      } else if (this.data.type=='csv')  {
-        this.downloadFilename = 'output.csv'
-        this.buttonLabel = 'Diagnostics CSV'
-      } else {
-        this.downloadFilename = '_'
       }
     }
 

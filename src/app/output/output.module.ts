@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ClarityModule } from "clarity-angular";
 
 
 import { OutputComponent } from './output.component';
@@ -26,7 +27,8 @@ import { JobParametersComponent } from './parameters/parameters.component';
     FormsModule,
     CommonModule,
     DescriptionModule,
-    PipeModule
+    PipeModule,
+    ClarityModule.forRoot()
   ],
   declarations: [
     OutputComponent,

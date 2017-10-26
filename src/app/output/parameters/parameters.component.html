@@ -1,19 +1,25 @@
-<table class="table">
-        <thead>
-            <tr>
-                <th>Famiy</th>
-                <th>Parameter</th>
-                <th>Unit</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let parameter of parameters">
-                <td>{{parameter.family}}</td>
-                <td>{{parameter.name}}</td>
-                <td>{{parameter.unit}}</td>
-                <td>{{parameter.value}}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class='container-fluid' >
+    <div class="row flex-items-lg-right flex-items-md-right flex-items-sm-right flex-items-xs-right">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+            <clr-icon shape="printer"></clr-icon>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <clr-datagrid>
+                <clr-dg-column>Family</clr-dg-column>
+                <clr-dg-column>Parameter</clr-dg-column>
+                <clr-dg-column>Value</clr-dg-column>
+
+                <clr-dg-row *ngFor="let parameter of parameters">
+                    <clr-dg-cell>{{parameter.family}}</clr-dg-cell>
+                    <clr-dg-cell>{{parameter.name}}</clr-dg-cell>
+                    <clr-dg-cell>{{parameter.value}} {{parameter.unit}}</clr-dg-cell>
+                </clr-dg-row>
+                <clr-dg-footer>{{parameters.length}} parameters</clr-dg-footer>
+            </clr-datagrid>
+        </div>
+    </div>
+    
+</div>
     

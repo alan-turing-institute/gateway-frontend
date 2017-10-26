@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { JobInfo } from '../../types/jobInfo';
 
+
+
 @Component({
     providers: [],
     selector: 'job-parameters',

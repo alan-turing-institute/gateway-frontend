@@ -75,19 +75,12 @@ export class OutputComponent implements OnInit {
     this.relativeEndTime = moment(this.job.end_datetime).fromNow()
   }
 
-  chartCollapse() {
-     this.chart['collapse'] = !this.chart['collapse']
-   }
+  // chartCollapse() {
+  //    this.chart['collapse'] = !this.chart['collapse']
+  //  }
 
-  configCollapse() {
-     this.config['collapse'] = !this.config['collapse']
-   }
-
-  downloadFile(fileUrl) {
-    console.log('downloading csv data')
-      this.outputService.downloadFile(fileUrl).subscribe(blob=>{
-       FileSaver.saveAs(blob, 'output.csv')
-    })
-  }
+  // configCollapse() {
+  //    this.config['collapse'] = !this.config['collapse']
+  //  }
 
 }

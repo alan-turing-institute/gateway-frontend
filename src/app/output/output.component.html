@@ -15,11 +15,18 @@
                   <div class="card-text">{{job?.description}}</div>
               </div>
               <div class="card-footer">
-                  <div *ngFor="let output of job?.outputs">
-                    <output-download [data]="output"></output-download>
-                  </div>
+                <clr-dropdown>
+                    <button type="button" class="btn btn-outline-primary" clrDropdownTrigger>
+                        Download
+                        <clr-icon shape="caret down"></clr-icon>
+                    </button>
+                    <clr-dropdown-menu clrPosition="top-right" *clrIfOpen>
+                        <div *ngFor="let output of job?.outputs">
+                            <output-download [data]="output"></output-download>
+                          </div>
+                    </clr-dropdown-menu>
+                </clr-dropdown>
               </div>
-              
           </div>
       </div>
     </div>
@@ -61,7 +68,7 @@
 
     <div class="row">  
       <div class = "card" >
-        <div class="card-header">Parameters</div>
+        <div class="card-header">Parameters </div>
         <div class="card-block">
             <job-parameters [parameters]="flatParametersList"></job-parameters>
         </div>
