@@ -1,60 +1,54 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-12">
-        <div class="card-header">
-          <strong>About</strong>
-        </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">  
-          <caseDescription [info] = "case"></caseDescription>
-          <div class="row">
-            <div class="col-md-12">
-                <label>Name:</label>
-                <input type="text" class="form-control" placeholder="Name"
-                       [(ngModel)]="job.name" 
-                       (keydown)="setMinimalJobInfoCollected()">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">  
-              <label>Description</label>
-              <textarea rows = "3" class="form-control" placeholder="Description"
+            <div class="card-block">
+              <form>
+                  <section class="form-block">
+                    <!-- <label>Job Information</label> -->
+                    <div class="card-media-block">
+                        <img src={{case?.thumbnail}} class="card-media-image">
+                        <div class="card-media-description">
+                          <span class="card-media-title">{{case?.label}}</span>
+                          <span class="card-media-text">{{case?.description}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="aForm_1">Name</label>
+                      <input type="text" class="form-control" name="jobName" placeholder="Your Job Name" size="45"
+                        [(ngModel)]="job.name" 
+                        (keydown)="setMinimalJobInfoCollected()">
+                    </div>
+                      
+                    <div class="form-group">
+                      <label for="aForm_4">Description</label>
+                      <textarea id="aForm_4" rows="5" name="jobDescription" placeholder="Job Description"
                         [(ngModel)]=job.description 
                         (keydown)="setMinimalJobInfoCollected()"></textarea>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-              <button type="button" 
+                  </div>
+                  <button type="button" 
                       class="btn btn-primary btn-action" 
                       (click)="saveJob()" 
-                      [disabled]=!minimalJobInfoCollected>
-                <span>Save</span>
-              </button>
-            <div class="col-md-4">
-                <button type="button"
-                        class="btn btn-primary btn-action"
-                        routerLinkActive="active"
-                        (click)="runJob()"
-                        [disabled]="!minimalJobInfoCollected"
-                        [hidden]=!minimalJobInfoCollected>
-                  <span>Run</span>
-                </button>
-              </div>
+                      [disabled]=!minimalJobInfoCollected><span>Save</span>
+                  </button>
+                  <button type="button"
+                      class="btn btn-primary btn-action"
+                      routerLinkActive="active"
+                      (click)="runJob()"
+                      [disabled]="!minimalJobInfoCollected"
+                      [hidden]=!minimalJobInfoCollected><span>Run</span>
+                  </button>
+                  </section>
+              </form>
             </div>
-          </div>
         </div>
     </div>
-  </div>
+  </div> 
   
   <div class="row">
-    <div class="col-md-12">
-      <div class="card-header">
-        <strong>Configuration</strong>
-      </div>
-      <div class = "card">
-      <div [attr.id]="componentFamilyAccordion" role="tablist">
-        <div *ngFor="let family of families" class="card card-family" >
-          <div class="card-header config" role="tab" (click)="toggleCollapse(family)">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div *ngFor="let family of families" class="card" >
+          <div class="card-header config" >
             <h5 class="mb-0">
               <a data-toggle="collapse" data-target={{getDataTarget(family)}} data-parent="#componentFamilyAccordion">
                 {{family.label}}
