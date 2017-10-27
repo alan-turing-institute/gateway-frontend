@@ -14,27 +14,34 @@ import { InputComponent } from '../inputComponent';
 export class SliderComponent implements OnInit{
   @Input() data: InputComponent; 
   @Output() onUpdated = new EventEmitter<string>();
-  previousValue:string
+  defaultValue:string
   
   ngOnInit () {
-    // console.log("Adding: "+this.data.type)
+    this.defaultValue = this.data.value
+    // console.log("changing value: "+this.defaultValue)
   }
 
   valueValidated(newValue):boolean {
-    if ((parseFloat(this.data.value) >= parseFloat(this.data.min_value)) 
-      && (parseFloat(this.data.value) <= parseFloat(this.data.max_value)))
+    if ((Number(newValue)!=NaN) && (Number(this.data.value) >= Number(this.data.min_value)) 
+      && (Number(this.data.value) <= Number(this.data.max_value))) {
       return true
-    else
+    }
+    else {
+      // console.log (newValue + " is invalid")
       return false
+    }
   }
 
   update (event) {
     let newValue = event.from;
     if (this.valueValidated(newValue)) {
-      this.previousValue = newValue
+      // this.defaultValue = newValue
       this.onUpdated.emit(newValue.toString())
+      console.log("Child Emiting change: " +newValue)
     }  
-    else 
-      this.data.value = this.previousValue
+    else {
+      console.log("resetting to "+this.defaultValue)
+      this.data.value = this.defaultValue
+    }
   }
 }
