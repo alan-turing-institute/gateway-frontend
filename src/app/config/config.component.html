@@ -17,13 +17,13 @@
                 <section class="form-block">
                   <div class="form-group">
                     <label for="aForm_1" class="required">Name</label>
-                    <input type="text" class="form-control" name="jobName" placeholder="Your Job Name" size="45"
+                    <input type="text" class="form-control" name="jobName" placeholder="Your Job Name" size="25"
                       [(ngModel)]="job.name" 
                       (keydown)="setMinimalJobInfoCollected()">
                   </div>
                     
                   <div class="form-group">
-                    <label for="aForm_4">Description</label>
+                    <label for="aForm_4" class="required">Description</label>
                     <textarea id="aForm_4" rows="2" name="jobDescription" placeholder="Job Description"
                       [(ngModel)]=job.description 
                       (keydown)="setMinimalJobInfoCollected()"></textarea>

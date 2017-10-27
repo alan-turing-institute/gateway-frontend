@@ -139,12 +139,12 @@ export class JobSummaryComponent implements OnInit{
 
     deleteJob() {
       console.log("Child wants to delete a Job")
-    //   this.jobDeleted.emit(this.jobInfo.id)
+      this.jobDeleted.emit(this.jobInfo.id)
     }
 
     stopJob() {
       console.log("Child wants to cancel a Job")
-    //   this.jobStopped.emit(this.jobInfo.id)
+      this.jobStopped.emit(this.jobInfo.id)
     }
 
     storeJobId(type:string): void {
