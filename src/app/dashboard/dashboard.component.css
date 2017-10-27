@@ -1,8 +1,3 @@
-.card-jobs {
-  width:100%;
-  /*transform: translate(-50px);*/
-}
-
-.card-deck {
-  padding-top: 2em;
+.spinner {
+  margin-top: 20vh;
 }

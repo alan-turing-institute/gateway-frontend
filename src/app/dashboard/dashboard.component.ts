@@ -10,6 +10,7 @@ import { JobSummaryComponent } from './jobSummary.component';
   selector: "dashboard",
   providers: [DashboardService],
   templateUrl: 'dashboard.component.html',
+  styleUrls:['./dashboard.component.css']
   // styles:[require('../../../node_modules/clarity-ui/clarity-ui.min.css').toString(), 
   // require('./dashboard.component.css').toString()]
 })
@@ -20,6 +21,7 @@ export class DashboardComponent implements OnInit {
   numCompleteJobs: number;
   numRunningJobs: number;
   numDraftJobs: number;
+  jobsStillLoading: boolean;
 
   constructor(private dashboardService: DashboardService) { }
 
@@ -30,10 +32,9 @@ export class DashboardComponent implements OnInit {
     localStorage.removeItem("job_id")
     localStorage.removeItem("template_id")
     this.jobs = []
+    this.jobsStillLoading = true;
     this.getJobsData()
   }
-
-  
 
   getJobsData() {
     this.dashboardService.data
@@ -59,6 +60,8 @@ export class DashboardComponent implements OnInit {
             case "draft": this.numDraftJobs++; break;
             case "complete": this.numCompleteJobs++; break;
           }
+          // this.jobsStillLoading = false;
+          
         })
       }
     )

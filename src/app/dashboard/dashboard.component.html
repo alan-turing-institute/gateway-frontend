@@ -1,6 +1,6 @@
 
 <div class="row">
-  <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+  <div class="col-lg">
     <div class="card">
       <div class="card-header">Complete <span class="badge badge-success">{{numCompleteJobs}}</span></div>
       <div class="card-block">
@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+  <div class="col-lg">
     <div class="card">
       <div class="card-header">Running <span class="badge badge-info">{{numRunningJobs}}</span></div>
       <div class="card-block">    
@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+  <div class="col-lg">
     <div class="card">
       <div class="card-header">Draft <span class="badge">{{numDraftJobs}}</span></div>
       <div class="card-block">
@@ -46,3 +46,13 @@
     </div>
   </div>
 </div>
+
+<div class="row flex-items-lg-center">
+  <div *ngIf="jobsStillLoading">
+    <div class="col-lg"></div>
+      <span class="spinner">
+      </span>
+      <p>Loading</p>
+  </div>
+</div>
+
