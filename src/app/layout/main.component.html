@@ -2,10 +2,9 @@
 <div class="app-body main-container">
     <header class="header-6">
         <div class="branding">
-            <span class="title">Code Blue</span>
+            <span class="title">Code <span class="icon">Blue</span></span>
         </div>
         <div class="header-nav">
-            <!-- <a routerLinkActive="active" [routerLink]="['/account']" class="active nav-link"><span class="nav-text">Account</span></a> -->
             <a routerLinkActive="active" [routerLink]="['/dashboard']" class="nav-link"><span class="nav-text">Dashboard</span></a>
             <a routerLinkActive="active" [routerLink]="['/cases']" class="nav-link"><span class="nav-text">New</span></a>
         </div>
@@ -23,7 +22,7 @@
             </clr-dropdown>
         </div>
     </header>
-    <div class="content-container">
+    <div class="content-container flex-container">
         <div class="content-area">
           <router-outlet></router-outlet>
         </div>

@@ -1,5 +1,4 @@
-<div class="card">
-    
+<div class="card"> 
     <div class="card-block">
         <div *ngIf ="stopJobOption" class="progress top">
             <progress value={{progressInfo.value}} max="100"></progress>
@@ -10,7 +9,7 @@
                 <span class="card-media-title">
                     {{jobInfo.name}}
                 </span>
-                <span class="card-media-text">
+                <span class="card-media-text job-progress-footer">
                     {{jobTemporalDistanceFromCreation}}
                 </span>
             </div>
@@ -21,7 +20,7 @@
         
     </div>
     
-    <div class="card-footer">
+    <div class="job-footer card-footer">
         <!-- <button class="btn btn-sm btn-link">Action</button> -->
       <button *ngIf = "routeToOutput" 
         type="button" class="btn btn-link" 

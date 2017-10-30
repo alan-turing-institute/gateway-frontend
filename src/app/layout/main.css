@@ -1,15 +1,15 @@
-.img-icon {
-    height:4vh;
-    padding-left: 2vh;
-    padding-right: 2vh;
-    padding-top: 1vh; 
+.icon {
+    color:#588ba9;
 }
-
-.img-institute {
-    height:2.5vh;
-    /* padding-left: 2%; */
-    padding-right: 0vh;
-     /* margin-top: 0.5vh;   */
-     background: transparent;
+.flex-container {
+    /* display: -webkit-flex; */
+    display: flex;
+    /* width: 100%; */
+    /* -webkit-justify-content: center;
+    justify-content: center; */
+    align-content:flex-start;
+    padding:0.5%;
+    flex-flow: row wrap;
+    max-width: 1350px;
+    margin: auto;
 }
-

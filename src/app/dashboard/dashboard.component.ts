@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
             case "draft": this.numDraftJobs++; break;
             case "complete": this.numCompleteJobs++; break;
           }
-          // this.jobsStillLoading = false;
+          this.jobsStillLoading = false;
           
         })
       }

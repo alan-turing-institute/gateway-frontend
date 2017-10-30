@@ -1,8 +1,15 @@
-
-.card-job {
-    /*margin:1% 1% 1% 1%;*/
-    /* max-width: 70vh; */
+.job-footer{
+    background-color:#edeff1; 
 }
+
+.job-progress-footer {
+    font-style: italic;
+    color: #2b4656;
+}
+
+
+
+
 
 /* text within cards*/
 .card-body {
