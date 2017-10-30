@@ -12,6 +12,7 @@ import * as moment from 'moment';
 @Component({
   providers: [OutputService],
   templateUrl: './output.component.html',
+  styleUrls:['./output.component.css'],
   // styles: [require('./output.component.css').toString()]
 })
 

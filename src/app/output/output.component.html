@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="card">  
-              <div class="card-header">{{job?.name}}</div>
+              <div class="category-header card-header">{{job?.name}}</div>
               <div class="card-block">
                   <div class="card-media-block">
                       <img src={{job?.case.thumbnail}} class="card-media-image">
@@ -34,7 +34,7 @@
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class = "card" >
-          <div class="card-header">Diagnostics</div>
+          <div class="category-header card-header">Diagnostics</div>
           <div class="card-block"><chart></chart></div>
         </div>
       </div>
@@ -45,7 +45,7 @@
         <div *ngFor="let output of job.outputs">
           <div *ngIf="output.type =='video'">
             <div class="card" >
-              <div class="card-header">Videos</div>
+              <div class="category-header card-header">Videos</div>
               <div>
                 <app-video [videoUrl]='output.destination_path'></app-video>
               </div>
@@ -54,7 +54,7 @@
           
           <div *ngIf="output.type =='interface'">
             <div class = "card" >
-              <div class="card-header">
+              <div class="category-header card-header">
                 <strong>Interface snapshot</strong>
               </div>
               <div>
@@ -68,7 +68,7 @@
 
     <div class="row">  
       <div class = "card" >
-        <div class="card-header">Parameters </div>
+        <div class="category-header card-header">Parameters </div>
         <div class="card-block">
             <job-parameters [parameters]="flatParametersList"></job-parameters>
         </div>
