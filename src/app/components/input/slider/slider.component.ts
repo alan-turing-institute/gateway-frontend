@@ -22,18 +22,32 @@ export class SliderComponent implements OnInit{
   }
 
   valueValidated(newValue):boolean {
-    if ((Number(newValue)!=NaN) && (Number(this.data.value) >= Number(this.data.min_value)) 
+    if ((newValue) && (Number(newValue)!=NaN) && (Number(this.data.value) >= Number(this.data.min_value)) 
       && (Number(this.data.value) <= Number(this.data.max_value))) {
-      return true
+        console.log (newValue + " is valid")
+        return true
     }
     else {
-      // console.log (newValue + " is invalid")
+      console.log (newValue + " is invalid")
       return false
     }
   }
 
-  update (event) {
+  updateSlider (event) {
     let newValue = event.from;
+    if (this.valueValidated(newValue)) {
+      // this.defaultValue = newValue
+      this.onUpdated.emit(newValue.toString())
+      console.log("Child Emiting change: " +newValue)
+    }  
+    else {
+      console.log("resetting to "+this.defaultValue)
+      this.data.value = this.defaultValue
+    }
+  }
+
+  updateText (value) {
+    let newValue = value;
     if (this.valueValidated(newValue)) {
       // this.defaultValue = newValue
       this.onUpdated.emit(newValue.toString())

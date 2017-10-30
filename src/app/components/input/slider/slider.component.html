@@ -12,7 +12,7 @@
                         min={{data.min_value}}
                         max={{data.max_value}}
                         data-step={{data.step}}
-                        (onFinish)="update($event)">
+                        (onFinish)="updateSlider($event)">
                     </ion-range-slider>
                 </div>
                 <div class="col-lg-2">
@@ -20,10 +20,8 @@
                         placeholder={{data.value}} size="5" 
                         min={{data.min_value}} max={{data.max_value}}  step={{data.step}}
                         [(ngModel)]="data.value"
-                        (ngModelChange) = "valueValidated(data.value)"
                         [attr.id]="data.name"
-                        (keyup.enter)="update($event)"
-                        (blur)="update($event)">    
+                        (blur)="updateText(data.value)">    
                 </div>
                 <div class="col-lg-1">
                     <div class="select form-control">
