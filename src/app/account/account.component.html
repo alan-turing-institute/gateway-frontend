@@ -6,23 +6,23 @@
     <div class="row">
     <!-- <div class="row flex-lg-bottom"> -->
         <div class="col-lg-6 col-med-12 col-sm-12 col-xs-12">
-            <simulations-allocation></simulations-allocation>
+            <simulations-allocation [account]="account"></simulations-allocation>
         </div>
         <div class="col-lg-6 col-med-12 col-sm-12 col-xs-12 allocationForm">
             <form>
                 <section class="form-block">
-                    <label>{{userID}}</label>
+                    <label>{{account.id}}</label>
                     <div class="form-group">
                             <label for="aForm_1">Ran</label>
-                            <input type="text" id="aForm_1" size="5" readonly value={{sim_ran}}>
+                            <input type="text" id="aForm_1" size="5" readonly value={{account.ran}}>
                     </div>
                     <div class="form-group">
                             <label for="aForm_1">Remain</label>
-                            <input type="text" id="aForm_1" size="5" readonly value={{sim_remain}}>
+                            <input type="text" id="aForm_1" size="5" readonly value={{account.remain}}>
                     </div>
                     <div class="form-group">
                             <label for="aForm_1">Organization</label>
-                            <input type="text" id="aForm_1" size="5" readonly value={{sim_organization}}>
+                            <input type="text" id="aForm_1" size="5" readonly value={{account.organization}}>
                     </div>
                 </section>
             </form>
