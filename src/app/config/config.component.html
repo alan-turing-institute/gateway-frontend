@@ -29,19 +29,31 @@
                       (keydown)="setMinimalJobInfoCollected()"></textarea>
                   </div>
                 </section>
-                <section class="form-block">
+                <section class="form-footer row">
                   <button type="button" 
-                      class="btn btn-outline" 
+                      class="btn btn-outline col-lg-1 col-med-1 col-sm-12 col-xs-12" 
                       (click)="saveJob()" 
                       [disabled]=!minimalJobInfoCollected><span>Save</span>
                   </button>
-                  <button type="button"
-                      class="btn btn-outline"
+                  <button *ngIf="jobExistsOnServer" type="button"
+                      class="btn btn-outline col-lg-1 col-med-1 col-sm-12 col-xs-12"
                       routerLinkActive="active"
                       (click)="runJob()"
                       [disabled]="!minimalJobInfoCollected"
                       [hidden]=!minimalJobInfoCollected><span>Run</span>
                   </button>
+                  <div *ngIf="alertAvailable" class="alert alert-success col-lg-10 col-med-9 col-sm-12 col-xs-12">
+                    <div class="alert-items">
+                        <div class="alert-item static">
+                            <div class="alert-icon-wrapper">
+                                <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+                            </div>
+                            <span class="alert-text">
+                                {{alertText}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
                 </section>
             </form>
           </div>

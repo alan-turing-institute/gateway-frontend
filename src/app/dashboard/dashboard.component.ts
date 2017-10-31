@@ -57,6 +57,7 @@ export class DashboardComponent implements OnInit {
 
           switch (job.status.toLowerCase()) {
             case "running": this.numRunningJobs++; break;
+            case "queued": this.numRunningJobs++; break;
             case "draft": this.numDraftJobs++; break;
             case "complete": this.numCompleteJobs++; break;
           }
@@ -75,10 +76,24 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteJob(id){
-    this.jobs = this.jobs.filter(item => item.info.id !== id);
     this.dashboardService.deleteJob(id).subscribe(
-      message => {console.log("deleted")},
+      message => {
+        console.log("deleted");
+        // find job to be deleted from list
+        var deletedJob = this.jobs.filter(item => item.info.id == id);
+        
+        // remove job from list
+        this.jobs = this.jobs.filter(item => item.info.id !== id);
+
+        // change badge number
+        switch (deletedJob[0].info.status.toLowerCase()) {
+          case "running": this.numRunningJobs--; break;
+          case "queued": this.numRunningJobs--; break;
+          case "draft": this.numDraftJobs--; break;
+          case "complete": this.numCompleteJobs--; break;
+      }},
       error => {this.errorMessage = <any> error}
+      
     )
   }
 }

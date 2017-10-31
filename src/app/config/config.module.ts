@@ -13,7 +13,7 @@ import { ClarityModule } from "clarity-angular";
 // import { TabsModule } from 'ngx-bootstrap/tabs';
 
 // import { ModalModule } from 'ngx-bootstrap/modal';
-// import { ModalContentComponent } from  './config.component';
+import { FeedbackComponent } from '../components/feedback/feedback.component';
 
 // import { ParametersComponent} from './parameters.component';
 // import { DescriptionComponent} from './description.component';
@@ -27,7 +27,7 @@ import { ClarityModule } from "clarity-angular";
     PipeModule,
     InputModule, 
     DescriptionModule,
-    ClarityModule.forRoot()
+    ClarityModule.forRoot(),
     // TabsModule.forRoot(),
     // ModalModule.forRoot()
   ],
@@ -35,7 +35,7 @@ import { ClarityModule } from "clarity-angular";
     ConfigComponent,
     // TextInputComponent,
     // SliderInputComponent,
-    // ModalContentComponent
+    FeedbackComponent
   ],
   providers: [
     ConfigDataService,
@@ -45,9 +45,9 @@ import { ClarityModule } from "clarity-angular";
     // ConfigComponent,
     // CaseDescriptionComponent
   ],
-  // entryComponents: [
-  //  ModalContentComponent
-  // ]
+  entryComponents: [
+  //  FeedbackComponent
+  ]
 })
 
 export class ConfigModule { }
