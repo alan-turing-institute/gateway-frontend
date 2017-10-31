@@ -1,54 +1,58 @@
 
 <div class="row">
-  <div class="col-sm-12 col-md-12 col-lg-4">
+  <div class="col-lg col-med col-sm col-xs">
     <div class="card">
-      <div class="card-header">Completed</div>
-      <div class="card-body">
-        <div class="card-deck">
-          <div *ngFor="let job of jobs" class='card-jobs container-fluid'>
-            <div *ngIf="job.info.status=='Complete'">
-              <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
-                (jobDeleted)="deleteJob($event)">
-              </jobSummary>
-            </div>
+      <div class="category-header card-header">Complete <span class="badge badge-success">{{numCompleteJobs}}</span></div>
+      <div class="card-block">
+        <div *ngFor="let job of jobs" class='card-jobs container-fluid'>
+          <div *ngIf="job.info.status=='Complete'">
+            <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
+              (jobDeleted)="deleteJob($event)">
+            </jobSummary>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="col-sm-12 col-md-12 col-lg-4">
+  <div class="col-lg col-med col-sm col-xs">
     <div class="card">
-      <div class="card-header">Running</div>
-      <div class="card-body">
-        <div class="card-deck">
-          <div *ngFor="let job of jobs" class='card-jobs container-fluid'>
-            <div *ngIf="job.info.status=='Queued' || job.info.status=='Running' ">
-              <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
-                          (jobDeleted)="deleteJob($event)" 
-                          (jobStopped)="cancelJob($event)">
-              </jobSummary>
-            </div>
+      <div class="category-header card-header">Running <span class="badge badge-info">{{numRunningJobs}}</span></div>
+      <div class="card-block">    
+        <div *ngFor="let job of jobs">
+          <div *ngIf="job.info.status=='Queued' || job.info.status=='Running' ">
+            <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
+                        (jobDeleted)="deleteJob($event)" 
+                        (jobStopped)="cancelJob($event)">
+            </jobSummary>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="col-sm-12 col-md-12 col-lg-4">
+  <div class="col-lg col-med col-sm col-xs">
     <div class="card">
-      <div class="card-header">Draft</div>
-      <div class="card-body">
-        <div class="card-deck">
-          <div *ngFor="let job of jobs" class='card-jobs container-fluid'>
+      <div class="category-header card-header">Draft <span class="badge">{{numDraftJobs}}</span></div>
+      <div class="card-block">
+          <div *ngFor="let job of jobs">
             <div *ngIf="job.info.status=='Draft'">
               <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
                           (jobDeleted)="deleteJob($event)"
               ></jobSummary>
             </div>
           </div>
-        </div>
       </div>
     </div>
   </div>
 </div>
+
+<div class="row flex-items-lg-center">
+  <div *ngIf="jobsStillLoading">
+    <div class="col-lg"></div>
+      <span class="spinner">
+      </span>
+      <p>Loading</p>
+  </div>
+</div>
+

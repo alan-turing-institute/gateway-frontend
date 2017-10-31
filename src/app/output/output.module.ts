@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ClarityModule } from "clarity-angular";
 
 
 import { OutputComponent } from './output.component';
@@ -17,6 +18,7 @@ import { PipeModule } from '../components/pipe/pipe.module';
 import { DashboardModule } from '../dashboard/dashboard.module'
 import { VideoComponent } from './video/video.component';
 import { DownloadComponent } from './download/download.component';
+import { JobParametersComponent } from './parameters/parameters.component';
 
 @NgModule({
   imports: [
@@ -25,13 +27,15 @@ import { DownloadComponent } from './download/download.component';
     FormsModule,
     CommonModule,
     DescriptionModule,
-    PipeModule
+    PipeModule,
+    ClarityModule.forRoot()
   ],
   declarations: [
     OutputComponent,
     ChartComponent,
     VideoComponent,
     DownloadComponent,
+    JobParametersComponent
   ],
   providers: [
     OutputService

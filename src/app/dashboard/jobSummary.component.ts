@@ -18,6 +18,7 @@ export class JobSummaryComponent implements OnInit{
     
     jobHoverHidden: boolean;
     actionButtonText: string;
+    actionButtonRoute: string;
     jobShortDescription:string;
     jobStatusBadgeClass:string;
     jobTemporalDistanceFromCreation:string;
@@ -58,6 +59,17 @@ export class JobSummaryComponent implements OnInit{
         if (this.jobInfo.status.toLowerCase() == "queued")
             text ="View"
         return text
+    }
+
+    getActionRoute() : string  {
+        switch (this.jobInfo.status.toLowerCase()) {
+            case "complete": return "['/output/output']";
+            case "running": return "['/output/output']";
+            case "queued": return "['/output/output']";
+            case "draft": return "['/config/config']";
+            case "new": return "['/config/config']";
+            default: return "['/output/output']";
+        }
     }
 
     getShortDescription(): string {
@@ -112,7 +124,7 @@ export class JobSummaryComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        console.log(this.jobInfo)
+        // console.log(this.jobInfo)
         this.jobHoverHidden = true
         this.actionButtonText = this.getActionText()
         this.jobShortDescription = this.getShortDescription()
@@ -122,6 +134,7 @@ export class JobSummaryComponent implements OnInit{
         this.routeToConfig=this.drawRouteToConfig()
         this.routeToOutput =this.drawRouteToOutput()
         this.stopJobOption = this.drawPauseOption()
+        this.actionButtonRoute = this.getActionRoute()
     }
 
     deleteJob() {

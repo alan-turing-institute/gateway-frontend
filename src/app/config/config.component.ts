@@ -8,7 +8,8 @@ import { ConfigDataService } from './configData.service';
 @Component({
   selector:"config",
   templateUrl: './config.component.html',
-  styles:[require('./config.component.css').toString()]
+  styleUrls:['./config.component.css'],
+  // styles:[require('./config.component.css').toString()]
 })
 
 export class ConfigComponent implements OnInit {

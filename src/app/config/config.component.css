@@ -1,5 +1,5 @@
 
-.card.card-family {
+/* .card.card-family {
     margin:20px;
 }
 
@@ -18,5 +18,10 @@
 .btn.btn-primary.btn-action {
     width: 7em;
     margin:0.25em;
-}
+} */
+
+.category-header{
+    background-color:#edeff1; 
+    border-bottom: 1px solid #cfd8dc;
+  }
 

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ClarityModule } from "clarity-angular";
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardService } from './dashboard.service';
 
@@ -10,6 +11,7 @@ import { JobSummaryComponent } from './jobSummary.component';
   imports: [
     DashboardRoutingModule,
     CommonModule,
+    ClarityModule.forRoot()
   ],
   declarations: [
     DashboardComponent,

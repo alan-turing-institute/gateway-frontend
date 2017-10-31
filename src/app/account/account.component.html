@@ -1,3 +1,33 @@
 <h1 class="display-4">MEMPHIS Showcase</h1>
 <h4>BLUE web demonstration</h4>
-<p>September 15, London</p>
+<p>November 5, London</p>
+
+<div class="container-fluid">
+    <div class="row">
+    <!-- <div class="row flex-lg-bottom"> -->
+        <div class="col-lg-6 col-med-12 col-sm-12 col-xs-12">
+            <simulations-allocation></simulations-allocation>
+        </div>
+        <div class="col-lg-6 col-med-12 col-sm-12 col-xs-12 allocationForm">
+            <form>
+                <section class="form-block">
+                    <label>{{userID}}</label>
+                    <div class="form-group">
+                            <label for="aForm_1">Ran</label>
+                            <input type="text" id="aForm_1" size="5" readonly value={{sim_ran}}>
+                    </div>
+                    <div class="form-group">
+                            <label for="aForm_1">Remain</label>
+                            <input type="text" id="aForm_1" size="5" readonly value={{sim_remain}}>
+                    </div>
+                    <div class="form-group">
+                            <label for="aForm_1">Organization</label>
+                            <input type="text" id="aForm_1" size="5" readonly value={{sim_organization}}>
+                    </div>
+                </section>
+            </form>
+        </div>
+        
+    </div>
+</div>
+    

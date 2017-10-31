@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { SliderComponent } from './slider/slider.component';
 import { TextComponent } from './text/text.component';
 import { IonRangeSliderComponent } from 'ng2-ion-range-slider';
+import { ClarityModule } from "clarity-angular";
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ClarityModule.forRoot()
   ],
   declarations: [
     SliderComponent,

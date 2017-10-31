@@ -1,8 +1,8 @@
-.card-jobs {
-  width:100%;
-  /*transform: translate(-50px);*/
+.category-header{
+  background-color:#edeff1; 
+  border-bottom: 1px solid #cfd8dc;
 }
 
-.card-deck {
-  padding-top: 2em;
+.spinner {
+  margin-top: 20vh;
 }

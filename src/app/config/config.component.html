@@ -1,85 +1,73 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-12">
-        <div class="card-header">
-          <strong>About</strong>
-        </div>
+    <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
         <div class="card">  
-          <caseDescription [info] = "case"></caseDescription>
-          <div class="row">
-            <div class="col-md-12">
-                <label>Name:</label>
-                <input type="text" class="form-control" placeholder="Name"
-                       [(ngModel)]="job.name" 
-                       (keydown)="setMinimalJobInfoCollected()">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">  
-              <label>Description</label>
-              <textarea rows = "3" class="form-control" placeholder="Description"
-                        [(ngModel)]=job.description 
-                        (keydown)="setMinimalJobInfoCollected()"></textarea>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-              <button type="button" 
-                      class="btn btn-primary btn-action" 
+          <div class="card-block">
+            <form>
+                <section class="form-block">
+                  <!-- <label>Job Information</label> -->
+                  <div class="card-media-block">
+                      <img src={{case?.thumbnail}} class="card-media-image">
+                      <div class="card-media-description">
+                        <span class="card-media-title">{{case?.label}}</span>
+                        <span class="card-media-text">{{case?.description}}</span>
+                      </div>
+                  </div>
+                </section>
+                <section class="form-block">
+                  <div class="form-group">
+                    <label for="aForm_1" class="required">Name</label>
+                    <input type="text" class="form-control" name="jobName" placeholder="Your Job Name" size="25"
+                      [(ngModel)]="job.name" 
+                      (keydown)="setMinimalJobInfoCollected()">
+                  </div>
+                    
+                  <div class="form-group">
+                    <label for="aForm_4" class="required">Description</label>
+                    <textarea id="aForm_4" rows="2" name="jobDescription" placeholder="Job Description"
+                      [(ngModel)]=job.description 
+                      (keydown)="setMinimalJobInfoCollected()"></textarea>
+                  </div>
+                </section>
+                <section class="form-block">
+                  <button type="button" 
+                      class="btn btn-outline" 
                       (click)="saveJob()" 
-                      [disabled]=!minimalJobInfoCollected>
-                <span>Save</span>
-              </button>
-            <div class="col-md-4">
-                <button type="button"
-                        class="btn btn-primary btn-action"
-                        routerLinkActive="active"
-                        (click)="runJob()"
-                        [disabled]="!minimalJobInfoCollected"
-                        [hidden]=!minimalJobInfoCollected>
-                  <span>Run</span>
-                </button>
-              </div>
-            </div>
+                      [disabled]=!minimalJobInfoCollected><span>Save</span>
+                  </button>
+                  <button type="button"
+                      class="btn btn-outline"
+                      routerLinkActive="active"
+                      (click)="runJob()"
+                      [disabled]="!minimalJobInfoCollected"
+                      [hidden]=!minimalJobInfoCollected><span>Run</span>
+                  </button>
+                </section>
+            </form>
           </div>
         </div>
-    </div>
-  </div>
+    <!-- </div> -->
+  </div> 
   
   <div class="row">
-    <div class="col-md-12">
-      <div class="card-header">
-        <strong>Configuration</strong>
-      </div>
-      <div class = "card">
-      <div [attr.id]="componentFamilyAccordion" role="tablist">
-        <div *ngFor="let family of families" class="card card-family" >
-          <div class="card-header config" role="tab" (click)="toggleCollapse(family)">
-            <h5 class="mb-0">
-              <a data-toggle="collapse" data-target={{getDataTarget(family)}} data-parent="#componentFamilyAccordion">
-                {{family.label}}
-              </a>
-            </h5>
-          </div>
-          <div [attr.id]=family.name [ngClass]="{'collapse': family.collapse }"role="tabpanel">
-            <div class="card-block">
-              <div *ngIf="family.name == 'tank_properties'">
-                  <app-tank [data]="family.parameters"></app-tank>
-              </div>
-              <div *ngIf="family.name == 'pipe_properties'">
-                  <app-pipe [data]="family.parameters"></app-pipe>
-              </div>    
-              <div *ngFor="let component of getComponentsOf(family)" class="col-md-6">
-                <textInput [data]="component"
-                           (onUpdated)="onUpdated(component, $event)"></textInput>
-                <sliderInput [data]="component"
-                            (onUpdated)="onUpdated(component, $event)"></sliderInput> 
-              </div>
+    <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
+      <div *ngFor="let family of families" class="card" >
+        <div class="category-header card-header" >{{family.label}}</div>
+          <div class="card-block">
+            <div *ngIf="family.name == 'tank_properties'">
+                <app-tank [data]="family.parameters"></app-tank>
+            </div>
+            <div *ngIf="family.name == 'pipe_properties'">
+                <app-pipe [data]="family.parameters"></app-pipe>
+            </div>    
+            <div *ngFor="let component of getComponentsOf(family)">
+              <textInput [data]="component"
+                          (onUpdated)="onUpdated(component, $event)"></textInput>
+              <sliderInput [data]="component"
+                          (onUpdated)="onUpdated(component, $event)"></sliderInput> 
             </div>
           </div>
-        </div>
       </div>
-      </div>
-    </div>
+    <!-- </div> -->
   </div>
 </div>

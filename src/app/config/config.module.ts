@@ -9,6 +9,7 @@ import { DescriptionModule } from '../components/description/description.module'
 import { ConfigDataService } from './configData.service';
 import { InputModule } from '../components/input/input.module';
 import { PipeModule} from '../components/pipe/pipe.module';
+import { ClarityModule } from "clarity-angular";
 // import { TabsModule } from 'ngx-bootstrap/tabs';
 
 // import { ModalModule } from 'ngx-bootstrap/modal';
@@ -25,7 +26,8 @@ import { PipeModule} from '../components/pipe/pipe.module';
     // IonRangeSliderModule,
     PipeModule,
     InputModule, 
-    DescriptionModule
+    DescriptionModule,
+    ClarityModule.forRoot()
     // TabsModule.forRoot(),
     // ModalModule.forRoot()
   ],

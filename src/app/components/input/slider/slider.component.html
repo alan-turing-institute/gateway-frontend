@@ -1,13 +1,37 @@
 <div *ngIf="data.type == 'slider'">
-    <label [for]=data.name>{{data.label}}</label>
-    <ion-range-slider
-        [attr.id]=data.name
-        from={{data.value}}
-        min={{data.min_value}}
-        max={{data.max_value}}
-        data-step={{data.step}}
-        postfix=" {{data.units}}"
-        (onFinish)="update($event)">
-    </ion-range-slider>
+    <form class="compact">
+        <section class="form-block">
+            <div class="form-group row" >
+                <div class="col-lg-3">
+                    <label [for]=data.name>{{data.label}}</label>
+                </div>
+                <div class="col-lg-6">
+                    <ion-range-slider
+                        [attr.id]=data.name
+                        from={{data.value}}
+                        min={{data.min_value}}
+                        max={{data.max_value}}
+                        data-step={{data.step}}
+                        (onFinish)="updateSlider($event)">
+                    </ion-range-slider>
+                </div>
+                <div class="col-lg-2">
+                    <input type="number" class="form-control" name={{data.name}} 
+                        placeholder={{data.value}} size="5" 
+                        min={{data.min_value}} max={{data.max_value}}  step={{data.step}}
+                        [(ngModel)]="data.value"
+                        [attr.id]="data.name"
+                        (blur)="updateText(data.value)">    
+                </div>
+                <div class="col-lg-1">
+                    <div class="select form-control">
+                        <select id="exampleSelect1">
+                            <option>{{data.units}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>                 
+        </section>
+    </form>
 </div>
       

@@ -1,7 +1,7 @@
 /*input[readonly] {
   background-color: white;
 }*/
-
+/* 
 .card-header:hover {
   background-color: hsla(198,36%,75%,1);
 }
@@ -13,4 +13,9 @@
 
 .downloads {
   width: 14em;
+} */
+
+.category-header{
+  background-color:#edeff1; 
+  border-bottom: 1px solid #cfd8dc;
 }
