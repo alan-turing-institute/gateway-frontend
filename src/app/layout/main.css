@@ -18,6 +18,7 @@
 @media only screen and (min-width: 900px) {
     .flex-container {
         min-width: 70%; 
+        max-width: 80%;
         /* background-color: red; */
     }
 }
@@ -26,6 +27,7 @@
     /* min-width: calc((100%-46.25em)/2);  */
     .flex-container {
         min-width: 90%; 
+        max-width: 95%;
         /* background-color: blue; */
     }
 }

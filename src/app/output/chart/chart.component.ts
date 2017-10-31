@@ -2,7 +2,7 @@ import { Component, Input, OnInit, NgZone, OnChanges, ViewChild, ElementRef, Hos
 
 import { ChartService } from './chart.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { ChartsModule } from 'ng2-charts';
+// import { ChartsModule } from 'ng2-charts';
 
 @Component({
   selector: 'chart',
