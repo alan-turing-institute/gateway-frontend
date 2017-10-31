@@ -1,8 +1,7 @@
-import {Component, NgModule} from '@angular/core';
+import {Component, Input, OnInit,NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
-
-
+import { AccountInfo } from '../../types/accountInfo';
 
 @Component({
   selector: 'simulations-allocation',
@@ -20,7 +19,8 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
     </ngx-charts-pie-chart>
   `
 })
-export class ChartComponent {
+export class ChartComponent implements OnInit{
+  @Input() account: AccountInfo;
   single: any[];
   view: any[] = [400, 300];
   showLegend = false;
@@ -30,23 +30,23 @@ export class ChartComponent {
   showLabels = true;
   explodeSlices = false;
   doughnut = false;
-
-  constructor() {
-    this.single = [
-        {
-          "name": "Ran",
-          "value": 5
-        },
-        {
-          "name": "Remain",
-          "value": 10
-        },
-      ];
-    Object.assign(this, this.single)   
-  }
   
   onSelect(event) {
     console.log(event);
+  }
+
+  ngOnInit(): void {
+    console.log(this.account)
+    this.single = [
+      {
+        "name": "Ran",
+        "value": Number(this.account['ran'])
+      },
+      {
+        "name": "Remain",
+        "value": Number(this.account['remain'])
+      },
+    ];
   }
   
 }
