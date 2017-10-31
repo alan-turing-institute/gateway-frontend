@@ -1,15 +1,17 @@
 import { Component, Injectable, OnInit, Input} from '@angular/core';
 import { Router} from '@angular/router';
 import { InputComponent } from '../components/input/inputComponent';
+import { FeedbackComponent } from '../components/feedback/feedback.component';
 import { CaseInfo } from '../types/caseInfo';
 import { JobInfo } from '../types/jobInfo';
 import { ConfigDataService } from './configData.service';
+// import { BsModalService,BsModalRef } from 'ngx-bootstrap';
+
 
 @Component({
   selector:"config",
   templateUrl: './config.component.html',
-  styleUrls:['./config.component.css'],
-  // styles:[require('./config.component.css').toString()]
+  styleUrls:['./config.component.css']
 })
 
 export class ConfigComponent implements OnInit {
@@ -19,6 +21,8 @@ export class ConfigComponent implements OnInit {
   errorMessage: string;
   jobExistsOnServer:boolean;
   minimalJobInfoCollected:boolean;
+  alertAvailable: boolean;
+  alertText: string;
 
   constructor(
     private configDataService:ConfigDataService,
@@ -27,6 +31,8 @@ export class ConfigComponent implements OnInit {
 
   ngOnInit() {
     this.families = []
+    this.alertAvailable = false;
+    this.alertText="";
     this.case = new CaseInfo
     this.minimalJobInfoCollected = false
     this.jobExistsOnServer = false
@@ -44,11 +50,17 @@ export class ConfigComponent implements OnInit {
 
   setMinimalJobInfoCollected () {
     console.log("changing")
-    if ((this.job.description.length > 0) && (this.job.name.length > 0))
+    if ((this.job.description.length > 0) && (this.job.name.length > 0)){
+      this.alertAvailable = true
+      this.alertText = "There are unsaved changes"
       this.minimalJobInfoCollected = true  
+    }
+      
   }
 
   onUpdated(component, value:string) {
+    this.alertAvailable = true
+    this.alertText = "There are unsaved changes"
     // console.log("Parent receive new value: "+value)
     component.value = value
     // overwrite with an array copy via .slice() method
@@ -113,12 +125,15 @@ export class ConfigComponent implements OnInit {
   }
 
   saveJob() {
+    this.alertAvailable = true
+    
     if (this.jobExistsOnServer) {
       this.job.status = "Draft"
       let url = this.configDataService.getSaveJobURL(this.job['id'])
       this.configDataService.saveJob(this.job, url)
                         .subscribe(
                           saveJob => {
+                            this.alertText = "Changes Saved"
                           },
                           error => {
                             this.errorMessage = <any> error
@@ -131,6 +146,7 @@ export class ConfigComponent implements OnInit {
                       .subscribe(
                         createJob => {
                           this.jobExistsOnServer = true
+                          this.alertText = "Changes Saved"
                         },
                         error => {
                           this.errorMessage = <any> error
@@ -141,8 +157,7 @@ export class ConfigComponent implements OnInit {
   runJob () {
     localStorage.setItem('job_id', this.job.id);
     let url = this.configDataService.getSaveJobURL(this.job['id'])
-
-    let that = this;
+    this.alertText = "Submitting Job. This page will navigate to Dashboard when job submission is complete."
     this.configDataService.saveJob(this.job, url).subscribe(
                         saveJob => {
                           this.configDataService.runJob(this.job)
