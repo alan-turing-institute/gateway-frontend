@@ -4,7 +4,7 @@ import { MainComponent } from './layout/main.component';
 import { CasesModule } from './cases/cases.module';
 // import { LoginLayoutComponent } from './layouts/login-layout.component';
 
-// import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './login/login.component';
 
 // import { AppComponent } from './app.component';
 // import { AccountModule } from './account/account.module';
@@ -14,9 +14,8 @@ import { CasesModule } from './cases/cases.module';
 
 export const routes: Routes = [
     {
-      path: '',
-      redirectTo: 'account',
-      pathMatch: 'full'
+      path: 'login',
+      component: LoginComponent,
     },
     {
       path: '',
