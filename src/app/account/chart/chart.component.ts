@@ -36,7 +36,6 @@ export class ChartComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log('FROM CHART')
     console.log(this.account)
     this.single = [
       {

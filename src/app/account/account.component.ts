@@ -17,16 +17,16 @@ import { AccountService } from './account.service';
 export class AccountComponent implements OnInit{
   account: AccountInfo;
 
-  // userCredit: number;
-  // userTally: number;
-  // organisationCredit: number;
-  // organisationTally: number;
+  userCredit: number;
+  userTally: number;
+  organisationCredit: number;
+  organisationTally: number;
 
   constructor(private accountService: AccountService, private auth: AuthService) { }
 
   ngOnInit():void {
     // this.account = new AccountInfo(10.3, 10.3, 1, 0);
-    this.account = new AccountInfo(1, 1, 1, 2);
+    this.account = new AccountInfo(10, 10, 10, 10);
     // this.accountService.getAccountData();
     this.checkCounter();
   }
@@ -39,10 +39,10 @@ export class AccountComponent implements OnInit{
       .then((response) => {
         let data = response.json();
         console.log(data);
-        // this.account.userTally = data.user.tally;
-        // this.account.userCredit = data.user.credit;
-        // this.account.organisationTally = data.organisation.tally;
-        // this.account.organisationCredit = data.organisation.credit;
+        this.account.userTally = data.user.tally;
+        this.account.userCredit = data.user.credit;
+        this.account.organisationTally = data.organisation.tally;
+        this.account.organisationCredit = data.organisation.credit;
         console.log(this.account);
       })
       .catch((err) => {

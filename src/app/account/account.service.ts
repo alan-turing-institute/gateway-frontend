@@ -12,7 +12,8 @@ import * as urljoin from 'url-join';
 @Injectable()
 export class AccountService {
   // private BASE_COUNTER_URL: string = 'https://science-gateway-counter.azurewebsites.net/api';
-  private COUNTER_URL: string = 'http://localhost:5000/api/count';
+  // private COUNTER_URL: string = 'http://localhost:5000/api/count';
+  private COUNTER_URL: string = 'https://science-gateway-count.azurewebsites.net/api/count';
 
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   constructor (private http: Http) {}

@@ -8,6 +8,7 @@ export class AuthService {
   // private USER_BASE_URL: string = 'http://localhost:5000/auth';
   private USER_BASE_URL: string = 'https://science-gateway-users.azurewebsites.net/auth';
   // private COUNTER_BASE_URL: string = 'http://localhost:5000/api';
+  private COUNTER_BASE_URL: string = 'http://science-gateway-count.azurewebsites.net/api';
 
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   constructor(private http: Http) {}
@@ -38,14 +39,14 @@ export class AuthService {
     return this.http.get(url, {headers: headers}).toPromise();
   }
 
-  // countSimulation(token): Promise<any> {
-  //   let url: string = `${this.COUNTER_BASE_URL}/count`;
-  //   let headers: Headers = new Headers({
-  //     'Content-Type': 'application/json',
-  //     Authorization: `Bearer ${token}`
-  //   });
-  //   return this.http.post(url, {}, {headers: headers}).toPromise();
-  // }
+  countSimulation(token): Promise<any> {
+    let url: string = `${this.COUNTER_BASE_URL}/count`;
+    let headers: Headers = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.post(url, {}, {headers: headers}).toPromise();
+  }
 
   logout(token): Promise<any> {
     let url: string = `${this.USER_BASE_URL}/logout`;
