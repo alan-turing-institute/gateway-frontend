@@ -10,22 +10,25 @@ language: node_js
 node_js:
 - 6.9.1
 addons:
-apt:
-  sources:
-  - google-chrome
-  packages:
-  - google-chrome-stable
-  - google-chrome-beta
-before_install:
-- export CHROME_BIN=chromium-browser
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-- google-chrome --version
+
+
+#apt:
+#  sources:
+#  - google-chrome
+#  packages:
+#  - google-chrome-stable
+#  - google-chrome-beta
+#before_install:
+#- export CHROME_BIN=chromium-browser
+#- export DISPLAY=:99.0
+#- sh -e /etc/init.d/xvfb start
+#- google-chrome --version
+
 before_script:
 - npm install
 - npm run build
-script:
-- npm run test -- --single-run=true --browsers Chrome --code-coverage
+#script:
+#- npm run test -- --single-run=true --browsers Chrome --code-coverage
 
 
 # set multiple providers, so that a single .travis.yml file
@@ -36,20 +39,20 @@ script:
 # warning for the redundant "staging" branch information below
 # (visa versa if we push to "staging", we will expect a warning for "master")
 
-#before_deploy:
-#- rm -rf node_modules
-#- echo 'start deploying!'
+before_deploy:
+- rm -rf node_modules
+- echo 'start deploying!'
 
-#deploy:
-#  - provider: azure_web_apps
-#    verbose: true
-#    skip_cleanup: true
-#    on: develop
-#    slot: science-gateway-inputs-dev
-#  - provider: azure_web_apps
-#    verbose: true
-#    skip_cleanup: true
-#    on: staging
-#    slot: science-gateway-inputs-staging
+deploy:
+ - provider: azure_web_apps
+   verbose: true
+   skip_cleanup: true
+   on: develop
+   slot: science-gateway-inputs-dev
+ - provider: azure_web_apps
+   verbose: true
+   skip_cleanup: true
+   on: master
+   slot: science-gateway-inputs-dev
 
-#after_deploy: echo 'done deploying!'
+after_deploy: echo 'done deploying!'
