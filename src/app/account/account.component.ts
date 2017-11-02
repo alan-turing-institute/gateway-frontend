@@ -27,10 +27,26 @@ export class AccountComponent implements OnInit{
 
   getAccountData():void {
     this.account =  this.accountService.getAccountDataFile();
-    
-    
     // this.sim_ran="";
     // this.sim_remain="";
     // this.sim_organization="";
   }
+
+  runSimulation() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      console.log("checking token");
+      console.log(token);
+
+      console.log("counting simulation")
+      // this.auth.countSimulation(token)
+      // .then((response) => {
+      //   console.log(response.json());
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // });
+    }
+  }
+
 }
