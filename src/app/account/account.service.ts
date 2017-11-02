@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptions } from '@angular/http';
+import { Headers, Http, Response, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -11,23 +11,39 @@ import * as urljoin from 'url-join';
 
 @Injectable()
 export class AccountService {
-  private progressUrl = urljoin(environment.apiRoot, "progress")
+  // private BASE_COUNTER_URL: string = 'https://science-gateway-counter.azurewebsites.net/api';
+  private COUNTER_URL: string = 'http://localhost:5000/api/count';
+
+  private headers: Headers = new Headers({'Content-Type': 'application/json'});
   constructor (private http: Http) {}
 
   getAccountData(): Observable<AccountInfo[]>{
-    return this.http.get(this.progressUrl)
+    return this.http.get(this.COUNTER_URL)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
 
-  getAccountDataFile(): AccountInfo {
-    let account = new AccountInfo ("May Yong", "5", "10", "8000")
-    return account 
+  // checkCounter(token): void {
+  //   // let account = new AccountInfo (10, 40, 90, 110)
+  //   // return account
+  //   console.log('in service')
+  //
+  //
+  // }
+
+  checkCounter(token): Promise<any> {
+    let url: string = `${this.COUNTER_URL}`;
+    let headers: Headers = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    });
+    // return this.http.get(url, {}, {headers: headers}).toPromise();
+    return this.http.get(url, {headers: headers}).toPromise();
   }
 
   private extractData(res: Response){
     let body = res.json();
-    return body.jobs || { };
+    return body || { };
   }
 
   private handleError (error: Response | any) {

@@ -1,6 +1,6 @@
-<h1 class="display-4">MEMPHIS Showcase</h1>
-<h4>BLUE web demonstration</h4>
-<p>November 5, London</p>
+<h1 class="display-4">BLUE Account</h1>
+<!-- <h4>Demonstration</h4> -->
+<!-- <p>November 3, London</p> -->
 
 <div class="container-fluid">
     <div class="row">
@@ -13,16 +13,20 @@
                 <section class="form-block">
                     <label>{{account.id}}</label>
                     <div class="form-group">
-                            <label for="aForm_1">Ran</label>
-                            <input type="text" id="aForm_1" size="5" readonly value={{account.ran}}>
+                            <label for="aForm_1">User Tally</label>
+                            <input type="text" id="aForm_1" size="5" readonly value={{account.userTally}}>
                     </div>
                     <div class="form-group">
-                            <label for="aForm_1">Remain</label>
-                            <input type="text" id="aForm_1" size="5" readonly value={{account.remain}}>
+                            <label for="aForm_1">User Credit</label>
+                            <input type="text" id="aForm_1" size="5" readonly value={{account.userCredit}}>
                     </div>
                     <div class="form-group">
-                            <label for="aForm_1">Organization</label>
-                            <input type="text" id="aForm_1" size="5" readonly value={{account.organization}}>
+                            <label for="aForm_1">Organisation Tally</label>
+                            <input type="text" id="aForm_1" size="5" readonly value={{account.organisationTally}}>
+                    </div>
+                    <div class="form-group">
+                            <label for="aForm_1">Organisation Credit</label>
+                            <input type="text" id="aForm_1" size="5" readonly value={{account.organisationCredit}}>
                     </div>
                 </section>
             </form>
@@ -30,7 +34,7 @@
 
     </div>
 
-    <!-- <button type="button" (click)="runSimulation()">Run simulation</button> -->
-    <button type="button" (click)="runSimulation()">Test counter</button>
+    <!-- <button type="button" (click)="decrementCounter()">decrementCounter</button> -->
+    <button type="button" (click)="checkCounter()">checkCounter</button>
 
 </div>
