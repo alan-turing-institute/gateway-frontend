@@ -1,5 +1,5 @@
 <div class="login-wrapper">
-    <form class="login">
+    <form (ngSubmit)="onLogin()" class="login" novalidate>
         <label class="title">
             <h3 class="welcome">Welcome to</h3>
             Blue Web
@@ -13,8 +13,10 @@
                     <option>Administrator</option>
                 </select>
             </div>
-            <input class="username" type="text" id="login_username" placeholder="Username">
-            <input class="password" type="password" id="login_password" placeholder="Password">
+
+            <input class="username" type="text" id="username" placeholder="enter username" [(ngModel)]="user.username" name="username" required>
+            <input class="password" type="password" id="password" placeholder="enter password" [(ngModel)]="user.password" name="password" required>
+
             <!-- <div class="checkbox">
                 <input type="checkbox" id="rememberme">
                 <label for="rememberme">

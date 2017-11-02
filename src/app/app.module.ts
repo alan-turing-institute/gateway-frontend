@@ -14,6 +14,7 @@ import { MainComponent } from './layout/main.component'
 import { LoginComponent } from './login/login.component';
 
 import { AuthService } from './auth/auth.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { AuthService } from './auth/auth.service';
     JsonpModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ClarityModule.forRoot()
+    FormsModule,
+    ClarityModule.forRoot(),
   ],
   declarations: [
     AppComponent,
