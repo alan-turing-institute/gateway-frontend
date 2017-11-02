@@ -16,6 +16,9 @@ import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth/auth.service';
 import { FormsModule } from '@angular/forms';
 
+import { EnsureAuthenticated } from './auth/ensure-authenticated.service';
+import { LoginRedirect } from './auth/login-redirect.service';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -32,7 +35,11 @@ import { FormsModule } from '@angular/forms';
     MainComponent,
     LoginComponent
   ],
-  providers: [ AuthService ],
+  providers: [
+    AuthService,
+    EnsureAuthenticated,
+    LoginRedirect
+  ],
   bootstrap: [ AppComponent ]
 })
 

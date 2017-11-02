@@ -6,6 +6,9 @@ import { CasesModule } from './cases/cases.module';
 
 import { LoginComponent } from './login/login.component';
 
+import { EnsureAuthenticated } from './auth/ensure-authenticated.service';
+import { LoginRedirect } from './auth/login-redirect.service';
+
 // import { AppComponent } from './app.component';
 // import { AccountModule } from './account/account.module';
 
@@ -26,23 +29,28 @@ export const routes: Routes = [
       children: [
         {
           path: 'account',
-          loadChildren: './account/account.module#AccountModule'
+          loadChildren: './account/account.module#AccountModule',
+          canLoad: [ EnsureAuthenticated ]
         },
         {
           path: 'cases',
-          loadChildren: './cases/cases.module#CasesModule'
+          loadChildren: './cases/cases.module#CasesModule',
+          canLoad: [ EnsureAuthenticated ]
         },
         {
           path: 'dashboard',
-          loadChildren: './dashboard/dashboard.module#DashboardModule'
+          loadChildren: './dashboard/dashboard.module#DashboardModule',
+          canLoad: [ EnsureAuthenticated ]
         },
         {
           path: 'output',
-          loadChildren: './output/output.module#OutputModule'
+          loadChildren: './output/output.module#OutputModule',
+          canLoad: [ EnsureAuthenticated ]
         },
         {
           path: 'config',
-          loadChildren: './config/config.module#ConfigModule'
+          loadChildren: './config/config.module#ConfigModule',
+          canLoad: [ EnsureAuthenticated ]
         }
       ]
     },
