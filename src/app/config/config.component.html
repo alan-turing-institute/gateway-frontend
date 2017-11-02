@@ -42,7 +42,18 @@
                       [disabled]="!minimalJobInfoCollected"
                       [hidden]=!minimalJobInfoCollected><span>Run</span>
                   </button>
-                  <div *ngIf="alertAvailable" class="alert alert-success col-lg-10 col-med-9 col-sm-12 col-xs-12">
+                  <clr-alert [clrAlertType]="'alert-success'" 
+                    [clrAlertClosable]="false"
+                    *ngIf="alertAvailable"
+                    class ="col-lg-9 col-med-9 col-sm-12 col-xs-12">
+                    <div class="alert-item">
+                        <span class="alert-text">
+                            {{alertText}}
+                        </span>
+                    </div>
+                  </clr-alert>
+                  
+                  <!-- <div *ngIf="alertAvailable" class="alert alert-success col-lg-10 col-med-9 col-sm-12 col-xs-12">
                     <div class="alert-items">
                         <div class="alert-item static">
                             <div class="alert-icon-wrapper">
@@ -53,7 +64,7 @@
                             </span>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 </section>
             </form>
           </div>
