@@ -5,7 +5,7 @@
   "description": "Example project from an angular.io guide.",
   "scripts": {
     "test:once": "karma start karma.conf.js --single-run",
-    "build": "rimraf dist && webpack --config config/webpack.prod.js --bail",
+    "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
     "serve": "lite-server -c=bs-config.json",
     "prestart": "npm run build",
     "start": "webpack-dev-server --inline --progress --port 8080",
@@ -69,6 +69,7 @@
     "three": "^0.86.0",
     "ts-helpers": "1.1.2",
     "url-join": "^2.0.2",
+	"web-animations-js": "^2.3.1",
     "webpack-glsl-loader": "^1.0.1",
     "zone.js": "^0.8.4"
   },
