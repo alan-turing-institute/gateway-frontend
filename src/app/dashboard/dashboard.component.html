@@ -1,4 +1,35 @@
 
+<!-- <div class="row">
+  <div class="col-lg-2 col-med-4 col-sm-12 col-xs-12">
+    <clr-dropdown>
+        <button type="button" class="btn btn-outline-primary" clrDropdownTrigger>
+            Filter
+            <clr-icon shape="caret down"></clr-icon>
+        </button>
+        <clr-dropdown-menu clrPosition="bottom-left" *clrIfOpen>
+            <button type="button" clrDropdownItem>Date</button>
+            <button type="button" disabled clrDropdownItem>Status</button>
+        </clr-dropdown-menu>
+    </clr-dropdown>      
+  </div>
+  <div class="col-lg-7 col-med-7 col-sm-12 col-xs-12">
+      <div class="form-group">
+          <label><clr-icon shape="search"></clr-icon></label>
+          <label for="validInput1">
+              <input type="text" id="validInput1" disabled>
+          </label>
+      </div>
+  </div>
+  <div class="col-lg-3 col-med-3 col-sm-12 col-xs-12 ">
+      <button type="button" class="btn btn-icon" disabled>
+        <clr-icon shape="grid-view" class="is-solid"></clr-icon>
+      </button>  
+      <button type="button" class="btn btn-icon" disabled>
+          <clr-icon shape="view-list"></clr-icon>
+        </button>
+  </div>
+</div>  -->
+
 <div class="row">
   <div class="col-lg col-med col-sm col-xs">
     <div class="card">
@@ -49,7 +80,7 @@
 
 <div class="row flex-items-lg-center">
   <div *ngIf="jobsStillLoading">
-    <div class="col-lg"></div>
+    <div class="col-lg col-med col-sm col-xs"></div>
       <span class="spinner">
       </span>
       <p>Loading</p>

@@ -26,6 +26,7 @@ export class JobSummaryComponent implements OnInit{
     routeToConfig:boolean
     routeToOutput:boolean
     stopJobOption:boolean
+    hideOptions:boolean
 
     getBadgeClass() : string {    
         let badgeClass = 'badge-success';
@@ -135,6 +136,7 @@ export class JobSummaryComponent implements OnInit{
         this.routeToOutput =this.drawRouteToOutput()
         this.stopJobOption = this.drawPauseOption()
         this.actionButtonRoute = this.getActionRoute()
+        this.hideOptions = true
     }
 
     deleteJob() {
@@ -150,5 +152,15 @@ export class JobSummaryComponent implements OnInit{
     storeJobId(type:string): void {
         localStorage.setItem('action_type', type);
         localStorage.setItem('job_id', this.jobInfo.id);
+    }
+
+    mouseOver() {
+        console.log("mousein")
+        this.hideOptions = false
+    }
+
+    mouseLeave() {
+        console.log("mouseleave")
+        this.hideOptions = true
     }
 }
