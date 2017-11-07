@@ -7,7 +7,8 @@ import 'rxjs/add/operator/toPromise';
 export class AuthService {
   // private USER_BASE_URL: string = 'http://localhost:5000/auth';
   private USER_BASE_URL: string = 'https://science-gateway-users.azurewebsites.net/auth';
-  private COUNTER_BASE_URL: string = 'http://localhost:5200/api';
+  // private COUNTER_BASE_URL: string = 'http://localhost:5000/api';
+  private COUNTER_BASE_URL: string = 'http://science-gateway-count.azurewebsites.net/api';
 
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   constructor(private http: Http) {}

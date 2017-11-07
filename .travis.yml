@@ -36,20 +36,20 @@ script:
 # warning for the redundant "staging" branch information below
 # (visa versa if we push to "staging", we will expect a warning for "master")
 
-#before_deploy:
-#- rm -rf node_modules
-#- echo 'start deploying!'
+before_deploy:
+- rm -rf node_modules
+- echo 'start deploying!'
 
-#deploy:
-#  - provider: azure_web_apps
-#    verbose: true
-#    skip_cleanup: true
-#    on: develop
-#    slot: science-gateway-inputs-dev
-#  - provider: azure_web_apps
-#    verbose: true
-#    skip_cleanup: true
-#    on: staging
-#    slot: science-gateway-inputs-staging
+deploy:
+ - provider: azure_web_apps
+   verbose: true
+   skip_cleanup: true
+   on: master
+   slot: science-gateway-inputs-dev
+ - provider: azure_web_apps
+   verbose: true
+   skip_cleanup: true
+   on: staging
+   slot: science-gateway-inputs-staging
 
-#after_deploy: echo 'done deploying!'
+after_deploy: echo 'done deploying!'

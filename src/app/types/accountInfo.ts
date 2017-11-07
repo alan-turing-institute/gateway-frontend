@@ -1,12 +1,13 @@
 export class AccountInfo {
-    id: string;
-    ran: string;
-    remain: string;
-    organization: string;
-    constructor (newId:string, newRan:string, newRemain:string, newOrg: string) {
-        this.id = newId;
-        this.ran = newRan;
-        this.remain = newRemain;
-        this.organization = newOrg;
+    userTally: number;
+    userCredit: number;
+    organisationCredit: number;
+    organisationTally: number;
+
+    constructor (newUserTally:number, newUserCredit:number, newOrganisationTally:number, newOrganisationCredit: number) {
+        this.userTally = newUserTally;
+        this.userCredit = newUserCredit;
+        this.organisationTally = newOrganisationTally;
+        this.organisationCredit = newOrganisationCredit;
     }
 }

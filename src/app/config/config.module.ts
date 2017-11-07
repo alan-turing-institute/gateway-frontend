@@ -18,6 +18,8 @@ import { FeedbackComponent } from '../components/feedback/feedback.component';
 // import { ParametersComponent} from './parameters.component';
 // import { DescriptionComponent} from './description.component';
 
+import { AuthService } from '../auth/auth.service';
+
 @NgModule({
   imports: [
     ConfigRoutingModule,
@@ -25,7 +27,7 @@ import { FeedbackComponent } from '../components/feedback/feedback.component';
     FormsModule,
     // IonRangeSliderModule,
     PipeModule,
-    InputModule, 
+    InputModule,
     DescriptionModule,
     ClarityModule.forRoot(),
     // TabsModule.forRoot(),
@@ -39,6 +41,7 @@ import { FeedbackComponent } from '../components/feedback/feedback.component';
   ],
   providers: [
     ConfigDataService,
+    AuthService,
     // OutputService
   ],
   exports: [

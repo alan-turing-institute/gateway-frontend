@@ -26,6 +26,9 @@ import 'clarity-ui/clarity-ui.min.css';
 
 import 'ngx-bootstrap';
 import 'ngx-dropdown';
+
 import 'ng2-ion-range-slider';
+import 'ion-rangeslider/css/ion.rangeSlider.css'
+import 'ion-rangeslider/css/ion.rangeSlider.skinFlat.css'
 
 import 'three/src/Three';

@@ -7,6 +7,7 @@ import { JobInfo } from '../types/jobInfo';
 import { ConfigDataService } from './configData.service';
 // import { BsModalService,BsModalRef } from 'ngx-bootstrap';
 
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector:"config",
@@ -27,6 +28,7 @@ export class ConfigComponent implements OnInit {
   constructor(
     private configDataService:ConfigDataService,
     private router: Router,
+    private auth: AuthService,
   ) { }
 
   ngOnInit() {
@@ -53,9 +55,9 @@ export class ConfigComponent implements OnInit {
     if ((this.job.description.length > 0) && (this.job.name.length > 0)){
       this.alertAvailable = true
       this.alertText = "There are unsaved changes"
-      this.minimalJobInfoCollected = true  
+      this.minimalJobInfoCollected = true
     }
-      
+
   }
 
   onUpdated(component, value:string) {
@@ -113,7 +115,7 @@ export class ConfigComponent implements OnInit {
                             this.case=template['case']
                             this.job.status = template['status']
                             this.job.id = template['id']
-                            
+
                             // Do not load name or description, as API template doesn't give desirable values
                             // Keep as empty
                           },
@@ -126,7 +128,7 @@ export class ConfigComponent implements OnInit {
 
   saveJob() {
     this.alertAvailable = true
-    
+
     if (this.jobExistsOnServer) {
       this.job.status = "Draft"
       let url = this.configDataService.getSaveJobURL(this.job['id'])
@@ -156,6 +158,19 @@ export class ConfigComponent implements OnInit {
 
   runJob () {
     localStorage.setItem('job_id', this.job.id);
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      console.log("counting simulation")
+      this.auth.countSimulation(token)
+      .then((response) => {
+        console.log(response.json());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+
     let url = this.configDataService.getSaveJobURL(this.job['id'])
     this.alertText = "Submitting Job. This page will navigate to Dashboard when job submission is complete."
     this.configDataService.saveJob(this.job, url).subscribe(

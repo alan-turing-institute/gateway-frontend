@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChartComponent } from './chart/chart.component';
-import { AccountService } from './account.service';
+
 import { AccountInfo } from '../types/accountInfo';
 
+import { AuthService } from '../auth/auth.service';
+import { AccountService } from './account.service';
 
 @Component({
   selector: 'app-account',
@@ -14,23 +16,56 @@ import { AccountInfo } from '../types/accountInfo';
 
 export class AccountComponent implements OnInit{
   account: AccountInfo;
-  sim_ran: string;
-  sim_remain: string;
-  sim_organization: string;
 
-  constructor(private accountService: AccountService) { }
+  userCredit: number;
+  userTally: number;
+  organisationCredit: number;
+  organisationTally: number;
+
+  constructor(private accountService: AccountService, private auth: AuthService) { }
 
   ngOnInit():void {
-    this.account = new AccountInfo ("May Yong", "5", "10", "8000")
-    this.getAccountData()
+    // this.account = new AccountInfo(10.3, 10.3, 1, 0);
+    this.account = new AccountInfo(10, 10, 10, 10);
+    // this.accountService.getAccountData();
+    this.checkCounter();
   }
 
-  getAccountData():void {
-    this.account =  this.accountService.getAccountDataFile();
-    
-    
-    // this.sim_ran="";
-    // this.sim_remain="";
-    // this.sim_organization="";
+  checkCounter() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      console.log("checking credit")
+      this.accountService.checkCounter(token)
+      .then((response) => {
+        let data = response.json();
+        console.log(data);
+        this.account.userTally = data.user.tally;
+        this.account.userCredit = data.user.credit;
+        this.account.organisationTally = data.organisation.tally;
+        this.account.organisationCredit = data.organisation.credit;
+        console.log(this.account);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
   }
+
+  // runSimulation() {
+  //   const token = localStorage.getItem('token');
+  //   if (token) {
+  //     console.log("checking token");
+  //     console.log(token);
+  //
+  //     console.log("counting simulation")
+  //     this.auth.countSimulation(token)
+  //     .then((response) => {
+  //       console.log(response.json());
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  //   }
+  // }
+
 }

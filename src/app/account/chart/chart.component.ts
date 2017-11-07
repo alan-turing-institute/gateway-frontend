@@ -30,7 +30,7 @@ export class ChartComponent implements OnInit{
   showLabels = true;
   explodeSlices = false;
   doughnut = false;
-  
+
   onSelect(event) {
     console.log(event);
   }
@@ -39,14 +39,14 @@ export class ChartComponent implements OnInit{
     console.log(this.account)
     this.single = [
       {
-        "name": "Ran",
-        "value": Number(this.account['ran'])
+        "name": "Tally",
+        "value": Number(this.account['userTally'])
       },
       {
-        "name": "Remain",
-        "value": Number(this.account['remain'])
+        "name": "Remaining",
+        "value": Number(this.account['userCredit'])
       },
     ];
   }
-  
+
 }
