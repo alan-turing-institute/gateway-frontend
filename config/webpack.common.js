@@ -57,7 +57,8 @@ module.exports = {
           loader: "sass-loader" // compiles Sass to CSS
         }]
       }
-    ]
+    ],
+    noParse: /clarity-icons\.min\.js/
   },
 
   plugins: [
