@@ -4,15 +4,12 @@ import { JobInfo } from '../types/jobInfo';
 import { ProgressInfo } from '../types/progressInfo';
 import { DashboardService } from './dashboard.service';
 import { JobSummaryComponent } from './jobSummary.component';
-// import {} from "../../../node_modules/clarity-ui/src/"
 
 @Component({
   selector: "dashboard",
   providers: [DashboardService],
   templateUrl: 'dashboard.component.html',
-  styleUrls:['./dashboard.component.css']
-  // styles:[require('../../../node_modules/clarity-ui/clarity-ui.min.css').toString(), 
-  // require('./dashboard.component.css').toString()]
+  styleUrls:['./dashboard.component.css'],
 })
 
 export class DashboardComponent implements OnInit {
@@ -62,7 +59,7 @@ export class DashboardComponent implements OnInit {
             case "complete": this.numCompleteJobs++; break;
           }
           this.jobsStillLoading = false;
-          
+
         })
       }
     )
@@ -81,7 +78,7 @@ export class DashboardComponent implements OnInit {
         console.log("deleted");
         // find job to be deleted from list
         var deletedJob = this.jobs.filter(item => item.info.id == id);
-        
+
         // remove job from list
         this.jobs = this.jobs.filter(item => item.info.id !== id);
 
@@ -93,7 +90,7 @@ export class DashboardComponent implements OnInit {
           case "complete": this.numCompleteJobs--; break;
       }},
       error => {this.errorMessage = <any> error}
-      
+
     )
   }
 }

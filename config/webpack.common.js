@@ -57,7 +57,8 @@ module.exports = {
           loader: "sass-loader" // compiles Sass to CSS
         }]
       }
-    ]
+    ],
+    noParse: /clarity-icons\.min\.js/
   },
 
   plugins: [
@@ -74,8 +75,7 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
-      template: 'src/index.html'
+      template: 'src/public/index.html'
     })
   ]
 };
-

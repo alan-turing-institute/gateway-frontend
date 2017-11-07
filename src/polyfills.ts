@@ -57,6 +57,11 @@ import 'core-js/es7/reflect';
 import 'zone.js/dist/zone';  // Included with Angular CLI.
 
 
+// from clarity seed (webpack)
+// these polyfills should always be placed below core-js
+import 'mutationobserver-shim/dist/mutationobserver.min';
+import '@webcomponents/custom-elements/custom-elements.min';
+
 
 /***************************************************************************************************
  * APPLICATION IMPORTS
