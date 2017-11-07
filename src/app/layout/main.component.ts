@@ -1,4 +1,6 @@
 import { Component} from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,5 +9,29 @@ import { Component} from '@angular/core';
 })
 
 export class MainComponent {
-  constructor() { }
+  constructor(private router: Router, private auth: AuthService) {}
+
+  logout() {
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      console.log("checking token");
+      console.log(token);
+
+      console.log("removing token from local storage")
+      localStorage.removeItem('token');
+
+      console.log("logging out")
+      this.auth.logout(token)
+      .then((response) => {
+        console.log(response.json());
+        console.log("Taking you to /login")
+        this.router.navigateByUrl('/login');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  }
+
 }
