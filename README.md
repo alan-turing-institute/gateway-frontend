@@ -67,9 +67,10 @@ sudo gem install dpl
 export AZURE_WA_PASSWORD=<password>
 export AZURE_WA_USERNAME=<user-name>
 export AZURE_WA_SITE=science-gateway-inputs
+export AZURE_WA_SLOT=science-gateway-inputs-dev
 npm install
 npm run build
 # no need to commit "node_modules" to Azure (we only really want --skip_cleanup to commit "dist")
 rm -rf node_modules  
-dpl --provider=AzureWebApps --verbose --skip_cleanup --slot science-gateway-inputs-dev
+dpl --provider=AzureWebApps --verbose --skip_cleanup
 ```
