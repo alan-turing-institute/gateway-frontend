@@ -1,0 +1,11 @@
+.login-wrapper {
+  background-image: url(https://sgmiddleware.blob.core.windows.net/blue/background_transparent.png);
+  background-repeat: no-repeat;
+  /*background-size: 20%;*/
+  background-size: 400px;
+  background-color: #0B2537;
+  background-position: 600px center;
+}
+/*.login-wrapper .login {
+  min-height: 70vh;
+}*/

@@ -11,20 +11,34 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { ClarityModule } from "clarity-angular";
 
 import { MainComponent } from './layout/main.component'
+import { LoginComponent } from './login/login.component';
+
+import { AuthService } from './auth/auth.service';
+import { FormsModule } from '@angular/forms';
+
+import { EnsureAuthenticated } from './auth/ensure-authenticated.service';
+import { LoginRedirect } from './auth/login-redirect.service';
 
 @NgModule({
   imports: [
-    BrowserModule, 
+    BrowserModule,
     RouterModule,
     HttpModule,
     JsonpModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ClarityModule.forRoot()
+    FormsModule,
+    ClarityModule.forRoot(),
   ],
   declarations: [
     AppComponent,
-    MainComponent
+    MainComponent,
+    LoginComponent
+  ],
+  providers: [
+    AuthService,
+    EnsureAuthenticated,
+    LoginRedirect
   ],
   bootstrap: [ AppComponent ]
 })
