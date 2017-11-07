@@ -1,4 +1,4 @@
-# science-gateway-inputs
+# Science Gateway Inputs
 
 [![Build Status](https://travis-ci.org/alan-turing-institute/science-gateway-inputs.svg?branch=master)](https://travis-ci.org/alan-turing-institute/science-gateway-inputs)
 
