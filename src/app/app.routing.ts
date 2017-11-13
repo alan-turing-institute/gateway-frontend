@@ -17,15 +17,10 @@ import { LoginRedirect } from './auth/login-redirect.service';
 
 export const routes: Routes = [
     {
-      path: 'login',
-      component: LoginComponent,
-    },
-    {
       path: '',
       component: MainComponent,
-      data: {
-        title: 'Home'
-      },
+      data: {title: 'Home'},
+      canActivate: [ EnsureAuthenticated ],
       children: [
         {
           path: 'account',
@@ -54,16 +49,10 @@ export const routes: Routes = [
         }
       ]
     },
-    // {
-    //   path: '',
-    //   component: LoginLayoutComponent,
-    //   children: [
-    //     {
-    //       path: 'login',
-    //       component: LoginComponent
-    //     }
-    //   ]
-    // },
+    {
+      path: 'login',
+      component: LoginComponent,
+    },
     {
       path: '**', redirectTo: ''
     }
