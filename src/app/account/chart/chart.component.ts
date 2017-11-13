@@ -2,34 +2,30 @@ import {Component, Input, OnInit,NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 
-import { CounterData } from '../../types/counterData';
 
 @Component({
-  selector: 'simulations-allocation',
-  // template: `
-  //   <ngx-charts-pie-chart
-  //     [scheme]="colorScheme"
-  //     [view]="view"
-  //     [results]="single"
-  //     [legend]="showLegend"
-  //     [explodeSlices]="explodeSlices"
-  //     [labels]="showLabels"
-  //     [doughnut]="doughnut"
-  //     [gradient]="gradient"
-  //     (select)="onSelect($event)">
-  //   </ngx-charts-pie-chart>
-  // `
-
+  selector: 'counter-chart',
   template: `
-    tally = {{data.tally}}, credit = {{data.credit}}
+
+    <ngx-charts-pie-chart
+      [scheme]="colorScheme"
+      [view]="view"
+      [results]="single"
+      [legend]="showLegend"
+      [explodeSlices]="explodeSlices"
+      [labels]="showLabels"
+      [doughnut]="doughnut"
+      [gradient]="gradient"
+      (select)="onSelect($event)">
+    </ngx-charts-pie-chart>
   `
 
 })
 export class ChartComponent implements OnInit{
-  @Input() data: CounterData;
-  // data: object = {tally: 10, credit: 30};
 
+  @Input() data: any[];
   single: any[];
+
   view: any[] = [400, 300];
   showLegend = false;
   colorScheme = {
@@ -44,19 +40,19 @@ export class ChartComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log("In chart component")
-    console.log("data:", this.data)
-    // console.log(this.data['tally'])
-    // console.log(this.data['credit'])
+
+    // console.log("In chart component")
+    // console.log("chart", this.data)
+
     this.single = [
-      // {
-      //   "name": "Used",
-      //   "value": Number(this.data['tally'])
-      // },
-      // {
-      //   "name": "Remaining",
-      //   "value": Number(this.data['credit'])
-      // },
+      {
+        "name": "Used",
+        "value": Number(this.data['tally'])
+      },
+      {
+        "name": "Remaining",
+        "value": Number(this.data['credit'])
+      },
     ];
   }
 
