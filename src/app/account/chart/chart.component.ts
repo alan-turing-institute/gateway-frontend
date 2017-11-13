@@ -6,7 +6,6 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 @Component({
   selector: 'counter-chart',
   template: `
-
     <ngx-charts-pie-chart
       [scheme]="colorScheme"
       [view]="view"
