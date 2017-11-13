@@ -5,7 +5,7 @@ import { AuthService } from '../auth/auth.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.css']
+  styleUrls: ['./main.css'],
 })
 
 export class MainComponent {
