@@ -5,16 +5,33 @@
 
         <div class="col-lg-6 col-med-12 col-sm-12 col-xs-12">
           <h2>Your usage</h2>
-          <!-- tally = {{userData.tally}}, credit = {{userData.credit}} -->
+          <h6 *ngIf="dataLoaded">You have run {{userData.tally}} simulations and have {{userData.credit}} remaining.</h6>
+
           <counter-chart *ngIf="dataLoaded" [data]="userData"></counter-chart>
+
+          <div *ngIf="!(dataLoaded)">
+            <div class="col-lg col-med col-sm col-xs"></div>
+              <span class="spinner">
+              </span>
+              <p>Loading</p>
+          </div>
+
         </div>
 
         <div class="col-lg-6 col-med-12 col-sm-12 col-xs-12">
           <h2>Organisation usage</h2>
+          <h6 *ngIf="dataLoaded">Your organisation has run {{userData.tally}} simulations and has {{userData.credit}} remaining.</h6>
           <!-- tally = {{organisationData.tally}}, credit = {{organisationData.credit}} -->
-          <counter-chart *ngIf="dataLoaded" [data]="organisationData"></counter-chart>
-        </div>
 
+          <counter-chart *ngIf="dataLoaded" [data]="organisationData"></counter-chart>
+
+          <div *ngIf="!(dataLoaded)">
+            <div class="col-lg col-med col-sm col-xs"></div>
+              <span class="spinner">
+              </span>
+              <p>Loading</p>
+          </div>
+        </div>
     </div>
 
 </div>
