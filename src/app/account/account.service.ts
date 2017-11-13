@@ -5,32 +5,31 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import { AccountInfo } from '../types/accountInfo';
+import { CounterData } from '../types/counterData';
+
 import { environment } from '../../environments/environment';
 import * as urljoin from 'url-join';
 
 @Injectable()
 export class AccountService {
-  // private BASE_COUNTER_URL: string = 'https://science-gateway-counter.azurewebsites.net/api';
   // private COUNTER_URL: string = 'http://localhost:5000/api/count';
   private COUNTER_URL: string = 'https://science-gateway-count.azurewebsites.net/api/count';
 
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
+
   constructor (private http: Http) {}
 
-  getAccountData(): Observable<AccountInfo[]>{
-    return this.http.get(this.COUNTER_URL)
-                    .map(this.extractData)
-                    .catch(this.handleError);
-  }
+  getCounterData(token): Observable<object>{
+    let url: string = `${this.COUNTER_URL}`;
+    let headers: Headers = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    });
 
-  // checkCounter(token): void {
-  //   // let account = new AccountInfo (10, 40, 90, 110)
-  //   // return account
-  //   console.log('in service')
-  //
-  //
-  // }
+    return this.http.get(url, {headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 
   checkCounter(token): Promise<any> {
     let url: string = `${this.COUNTER_URL}`;

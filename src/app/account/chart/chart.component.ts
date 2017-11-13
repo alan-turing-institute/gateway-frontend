@@ -1,11 +1,12 @@
 import {Component, Input, OnInit,NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
-import { AccountInfo } from '../../types/accountInfo';
+
 
 @Component({
-  selector: 'simulations-allocation',
+  selector: 'counter-chart',
   template: `
+
     <ngx-charts-pie-chart
       [scheme]="colorScheme"
       [view]="view"
@@ -18,10 +19,13 @@ import { AccountInfo } from '../../types/accountInfo';
       (select)="onSelect($event)">
     </ngx-charts-pie-chart>
   `
+
 })
 export class ChartComponent implements OnInit{
-  @Input() account: AccountInfo;
+
+  @Input() data: any[];
   single: any[];
+
   view: any[] = [400, 300];
   showLegend = false;
   colorScheme = {
@@ -36,15 +40,18 @@ export class ChartComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log(this.account)
+
+    // console.log("In chart component")
+    // console.log("chart", this.data)
+
     this.single = [
       {
-        "name": "Tally",
-        "value": Number(this.account['userTally'])
+        "name": "Used",
+        "value": Number(this.data['tally'])
       },
       {
         "name": "Remaining",
-        "value": Number(this.account['userCredit'])
+        "value": Number(this.data['credit'])
       },
     ];
   }
