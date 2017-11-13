@@ -4,7 +4,7 @@ export class AccountInfo {
     organisationCredit: number;
     organisationTally: number;
 
-    constructor (newUserTally:number, newUserCredit:number, newOrganisationTally:number, newOrganisationCredit: number) {
+    constructor (newUserTally:number=null, newUserCredit:number=null, newOrganisationTally:number=null, newOrganisationCredit: number=null) {
         this.userTally = newUserTally;
         this.userCredit = newUserCredit;
         this.organisationTally = newOrganisationTally;
