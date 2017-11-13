@@ -13,11 +13,7 @@ import * as urljoin from 'url-join';
 
 @Injectable()
 export class DashboardService {
-  // private jobsUrl = require('../../assets/job_status.json');
-  // private jobsUrl = 'http://localhost:5000/api/jobs';
-  // apiRoot: 'http://dev-science-gateway-middleware.azurewebsites.net/api/',
-  // private progressUrl = require('../../assets/progress.json')
-  //private progressUrl = 'http://localhost:5000/api/progress/';
+  
   private jobsUrl = urljoin(environment.apiRoot, "jobs")
   private progressUrl = urljoin(environment.apiRoot, "progress")
   private cancelUrl = urljoin(environment.apiRoot, "cancel")
