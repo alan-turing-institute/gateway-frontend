@@ -24,14 +24,14 @@
 
       <!-- <button class="btn btn-sm btn-link">Action</button> -->
     <button *ngIf = "routeToOutput"
-      type="button" class="btn btn-link"
+      type="button" class="btn btn-link btn-sm"
       (click)="storeJobId('Output')"
       [routerLink]="['/output/output']" routerLinkActive="active">
       <span class="actionText">{{actionButtonText}}</span>
     </button>
 
     <button *ngIf = "routeToConfig"
-            type="button" class="btn btn-link"
+            type="button" class="btn btn-link btn-sm"
             [hidden]="routeToConfigHidden"
             (click)="storeJobId('Edit')"
             [routerLink]="['/config/config']" routerLinkActive="active">
@@ -39,11 +39,11 @@
     </button>
 
       <button *ngIf ="stopJobOption"
-            type="button" class="btn btn-outline"
+            type="button" class="btn btn-outline btn-sm"
             (click)="stopJob()">Stop</button>
 
 
-      <button type="button" class="btn btn-outline btn-hover"
+      <button type="button" class="btn btn-outline btn-hover btn-sm"
               (click)="deleteJob()">Delete</button>
   </div>
 </div>
