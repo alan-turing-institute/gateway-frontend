@@ -1,4 +1,4 @@
-<div class="card" (mouseover)='mouseOver()' (mouseleave)='mouseLeave()'>
+<div class="card clickable" (click)='setOptionsHidden()'>
 
   <div class="card-block">
       <div *ngIf ="stopJobOption" class="progress top">
@@ -24,26 +24,25 @@
 
       <!-- <button class="btn btn-sm btn-link">Action</button> -->
     <button *ngIf = "routeToOutput"
-      type="button" class="btn btn-link btn-sm"
+      type="button" class="btn btn-link btn-sm" [hidden]=hideOptions
       (click)="storeJobId('Output')"
       [routerLink]="['/output/output']" routerLinkActive="active">
       <span class="actionText">{{actionButtonText}}</span>
     </button>
 
     <button *ngIf = "routeToConfig"
-            type="button" class="btn btn-link btn-sm"
-            [hidden]="routeToConfigHidden"
+            type="button" class="btn btn-link btn-sm" [hidden]=hideOptions
             (click)="storeJobId('Edit')"
             [routerLink]="['/config/config']" routerLinkActive="active">
       <span class="actionText">{{actionButtonText}}</span>
     </button>
 
-      <button *ngIf ="stopJobOption"
+      <button *ngIf ="stopJobOption" [hidden]=hideOptions
             type="button" class="btn btn-outline btn-sm"
             (click)="stopJob()">Stop</button>
 
 
-      <button type="button" class="btn btn-outline btn-hover btn-sm"
+      <button type="button" class="btn btn-outline btn-hover btn-sm" [hidden]=hideOptions
               (click)="deleteJob()">Delete</button>
   </div>
 </div>

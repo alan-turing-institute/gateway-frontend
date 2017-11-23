@@ -163,4 +163,9 @@ export class JobSummaryComponent implements OnInit{
         console.log("mouseleave")
         this.hideOptions = true
     }
+
+    setOptionsHidden() {
+        this.hideOptions = !this.hideOptions  
+    }
+
 }
