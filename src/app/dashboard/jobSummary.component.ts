@@ -154,16 +154,6 @@ export class JobSummaryComponent implements OnInit{
         localStorage.setItem('job_id', this.jobInfo.id);
     }
 
-    mouseOver() {
-        console.log("mousein")
-        this.hideOptions = false
-    }
-
-    mouseLeave() {
-        console.log("mouseleave")
-        this.hideOptions = true
-    }
-
     setOptionsHidden() {
         this.hideOptions = !this.hideOptions  
     }
