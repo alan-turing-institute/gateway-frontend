@@ -24,6 +24,7 @@ export class ConfigComponent implements OnInit {
   minimalJobInfoCollected:boolean;
   alertAvailable: boolean;
   alertText: string;
+  basic:boolean
 
   constructor(
     private configDataService:ConfigDataService,
@@ -39,6 +40,7 @@ export class ConfigComponent implements OnInit {
     this.minimalJobInfoCollected = false
     this.jobExistsOnServer = false
     this.job = new JobInfo
+    this.basic = false
     this.getData()
   }
 
@@ -172,13 +174,14 @@ export class ConfigComponent implements OnInit {
     }
 
     let url = this.configDataService.getSaveJobURL(this.job['id'])
-    this.alertText = "Submitting Job. This page will navigate to Dashboard when job submission is complete."
+    this.alertText = "Submitting Job."
     this.configDataService.saveJob(this.job, url).subscribe(
                         saveJob => {
                           this.configDataService.runJob(this.job)
                             .subscribe(
                               ranJob => {
-                                this.router.navigate(['../../dashboard'])
+                                this.basic = true;
+                                
                               },
                               error => {
                                 this.errorMessage = <any> error
@@ -188,5 +191,9 @@ export class ConfigComponent implements OnInit {
                           this.errorMessage = <any> error
                       });
 
+  }
+
+  navigateToDashboard() {
+    this.router.navigate(['../../dashboard'])
   }
 }
