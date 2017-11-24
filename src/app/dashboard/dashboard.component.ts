@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   cardView: boolean;
   tableView: boolean;
   showConfirmDelete: boolean;
-  selectedJobs: JobInfo [];
+  selectedJobs: {info: JobInfo, progress:ProgressInfo} [];
   searchTerm:string;
   filteredJobs:{info: JobInfo, progress:ProgressInfo} []
 
@@ -87,15 +87,15 @@ export class DashboardComponent implements OnInit {
   confirmedDeleteJob(){
     this.showConfirmDelete =false
     this.selectedJobs.map(selectedJob => {
-      this.dashboardService.deleteJob(selectedJob).subscribe(
+      this.dashboardService.deleteJob(selectedJob.info.id).subscribe(
         message => {
           console.log("deleted");
           // find job to be deleted from list
-          var deletedJob = this.jobs.filter(item => item.info.id == selectedJob.id);
+          var deletedJob = this.jobs.filter(item => item.info.id == selectedJob.info.id);
   
           // remove job from list
-          this.jobs = this.jobs.filter(item => item.info.id !== selectedJob.id);
-  
+          this.jobs = this.jobs.filter(item => item.info.id !== selectedJob.info.id);
+          this.filteredJobs = this.jobs.slice();
           // change badge number
           switch (deletedJob[0].info.status.toLowerCase()) {
             case "running": this.numRunningJobs--; break;
@@ -108,7 +108,14 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  clearSelectedJobs() {
+    // so that any selected jobs will not be carried over to new view
+    this.selectedJobs = []
+  }
+
   toggleView() {
+    // so that any selected jobs will not be carried over to new view
+    this.clearSelectedJobs()
     this.cardView = !this.cardView  
     this.tableView = !this.tableView  
     // console.log("Card: "+this.cardView)
@@ -120,8 +127,12 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteJob(selectedJob) {
-    this.selectedJobs = []
+    this.clearSelectedJobs() 
     this.selectedJobs.push(selectedJob)
+    this.showConfirmDelete =true
+  }
+
+  deleteJobs() {
     this.showConfirmDelete =true
   }
 
