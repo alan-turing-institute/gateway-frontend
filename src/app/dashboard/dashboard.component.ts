@@ -145,4 +145,14 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  storeJobId(job) {
+    if (job.status=='Complete') {
+      localStorage.setItem('action_type', 'Output');
+    }
+    else {
+      localStorage.setItem('action_type', 'Edit');  
+    }
+    localStorage.setItem('job_id', job.id);  
+  }
+
 }

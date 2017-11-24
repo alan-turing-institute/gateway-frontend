@@ -128,7 +128,18 @@
         <clr-dg-column>Created</clr-dg-column>
     
         <clr-dg-row *clrDgItems="let job of filteredJobs" [clrDgItem]="job">
-            <clr-dg-cell>{{job.info.name}}</clr-dg-cell>
+            <clr-dg-cell>
+                <a *ngIf="job.info.status=='Complete'"
+                  [routerLink]="['/output/output']" 
+                  routerLinkActive="active" 
+                  (click)="storeJobId(job.info)">{{job.info.name}}
+                </a>
+                <a *ngIf="job.info.status=='Draft'"
+                [routerLink]="['/config/config']" 
+                routerLinkActive="active" 
+                (click)="storeJobId(job.info)">{{job.info.name}}
+              </a>
+            </clr-dg-cell>
             <clr-dg-cell>{{job.info.status}}</clr-dg-cell>
             <clr-dg-cell>{{job.info.creation_datetime | date: 'dd/MM/yyyy'}}</clr-dg-cell>
         </clr-dg-row>
