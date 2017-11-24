@@ -13,7 +13,7 @@ import * as moment from 'moment';
 export class JobSummaryComponent implements OnInit{
     @Input() jobInfo: JobInfo;
     @Input() progressInfo: ProgressInfo;
-    @Output() jobDeleted: EventEmitter<string> = new EventEmitter();
+    @Output() jobDeleted: EventEmitter<JobInfo> = new EventEmitter();
     @Output() jobStopped: EventEmitter<string> = new EventEmitter();
     
     jobHoverHidden: boolean;
@@ -143,19 +143,10 @@ export class JobSummaryComponent implements OnInit{
 
     deleteJob() {
     //   console.log("Child wants to delete a Job")
-      this.showConfirmDelete =false
-      this.jobDeleted.emit(this.jobInfo.id)
+      this.jobDeleted.emit(this.jobInfo)
     }
 
-    cancelDeleteJob() {
-        //   console.log("Child wants to delete a Job")
-          this.showConfirmDelete =false
-        }
-
-    confirmDeleteJob() {
-    //   console.log("Child wants to delete a Job")
-        this.showConfirmDelete =true
-    }
+    
 
     stopJob() {
       console.log("Child wants to cancel a Job")

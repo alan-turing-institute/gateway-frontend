@@ -1,4 +1,31 @@
 
+<clr-modal [(clrModalOpen)]="showConfirmDelete">
+    <h3 class="modal-title">Delete File</h3>
+    <div class="modal-body">
+        <div class="alert alert-danger">
+            <div class="alert-items">
+                <div class="alert-item static">
+                    <div class="alert-icon-wrapper">
+                        <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                    </div>
+                    <span class="alert-text">You are going to delete {{selectedJobs.length}} job.</span>
+                </div>
+            </div>
+        </div>
+        <p>Are you sure you want to delete 
+          <b>
+            <ul *ngFor="let job of selectedJobs">
+                <li>{{job.name}}</li>
+              </ul>  
+          </b>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-outline" (click)="cancelDeleteJob()" >Cancel</button>
+        <button class="btn btn-warning" (click)="confirmedDeleteJob()">Delete</button>
+    </div>
+</clr-modal>
+
 <div class="row flex-items-lg-between flex-items-med-between flex-items-sm-between flex-items-xs-between">
   <div class="col-lg-3 col-med-3 col-sm-12 col-xs-12">
       <div class="btn-group">
@@ -8,7 +35,7 @@
           </div>
           <div class="radio btn">
               <input type="radio" name="btn-group-view-radios" id="btn-cardview" checked=cardView (click)="toggleView()">
-              <label for="btn-cardview"><clr-icon shape="grid-view"></clr-icon></label>
+              <label for="btn-cardview"><clr-icon shape="view-cards"></clr-icon></label>
           </div>
       </div>
   </div>
@@ -16,18 +43,42 @@
       <div class="form-group">
           <label><clr-icon shape="search"></clr-icon></label>
           <label for="searchTerm">
-              <input type="text" id="searchTerm" disabled>
+              <input type="text" id="searchTerm" 
+              [(ngModel)]="searchTerm" name="searchTerm"
+              (keyup)="filterJobs()">
           </label>
       </div>
   </div> 
 </div> 
+
+<div class="row" *ngIf="tableView && selectedJobs.length >0">
+  <div class="col-lg col-med col-sm col-xs">
+    <div class="alert alert-info">
+      <div class="alert-items">
+          <div class="alert-item static">
+              <div class="alert-icon-wrapper">
+                  <clr-icon class="alert-icon" shape="info-circle"></clr-icon>
+              </div>
+              <span class="alert-text">...</span>
+              <div class="alert-actions">
+                  <a href="..." class="alert-action">Acknowledge</a>
+                  <a href="..." class="alert-action">Reset to green</a>
+              </div>
+          </div>
+      </div>
+      <button type="button" class="close" aria-label="Close">
+          <clr-icon aria-hidden="true" shape="close"></clr-icon>
+      </button>
+    </div>
+  </div>
+</div>
 
 <div class="row" *ngIf="cardView">
   <div class="col-lg col-med col-sm col-xs">
     <div class="card">
       <div class="category-header card-header">Complete <span class="badge badge-success">{{numCompleteJobs}}</span></div>
       <div class="card-block">
-        <div *ngFor="let job of jobs" class='card-jobs container-fluid'>
+        <div *ngFor="let job of filteredJobs" class='card-jobs container-fluid'>
           <div *ngIf="job.info.status=='Complete'">
             <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
               (jobDeleted)="deleteJob($event)">
@@ -41,7 +92,7 @@
     <div class="card">
       <div class="category-header card-header">Running <span class="badge badge-info">{{numRunningJobs}}</span></div>
       <div class="card-block">    
-        <div *ngFor="let job of jobs">
+        <div *ngFor="let job of filteredJobs">
           <div *ngIf="job.info.status=='Queued' || job.info.status=='Running' ">
             <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
                         (jobDeleted)="deleteJob($event)" 
@@ -56,7 +107,7 @@
     <div class="card">
       <div class="category-header card-header">Draft <span class="badge">{{numDraftJobs}}</span></div>
       <div class="card-block">
-          <div *ngFor="let job of jobs">
+          <div *ngFor="let job of filteredJobs">
             <div *ngIf="job.info.status=='Draft'">
               <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
                           (jobDeleted)="deleteJob($event)"
@@ -76,14 +127,19 @@
         <clr-dg-column>Created</clr-dg-column>
         <clr-dg-column>Action</clr-dg-column>
     
-        <clr-dg-row *ngFor="let job of jobs">
+        <clr-dg-row *ngFor="let job of filteredJobs">
             <clr-dg-cell>{{job.info.name}}</clr-dg-cell>
             <clr-dg-cell>{{job.info.status}}</clr-dg-cell>
-            <clr-dg-cell>{{job.info.creation_datetime}}</clr-dg-cell>
-            <clr-dg-cell></clr-dg-cell>
+            <clr-dg-cell>{{job.info.creation_datetime | date: 'dd/MM/yyyy'}}</clr-dg-cell>
+            <clr-dg-cell>
+              <clr-icon shape="trash"></clr-icon>
+              <clr-icon *ngIf="job.info.status=='Running'" shape="stop"></clr-icon>
+              <clr-icon shape="folder-open">
+              </clr-icon>
+            </clr-dg-cell>
         </clr-dg-row>
     
-        <clr-dg-footer>{{jobs.length}} users</clr-dg-footer>
+        <clr-dg-footer>{{filteredJobs.length}} jobs</clr-dg-footer>
     </clr-datagrid>   
   </div> 
 </div>

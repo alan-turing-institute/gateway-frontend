@@ -21,6 +21,10 @@ export class DashboardComponent implements OnInit {
   jobsStillLoading: boolean;
   cardView: boolean;
   tableView: boolean;
+  showConfirmDelete: boolean;
+  selectedJobs: JobInfo [];
+  searchTerm:string;
+  filteredJobs:{info: JobInfo, progress:ProgressInfo} []
 
   constructor(private dashboardService: DashboardService) { }
 
@@ -31,9 +35,13 @@ export class DashboardComponent implements OnInit {
     localStorage.removeItem("job_id")
     localStorage.removeItem("template_id")
     this.jobs = []
+    this.filteredJobs = []
     this.jobsStillLoading = true;
     this.cardView = false;
     this.tableView = true;
+    this.showConfirmDelete = false
+    this.selectedJobs = []
+    this.searchTerm = ""
     this.getJobsData()
   }
 
@@ -54,6 +62,7 @@ export class DashboardComponent implements OnInit {
           else {
             var progressPlaceHolder:ProgressInfo = {"value": 0, "units": "%", "range_min":0, "range_max":100}
             this.jobs.push({"info": job, "progress":progressPlaceHolder})
+            this.filteredJobs.push({"info": job, "progress":progressPlaceHolder})
           }
 
           switch (job.status.toLowerCase()) {
@@ -75,30 +84,54 @@ export class DashboardComponent implements OnInit {
     )
   }
 
-  deleteJob(id){
-    this.dashboardService.deleteJob(id).subscribe(
-      message => {
-        console.log("deleted");
-        // find job to be deleted from list
-        var deletedJob = this.jobs.filter(item => item.info.id == id);
-
-        // remove job from list
-        this.jobs = this.jobs.filter(item => item.info.id !== id);
-
-        // change badge number
-        switch (deletedJob[0].info.status.toLowerCase()) {
-          case "running": this.numRunningJobs--; break;
-          case "queued": this.numRunningJobs--; break;
-          case "draft": this.numDraftJobs--; break;
-          case "complete": this.numCompleteJobs--; break;
-      }},
-      error => {this.errorMessage = <any> error}
-
-    )
+  confirmedDeleteJob(){
+    this.showConfirmDelete =false
+    this.selectedJobs.map(selectedJob => {
+      this.dashboardService.deleteJob(selectedJob).subscribe(
+        message => {
+          console.log("deleted");
+          // find job to be deleted from list
+          var deletedJob = this.jobs.filter(item => item.info.id == selectedJob.id);
+  
+          // remove job from list
+          this.jobs = this.jobs.filter(item => item.info.id !== selectedJob.id);
+  
+          // change badge number
+          switch (deletedJob[0].info.status.toLowerCase()) {
+            case "running": this.numRunningJobs--; break;
+            case "queued": this.numRunningJobs--; break;
+            case "draft": this.numDraftJobs--; break;
+            case "complete": this.numCompleteJobs--; break;
+        }},
+        error => {this.errorMessage = <any> error}
+      )
+    })
   }
 
   toggleView() {
     this.cardView = !this.cardView  
     this.tableView = !this.tableView  
+    // console.log("Card: "+this.cardView)
+    // console.log("Table: "+this.tableView)
   }
+
+  cancelDeleteJob() {
+    this.showConfirmDelete =false
+  }
+
+  deleteJob(selectedJob) {
+    this.selectedJobs = []
+    this.selectedJobs.push(selectedJob)
+    this.showConfirmDelete =true
+  }
+
+  filterJobs() {
+    this.filteredJobs = []
+    this.jobs.map(job => {
+      if (job.info.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0) {
+        this.filteredJobs.push(job)  
+      }
+    })
+  }
+
 }
