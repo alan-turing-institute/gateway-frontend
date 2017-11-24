@@ -1,36 +1,28 @@
 
-<!-- <div class="row">
-  <div class="col-lg-2 col-med-4 col-sm-12 col-xs-12">
-    <clr-dropdown>
-        <button type="button" class="btn btn-outline-primary" clrDropdownTrigger>
-            Filter
-            <clr-icon shape="caret down"></clr-icon>
-        </button>
-        <clr-dropdown-menu clrPosition="bottom-left" *clrIfOpen>
-            <button type="button" clrDropdownItem>Date</button>
-            <button type="button" disabled clrDropdownItem>Status</button>
-        </clr-dropdown-menu>
-    </clr-dropdown>      
-  </div>
-  <div class="col-lg-7 col-med-7 col-sm-12 col-xs-12">
-      <div class="form-group">
-          <label><clr-icon shape="search"></clr-icon></label>
-          <label for="validInput1">
-              <input type="text" id="validInput1" disabled>
-          </label>
+<div class="row flex-items-lg-between flex-items-med-between flex-items-sm-between flex-items-xs-between">
+  <div class="col-lg-3 col-med-3 col-sm-12 col-xs-12">
+      <div class="btn-group">
+          <div class="radio btn">
+              <input type="radio" name="btn-group-view-radios" id="btn-tableview" checked=tableView (click)="toggleView()">
+              <label for="btn-tableview"><clr-icon shape="view-list"></clr-icon></label>
+          </div>
+          <div class="radio btn">
+              <input type="radio" name="btn-group-view-radios" id="btn-cardview" checked=cardView (click)="toggleView()">
+              <label for="btn-cardview"><clr-icon shape="grid-view"></clr-icon></label>
+          </div>
       </div>
   </div>
-  <div class="col-lg-3 col-med-3 col-sm-12 col-xs-12 ">
-      <button type="button" class="btn btn-icon" disabled>
-        <clr-icon shape="grid-view" class="is-solid"></clr-icon>
-      </button>  
-      <button type="button" class="btn btn-icon" disabled>
-          <clr-icon shape="view-list"></clr-icon>
-        </button>
-  </div>
-</div>  -->
+  <div class="col-lg-4 col-med-3 col-sm-12 col-xs-12">
+      <div class="form-group">
+          <label><clr-icon shape="search"></clr-icon></label>
+          <label for="searchTerm">
+              <input type="text" id="searchTerm" disabled>
+          </label>
+      </div>
+  </div> 
+</div> 
 
-<div class="row">
+<div class="row" *ngIf="cardView">
   <div class="col-lg col-med col-sm col-xs">
     <div class="card">
       <div class="category-header card-header">Complete <span class="badge badge-success">{{numCompleteJobs}}</span></div>
@@ -45,7 +37,6 @@
       </div>
     </div>
   </div>
-
   <div class="col-lg col-med col-sm col-xs">
     <div class="card">
       <div class="category-header card-header">Running <span class="badge badge-info">{{numRunningJobs}}</span></div>
@@ -61,7 +52,6 @@
       </div>
     </div>
   </div>
-
   <div class="col-lg col-med col-sm col-xs">
     <div class="card">
       <div class="category-header card-header">Draft <span class="badge">{{numDraftJobs}}</span></div>
@@ -77,6 +67,27 @@
     </div>
   </div>
 </div>
+
+<div class="row" *ngIf="tableView">
+  <div class="col-lg col-med col-sm col-xs">
+    <clr-datagrid>
+        <clr-dg-column>Name</clr-dg-column>
+        <clr-dg-column>Status</clr-dg-column>
+        <clr-dg-column>Created</clr-dg-column>
+        <clr-dg-column>Action</clr-dg-column>
+    
+        <clr-dg-row *ngFor="let job of jobs">
+            <clr-dg-cell>{{job.info.name}}</clr-dg-cell>
+            <clr-dg-cell>{{job.info.status}}</clr-dg-cell>
+            <clr-dg-cell>{{job.info.creation_datetime}}</clr-dg-cell>
+            <clr-dg-cell></clr-dg-cell>
+        </clr-dg-row>
+    
+        <clr-dg-footer>{{jobs.length}} users</clr-dg-footer>
+    </clr-datagrid>   
+  </div> 
+</div>
+  
 
 <div class="row flex-items-lg-center">
   <div *ngIf="jobsStillLoading">

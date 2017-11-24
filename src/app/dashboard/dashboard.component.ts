@@ -19,6 +19,8 @@ export class DashboardComponent implements OnInit {
   numRunningJobs: number;
   numDraftJobs: number;
   jobsStillLoading: boolean;
+  cardView: boolean;
+  tableView: boolean;
 
   constructor(private dashboardService: DashboardService) { }
 
@@ -30,6 +32,8 @@ export class DashboardComponent implements OnInit {
     localStorage.removeItem("template_id")
     this.jobs = []
     this.jobsStillLoading = true;
+    this.cardView = false;
+    this.tableView = true;
     this.getJobsData()
   }
 
@@ -59,7 +63,6 @@ export class DashboardComponent implements OnInit {
             case "complete": this.numCompleteJobs++; break;
           }
           this.jobsStillLoading = false;
-
         })
       }
     )
@@ -92,5 +95,10 @@ export class DashboardComponent implements OnInit {
       error => {this.errorMessage = <any> error}
 
     )
+  }
+
+  toggleView() {
+    this.cardView = !this.cardView  
+    this.tableView = !this.tableView  
   }
 }
