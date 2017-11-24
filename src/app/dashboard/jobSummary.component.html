@@ -1,3 +1,24 @@
+<clr-modal [(clrModalOpen)]="showConfirmDelete">
+    <h3 class="modal-title">Success</h3>
+    <div class="modal-body">
+        <div class="alert alert-success">
+            <div class="alert-items">
+                <div class="alert-item static">
+                    <div class="alert-icon-wrapper">
+                        <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+                    </div>
+                    <span class="alert-text">This job is currently running.</span>
+                </div>
+            </div>
+        </div>
+        <p>Are you sure you want to delete this job?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="cancelDeleteJob()" >Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="deleteJob()">Ok</button>
+    </div>
+</clr-modal>
+
 <div class="card clickable" (click)='setOptionsHidden()'>
 
   <div class="card-block">
@@ -41,9 +62,8 @@
             type="button" class="btn btn-outline btn-sm"
             (click)="stopJob()">Stop</button>
 
-
       <button type="button" class="btn btn-outline btn-hover btn-sm" [hidden]=hideOptions
-              (click)="deleteJob()">Delete</button>
+              (click)="confirmDeleteJob()">Delete</button>
   </div>
 </div>
 

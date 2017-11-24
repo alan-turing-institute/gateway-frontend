@@ -27,6 +27,7 @@ export class JobSummaryComponent implements OnInit{
     routeToOutput:boolean
     stopJobOption:boolean
     hideOptions:boolean
+    showConfirmDelete:boolean
 
     getBadgeClass() : string {    
         let badgeClass = 'badge-success';
@@ -137,11 +138,23 @@ export class JobSummaryComponent implements OnInit{
         this.stopJobOption = this.drawPauseOption()
         this.actionButtonRoute = this.getActionRoute()
         this.hideOptions = true
+        this.showConfirmDelete = false
     }
 
     deleteJob() {
-      console.log("Child wants to delete a Job")
+    //   console.log("Child wants to delete a Job")
+      this.showConfirmDelete =false
       this.jobDeleted.emit(this.jobInfo.id)
+    }
+
+    cancelDeleteJob() {
+        //   console.log("Child wants to delete a Job")
+          this.showConfirmDelete =false
+        }
+
+    confirmDeleteJob() {
+    //   console.log("Child wants to delete a Job")
+        this.showConfirmDelete =true
     }
 
     stopJob() {
