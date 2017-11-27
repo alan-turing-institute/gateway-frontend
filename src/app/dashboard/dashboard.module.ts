@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ClarityModule } from "clarity-angular";
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -11,6 +12,7 @@ import { JobSummaryComponent } from './jobSummary.component';
   imports: [
     DashboardRoutingModule,
     CommonModule,
+    FormsModule,
     ClarityModule.forRoot()
   ],
   declarations: [

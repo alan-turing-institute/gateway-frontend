@@ -19,6 +19,12 @@ export class DashboardComponent implements OnInit {
   numRunningJobs: number;
   numDraftJobs: number;
   jobsStillLoading: boolean;
+  cardView: boolean;
+  tableView: boolean;
+  showConfirmDelete: boolean;
+  selectedJobs: {info: JobInfo, progress:ProgressInfo} [];
+  searchTerm:string;
+  filteredJobs:{info: JobInfo, progress:ProgressInfo} []
 
   constructor(private dashboardService: DashboardService) { }
 
@@ -29,7 +35,13 @@ export class DashboardComponent implements OnInit {
     localStorage.removeItem("job_id")
     localStorage.removeItem("template_id")
     this.jobs = []
+    this.filteredJobs = []
     this.jobsStillLoading = true;
+    this.cardView = false;
+    this.tableView = true;
+    this.showConfirmDelete = false
+    this.selectedJobs = []
+    this.searchTerm = ""
     this.getJobsData()
   }
 
@@ -50,6 +62,7 @@ export class DashboardComponent implements OnInit {
           else {
             var progressPlaceHolder:ProgressInfo = {"value": 0, "units": "%", "range_min":0, "range_max":100}
             this.jobs.push({"info": job, "progress":progressPlaceHolder})
+            this.filteredJobs.push({"info": job, "progress":progressPlaceHolder})
           }
 
           switch (job.status.toLowerCase()) {
@@ -59,7 +72,6 @@ export class DashboardComponent implements OnInit {
             case "complete": this.numCompleteJobs++; break;
           }
           this.jobsStillLoading = false;
-
         })
       }
     )
@@ -72,25 +84,75 @@ export class DashboardComponent implements OnInit {
     )
   }
 
-  deleteJob(id){
-    this.dashboardService.deleteJob(id).subscribe(
-      message => {
-        console.log("deleted");
-        // find job to be deleted from list
-        var deletedJob = this.jobs.filter(item => item.info.id == id);
-
-        // remove job from list
-        this.jobs = this.jobs.filter(item => item.info.id !== id);
-
-        // change badge number
-        switch (deletedJob[0].info.status.toLowerCase()) {
-          case "running": this.numRunningJobs--; break;
-          case "queued": this.numRunningJobs--; break;
-          case "draft": this.numDraftJobs--; break;
-          case "complete": this.numCompleteJobs--; break;
-      }},
-      error => {this.errorMessage = <any> error}
-
-    )
+  confirmedDeleteJob(){
+    this.showConfirmDelete =false
+    this.selectedJobs.map(selectedJob => {
+      this.dashboardService.deleteJob(selectedJob.info.id).subscribe(
+        message => {
+          console.log("deleted");
+          // find job to be deleted from list
+          var deletedJob = this.jobs.filter(item => item.info.id == selectedJob.info.id);
+  
+          // remove job from list
+          this.jobs = this.jobs.filter(item => item.info.id !== selectedJob.info.id);
+          this.filteredJobs = this.jobs.slice();
+          // change badge number
+          switch (deletedJob[0].info.status.toLowerCase()) {
+            case "running": this.numRunningJobs--; break;
+            case "queued": this.numRunningJobs--; break;
+            case "draft": this.numDraftJobs--; break;
+            case "complete": this.numCompleteJobs--; break;
+        }},
+        error => {this.errorMessage = <any> error}
+      )
+    })
   }
+
+  clearSelectedJobs() {
+    // so that any selected jobs will not be carried over to new view
+    this.selectedJobs = []
+  }
+
+  toggleView() {
+    // so that any selected jobs will not be carried over to new view
+    this.clearSelectedJobs()
+    this.cardView = !this.cardView  
+    this.tableView = !this.tableView  
+    // console.log("Card: "+this.cardView)
+    // console.log("Table: "+this.tableView)
+  }
+
+  cancelDeleteJob() {
+    this.showConfirmDelete =false
+  }
+
+  deleteJob(selectedJob) {
+    this.clearSelectedJobs() 
+    this.selectedJobs.push(selectedJob)
+    this.showConfirmDelete =true
+  }
+
+  deleteJobs() {
+    this.showConfirmDelete =true
+  }
+
+  filterJobs() {
+    this.filteredJobs = []
+    this.jobs.map(job => {
+      if (job.info.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0) {
+        this.filteredJobs.push(job)  
+      }
+    })
+  }
+
+  storeJobId(job) {
+    if (job.status=='Complete') {
+      localStorage.setItem('action_type', 'Output');
+    }
+    else {
+      localStorage.setItem('action_type', 'Edit');  
+    }
+    localStorage.setItem('job_id', job.id);  
+  }
+
 }

@@ -1,26 +1,5 @@
-<clr-modal [(clrModalOpen)]="showConfirmDelete">
-    <h3 class="modal-title">Success</h3>
-    <div class="modal-body">
-        <div class="alert alert-success">
-            <div class="alert-items">
-                <div class="alert-item static">
-                    <div class="alert-icon-wrapper">
-                        <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
-                    </div>
-                    <span class="alert-text">This job is currently running.</span>
-                </div>
-            </div>
-        </div>
-        <p>Are you sure you want to delete this job?</p>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="cancelDeleteJob()" >Cancel</button>
-        <button type="button" class="btn btn-primary" (click)="deleteJob()">Ok</button>
-    </div>
-</clr-modal>
 
 <div class="card clickable" (click)='setOptionsHidden()'>
-
   <div class="card-block">
       <div *ngIf ="stopJobOption" class="progress top">
           <progress value={{progressInfo.value}} max="100"></progress>
@@ -63,56 +42,6 @@
             (click)="stopJob()">Stop</button>
 
       <button type="button" class="btn btn-outline btn-hover btn-sm" [hidden]=hideOptions
-              (click)="confirmDeleteJob()">Delete</button>
+              (click)="deleteJob()">Delete</button>
   </div>
 </div>
-
-    <!-- <h5 class="card-title">{{jobInfo.name}}</h5>
-    <p class="card-subtitle mb-2 text-muted">{{jobTemporalDistanceFromCreation}}</p>
-
-    <div class="row">
-      <div class="col-sm-4 col-md-3">
-        <img style="height: 3em" src={{jobInfo.case.thumbnail}} class="img-job">
-      </div>
-      <div class="col-sm-8 col-md-8">
-        <p class="card-text">{{jobShortDescription}}</p>
-      </div>
-    </div>
-
-    <div *ngIf="jobInfo.status =='Running'">
-      <div class="card-block">
-        <div class="h6 m-0">{{jobProgress}} completed</div>
-        <div>Running on cx1 cluster</div>
-        <div class="progress progress-xs my-1">
-          <div class="progress-bar bg-warning" role="progressbar"
-          [ngStyle]="{'width':progressInfo.value+'%'}"
-          aria-valuenow="progressInfo.value" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-      </div>
-    </div> -->
-
-
-  <!-- <div class="card-footer">
-    <button *ngIf = "routeToOutput"
-            type="button" class="btn btn-outline-primary btn-action btn-sm"
-            (click)="storeJobId('Output')"
-            [routerLink]="['/output/output']" routerLinkActive="active">
-      <span class="actionText">{{actionButtonText}}</span>
-    </button>
-
-    <button *ngIf = "routeToConfig"
-            type="button" class="btn btn-outline-primary btn-action btn-sm"
-            [hidden]="routeToConfigHidden"
-            (click)="storeJobId('Edit')"
-            [routerLink]="['/config/config']" routerLinkActive="active">
-      <span class="actionText">{{actionButtonText}}</span>
-    </button>
-
-    <button *ngIf ="stopJobOption"
-            type="button" class="btn btn-link btn-action btn-sm"
-            (click)="stopJob()">Stop</button>
-
-    <button type="button" class="btn btn-link btn-action btn-sm"
-            (click)="deleteJob()">Delete</button>
-
-  </div> -->

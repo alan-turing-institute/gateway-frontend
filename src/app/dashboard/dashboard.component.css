@@ -6,3 +6,11 @@
 .spinner {
   margin-top: 20vh;
 }
+
+.alert-delete-text {
+  padding-top: 1vh;
+}
+
+.alert-delete-box {
+  padding-top: 1.5vh;
+}
