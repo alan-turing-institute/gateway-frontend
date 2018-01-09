@@ -26,8 +26,8 @@
     </div>
 </clr-modal>
 
-<div class="row flex-items-lg-between flex-items-med-between flex-items-sm-between flex-items-xs-between">
-  <div class="col-lg-3 col-med-3 col-sm-12 col-xs-12">
+<div class="row flex-items-lg-between flex-items-med-between flex-items-sm-between flex-items-xs-between"> 
+  <div class="col-lg-3 col-med-3 col-sm-3 col-xs-12">
       <div class="btn-group">
           <div class="radio btn">
               <input type="radio" name="btn-group-view-radios" id="btn-tableview" checked=tableView (click)="toggleView()">
@@ -39,15 +39,15 @@
           </div>
       </div>
   </div>
-  <div class="col-lg-4 col-med-3 col-sm-12 col-xs-12">
-      <div class="form-group">
-          <label><clr-icon shape="search"></clr-icon></label>
-          <label for="searchTerm">
-              <input type="text" id="searchTerm" 
-              [(ngModel)]="searchTerm" name="searchTerm"
-              (keyup)="filterJobs()">
-          </label>
-      </div>
+  <div class="searchgroup col-lg col-med col-sm col-xs">
+    <div class="form-group">
+        <label><clr-icon shape="search"></clr-icon></label>
+        <label for="searchTerm">
+            <input type="text" id="searchTerm" 
+            [(ngModel)]="searchTerm" name="searchTerm"
+            (keyup)="filterJobs()">
+        </label>
+    </div>    
   </div> 
 </div> 
 
@@ -74,12 +74,13 @@
   </div>
 </div>
 
-<div class="row" *ngIf="cardView">
-  <div class="col-lg col-med col-sm col-xs">
+<div class="row flex-items-lg-between flex-items-med-between flex-items-sm-between" 
+  *ngIf="cardView">
+  <div class="col-lg col-med col-sm col-xs-12">
     <div class="card">
       <div class="category-header card-header">Complete <span class="badge badge-success">{{numCompleteJobs}}</span></div>
       <div class="card-block">
-        <div *ngFor="let job of filteredJobs" class='card-jobs container-fluid'>
+        <div *ngFor="let job of filteredJobs">
           <div *ngIf="job.info.status=='Complete'">
             <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
               (jobDeleted)="deleteJob($event)">
@@ -89,12 +90,12 @@
       </div>
     </div>
   </div>
-  <div class="col-lg col-med col-sm col-xs">
+  <div class="col-lg col-med col-sm col-xs-12">
     <div class="card">
       <div class="category-header card-header">Running <span class="badge badge-info">{{numRunningJobs}}</span></div>
       <div class="card-block">    
         <div *ngFor="let job of filteredJobs">
-          <div *ngIf="job.info.status=='Queued' || job.info.status=='Running' ">
+          <div *ngIf="job.info.status=='Running' || job.info.status=='Queued' ">
             <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
                         (jobDeleted)="deleteJob($event)" 
                         (jobStopped)="cancelJob($event)">
@@ -104,7 +105,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg col-med col-sm col-xs">
+  <div class="col-lg col-med col-sm col-xs-12">
     <div class="card">
       <div class="category-header card-header">Draft <span class="badge">{{numDraftJobs}}</span></div>
       <div class="card-block">

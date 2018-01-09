@@ -37,8 +37,8 @@ export class DashboardComponent implements OnInit {
     this.jobs = []
     this.filteredJobs = []
     this.jobsStillLoading = true;
-    this.cardView = false;
-    this.tableView = true;
+    this.cardView = true;
+    this.tableView = false;
     this.showConfirmDelete = false
     this.selectedJobs = []
     this.searchTerm = ""

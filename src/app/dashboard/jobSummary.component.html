@@ -4,7 +4,7 @@
       <div *ngIf ="stopJobOption" class="progress top">
           <progress value={{progressInfo.value}} max="100"></progress>
       </div>
-      <div class="card-media-block ">
+      <div class="card-media-block">
           <img src={{jobInfo.case.thumbnail}} class="card-media-image">
           <div class="card-media-description">
               <span class="card-media-title">
@@ -15,16 +15,18 @@
               </span>
           </div>
       </div>
-      <p class="card-text">
-          {{jobShortDescription}}
-      </p>
+      
   </div>
 
   <div class="job-footer card-footer">
-
+    
+    <clr-icon shape="caret down" [hidden]=!hideOptions></clr-icon>
+    <p class="card-text" [hidden]=hideOptions>
+        {{jobShortDescription}}
+    </p>
       <!-- <button class="btn btn-sm btn-link">Action</button> -->
     <button *ngIf = "routeToOutput"
-      type="button" class="btn btn-link btn-sm" [hidden]=hideOptions
+      type="button" class="btn btn-link btn-sm" [hidden]="hideOptions"
       (click)="storeJobId('Output')"
       [routerLink]="['/output/output']" routerLinkActive="active">
       <span class="actionText">{{actionButtonText}}</span>
@@ -37,11 +39,12 @@
       <span class="actionText">{{actionButtonText}}</span>
     </button>
 
-      <button *ngIf ="stopJobOption" [hidden]=hideOptions
+    <button *ngIf ="stopJobOption" [hidden]=hideOptions
             type="button" class="btn btn-outline btn-sm"
             (click)="stopJob()">Stop</button>
 
-      <button type="button" class="btn btn-outline btn-hover btn-sm" [hidden]=hideOptions
+    <button type="button" class="btn btn-outline btn-hover btn-sm" [hidden]=hideOptions
               (click)="deleteJob()">Delete</button>
   </div>
 </div>
+

@@ -76,7 +76,9 @@ export class JobSummaryComponent implements OnInit{
 
     getShortDescription(): string {
         // return this.jobInfo.description.slice(0,200);
-        return this.jobInfo.description;
+        if (this.jobInfo.description.length >= 40)
+            return this.jobInfo.description.slice(0,40)+"..";
+        return this.jobInfo.description
     }
 
     getRelativeCreationTime() : string {
