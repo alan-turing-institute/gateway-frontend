@@ -7,9 +7,9 @@
     color: #2b4656;
 }
 
-
-
-
+.card.clickable {
+    width: 15rem;
+}
 
 /* text within cards*/
 .card-body {
@@ -25,9 +25,6 @@
     color: #263238;
 }
 
-.card-header, a:focus, a:hover {
-    /* background-color: #a8c8d6; */
-}
 
 .badge-draft {
     color: #f8cb00;

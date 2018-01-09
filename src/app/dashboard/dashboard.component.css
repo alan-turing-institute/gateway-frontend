@@ -16,7 +16,8 @@
 }
 
 .searchgroup {
-  padding-top: 0.80vh;
+  padding-top: 0.70vh;
+  padding-bottom: 1.80vh;
 }
 
 .card-job {
@@ -25,4 +26,8 @@
 
 .card-jobs {
   padding: 0.1vh 0.15vh;
+}
+
+.form-filter {
+  padding-left: 0.0vh;
 }

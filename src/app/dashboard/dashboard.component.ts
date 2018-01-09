@@ -24,6 +24,9 @@ export class DashboardComponent implements OnInit {
   showConfirmDelete: boolean;
   selectedJobs: {info: JobInfo, progress:ProgressInfo} [];
   searchTerm:string;
+  includeCompletedJobs:boolean;
+  includeRunningJobs:boolean;
+  includeDraftJobs:boolean;
   filteredJobs:{info: JobInfo, progress:ProgressInfo} []
 
   constructor(private dashboardService: DashboardService) { }
@@ -42,28 +45,32 @@ export class DashboardComponent implements OnInit {
     this.showConfirmDelete = false
     this.selectedJobs = []
     this.searchTerm = ""
+    this.includeCompletedJobs=true;
+    this.includeRunningJobs=true;
+    this.includeDraftJobs=true;
     this.getJobsData()
   }
 
   getJobsData() {
-    this.dashboardService.data
+    this.dashboardService.getMockData()
       .subscribe(allJobs => {
+        console.log(allJobs);
         allJobs.map(job => {
-          if (job.status.toLowerCase() == "running") {
-            this.dashboardService.getProgressInfo(job.id)
-                            .subscribe(
-                              progress => {
-                                  this.jobs.push({"info": job, "progress":progress})
-                              },
-                              error => {
-                                this.errorMessage = <any> error
-                              });
-          }
-          else {
+          // if (job.status.toLowerCase() == "running") {
+          //   this.dashboardService.getProgressInfo(job.id)
+          //                   .subscribe(
+          //                     progress => {
+          //                         this.jobs.push({"info": job, "progress":progress})
+          //                     },
+          //                     error => {
+          //                       this.errorMessage = <any> error
+          //                     });
+          // }
+          // else {
             var progressPlaceHolder:ProgressInfo = {"value": 0, "units": "%", "range_min":0, "range_max":100}
             this.jobs.push({"info": job, "progress":progressPlaceHolder})
             this.filteredJobs.push({"info": job, "progress":progressPlaceHolder})
-          }
+          // }
 
           switch (job.status.toLowerCase()) {
             case "running": this.numRunningJobs++; break;
@@ -136,13 +143,53 @@ export class DashboardComponent implements OnInit {
     this.showConfirmDelete =true
   }
 
+  toggleStatus(status:string) {
+    switch (status) {
+      case 'Draft': {
+        this.includeDraftJobs = !this.includeDraftJobs
+        break;
+      }
+      case 'Running': {
+        this.includeRunningJobs = !this.includeRunningJobs
+        break;
+      }
+      case 'Complete': {
+        this.includeCompletedJobs = !this.includeCompletedJobs
+        break;
+      }
+    }
+    this.filterJobs();
+  }
+
   filterJobs() {
     this.filteredJobs = []
+    // this.jobs.map(job => {
+    //   if (job.info.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0) {
+    //     this.filteredJobs.push(job)  
+    //   }
+    // })
     this.jobs.map(job => {
-      if (job.info.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0) {
-        this.filteredJobs.push(job)  
+      if (this.includeDraftJobs) {
+        if ((job.info.status.toLowerCase().indexOf('draft') >= 0)
+            &&(job.info.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0)) {
+          this.filteredJobs.push(job)  
+        }
       }
-    })
+      if (this.includeRunningJobs) {
+        if (((job.info.status.toLowerCase().indexOf('running') >= 0) ||
+        (job.info.status.toLowerCase().indexOf('queued') >= 0))
+        &&(job.info.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0))  
+        {
+          this.filteredJobs.push(job)  
+        }
+      }
+      if (this.includeCompletedJobs) {
+        if ((job.info.status.toLowerCase().indexOf('complete') >= 0)
+        &&(job.info.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0)) {
+          this.filteredJobs.push(job)  
+        }
+      }
+    })  
   }
 
   storeJobId(job) {

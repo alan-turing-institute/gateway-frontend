@@ -1,6 +1,9 @@
 
 <div class="card clickable" (click)='setOptionsHidden()'>
-  <div class="card-block">
+    <div class="card-header">
+            {{jobInfo.status}}
+    </div>  
+    <div class="card-block">
       <div *ngIf ="stopJobOption" class="progress top">
           <progress value={{progressInfo.value}} max="100"></progress>
       </div>
@@ -14,8 +17,7 @@
                   {{jobTemporalDistanceFromCreation}}
               </span>
           </div>
-      </div>
-      
+      </div>  
   </div>
 
   <div class="job-footer card-footer">
