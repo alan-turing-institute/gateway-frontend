@@ -1,19 +1,19 @@
-<div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card clickable">
-            <a routerLinkActive = "active"
-              [routerLink] = "['/config/config']"
-              (click)="storeCaseType()">
-                <div class="card-block">
-                    <div class="card-media-block">
-                        <img src={{info.thumbnail}}  class="card-media-image">
-                        <div class="card-media-description">
-                            <span class="card-media-title">{{info.label}}</span>
-                            <span class="card-media-text">{{getShortDescription()}}</span>
-                        </div>
-                    </div>
-                </div> 
-            </a>
+<div class="card clickable">
+    <div class="card-header">
+            {{info.label}}
+    </div>  
+    <a routerLinkActive = "active"
+        [routerLink] = "['/config/config']"
+        (click)="storeCaseType()">
+        <div class="card-block">
+            <div class="card-media-block">
+                <img src={{info.thumbnail}}  class="card-media-image">
+                <div class="card-media-description">
+                    <span class="card-media-title">{{info.label}}</span>
+                    <span class="card-media-text">{{getShortDescription()}}</span>
+                </div>
+            </div>
         </div> 
-    </div> 
-</div>
+    </a>
+</div> 
+    

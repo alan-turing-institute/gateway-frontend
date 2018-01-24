@@ -72,17 +72,13 @@
   </div> 
 
 <div class="row" *ngIf="cardView">
-  <!-- <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12"> -->
-    <!-- <div class="row flex-items-lg-between flex-items-med-between flex-items-sm-between"> -->
-      <div *ngFor="let job of filteredJobs">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
-            (jobDeleted)="deleteJob($event)">
-          </jobSummary>
-        </div>
-      
-    <!-- </div>    -->
-      </div>
+  <div *ngFor="let job of filteredJobs">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
+        (jobDeleted)="deleteJob($event)">
+      </jobSummary>
+    </div>
+  </div>
 </div>
 
 <div class="row alert-delete-box" *ngIf="tableView">
