@@ -19,12 +19,11 @@
 </clr-modal>
 <div class="container-fluid">  
   <div class="row">
-    <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">  
           <div class="card-block">
             <form>
                 <section class="form-block">
-                  <!-- <label>Job Information</label> -->
                   <div class="card-media-block">
                       <img src={{case?.thumbnail}} class="card-media-image">
                       <div class="card-media-description">
@@ -48,51 +47,36 @@
                       (keydown)="setMinimalJobInfoCollected()"></textarea>
                   </div>
                 </section>
-                <section class="form-footer row">
-                  <button type="button" 
-                      class="btn btn-outline col-lg-1 col-med-1 col-sm-12 col-xs-12" 
-                      (click)="saveJob()" 
-                      [disabled]=!minimalJobInfoCollected><span>Save</span>
-                  </button>
-                  <button *ngIf="jobExistsOnServer" type="button"
-                      class="btn btn-outline col-lg-1 col-med-1 col-sm-12 col-xs-12"
-                      routerLinkActive="active"
-                      (click)="runJob()"
-                      [disabled]="!minimalJobInfoCollected"
-                      [hidden]=!minimalJobInfoCollected><span>Run</span>
-                  </button>
-                  <clr-alert [clrAlertType]="'alert-success'" 
-                    [clrAlertClosable]="false"
-                    *ngIf="alertAvailable"
-                    class ="col-lg-9 col-med-9 col-sm-12 col-xs-12">
+                <section class="form-footer">
+                    <button type="button" 
+                        (click)="saveJob()" 
+                        [disabled]=!minimalJobInfoCollected><span>Save</span>
+                    </button>
+                    <button *ngIf="jobExistsOnServer" type="button"
+                        routerLinkActive="active"
+                        (click)="runJob()"
+                        [disabled]="!minimalJobInfoCollected"
+                        [hidden]=!minimalJobInfoCollected><span>Run</span>
+                    </button>
+                
+                    <clr-alert [clrAlertType]="'alert-success'" 
+                        [clrAlertClosable]="false"
+                        *ngIf="alertAvailable">
                     <div class="alert-item">
                         <span class="alert-text">
                             {{alertText}}
                         </span>
                     </div>
-                </clr-alert>
-                  
-                  <!-- <div *ngIf="alertAvailable" class="alert alert-success col-lg-10 col-med-9 col-sm-12 col-xs-12">
-                    <div class="alert-items">
-                        <div class="alert-item static">
-                            <div class="alert-icon-wrapper">
-                                <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
-                            </div>
-                            <span class="alert-text">
-                                {{alertText}}
-                            </span>
-                        </div>
-                    </div>
-                </div> -->
+                    </clr-alert>
                 </section>
             </form>
           </div>
         </div>
-    <!-- </div> -->
+    </div>
   </div> 
   
   <div class="row">
-    <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div *ngFor="let family of families" class="card" >
         <div class="category-header card-header" >{{family.label}}</div>
           <div class="card-block">
@@ -110,6 +94,6 @@
             </div>
           </div>
       </div>
-    <!-- </div> -->
+    </div>
   </div>
 </div>

@@ -120,13 +120,24 @@ export class DashboardComponent implements OnInit {
     this.selectedJobs = []
   }
 
-  toggleView() {
+  toggleView(selectedView) {
+    if (selectedView == 'card')
+      if (!this.cardView)
+        this.changeView();
+    if (selectedView == 'table')
+      if (!this.tableView)
+        this.changeView();
+
     // so that any selected jobs will not be carried over to new view
-    this.clearSelectedJobs()
-    this.cardView = !this.cardView  
-    this.tableView = !this.tableView  
+     
     // console.log("Card: "+this.cardView)
     // console.log("Table: "+this.tableView)
+  }
+
+  changeView() {
+    this.clearSelectedJobs()
+    this.cardView = !this.cardView  
+    this.tableView = !this.tableView 
   }
 
   cancelDeleteJob() {

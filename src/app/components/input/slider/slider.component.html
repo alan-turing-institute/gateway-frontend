@@ -2,10 +2,10 @@
     <form class="compact">
         <section class="form-block">
             <div class="form-group row" >
-                <div class="col-lg-3">
+                <div class="col-lg-3 col-med-3 col-sm-6 col-xs-12">
                     <label [for]=data.name>{{data.label}}</label>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-5 col-med-3 col-sm-6 col-xs-12">
                     <ion-range-slider
                         [attr.id]=data.name
                         from={{data.value}}
@@ -15,7 +15,7 @@
                         (onFinish)="updateSlider($event)">
                     </ion-range-slider>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-2 col-med-3 col-sm-6 col-xs-12">
                     <input type="number" class="form-control" name={{data.name}} 
                         placeholder={{data.value}} size="5" 
                         min={{data.min_value}} max={{data.max_value}}  step={{data.step}}
@@ -23,7 +23,7 @@
                         [attr.id]="data.name"
                         (blur)="updateText(data.value)">    
                 </div>
-                <div class="col-lg-1">
+                <div class="col-lg-2 col-med-3 col-sm-6 col-xs-12">
                     <div class="select form-control">
                         <select id="exampleSelect1">
                             <option>{{data.units}}</option>
