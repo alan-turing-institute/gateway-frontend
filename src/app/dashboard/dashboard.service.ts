@@ -24,7 +24,7 @@ export class DashboardService {
   constructor (private http: Http) {}
 
   // data = this.getJobsData()
-  mockdata = this.getMockData()
+  // mockdata = this.getMockData()
 
   getJobsData(): Observable<JobInfo[]>{
     return this.http.get(this.jobsUrl)
