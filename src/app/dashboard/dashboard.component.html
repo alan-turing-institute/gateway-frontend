@@ -26,20 +26,39 @@
     </div>
 </clr-modal>
 
-<div class="row flex-items-lg-between flex-items-med-between flex-items-sm-between flex-items-xs-between">
-  <div class="col-lg-3 col-med-3 col-sm-12 col-xs-12">
-      <div class="btn-group">
-          <div class="radio btn">
-              <input type="radio" name="btn-group-view-radios" id="btn-tableview" checked=tableView (click)="toggleView()">
-              <label for="btn-tableview"><clr-icon shape="view-list"></clr-icon></label>
-          </div>
-          <div class="radio btn">
-              <input type="radio" name="btn-group-view-radios" id="btn-cardview" checked=cardView (click)="toggleView()">
-              <label for="btn-cardview"><clr-icon shape="view-cards"></clr-icon></label>
-          </div>
-      </div>
-  </div>
-  <div class="col-lg-4 col-med-3 col-sm-12 col-xs-12">
+<div class="row flex-items-lg-between flex-items-med-between flex-items-sm-between flex-items-xs-between"> 
+    <div class="col-lg-3 col-med-3 col-sm-3 col-xs-12">
+        <div class="btn-group">
+            <div class="radio btn">
+                <input type="radio" name="btn-group-view-radios" id="btn-tableview" checked=tableView (click)="toggleView('table')">
+                <label for="btn-tableview"><clr-icon shape="view-list"></clr-icon></label>
+            </div>
+            <div class="radio btn">
+                <input type="radio" name="btn-group-view-radios" id="btn-cardview" checked=cardView (click)="toggleView('card')">
+                <label for="btn-cardview"><clr-icon shape="view-cards"></clr-icon></label>
+            </div>
+        </div>
+    </div>
+    <div class="searchgroup col-lg-5 col-med-5 col-sm-5 col-xs-12">
+        <div class="form-group form-filter">
+            <clr-checkbox [clrChecked]="includeCompletedJobs"  
+              [clrInline]="true"
+              (change)="toggleStatus('Complete')">
+                Completed <span class="badge badge-success">{{numCompleteJobs}}</span>
+            </clr-checkbox>
+            <clr-checkbox [clrChecked]="includeRunningJobs"  
+              [clrInline]="true"
+              (change)="toggleStatus('Running')">
+                Running <span class="badge badge-info">{{numRunningJobs}}</span>
+            </clr-checkbox>
+            <clr-checkbox [clrChecked]="includeDraftJobs"  
+              [clrInline]="true"
+              (change)="toggleStatus('Draft')">
+                Draft <span class="badge">{{numDraftJobs}}</span>
+            </clr-checkbox>
+        </div>     
+      </div> 
+    <div class="searchgroup col-lg-4 col-med-4 col-sm-4 col-xs-12">
       <div class="form-group">
           <label><clr-icon shape="search"></clr-icon></label>
           <label for="searchTerm">
@@ -47,75 +66,40 @@
               [(ngModel)]="searchTerm" name="searchTerm"
               (keyup)="filterJobs()">
           </label>
-      </div>
+      </div>    
+    </div> 
+    
   </div> 
-</div> 
+
+<div class="row" *ngIf="cardView">
+  <div *ngFor="let job of filteredJobs">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
+        (jobDeleted)="deleteJob($event)">
+      </jobSummary>
+    </div>
+  </div>
+</div>
 
 <div class="row alert-delete-box" *ngIf="tableView">
   <div class="col-lg col-med col-sm col-xs">
     <div class="alert alert-info">
       <div class="alert-items">
-          <div class="alert-item static">
-              <div class="alert-icon-wrapper alert-delete-text">
-                  <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
-              </div>
-              <span class="alert-text alert-delete-text">You have selected {{selectedJobs.length}} jobs</span>
-              <div class="alert-actions">
-                  <button type="button" class="btn btn-link btn-sm" aria-label="Close" (click)="deleteJobs()">
-                      <clr-icon aria-hidden="true" shape="trash"></clr-icon> Delete
-                  </button>
-              </div>
+        <div class="alert-item static">
+          <div class="alert-icon-wrapper alert-delete-text">
+            <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
           </div>
+          <span class="alert-text alert-delete-text">You have selected {{selectedJobs.length}} jobs</span>
+          <div class="alert-actions">
+            <button type="button" class="btn btn-link btn-sm" aria-label="Close" (click)="deleteJobs()">
+              <clr-icon aria-hidden="true" shape="trash"></clr-icon> Delete
+            </button>
+          </div>
+        </div>
       </div>
       <button type="button" class="close alert-delete-text" aria-label="Close" (click)="clearSelectedJobs()">
-          <clr-icon aria-hidden="true" shape="close"></clr-icon>
+        <clr-icon aria-hidden="true" shape="close"></clr-icon>
       </button>
-    </div>
-  </div>
-</div>
-
-<div class="row" *ngIf="cardView">
-  <div class="col-lg col-med col-sm col-xs">
-    <div class="card">
-      <div class="category-header card-header">Complete <span class="badge badge-success">{{numCompleteJobs}}</span></div>
-      <div class="card-block">
-        <div *ngFor="let job of filteredJobs" class='card-jobs container-fluid'>
-          <div *ngIf="job.info.status=='Complete'">
-            <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
-              (jobDeleted)="deleteJob($event)">
-            </jobSummary>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg col-med col-sm col-xs">
-    <div class="card">
-      <div class="category-header card-header">Running <span class="badge badge-info">{{numRunningJobs}}</span></div>
-      <div class="card-block">    
-        <div *ngFor="let job of filteredJobs">
-          <div *ngIf="job.info.status=='Queued' || job.info.status=='Running' ">
-            <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
-                        (jobDeleted)="deleteJob($event)" 
-                        (jobStopped)="cancelJob($event)">
-            </jobSummary>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg col-med col-sm col-xs">
-    <div class="card">
-      <div class="category-header card-header">Draft <span class="badge">{{numDraftJobs}}</span></div>
-      <div class="card-block">
-          <div *ngFor="let job of filteredJobs">
-            <div *ngIf="job.info.status=='Draft'">
-              <jobSummary [jobInfo]="job.info" [progressInfo]="job.progress" 
-                          (jobDeleted)="deleteJob($event)"
-              ></jobSummary>
-            </div>
-          </div>
-      </div>
     </div>
   </div>
 </div>
@@ -123,38 +107,36 @@
 <div class="row" *ngIf="tableView">
   <div class="col-lg col-med col-sm col-xs">
     <clr-datagrid  [(clrDgSelected)]="selectedJobs">
-        <clr-dg-column>Name</clr-dg-column>
-        <clr-dg-column>Status</clr-dg-column>
-        <clr-dg-column>Created</clr-dg-column>
-    
-        <clr-dg-row *clrDgItems="let job of filteredJobs" [clrDgItem]="job">
-            <clr-dg-cell>
-                <a *ngIf="job.info.status=='Complete'"
-                  [routerLink]="['/output/output']" 
-                  routerLinkActive="active" 
-                  (click)="storeJobId(job.info)">{{job.info.name}}
-                </a>
-                <a *ngIf="job.info.status=='Draft'"
-                [routerLink]="['/config/config']" 
-                routerLinkActive="active" 
-                (click)="storeJobId(job.info)">{{job.info.name}}
-              </a>
-            </clr-dg-cell>
-            <clr-dg-cell>{{job.info.status}}</clr-dg-cell>
-            <clr-dg-cell>{{job.info.creation_datetime | date: 'dd/MM/yyyy'}}</clr-dg-cell>
-        </clr-dg-row>
-    
-        <clr-dg-footer>{{filteredJobs.length}} jobs</clr-dg-footer>
+      <clr-dg-column>Name</clr-dg-column>
+      <clr-dg-column>Status</clr-dg-column>
+      <clr-dg-column>Created</clr-dg-column>
+      <clr-dg-row *clrDgItems="let job of filteredJobs" [clrDgItem]="job">
+        <clr-dg-cell>
+          <a *ngIf="job.info.status=='Complete'"
+            [routerLink]="['/output/output']" 
+            routerLinkActive="active" 
+            (click)="storeJobId(job.info)">{{job.info.name}}
+          </a>
+          <a *ngIf="job.info.status=='Draft'"
+            [routerLink]="['/config/config']" 
+            routerLinkActive="active" 
+            (click)="storeJobId(job.info)">{{job.info.name}}
+          </a>
+        </clr-dg-cell>
+        <clr-dg-cell>{{job.info.status}}</clr-dg-cell>
+        <clr-dg-cell>{{job.info.creation_datetime | date: 'dd/MM/yyyy'}}</clr-dg-cell>
+      </clr-dg-row>
+      <clr-dg-footer>{{filteredJobs.length}} jobs</clr-dg-footer>
     </clr-datagrid>   
   </div> 
 </div>
-  
-<div class="row flex-items-lg-center">
-  <div *ngIf="jobsStillLoading">
-    <div class="col-lg col-med col-sm col-xs"></div>
-      <span class="spinner">
-      </span>
-      <p>Loading</p>
+    
+  <div class="row flex-items-lg-center">
+    <div *ngIf="jobsStillLoading">
+      <div class="col-lg col-med col-sm col-xs"></div>
+        <span class="spinner">
+        </span>
+        <p>Loading</p>
+    </div>
   </div>
-</div>
 

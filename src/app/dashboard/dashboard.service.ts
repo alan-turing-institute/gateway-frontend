@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { JOBS } from './mock-jobs';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
@@ -21,7 +23,8 @@ export class DashboardService {
 
   constructor (private http: Http) {}
 
-  data = this.getJobsData()
+  // data = this.getJobsData()
+  // mockdata = this.getMockData()
 
   getJobsData(): Observable<JobInfo[]>{
     return this.http.get(this.jobsUrl)
@@ -78,5 +81,9 @@ private extractJsonData(res: Response){
     }
     console.error(errMsg);
     return Observable.throw(errMsg);
+  }
+
+  getMockData(): Observable<any[]>{
+    return of(JOBS)
   }
 }

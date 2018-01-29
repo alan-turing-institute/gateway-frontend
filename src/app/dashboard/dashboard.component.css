@@ -14,3 +14,20 @@
 .alert-delete-box {
   padding-top: 1.5vh;
 }
+
+.searchgroup {
+  padding-top: 0.70vh;
+  padding-bottom: 1.80vh;
+}
+
+.card-job {
+  padding: 0.1vh 0.15vh;
+}
+
+.card-jobs {
+  padding: 0.1vh 0.15vh;
+}
+
+.form-filter {
+  padding-left: 0.0vh;
+}
