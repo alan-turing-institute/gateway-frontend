@@ -16,7 +16,7 @@ export class CasesService {
   constructor (private http: Http) {}
 
   getCases(): Observable<CaseInfo[]>{
-    let templateUrl = urljoin(environment.apiRoot, "cases");
+    let templateUrl = urljoin(environment.apiRoot, "case");
     return this.http.get(templateUrl)
                     .map(this.extractData)
                     .catch(this.handleError);
@@ -24,7 +24,8 @@ export class CasesService {
 
   private extractData(res: Response){
     let body = res.json();
-    return body.cases || { };
+    // console.log(res);
+    return body || { };
   }
 
   private handleError (error: Response | any) {

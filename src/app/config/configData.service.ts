@@ -18,7 +18,7 @@ import * as urljoin from 'url-join';
 export class ConfigDataService {
 
   private jobData;
-  private templateUrl = urljoin(environment.apiRoot, "cases");
+  private templateUrl = urljoin(environment.apiRoot, "case");
   private jobsUrl = urljoin(environment.apiRoot, "jobs");
   private runUrl = urljoin(environment.apiRoot, "run");
   private response = {}

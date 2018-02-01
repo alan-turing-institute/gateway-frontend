@@ -14,7 +14,7 @@ export class CaseCardComponent implements OnInit{
   
   storeCaseType(): void {
     localStorage.setItem('action_type', "Template");
-    localStorage.setItem('template_id', this.info.id);
+    localStorage.setItem('template_id', this.info.links.self);
   }
 
   setCaseHoverHidden(): void {
@@ -24,7 +24,7 @@ export class CaseCardComponent implements OnInit{
   getShortDescription(): string {
     if (this.info.description !== undefined)
       return this.info.description.slice(0,200);
-    else return ""
+    else return "filler description data";
   }
 
   ngOnInit(): void {

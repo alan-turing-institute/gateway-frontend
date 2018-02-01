@@ -1,7 +1,6 @@
 export class CaseInfo {
-    id: string;
-    uri: string;
-    label: string;
+    links: {self: string};
+    name: string;
     thumbnail: string;
     description: string;
 }

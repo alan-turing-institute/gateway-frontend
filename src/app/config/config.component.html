@@ -87,10 +87,12 @@
                 <app-pipe [data]="family.parameters"></app-pipe>
             </div>    
             <div *ngFor="let component of getComponentsOf(family)">
-              <textInput [data]="component"
-                          (onUpdated)="onUpdated(component, $event)"></textInput>
-              <sliderInput [data]="component"
-                          (onUpdated)="onUpdated(component, $event)"></sliderInput> 
+                <div *ngIf="component.type == 'slider'">
+                    <textInput [data]="component"
+                            (onUpdated)="onUpdated(component, $event)"></textInput>
+                    <sliderInput [data]="component"
+                            (onUpdated)="onUpdated(component, $event)"></sliderInput> 
+                </div>  
             </div>
           </div>
       </div>
