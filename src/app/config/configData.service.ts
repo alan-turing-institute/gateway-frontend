@@ -18,7 +18,7 @@ import * as urljoin from 'url-join';
 export class ConfigDataService {
 
   private jobData;
-  private templateUrl = urljoin(environment.apiRoot, "case");
+  private templateUrl = urljoin(environment.apiRoot, "");
   private jobsUrl = urljoin(environment.apiRoot, "jobs");
   private runUrl = urljoin(environment.apiRoot, "run");
   private response = {}
@@ -85,9 +85,9 @@ export class ConfigDataService {
   }
 
   private extractJsonData(res: Response) {
-    console.log(res)
+    // console.log(res)
     let body = res.json();
-    this.response = body
+    // this.response = body
 
     return body || { };
   }

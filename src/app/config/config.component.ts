@@ -93,7 +93,7 @@ export class ConfigComponent implements OnInit {
                         .subscribe(
                           config => {
                             this.job = config
-                            this.families = config['families']
+                            this.families = config['fields']
                             this.case=config['case']
                             this.job.name = config['name']
                             this.job.description = config['description']
@@ -113,10 +113,12 @@ export class ConfigComponent implements OnInit {
                             this.job = template
                             this.job.name=""
                             this.job.description=""
-                            this.families = template['families']
+                            this.families = template['fields']
                             this.case=template['case']
                             this.job.status = template['status']
                             this.job.id = template['id']
+
+                            console.log(this.families);
 
                             // Do not load name or description, as API template doesn't give desirable values
                             // Keep as empty

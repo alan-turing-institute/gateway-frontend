@@ -1,11 +1,11 @@
+
 export class JobInfo {
     id: string;
     name: string;
     description: string;
     case: {
-        id: string;
-        uri: string;
-        label: string;
+        links: {self: string};
+        name: string;
         thumbnail: string;
         description: string;
     };
