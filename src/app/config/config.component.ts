@@ -3,11 +3,13 @@ import { Router} from '@angular/router';
 import { InputComponent } from '../components/input/inputComponent';
 import { FeedbackComponent } from '../components/feedback/feedback.component';
 import { CaseInfo } from '../types/caseInfo';
+import { FieldsTemplate } from '../types/fieldsInfo';
 import { JobInfo } from '../types/jobInfo';
 import { ConfigDataService } from './configData.service';
 // import { BsModalService,BsModalRef } from 'ngx-bootstrap';
 
 import { AuthService } from '../auth/auth.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector:"config",
@@ -17,6 +19,7 @@ import { AuthService } from '../auth/auth.service';
 
 export class ConfigComponent implements OnInit {
   case:CaseInfo
+  fields:FieldsTemplate[]
   families:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
   job: JobInfo
   errorMessage: string;
@@ -53,13 +56,11 @@ export class ConfigComponent implements OnInit {
   }
 
   setMinimalJobInfoCollected () {
-    console.log("changing")
     if ((this.job.description.length > 0) && (this.job.name.length > 0)){
       this.alertAvailable = true
       this.alertText = "There are unsaved changes"
       this.minimalJobInfoCollected = true
     }
-
   }
 
   onUpdated(component, value:string) {
@@ -83,6 +84,52 @@ export class ConfigComponent implements OnInit {
     }
   }
 
+  getComponentProperty(childField, property:string) {
+    for (let spec of childField['specs']) {
+      if (spec['property_name'] == property) {
+        return spec['property_value']
+      }
+    }
+    return "";
+  }
+  
+  serializeFieldToFamily(aField) {
+    var child_fields = aField['child_fields'];
+    var components = [];
+    for (let child_field of child_fields) {
+      var aComponent:InputComponent = {
+            name: child_field['name'],
+            tag: [],
+            type: "slider",
+            label: child_field['name'],
+            units: this.getComponentProperty(child_field, "units"),
+            type_value: "string",
+            min_value: this.getComponentProperty(child_field, "min"),
+            max_value: this.getComponentProperty(child_field, "max"),
+            options:[],
+            help: "string",
+            disabled: true,
+            valid: true,
+            value: this.getComponentProperty(child_field, "default"), 
+          }
+      components.push(aComponent);
+    }
+    var aFamily = {
+      name: aField.name, 
+      label: aField.name, 
+      collapse: false, 
+      parameters: components
+    }  
+    return aFamily
+  }
+
+  serializeFieldsToFamilies() {    
+    for (let field of this.fields) {
+      this.families.push(this.serializeFieldToFamily(field));
+    }
+    console.log(this.families)
+  }
+
   getData () {
     let action_type = localStorage.getItem('action_type');
     if (action_type === 'Edit') {
@@ -93,7 +140,7 @@ export class ConfigComponent implements OnInit {
                         .subscribe(
                           config => {
                             this.job = config
-                            this.families = config['fields']
+                            this.fields = config['fields']
                             this.case=config['case']
                             this.job.name = config['name']
                             this.job.description = config['description']
@@ -113,12 +160,12 @@ export class ConfigComponent implements OnInit {
                             this.job = template
                             this.job.name=""
                             this.job.description=""
-                            this.families = template['fields']
+                            this.fields = template['fields']
                             this.case=template['case']
                             this.job.status = template['status']
                             this.job.id = template['id']
 
-                            console.log(this.families);
+                            this.serializeFieldsToFamilies();
 
                             // Do not load name or description, as API template doesn't give desirable values
                             // Keep as empty
@@ -129,6 +176,7 @@ export class ConfigComponent implements OnInit {
 
     }
   }
+
 
   saveJob() {
     this.alertAvailable = true
