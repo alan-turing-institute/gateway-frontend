@@ -3,6 +3,10 @@ export class JobInfo {
     id: string;
     name: string;
     description: string;
+    links: {
+        self: string;
+        case: string;
+    };
     case: {
         links: {self: string};
         name: string;

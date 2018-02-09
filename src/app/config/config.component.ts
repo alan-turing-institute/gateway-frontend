@@ -5,6 +5,8 @@ import { FeedbackComponent } from '../components/feedback/feedback.component';
 import { CaseInfo } from '../types/caseInfo';
 import { FieldsTemplate } from '../types/fieldsInfo';
 import { JobInfo } from '../types/jobInfo';
+import { JobAbout } from '../types/jobAbout';
+import { JobValues } from '../types/jobValues';
 import { ConfigDataService } from './configData.service';
 // import { BsModalService,BsModalRef } from 'ngx-bootstrap';
 
@@ -22,6 +24,7 @@ export class ConfigComponent implements OnInit {
   fields:FieldsTemplate[]
   families:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
   job: JobInfo
+  jobAbout: JobAbout
   errorMessage: string;
   jobExistsOnServer:boolean;
   minimalJobInfoCollected:boolean;
@@ -43,6 +46,7 @@ export class ConfigComponent implements OnInit {
     this.minimalJobInfoCollected = false
     this.jobExistsOnServer = false
     this.job = new JobInfo
+    this.jobAbout= new JobAbout
     this.basic = false
     this.getData()
   }
@@ -86,8 +90,8 @@ export class ConfigComponent implements OnInit {
 
   getComponentProperty(childField, property:string) {
     for (let spec of childField['specs']) {
-      if (spec['property_name'] == property) {
-        return spec['property_value']
+      if (spec['name'] == property) {
+        return spec['value']
       }
     }
     return "";
@@ -141,7 +145,7 @@ export class ConfigComponent implements OnInit {
                           config => {
                             this.job = config
                             this.fields = config['fields']
-                            this.case=config['case']
+                            // this.case=config['case']
                             this.job.name = config['name']
                             this.job.description = config['description']
                             this.job.status = config['status']
@@ -157,14 +161,18 @@ export class ConfigComponent implements OnInit {
       this.configDataService.getTemplate(template_id)
                         .subscribe(
                           template => {
+                            console.log(template)
                             this.job = template
                             this.job.name=""
                             this.job.description=""
                             this.fields = template['fields']
-                            this.case=template['case']
+                            // this.case=template['case']
+                            // this needs to be filled in for displaying any case information on config
                             this.job.status = template['status']
                             this.job.id = template['id']
-
+                            
+                            this.jobAbout.case_id=template['id']
+                            this.jobAbout.author="Myong"
                             this.serializeFieldsToFamilies();
 
                             // Do not load name or description, as API template doesn't give desirable values
@@ -177,29 +185,64 @@ export class ConfigComponent implements OnInit {
     }
   }
 
+  serializeParameterToValue (parameter):any {
+    let value = {name:parameter['name'], value:parameter['value']}
+    console.log(value);
+    return value
+  }
 
   saveJob() {
     this.alertAvailable = true
+    this.job.status = "Draft"
+    console.log(this.jobExistsOnServer)
+    if (!this.jobExistsOnServer) {
+      let url = this.configDataService.getCreateJobURL(this.jobAbout)
+      this.jobAbout.name=this.job.name
+      this.configDataService.createJob(this.jobAbout, url)
+                      .subscribe(
+                        job_id => {
+                          this.jobExistsOnServer = true
+                          this.job['id'] = job_id['job_id']
+                          this.alertText = "Changes Saved"
+                          console.log(this.job)
+                          console.log(this.families);
+                          let jobValues = new JobValues
+                          jobValues.id = this.job['id']
+                          jobValues.values = [];
+                          for (let family of this.families)
+                            var parameters = family['parameters'].map(this.serializeParameterToValue)
+                            jobValues.values = jobValues.values.concat(parameters);
+                          console.log(jobValues);
 
-    if (this.jobExistsOnServer) {
-      this.job.status = "Draft"
-      let url = this.configDataService.getSaveJobURL(this.job['id'])
-      this.configDataService.saveJob(this.job, url)
-                        .subscribe(
-                          saveJob => {
-                            this.alertText = "Changes Saved"
-                          },
-                          error => {
-                            this.errorMessage = <any> error
-                          });
+                          let url = this.configDataService.getSaveJobURL(this.job['id'])
+                          this.configDataService.saveJob(jobValues, url)
+                                            .subscribe(
+                                              saveJob => {
+                                                this.alertText = "Changes Saved"
+                                              },
+                                              error => {
+                                                this.errorMessage = <any> error
+                                              });
+                        },
+                        error => {
+                          this.errorMessage = <any> error
+                        });
     }
     else {
-      this.job.status = "Draft"
-      let url = this.configDataService.getCreateJobURL(this.job['id'])
-      this.configDataService.createJob(this.job, url)
+    // this.job['id'] = "11";
+    let jobValues = new JobValues
+    jobValues.id = this.job['id']
+    jobValues.values = [];
+    for (let family of this.families)
+      var parameters = family['parameters'].map(this.serializeParameterToValue)
+      jobValues.values = jobValues.values.concat(parameters);
+    console.log(jobValues);
+
+    let url = this.configDataService.getSaveJobURL(this.job['id'])
+    
+    this.configDataService.saveJob(jobValues, url)
                       .subscribe(
-                        createJob => {
-                          this.jobExistsOnServer = true
+                        saveJob => {
                           this.alertText = "Changes Saved"
                         },
                         error => {
@@ -207,6 +250,37 @@ export class ConfigComponent implements OnInit {
                         });
     }
   }
+
+  // saveJob() {
+  //   this.alertAvailable = true
+  //   if (this.jobExistsOnServer) {
+  //     this.job.status = "Draft"
+  //     let url = this.configDataService.getSaveJobURL(this.job['id'])
+  //     this.configDataService.saveJob(this.job, url)
+  //                       .subscribe(
+  //                         saveJob => {
+  //                           this.alertText = "Changes Saved"
+  //                         },
+  //                         error => {
+  //                           this.errorMessage = <any> error
+  //                         });
+  //   }
+  //   else {
+  //     this.job.status = "Draft"
+  //     let url = this.configDataService.getCreateJobURL(this.jobAbout)
+  //     // this.configDataService.createJob(this.jobAbout, url)
+  //     this.jobAbout.name=this.job.name
+  //     this.configDataService.createJob(this.jobAbout, url)
+  //                     .subscribe(
+  //                       createJob => {
+  //                         this.jobExistsOnServer = true
+  //                         this.alertText = "Changes Saved"
+  //                       },
+  //                       error => {
+  //                         this.errorMessage = <any> error
+  //                       });
+  //   }
+  // }
 
   runJob () {
     localStorage.setItem('job_id', this.job.id);
@@ -223,23 +297,23 @@ export class ConfigComponent implements OnInit {
       });
     }
 
-    let url = this.configDataService.getSaveJobURL(this.job['id'])
-    this.alertText = "Submitting Job."
-    this.configDataService.saveJob(this.job, url).subscribe(
-                        saveJob => {
-                          this.configDataService.runJob(this.job)
-                            .subscribe(
-                              ranJob => {
-                                this.basic = true;
+    // let url = this.configDataService.getSaveJobURL(this.job['id'])
+    // this.alertText = "Submitting Job."
+    // this.configDataService.saveJob(this.job, url).subscribe(
+    //                     saveJob => {
+    //                       this.configDataService.runJob(this.job)
+    //                         .subscribe(
+    //                           ranJob => {
+    //                             this.basic = true;
                                 
-                              },
-                              error => {
-                                this.errorMessage = <any> error
-                              });
-                        },
-                        error => {
-                          this.errorMessage = <any> error
-                      });
+    //                           },
+    //                           error => {
+    //                             this.errorMessage = <any> error
+    //                           });
+    //                     },
+    //                     error => {
+    //                       this.errorMessage = <any> error
+    //                   });
 
   }
 

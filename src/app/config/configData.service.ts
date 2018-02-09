@@ -9,6 +9,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import { JobInfo } from '../types/jobInfo';
+import { JobAbout } from '../types/jobAbout';
+import { JobValues } from '../types/jobValues';
 import {InputComponent} from '../components/input/inputComponent';
 import { environment } from '../../environments/environment';
 
@@ -19,7 +21,7 @@ export class ConfigDataService {
 
   private jobData;
   private templateUrl = urljoin(environment.apiRoot, "");
-  private jobsUrl = urljoin(environment.apiRoot, "jobs");
+  private jobsUrl = urljoin(environment.apiRoot, "job");
   private runUrl = urljoin(environment.apiRoot, "run");
   private response = {}
   constructor (private http: Http) {}
@@ -47,29 +49,42 @@ export class ConfigDataService {
     return url
   }
 
-  getCreateJobURL(job_id): string {
+  getCreateJobURL(jobAbout): string {
     return this.jobsUrl
+    // return
   }
 
   getSaveJobURL(job_id): string {
+    console.log(urljoin(this.jobsUrl, job_id))
     return urljoin(this.jobsUrl, job_id)
   }
 
-  createJob(jobData:any, newJobUrl): Observable<InputComponent[]> {
+  createJob(jobAbout:JobAbout, newJobUrl):Observable<any> {
+    let body = JSON.stringify(jobAbout)
+    
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let response = this.http.post(newJobUrl, body, options)
+                    .map(this.extractJsonData)
+                    .catch(this.handleError);
+    return response
+  }
+
+  patchJob(jobAbout:JobAbout, newJobUrl): Observable<InputComponent[]> {
     // console.log(jobData)
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    this.jobData = this.http.post(newJobUrl, jobData, options)
+    this.jobData = this.http.post(newJobUrl, jobAbout, options)
                     .map(this.extractJsonData)
                     .catch(this.handleError);
     return  this.jobData
   }
 
-  saveJob(jobData:any, newJobUrl): Observable<InputComponent[]> {
+  saveJob(jobValues:JobValues, newJobUrl): Observable<InputComponent[]> {
     console.log("in save")
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    let response = this.http.patch(newJobUrl, jobData, options)
+    let response = this.http.patch(newJobUrl, jobValues, options)
                     .catch(this.handleError);
     return response
   }
@@ -85,10 +100,8 @@ export class ConfigDataService {
   }
 
   private extractJsonData(res: Response) {
-    // console.log(res)
     let body = res.json();
     // this.response = body
-
     return body || { };
   }
 
