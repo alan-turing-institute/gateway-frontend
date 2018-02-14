@@ -17,13 +17,6 @@ import { ConfigDataService } from './configData.service';
 describe('Job Service', () => {
   let mockBackend: MockBackend;
 
-  // All heed this block - it is required so that the test injector
-  // is properly set up. Without doing this, you won't get the
-  // fake backend injected into Http.
-
-  // Also, you need to inject MockBackend as a provider before you wire
-  // it to replace XHRBackend with the provide function!  So this is all
-  // extremely important to set up right.
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -46,101 +39,130 @@ describe('Job Service', () => {
     mockBackend = getTestBed().get(MockBackend);
   }));
 
-    // it('should run a test that finishes eventually', done => {
-    // // kick off an asynchronous call in the background
-    // setTimeout(() => {
-    //     console.log('now we are done');
-    //     done();
-    // }, 500);
-    // })
+  it('should run a test that finishes eventually', done => {
+  // kick off an asynchronous call in the background
+  setTimeout(() => {
+      done();
+  }, 500);
+  })
 
 
-  // it('should get jobs', done => {
-  //   let jobService: ConfigDataService;
+  it('should get jobs', done => {
+    let jobService: ConfigDataService;
+    getTestBed().compileComponents().then(() => {
+      mockBackend.connections.subscribe(
+        (connection: MockConnection) => {
+          connection.mockRespond(new Response(
+            new ResponseOptions({
+              body: [
+                {
+                    "user": "nbarlow",
+                    "links": {
+                        "self": "/job/1",
+                        "case": "/case/3"
+                    },
+                    "id": 1,
+                    "name": "TESTMINT"
+                },
+                {
+                    "user": "myong",
+                    "links": {
+                        "self": "/job/22",
+                        "case": "/case/2"
+                    },
+                    "id": 22,
+                    "name": "where am I again"
+                }
+            ]}
+          )));
+        });
 
-  //   getTestBed().compileComponents().then(() => {
-  //     mockBackend.connections.subscribe(
-  //       (connection: MockConnection) => {
-  //         connection.mockRespond(new Response(
-  //           new ResponseOptions({
-  //             body: {  
-  //               "families": [{
-  //                   "label": "Viscosity information",
-  //                   "name": "viscosity_properties",
-  //                   "collapse": true,
-  //                   "parameters": [{
-  //                       "name": "viscosity_phase_1",
-  //                       "type": "slider",
-  //                       "label": "Viscosity: Phase 1",
-  //                       "units": "Pa s",
-  //                       "type_value": "float",
-  //                       "min_value": "10",
-  //                       "max_value": "20",
-  //                       "value": "13",
-  //                       "options": [],
-  //                       "help": "",
-  //                       "disabled":false
-  //                     },
-  //                     {
-  //                       "name": "viscosity_phase_2",
-  //                       "type": "slider",
-  //                       "label": "Viscosity: Phase 2",
-  //                       "units": "Pa s",
-  //                       "type_value": "float",
-  //                       "min_value": "10",
-  //                       "max_value": "20",
-  //                       "value": "17",
-  //                       "options": ["17"],
-  //                       "help": "A description of surface tension?",
-  //                       "disabled":false
-  //                     }
-  //                   ]
-  //                 }
-  //               ],
-  //               "inputs": [{
-  //                 "destination_path": "project/case/",
-  //                 "source_uri": "https://science-gate-way-middleware.azurewebstes.net/resources/case/Changeover/inputs/mesh_file.stl"
-  //               }],
-  //               "scripts": [{
-  //                 "destination_path": "project/case/",
-  //                 "source_uri": "https://science-gate-way-middleware.azurewebstes.net/resources/case/Changeover/scripts/run_job.sh",
-  //                 "action": "RUN"
-  //               }],
-  //               "user": "lrmason",
-  //               "templates": [{
-  //                 "destination_path": "project/case/",
-  //                 "source_uri": "https://science-gate-way-middleware.azurewebstes.net/resources/case/Changeover/templates/Blue.nml"
-  //               }],
-  //               "id": "d769843b-6f37-4939-96c7-c382c3e74b46",
-  //               "name": "Talcum powder to flour",
-  //               "description": "Job description",
-  //               "creation_datetime": null,
-  //               "start_datetime": null,
-  //               "end_datetime": null,
-  //               "status": "Draft",
-  //               "case": {
-  //                 "id": "yy69843b-4939-6f37-96c7-c382c3e74b46",
-  //                 "uri": "https://science-gate-way-middleware.azurewebstes.net/case/d769843b-6f37-4939-96c7-c382c3e74b46",
-  //                 "thumbnail": "./src/assets/img/product_changeover.png",
-  //                 "label": "Changeover",
-  //                 "description": "Spicy jalapeno bacon ipsum dolor amet burgdoggen tenderloin cow ribeye kielbasa boudin. Kevin salami bacon venison landjaeger capicola frankfurter jerky ham hock hamburger tenderloin kielbasa rump porchetta. Tenderloin cow short loin, jowl brisket alcatra meatball burgdoggen doner ground round. Short ribs pancetta corned beef shankle, alcatra pastrami chicken biltong meatloaf t-bone ground round sausage bresaola ham. Drumstick chuck pork burgdoggen."
-  //               }
-  //             }
-  //           }
-  //           )));
-  //       });
+        jobService = getTestBed().get(ConfigDataService);
+        expect(jobService).toBeDefined();
 
-  //       jobService = getTestBed().get(ConfigDataService);
-  //       expect(jobService).toBeDefined();
+        jobService.getTemplate("2").subscribe((jobs: any) => {
+            expect(jobs.length).toBeDefined();
+            expect(jobs.length).toEqual(2);
+            expect(jobs[0].id).toEqual(1);
+            expect(jobs[0].name).toEqual("TESTMINT");
+            expect(jobs[0].links.self).toEqual("/job/1");
+            expect(jobs[0].links.case).toEqual("/case/3");
+            done();
+        });
+    });
+  });
 
-  //       jobService.getTemplateData().subscribe((components: any) => {
-  //           // expect(components.length).toBeDefined();
-  //           // expect(blogs.length).toEqual(1);
-  //           // expect(blogs[0].id).toEqual(26);
-  //           done();
-  //       });
-  //   });
-  // });
+  it('should get a job', done => {
+    let jobService: ConfigDataService;
+    getTestBed().compileComponents().then(() => {
+      mockBackend.connections.subscribe(
+        (connection: MockConnection) => {
+          connection.mockRespond(new Response(
+            new ResponseOptions({
+              body: {
+                "values": [
+                    {
+                        "parent_template": null,
+                        "value": "3000",
+                        "id": 13,
+                        "name": "density"
+                    },
+                ],
+                "name": "where am I again",
+                "user": "Myong",
+                "parent_case": {
+                    "fields": [
+                        {
+                            "child_fields": [
+                                {
+                                    "child_fields": [],
+                                    "name": "density",
+                                    "specs": [
+                                        {
+                                            "value": "200",
+                                            "id": 9,
+                                            "name": "min"
+                                        },
+                                        {
+                                            "value": "4000",
+                                            "id": 10,
+                                            "name": "max"
+                                        },
+                                        {
+                                            "value": "1000",
+                                            "id": 11,
+                                            "name": "default"
+                                        },
+                                        {
+                                            "value": "kg/m^3",
+                                            "id": 12,
+                                            "name": "units"
+                                        }
+                                    ]
+                                },
+                            ],
+                            "name": "fluidA",
+                            "specs": []
+                        }
+                    ],
+                    "id": 2,
+                    "name": "fluids_R_us"
+                },
+                "id": 22
+            }
+          })));
+        });
+
+        jobService = getTestBed().get(ConfigDataService);
+        expect(jobService).toBeDefined();
+
+        jobService.getJob("22").subscribe((job: any) => {
+            expect(job).toBeDefined();
+            expect(job.id).toEqual(22);
+            done();
+        });
+    });
+  });
 
 //   it('should get blogs async',
 //     async(inject([BlogService], (blogService) => {
