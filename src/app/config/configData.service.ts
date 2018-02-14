@@ -35,14 +35,14 @@ export class ConfigDataService {
     return this.jobData;
   }
 
-  getJob(url): Observable<JobInfo> {
+  getJob(job_id): Observable<JobInfo> {
+    var url = urljoin(this.jobsUrl, job_id)
     this.jobData = this.http.get(url)
                     .map(this.extractJsonData)
                     .catch(this.handleError);
-
+    console.log(this.jobData)
     return this.jobData;
   }
-
 
   getJobUrl(job_id): string {
     var url = urljoin(this.jobsUrl, job_id)

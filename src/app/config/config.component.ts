@@ -134,22 +134,50 @@ export class ConfigComponent implements OnInit {
     console.log(this.families)
   }
 
+  findValueWithName(values:any, name) {
+    for (let value of values) {
+      if (value["name"] == name) {
+        return value["value"]
+      }
+    }
+    return ""
+  }
+
+  serializeValuesToFamilies(values:any) {    
+    for (let family of this.families) {
+      for (let parameter of family['parameters']){
+        parameter["value"] = this.findValueWithName(values, parameter["name"])
+        console.log(parameter["name"]+" : "+ parameter["value"] )
+      }  
+    }
+  }
+
   getData () {
     let action_type = localStorage.getItem('action_type');
     if (action_type === 'Edit') {
       this.jobExistsOnServer = true
       let job_id = localStorage.getItem('job_id');
-      let url = this.configDataService.getJobUrl(job_id)
-      this.configDataService.getJob(url)
+      this.configDataService.getJob(job_id)
                         .subscribe(
                           config => {
-                            this.job = config
-                            this.fields = config['fields']
-                            // this.case=config['case']
-                            this.job.name = config['name']
-                            this.job.description = config['description']
-                            this.job.status = config['status']
-                            this.job.id = config['id']
+                            this.job.id = config["id"]
+                            this.job.name = config["name"]
+                            this.job.description=""
+                            this.fields = config["parent_case"]["fields"]
+                            this.job.status = "Draft"
+
+                            this.jobAbout.case_id=config["parent_case"]['id']
+                            this.jobAbout.author="Myong"
+
+                            this.serializeFieldsToFamilies();
+                            this.serializeValuesToFamilies(config["values"]);
+                            // this.job = config
+                            // this.fields = config['fields']
+                            // // this.case=config['case']
+                            // this.job.name = config['name']
+                            // this.job.description = config['description']
+                            // this.job.status = config['status']
+                            // this.job.id = config['id']
                           },
                           error => {
                             this.errorMessage = <any> error
@@ -161,7 +189,7 @@ export class ConfigComponent implements OnInit {
       this.configDataService.getTemplate(template_id)
                         .subscribe(
                           template => {
-                            console.log(template)
+                            console.log("Template: "+template)
                             this.job = template
                             this.job.name=""
                             this.job.description=""
