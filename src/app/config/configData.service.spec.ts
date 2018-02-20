@@ -47,8 +47,8 @@ describe('Job Service', () => {
   })
 
 
-  it('should get jobs', done => {
-    let jobService: ConfigDataService;
+  it('should get cases', done => {
+    let caseService: ConfigDataService;
     getTestBed().compileComponents().then(() => {
       mockBackend.connections.subscribe(
         (connection: MockConnection) => {
@@ -77,10 +77,10 @@ describe('Job Service', () => {
           )));
         });
 
-        jobService = getTestBed().get(ConfigDataService);
-        expect(jobService).toBeDefined();
+        caseService = getTestBed().get(ConfigDataService);
+        expect(caseService).toBeDefined();
 
-        jobService.getTemplate("2").subscribe((jobs: any) => {
+        caseService.getTemplate("2").subscribe((jobs: any) => {
             expect(jobs.length).toBeDefined();
             expect(jobs.length).toEqual(2);
             expect(jobs[0].id).toEqual(1);
@@ -92,8 +92,8 @@ describe('Job Service', () => {
     });
   });
 
-  it('should get a job', done => {
-    let jobService: ConfigDataService;
+  it('should get a case', done => {
+    let caseService: ConfigDataService;
     getTestBed().compileComponents().then(() => {
       mockBackend.connections.subscribe(
         (connection: MockConnection) => {
@@ -153,10 +153,10 @@ describe('Job Service', () => {
           })));
         });
 
-        jobService = getTestBed().get(ConfigDataService);
-        expect(jobService).toBeDefined();
+        caseService = getTestBed().get(ConfigDataService);
+        expect(caseService).toBeDefined();
 
-        jobService.getJob("22").subscribe((job: any) => {
+        caseService.getJob("22").subscribe((job: any) => {
             expect(job).toBeDefined();
             expect(job.id).toEqual(22);
             done();
