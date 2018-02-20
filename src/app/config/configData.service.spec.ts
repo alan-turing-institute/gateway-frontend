@@ -14,7 +14,7 @@ import {MockBackend, MockConnection} from '@angular/http/testing';
 import {InputComponent} from '../components/input/inputComponent';
 import { ConfigDataService } from './configData.service';
 
-describe('Job Service', () => {
+describe('Case Service', () => {
   let mockBackend: MockBackend;
 
   beforeEach(async(() => {
@@ -39,60 +39,15 @@ describe('Job Service', () => {
     mockBackend = getTestBed().get(MockBackend);
   }));
 
-  it('should run a test that finishes eventually', done => {
-  // kick off an asynchronous call in the background
-  setTimeout(() => {
-      done();
-  }, 500);
-  })
+//   it('should run a test that finishes eventually', done => {
+//   // kick off an asynchronous call in the background
+//   setTimeout(() => {
+//       done();
+//   }, 500);
+//   })
 
 
-  it('should get cases', done => {
-    let caseService: ConfigDataService;
-    getTestBed().compileComponents().then(() => {
-      mockBackend.connections.subscribe(
-        (connection: MockConnection) => {
-          connection.mockRespond(new Response(
-            new ResponseOptions({
-              body: [
-                {
-                    "user": "nbarlow",
-                    "links": {
-                        "self": "/job/1",
-                        "case": "/case/3"
-                    },
-                    "id": 1,
-                    "name": "TESTMINT"
-                },
-                {
-                    "user": "myong",
-                    "links": {
-                        "self": "/job/22",
-                        "case": "/case/2"
-                    },
-                    "id": 22,
-                    "name": "where am I again"
-                }
-            ]}
-          )));
-        });
-
-        caseService = getTestBed().get(ConfigDataService);
-        expect(caseService).toBeDefined();
-
-        caseService.getTemplate("2").subscribe((jobs: any) => {
-            expect(jobs.length).toBeDefined();
-            expect(jobs.length).toEqual(2);
-            expect(jobs[0].id).toEqual(1);
-            expect(jobs[0].name).toEqual("TESTMINT");
-            expect(jobs[0].links.self).toEqual("/job/1");
-            expect(jobs[0].links.case).toEqual("/case/3");
-            done();
-        });
-    });
-  });
-
-  it('should get a case', done => {
+  it('should get a case by case id', done => {
     let caseService: ConfigDataService;
     getTestBed().compileComponents().then(() => {
       mockBackend.connections.subscribe(
@@ -100,55 +55,117 @@ describe('Job Service', () => {
           connection.mockRespond(new Response(
             new ResponseOptions({
               body: {
-                "values": [
+                "name": "MyCase",
+                "fields": [
                     {
-                        "parent_template": null,
-                        "value": "3000",
-                        "id": 13,
-                        "name": "density"
+                        "name": "tankA",
+                        "child_fields": [
+                            {
+                                "name": "width",
+                                "child_fields": [],
+                                "specs": [
+                                    {
+                                        "name": "min",
+                                        "id": 21,
+                                        "value": "0.1"
+                                    },
+                                    {
+                                        "name": "max",
+                                        "id": 22,
+                                        "value": "40"
+                                    },
+                                    {
+                                        "name": "default",
+                                        "id": 23,
+                                        "value": "3"
+                                    },
+                                    {
+                                        "name": "units",
+                                        "id": 24,
+                                        "value": "m"
+                                    }
+                                ]
+                            }
+                        ],
+                        "specs": []
                     },
                 ],
-                "name": "where am I again",
-                "user": "Myong",
+                "id": 3
+            }
+            })));
+        });
+
+        caseService = getTestBed().get(ConfigDataService);
+        expect(caseService).toBeDefined();
+
+        caseService.getTemplate("3").subscribe((template: any) => {
+            expect(template).toBeDefined();
+            expect(template['name']=="MyCase")
+            expect(template['id']=="3");
+            expect(template['fields'].length == 1);
+            done();
+        });
+    });
+  });
+
+  it('should get a single job by job id', done => {
+    let caseService: ConfigDataService;
+    getTestBed().compileComponents().then(() => {
+      mockBackend.connections.subscribe(
+        (connection: MockConnection) => {
+          connection.mockRespond(new Response(
+            new ResponseOptions({
+              body: {
+                "name": "TESTMINT",
+                "user": "nbarlow",
+                "status": "Not Started",
+                "id": 1,
                 "parent_case": {
+                    "name": "MyCase",
                     "fields": [
                         {
+                            "name": "tankA",
                             "child_fields": [
                                 {
+                                    "name": "width",
                                     "child_fields": [],
-                                    "name": "density",
                                     "specs": [
                                         {
-                                            "value": "200",
-                                            "id": 9,
-                                            "name": "min"
+                                            "name": "min",
+                                            "id": 21,
+                                            "value": "0.1"
                                         },
                                         {
-                                            "value": "4000",
-                                            "id": 10,
-                                            "name": "max"
+                                            "name": "max",
+                                            "id": 22,
+                                            "value": "40"
                                         },
                                         {
-                                            "value": "1000",
-                                            "id": 11,
-                                            "name": "default"
+                                            "name": "default",
+                                            "id": 23,
+                                            "value": "3"
                                         },
                                         {
-                                            "value": "kg/m^3",
-                                            "id": 12,
-                                            "name": "units"
+                                            "name": "units",
+                                            "id": 24,
+                                            "value": "m"
                                         }
                                     ]
-                                },
+                                }
                             ],
-                            "name": "fluidA",
                             "specs": []
-                        }
+                        },
                     ],
-                    "id": 2,
-                    "name": "fluids_R_us"
+                    "id": 3
                 },
-                "id": 22
+                "values": [
+                    {
+                        "name": "width",
+                        "parent_template": null,
+                        "id": 1,
+                        "value": "3.35"
+                    },
+                ]
             }
           })));
         });
@@ -156,9 +173,9 @@ describe('Job Service', () => {
         caseService = getTestBed().get(ConfigDataService);
         expect(caseService).toBeDefined();
 
-        caseService.getJob("22").subscribe((job: any) => {
+        caseService.getJob("1").subscribe((job: any) => {
             expect(job).toBeDefined();
-            expect(job.id).toEqual(22);
+            expect(job.id).toEqual(1);
             done();
         });
     });

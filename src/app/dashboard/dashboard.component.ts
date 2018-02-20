@@ -68,8 +68,12 @@ export class DashboardComponent implements OnInit {
           //                     });
           // }
           // else {
-            console.log(job)
-            job.status="draft"
+            switch (job.status) {
+              case "Not Started": {
+                job.status = "Draft";
+                break;
+              }  
+            }
             job.description="change me"
             job.case = {links: {self:"string"},name: "string",thumbnail: "string",description: "string"}
             var progressPlaceHolder:ProgressInfo = {"value": 0, "units": "%", "range_min":0, "range_max":100}
@@ -84,7 +88,6 @@ export class DashboardComponent implements OnInit {
         //   }
         })
         this.jobsStillLoading = false;
-        console.log(this.jobs)
       }
     )
   }
