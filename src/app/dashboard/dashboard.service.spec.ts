@@ -14,7 +14,7 @@ import {ResponseOptions} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
 import { DashboardService } from './dashboard.service';
 
-describe('Job Service', () => {
+describe('Config Service', () => {
   let mockBackend: MockBackend;
 
   beforeEach(async(() => {
@@ -67,8 +67,8 @@ it('should get jobs', done => {
 
         dashboardService.getJobsData().subscribe((jobs: any []) => {
             expect(jobs).toBeDefined();
-            expect(jobs.length == 1);
-            expect(jobs[0].id == 1);
+            expect(jobs.length).toBe(1);
+            expect(jobs[0].id).toBe(1);
             done();
       });
     });
