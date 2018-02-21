@@ -64,7 +64,7 @@ import {
   
           casesService.getCases().subscribe((templates: any) => {
               expect(templates).toBeDefined();
-              expect(templates[0].id).toBe("3")
+              expect(templates[0].id).toBe(3)
               expect(templates[0].links.self).toBe("/case/3")
               done();
           });

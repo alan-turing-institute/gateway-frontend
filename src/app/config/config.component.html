@@ -88,8 +88,8 @@
             </div>    
             <div *ngFor="let component of getComponentsOf(family)">
                 <div *ngIf="component.type == 'slider'">
-                    <textInput [data]="component"
-                            (onUpdated)="onUpdated(component, $event)"></textInput>
+                    <!-- <textInput [data]="component"
+                            (onUpdated)="onUpdated(component, $event)"></textInput> -->
                     <sliderInput [data]="component"
                             (onUpdated)="onUpdated(component, $event)"></sliderInput> 
                 </div>  

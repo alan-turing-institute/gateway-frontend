@@ -101,21 +101,16 @@ export class ConfigComponent implements OnInit {
     var child_fields = aField['child_fields'];
     var components = [];
     for (let child_field of child_fields) {
-      var aComponent:InputComponent = {
-            name: child_field['name'],
-            tag: [],
-            type: "slider",
-            label: child_field['name'],
-            units: this.getComponentProperty(child_field, "units"),
-            type_value: "string",
-            min_value: this.getComponentProperty(child_field, "min"),
-            max_value: this.getComponentProperty(child_field, "max"),
-            options:[],
-            help: "string",
-            disabled: true,
-            valid: true,
-            value: this.getComponentProperty(child_field, "default"), 
-          }
+      let name = child_field['name'];
+      let type = "slider";
+      let label = child_field['name'];
+      let units = this.getComponentProperty(child_field, "units");
+      let min =  this.getComponentProperty(child_field, "min");
+      let max =  this.getComponentProperty(child_field, "max");
+      let value = this.getComponentProperty(child_field, "default");
+      let help = "help me"
+      let prefix =this.getComponentProperty(child_field, "prefix");
+      let aComponent = new InputComponent (name, type, label, units, min, max, value, help, prefix);
       components.push(aComponent);
     }
     var aFamily = {
@@ -146,7 +141,6 @@ export class ConfigComponent implements OnInit {
     for (let family of this.families) {
       for (let parameter of family['parameters']){
         parameter["value"] = this.findValueWithName(values, parameter["name"])
-        console.log(parameter["name"]+" : "+ parameter["value"] )
       }  
     }
   }
@@ -226,10 +220,11 @@ export class ConfigComponent implements OnInit {
                           let jobValues = new JobValues
                           jobValues.id = this.job['id']
                           jobValues.values = [];
-                          for (let family of this.families)
+                          for (let family of this.families){
                             var parameters = family['parameters'].map(this.serializeParameterToValue)
                             jobValues.values = jobValues.values.concat(parameters);
-
+                          }
+                          console.log(jobValues.values);
                           let url = this.configDataService.getSaveJobURL(this.job['id'])
                           this.configDataService.saveJob(jobValues, url)
                                             .subscribe(
@@ -248,9 +243,11 @@ export class ConfigComponent implements OnInit {
       let jobValues = new JobValues
       jobValues.id = this.job['id']
       jobValues.values = [];
-      for (let family of this.families)
+      for (let family of this.families){
         var parameters = family['parameters'].map(this.serializeParameterToValue)
         jobValues.values = jobValues.values.concat(parameters);
+      }
+      console.log(jobValues.values);
       
       let url = this.configDataService.getSaveJobURL(this.job['id'])
       this.configDataService.saveJob(jobValues, url)
