@@ -15,8 +15,8 @@ export class SliderComponent implements OnInit{
   
   ngOnInit () {
     this.defaultValue = this.data.value
-    console.log("Label: "+this.data.label);
-    console.log(this.data["value"]);
+    // console.log("Label: "+this.data.label);
+    // console.log(this.data["value"]);
   }
 
   valueValidated(newValue):boolean {
