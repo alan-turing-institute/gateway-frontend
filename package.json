@@ -9,7 +9,7 @@
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail && npm run azureconfig",
     "serve": "lite-server -c=bs-config.json",
     "prestart": "npm run build",
-    "start": "webpack-dev-server --inline --progress --port 8080",
+    "start": "webpack-dev-server --host 0.0.0.0 --port 8080",
     "pretest": "npm run build",
     "test": "karma start karma.webpack.conf.js",
     "pretest:once": "npm run build",
