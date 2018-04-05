@@ -8,23 +8,13 @@
 }
 
 .card.clickable {
-    width: 15rem;
+    width: 100%;
 }
 
 /* text within cards*/
 .card-body {
     margin:1em;
 }
-
-.card-block-container {
-    padding: 0%;
-}
-
-
-.card-header-name {
-    color: #263238;
-}
-
 
 .badge-draft {
     color: #f8cb00;
@@ -61,11 +51,15 @@
    left: 50%;
 }
 
-.img-job {
+.job-image {
     max-width:5rem;
+    width:5rem;
+    max-height:5rem;
+    height:5rem;
+    padding-right: 1rem;
     /* max-height:5rem; */
-    /* padding-right: 1rem;
-    padding-left: 1rem; */
+    /* adding-right: 1rem; */
+    /* padding-left: 1rem;  */
 }
 
 .descriptionText, a:focus, a:hover {
