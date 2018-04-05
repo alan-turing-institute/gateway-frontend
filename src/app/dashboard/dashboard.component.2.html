@@ -2,8 +2,7 @@
 
 <!-- <div class="main-container"> -->
     <!-- <nav class="subnav"> -->
-    
-      <div class="row">
+      <div class="row subnav">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <div class="form-group form-filter"> 
               <p class="p2">x-xx of xxx results for Jobs: {{searchTerm}}</p>
@@ -24,13 +23,24 @@
           </div>
         </div>
       </div>
-      <hr>
-    <!-- </clr-vertical-nav> -->
     <!-- </nav> -->
   <div class="content-container">
-    <clr-vertical-nav [clrVerticalNavCollapsible]="true" [(clrVerticalNavCollapsed)]="collapsed"> 
+    <nav class="sidenav">
+        <section class="sidenav-content">
+      <!-- <div class="form-group">
+        <div class="btn-group">
+          <div class="radio btn">
+              <input type="radio" name="btn-group-view-radios" id="btn-tableview" checked=tableView (click)="toggleView('table')">
+              <label for="btn-tableview"><clr-icon shape="view-list"></clr-icon></label>
+          </div>
+          <div class="radio btn">
+              <input type="radio" name="btn-group-view-radios" id="btn-cardview" checked=cardView (click)="toggleView('card')">
+              <label for="btn-cardview"><clr-icon shape="view-cards"></clr-icon></label>
+          </div>
+        </div>
+      </div> -->
       <div class="form-group form-filter">
-        Status:
+        <p class="p4">Filter by:</p>
         <clr-checkbox [clrChecked]="includeCompletedJobs"  
           [clrInline]="false"
           (change)="toggleStatus('Complete')">
@@ -47,7 +57,10 @@
             Draft <span class="badge">{{numDraftJobs}}</span>
         </clr-checkbox> 
       </div>  
-    </clr-vertical-nav>
+      </section>
+       
+    </nav>
+
     <div class="content-area">
       <div class="form-group form-filter">
         <div class="form-group row">
@@ -55,7 +68,7 @@
             <label for="searchTerm">
               <input type="text" id="searchTerm" 
                 [(ngModel)]="searchTerm" name="searchTerm" placeholder="Find Job"
-                (keyup)="filterJobs()" style="float:right">
+                (keyup)="filterJobs()">
             </label>
           </div>
         </div>

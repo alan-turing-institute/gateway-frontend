@@ -57,9 +57,6 @@
     max-height:5rem;
     height:5rem;
     padding-right: 1rem;
-    /* max-height:5rem; */
-    /* adding-right: 1rem; */
-    /* padding-left: 1rem;  */
 }
 
 .descriptionText, a:focus, a:hover {
@@ -92,4 +89,12 @@
 .btn-outline-primary {
   width: 7em;
   margin: 0.25em;
+}
+
+.job-card {
+	padding: 1rem;
+}
+
+.action-row {
+	padding-top: 1rem;
 }
