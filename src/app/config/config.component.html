@@ -1,82 +1,67 @@
-<clr-modal [(clrModalOpen)]="basic">
-    <h3 class="modal-title">Success</h3>
-    <div class="modal-body">
-        <div class="alert alert-success">
-            <div class="alert-items">
-                <div class="alert-item static">
-                    <div class="alert-icon-wrapper">
-                        <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
-                    </div>
-                    <span class="alert-text">Your job has been submitted and is now queued.</span>
-                </div>
-            </div>
-        </div>
-        <p>This page will navigate to dashboard.</p>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="navigateToDashboard()">Ok</button>
-    </div>
-</clr-modal>
 <div class="container-fluid">  
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">  
           <div class="card-block">
+						<clr-alert [clrAlertType]="'alert-success'" 
+							[clrAlertClosable]="false"
+							*ngIf="alertAvailable">
+							<div class="alert-item">
+								<span class="alert-text">
+										{{alertText}}
+								</span>
+							</div>
+            </clr-alert>
             <form>
-                <section class="form-block">
-                  <div class="card-media-block">
-                      <img src={{case?.thumbnail}} class="card-media-image">
-                      <div class="card-media-description">
-                        <span class="card-media-title">{{case?.name}}</span>
-                        <span class="card-media-text">{{case?.description}}</span>
-                      </div>
-                  </div>
-                </section>
-                <section class="form-block">
-                  <div class="form-group">
-                    <label for="aForm_1" class="required">Name</label>
-                    <input type="text" class="form-control" name="jobName" placeholder="Your Job Name" size="25"
-                      [(ngModel)]="job.name" 
-                      (keydown)="setMinimalJobInfoCollected()">
-                  </div>
-                    
-                  <div class="form-group">
-                    <label for="aForm_4" class="required">Description</label>
-                    <textarea id="aForm_4" rows="2" name="jobDescription" placeholder="Job Description"
-                      [(ngModel)]=job.description 
-                      (keydown)="setMinimalJobInfoCollected()"></textarea>
-                  </div>
-                </section>
-                <section class="form-footer">
-                    <button type="button" 
-                        (click)="saveJob()" 
-                        [disabled]=!minimalJobInfoCollected><span>Save</span>
-                    </button>
-                    <button *ngIf="jobExistsOnServer" type="button"
-                        routerLinkActive="active"
-                        (click)="runJob()"
-                        [disabled]="!minimalJobInfoCollected"
-                        [hidden]=!minimalJobInfoCollected><span>Run</span>
-                    </button>
-                
-                    <clr-alert [clrAlertType]="'alert-success'" 
-                        [clrAlertClosable]="false"
-                        *ngIf="alertAvailable">
-                    <div class="alert-item">
-                        <span class="alert-text">
-                            {{alertText}}
-                        </span>
-                    </div>
-                    </clr-alert>
-                </section>
+							<section class="form-block">
+								<div class="card-media-block">
+										<img src={{case?.thumbnail}} class="card-media-image job-image">
+										<div class="card-media-description">
+											<span class="card-media-title p4">{{case?.name}}</span>
+											<span class="card-media-text p5">{{case?.description}}</span>
+										</div>
+								</div>
+							</section>
+							<div class="card-text">
+								<section class="form-block">
+									<div class="form-group">
+										<label for="aForm_1" class="required">Name</label>
+										<input type="text" class="form-control" name="jobName" placeholder="Your Job Name" size="25"
+											[(ngModel)]="job.name" 
+											(keydown)="setMinimalJobInfoCollected()">
+									</div>
+										
+									<div class="form-group">
+										<label for="aForm_4" class="required">Description</label>
+										<textarea id="aForm_4" rows="2" name="jobDescription" placeholder="Job Description"
+											[(ngModel)]=job.description 
+											(keydown)="setMinimalJobInfoCollected()"></textarea>
+									</div>
+								</section>
+              </div>
+							<div class="card-footer">
+									<button style="float:right" 
+											type="button" 
+											class="btn btn-outline btn-sm"
+											(click)="saveJob()" 
+											[disabled]=!minimalJobInfoCollected><span>Save</span>
+									</button>
+									<button style="float:right" 
+											*ngIf="jobExistsOnServer" type="button"
+											routerLinkActive="active"
+											class="btn btn-outline btn-sm"
+											(click)="runJob()"
+											[disabled]="!minimalJobInfoCollected"
+											[hidden]=!minimalJobInfoCollected><span>Run</span>
+									</button>	
+							</div>
             </form>
           </div>
         </div>
     </div>
   </div> 
   
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  
       <div *ngFor="let family of families" class="card" >
         <div class="category-header card-header" >{{family.label}}</div>
           <div class="card-block">
@@ -97,5 +82,24 @@
           </div>
       </div>
     </div>
-  </div>
-</div>
+  
+
+<clr-modal [(clrModalOpen)]="basic">
+        <h3 class="modal-title">Success</h3>
+        <div class="modal-body">
+            <div class="alert alert-success">
+                <div class="alert-items">
+                    <div class="alert-item static">
+                        <div class="alert-icon-wrapper">
+                            <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+                        </div>
+                        <span class="alert-text">Your job has been submitted and is now queued.</span>
+                    </div>
+                </div>
+            </div>
+            <p>This page will navigate to dashboard.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="navigateToDashboard()">Ok</button>
+        </div>
+    </clr-modal>

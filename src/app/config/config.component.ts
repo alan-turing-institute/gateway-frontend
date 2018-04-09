@@ -42,11 +42,11 @@ export class ConfigComponent implements OnInit {
     this.families = []
     this.alertAvailable = false;
     this.alertText="";
-    this.case = new CaseInfo
     this.minimalJobInfoCollected = false
     this.jobExistsOnServer = false
     this.job = new JobInfo
     this.jobAbout= new JobAbout
+    this.case = new CaseInfo
     this.basic = false
     this.getData()
   }
@@ -161,6 +161,9 @@ export class ConfigComponent implements OnInit {
 
                             this.jobAbout.case_id=config["parent_case"]['id']
                             this.jobAbout.author="Myong"
+
+                            this.case.name = config["parent_case"]["name"]
+                            this.case.description = "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
 
                             this.serializeFieldsToFamilies();
                             this.serializeValuesToFamilies(config["values"]);
