@@ -98,3 +98,10 @@
 .action-row {
 	padding-top: 1rem;
 }
+
+.job-description {
+	font-size: .5rem;
+	letter-spacing: normal;
+	line-height: 1rem;
+	margin-bottom: 0;
+}

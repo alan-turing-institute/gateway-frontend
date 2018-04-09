@@ -34,9 +34,11 @@
   border-color: #2b4656;
 }
 
-.filter-checkbox {
-  
-}
 .subnav {
   height:2.0rem;
+}
+
+.searchTerm {
+  margin-right:1.5rem;
+  float:right
 }

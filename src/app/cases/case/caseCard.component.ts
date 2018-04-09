@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class CaseCardComponent implements OnInit{
   @Input() info: CaseInfo;
   caseHoverHidden: boolean;
+  shortDescription: string;
   
   storeCaseType(): void {
     localStorage.setItem('action_type', "Template");
@@ -21,14 +22,16 @@ export class CaseCardComponent implements OnInit{
         this.caseHoverHidden = !this.caseHoverHidden
     }
 
-  getShortDescription(): string {
+  setShortDescription(): void {
     if (this.info.description !== undefined)
-      return this.info.description.slice(0,200);
-    else return "filler description data";
+      this.shortDescription = this.info.description.slice(0,200);
+    else 
+      this.shortDescription = "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...";
   }
 
   ngOnInit(): void {
         this.caseHoverHidden = true
+        this.setShortDescription();
     }
 
 }
