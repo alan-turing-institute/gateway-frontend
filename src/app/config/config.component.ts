@@ -301,22 +301,50 @@ export class ConfigComponent implements OnInit {
 
   runJob () {
     localStorage.setItem('job_id', this.job.id);
+    let jobValues = new JobValues
+      jobValues.id = this.job['id']
+      jobValues.values = [];
+      for (let family of this.families){
+        var parameters = family['parameters'].map(this.serializeParameterToValue)
+        jobValues.values = jobValues.values.concat(parameters);
+      }
+      console.log(jobValues.values);
+      
+      let url = this.configDataService.getSaveJobURL(this.job['id'])
+      console.log("Save job url: "+url);
+      this.configDataService.saveJob(jobValues, url)
+                        .subscribe(
+                          saveJob => {
+                            this.alertText = "Changes Saved";
+                            this.configDataService.runJob(this.job).subscribe(
+                              ranJob => {
+                                this.basic = true;
+                              },
+                              error => {
+                                this.errorMessage = <any> error
+                              });
+                          },
+                          error => {
+                          this.errorMessage = <any> error
+                          });
 
-    const token = localStorage.getItem('token');
-    if (token) {
-      console.log("counting simulation")
-      this.auth.countSimulation(token)
-      .then((response) => {
-        console.log(response.json());
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    }
+    // const token = localStorage.getItem('token');
+    // if (token) {
+    //   console.log("counting simulation")
+    //   this.auth.countSimulation(token)
+    //   .then((response) => {
+    //     console.log(response.json());
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    // }
 
     // let url = this.configDataService.getSaveJobURL(this.job['id'])
-    // this.alertText = "Submitting Job."
-    // this.configDataService.saveJob(this.job, url).subscribe(
+    // console.log("Submitting job to: "+ url)
+    // this.alertText = "Submitting Job.."
+    
+    // this.configDataService.saveJob(jobValues, url).subscribe(
     //                     saveJob => {
     //                       this.configDataService.runJob(this.job)
     //                         .subscribe(

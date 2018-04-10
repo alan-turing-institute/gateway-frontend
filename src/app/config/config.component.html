@@ -61,46 +61,46 @@
   </div> 
   
   
-      <div *ngFor="let family of families" class="card" >
-        <div class="category-header card-header" >{{family.label}}</div>
-          <div class="card-block">
-            <div *ngIf="family.name == 'tank_properties'">
-                <app-tank [data]="family.parameters"></app-tank>
-            </div>
-            <div *ngIf="family.name == 'pipe_properties'">
-                <app-pipe [data]="family.parameters"></app-pipe>
-            </div>    
-            <div *ngFor="let component of getComponentsOf(family)">
-							<div *ngIf="component.type == 'slider'">
-								<!-- <textInput [data]="component"
-												(onUpdated)="onUpdated(component, $event)"></textInput> -->
-								<sliderInput 
-									[data]="component"
-									(onUpdated)="onUpdated(component, $event)">
-								</sliderInput> 
-							</div>  
-            </div>
-          </div>
-      </div>
-    </div>
+	<div *ngFor="let family of families" class="card" >
+		<div class="category-header card-header" >{{family.label}}</div>
+			<div class="card-block">
+				<div *ngIf="family.name == 'tank_properties'">
+						<app-tank [data]="family.parameters"></app-tank>
+				</div>
+				<div *ngIf="family.name == 'pipe_properties'">
+						<app-pipe [data]="family.parameters"></app-pipe>
+				</div>    
+				<div *ngFor="let component of getComponentsOf(family)">
+					<div *ngIf="component.type == 'slider'">
+						<!-- <textInput [data]="component"
+										(onUpdated)="onUpdated(component, $event)"></textInput> -->
+						<sliderInput 
+							[data]="component"
+							(onUpdated)="onUpdated(component, $event)">
+						</sliderInput> 
+					</div>  
+				</div>
+			</div>
+	</div>
+</div>
   
 
 <clr-modal [(clrModalOpen)]="basic">
-        <h3 class="modal-title">Success</h3>
-        <div class="modal-body">
-            <div class="alert alert-success">
-                <div class="alert-items">
-                    <div class="alert-item static">
-                        <div class="alert-icon-wrapper">
-                            <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
-                        </div>
-                        <span class="alert-text">Your job has been submitted and is now queued.</span>
-                    </div>
-                </div>
-            </div>
-            <p>This page will navigate to dashboard.</p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" (click)="navigateToDashboard()">Ok</button>
-        </div>
-    </clr-modal>
+	<h3 class="modal-title">Success</h3>
+	<div class="modal-body">
+			<div class="alert alert-success">
+					<div class="alert-items">
+							<div class="alert-item static">
+									<div class="alert-icon-wrapper">
+											<clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+									</div>
+									<span class="alert-text">Your job has been submitted and is now queued.</span>
+							</div>
+					</div>
+			</div>
+			<p>This page will navigate to dashboard.</p>
+	</div>
+	<div class="modal-footer">
+			<button type="button" class="btn btn-primary" (click)="navigateToDashboard()">Ok</button>
+	</div>
+</clr-modal>

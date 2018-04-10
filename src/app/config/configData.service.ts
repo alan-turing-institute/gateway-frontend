@@ -22,7 +22,6 @@ export class ConfigDataService {
   private jobData;
   private templateUrl = urljoin(environment.apiRoot, "");
   private jobsUrl = urljoin(environment.apiRoot, "job");
-  private runUrl = urljoin(environment.apiRoot, "run");
   private response = {}
   constructor (private http: Http) {}
 
@@ -55,7 +54,7 @@ export class ConfigDataService {
   }
 
   getSaveJobURL(job_id): string {
-    console.log(urljoin(this.jobsUrl, job_id))
+    // console.log(urljoin(this.jobsUrl, job_id))
     return urljoin(this.jobsUrl, job_id)
   }
 
@@ -90,11 +89,11 @@ export class ConfigDataService {
   }
 
   runJob(jobData:any): Observable<any> {
-    console.log("in run")
-    let url = urljoin(this.runUrl, jobData['id']);
+    let url = urljoin(this.jobsUrl, jobData['id']);
+    console.log("Running job at: " +url);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    let response = this.http.post(url, jobData, options)
+    let response = this.http.post(url, options)
                     .catch(this.handleError);
     return response
   }

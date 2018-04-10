@@ -38,7 +38,7 @@ export class JobSummaryComponent implements OnInit{
         badgeClass = 'badge-success'
         if (this.jobInfo.status.toLowerCase() == 'queued')
         badgeClass = 'badge-warning'
-        if (this.jobInfo.status.toLowerCase() == 'draft')
+        if (this.jobInfo.status.toLowerCase() == 'not started')
         badgeClass = 'badge-info'
         if (this.jobInfo.status.toLowerCase() == 'error')
         badgeClass = 'badge-danger'
@@ -68,7 +68,7 @@ export class JobSummaryComponent implements OnInit{
             case "complete": return "['/output/output']";
             case "running": return "['/output/output']";
             case "queued": return "['/output/output']";
-            case "draft": return "['/config/config']";
+            case "not started": return "['/config/config']";
             case "new": return "['/config/config']";
             default: return "['/output/output']";
         }
@@ -107,6 +107,7 @@ export class JobSummaryComponent implements OnInit{
 
     drawRouteToConfig() : boolean  {
         switch (this.jobInfo.status.toLowerCase()) {
+            case "not started": return true;
             case "draft": return true;
             default: return false;
         }
@@ -130,6 +131,7 @@ export class JobSummaryComponent implements OnInit{
 
     ngOnInit(): void {
         // console.log(this.jobInfo)
+        // console.log(this.jobInfo.links.case);
         this.jobHoverHidden = true
         this.actionButtonText = this.getActionText()
         this.jobShortDescription = this.getShortDescription()
