@@ -194,6 +194,10 @@ export class ConfigComponent implements OnInit {
                             
                             this.jobAbout.case_id=template['id']
                             this.jobAbout.author="Myong"
+
+                            this.case.name = template["fields"][0]["name"]
+                            this.case.description = "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
+
                             this.serializeFieldsToFamilies();
                           },
                           error => {

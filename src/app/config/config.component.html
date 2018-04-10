@@ -15,11 +15,11 @@
             <form>
 							<section class="form-block">
 								<div class="card-media-block">
-										<img src={{case?.thumbnail}} class="card-media-image job-image">
-										<div class="card-media-description">
-											<span class="card-media-title p4">{{case?.name}}</span>
-											<span class="card-media-text p5">{{case?.description}}</span>
-										</div>
+									<img src={{case?.thumbnail}} class="card-media-image job-image">
+									<div class="card-media-description">
+										<span class="card-media-title p4">{{case?.name}}</span>
+										<span class="card-media-text p5">{{case?.description}}</span>
+									</div>
 								</div>
 							</section>
 							<div class="card-text">
@@ -30,7 +30,6 @@
 											[(ngModel)]="job.name" 
 											(keydown)="setMinimalJobInfoCollected()">
 									</div>
-										
 									<div class="form-group">
 										<label for="aForm_4" class="required">Description</label>
 										<textarea id="aForm_4" rows="2" name="jobDescription" placeholder="Job Description"
@@ -40,20 +39,20 @@
 								</section>
               </div>
 							<div class="card-footer">
-									<button style="float:right" 
-											type="button" 
-											class="btn btn-outline btn-sm"
-											(click)="saveJob()" 
-											[disabled]=!minimalJobInfoCollected><span>Save</span>
-									</button>
-									<button style="float:right" 
-											*ngIf="jobExistsOnServer" type="button"
-											routerLinkActive="active"
-											class="btn btn-outline btn-sm"
-											(click)="runJob()"
-											[disabled]="!minimalJobInfoCollected"
-											[hidden]=!minimalJobInfoCollected><span>Run</span>
-									</button>	
+								<button style="float:right" 
+										type="button" 
+										class="btn btn-outline btn-sm"
+										(click)="saveJob()" 
+										[disabled]=!minimalJobInfoCollected><span>Save</span>
+								</button>
+								<button style="float:right" 
+										*ngIf="jobExistsOnServer" type="button"
+										routerLinkActive="active"
+										class="btn btn-outline btn-sm"
+										(click)="runJob()"
+										[disabled]="!minimalJobInfoCollected"
+										[hidden]=!minimalJobInfoCollected><span>Run</span>
+								</button>	
 							</div>
             </form>
           </div>
@@ -72,12 +71,14 @@
                 <app-pipe [data]="family.parameters"></app-pipe>
             </div>    
             <div *ngFor="let component of getComponentsOf(family)">
-                <div *ngIf="component.type == 'slider'">
-                    <!-- <textInput [data]="component"
-                            (onUpdated)="onUpdated(component, $event)"></textInput> -->
-                    <sliderInput [data]="component"
-                            (onUpdated)="onUpdated(component, $event)"></sliderInput> 
-                </div>  
+							<div *ngIf="component.type == 'slider'">
+								<!-- <textInput [data]="component"
+												(onUpdated)="onUpdated(component, $event)"></textInput> -->
+								<sliderInput 
+									[data]="component"
+									(onUpdated)="onUpdated(component, $event)">
+								</sliderInput> 
+							</div>  
             </div>
           </div>
       </div>
