@@ -10,28 +10,25 @@ import { CasesService } from './cases.service';
 })
 
 export class CasesComponent implements OnInit {
+	cases: CaseInfo[];
+	errorMessage: string;
 
-    cases: CaseInfo[];
-    errorMessage: string;
+	constructor(private casesService:CasesService) { }
 
-    constructor(private casesService:CasesService) { }
+	ngOnInit():void {
+			this.cases = []
+			this.getCaseTypes()
+	}
 
-    ngOnInit():void {
-        this.cases = []
-        this.getCaseTypes()
-    }
-
-    getCaseTypes() {
-        this.casesService.getCases()
-                            .subscribe(
-                                cases => {
-                                    this.cases = cases
-                                    // console.log(this.cases)
-                                },
-                                error => {
-                                    this.errorMessage = <any> error
-                                }
-                            );
-    }
-
+	getCaseTypes() {
+			this.casesService.getCases()
+				.subscribe(
+						cases => {
+							this.cases = cases
+						},
+						error => {
+							this.errorMessage = <any> error
+						}
+				);
+	}
 }

@@ -48,7 +48,7 @@
       </clr-checkbox>
       <clr-checkbox [clrChecked]="includeDraftJobs"  
         [clrInline]="false"
-        (change)="toggleStatus('Draft')">
+        (change)="toggleStatus('Not Started')">
           Draft <span class="badge">{{numDraftJobs}}</span>
       </clr-checkbox> 
     </div>  
@@ -78,7 +78,7 @@
               routerLinkActive="active" 
               (click)="storeJobId(job.info)">{{job.info.name}}
             </a>
-            <a *ngIf="job.info.status=='Draft'"
+            <a *ngIf="job.info.status=='Not Started'"
               [routerLink]="['/config/config']" 
               routerLinkActive="active" 
               (click)="storeJobId(job.info)">{{job.info.name}}

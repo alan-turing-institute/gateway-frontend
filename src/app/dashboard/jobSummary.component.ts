@@ -56,7 +56,7 @@ export class JobSummaryComponent implements OnInit{
             text ="View"
         if (this.jobInfo.status.toLowerCase() == "error")
             text ="Error"
-        if (this.jobInfo.status.toLowerCase() == "draft")
+        if (this.jobInfo.status.toLowerCase() == "not started")
             text ="Edit"
         if (this.jobInfo.status.toLowerCase() == "queued")
             text ="View"
@@ -76,7 +76,7 @@ export class JobSummaryComponent implements OnInit{
 
     getShortDescription(): string {
         // return this.jobInfo.description.slice(0,200);
-        if (this.jobInfo.description.length >= 40)
+        if ((this.jobInfo.description != null)&&(this.jobInfo.description.length >= 40))
             return this.jobInfo.description.slice(0,40)+"..";
         // return this.jobInfo.description
         return "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...";
@@ -108,7 +108,7 @@ export class JobSummaryComponent implements OnInit{
     drawRouteToConfig() : boolean  {
         switch (this.jobInfo.status.toLowerCase()) {
             case "not started": return true;
-            case "draft": return true;
+            // case "draft": return true;
             default: return false;
         }
     }
