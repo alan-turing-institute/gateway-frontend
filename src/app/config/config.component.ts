@@ -214,7 +214,7 @@ export class ConfigComponent implements OnInit {
 
   saveJob() {
     this.alertAvailable = true
-    this.job.status = "Draft"
+    // this.job.status = "Not "
     if (!this.jobExistsOnServer) {
       let url = this.configDataService.getCreateJobURL(this.jobAbout)
       this.jobAbout.name=this.job.name
@@ -226,12 +226,13 @@ export class ConfigComponent implements OnInit {
                           this.alertText = "Changes Saved"
                           let jobValues = new JobValues
                           jobValues.id = this.job['id']
+                          jobValues.description = this.job.description;
                           jobValues.values = [];
                           for (let family of this.families){
                             var parameters = family['parameters'].map(this.serializeParameterToValue)
                             jobValues.values = jobValues.values.concat(parameters);
                           }
-                          console.log(jobValues.values);
+                          console.log(jobValues);
                           let url = this.configDataService.getSaveJobURL(this.job['id'])
                           this.configDataService.saveJob(jobValues, url)
                                             .subscribe(
