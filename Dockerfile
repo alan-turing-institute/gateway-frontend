@@ -1,4 +1,4 @@
-FROM node:9
+FROM node:carbon
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm install webpack -g
+#RUN npm install webpack -g
 RUN npm install
 # If you are building your code for production
 # RUN npm install --only=production
