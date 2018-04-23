@@ -56,7 +56,8 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getJobsData()
       .subscribe(allJobs => {
         allJobs.map(job => {
-          job.case = {links: {self:"string"},name: "string",thumbnail: "string",description: "string"}
+          console.log(job)
+          job.case = {links: {self:job['links']['case']},name: job['parent_case'],thumbnail: "string",description: "string"}
           var progressPlaceHolder:ProgressInfo = {"value": 0, "units": "%", "range_min":0, "range_max":100}
           this.jobs.push({"info": job, "progress":progressPlaceHolder})
           this.filteredJobs.push({"info": job, "progress":progressPlaceHolder})

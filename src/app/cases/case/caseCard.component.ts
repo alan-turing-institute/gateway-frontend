@@ -26,7 +26,7 @@ export class CaseCardComponent implements OnInit{
     if ((this.info.description !== undefined) && (this.info.description !== null))
       this.shortDescription = this.info.description.slice(0,200);
     else 
-      this.shortDescription = "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...";
+      this.shortDescription = "No description provided";
   }
 
   ngOnInit(): void {

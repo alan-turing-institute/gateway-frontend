@@ -155,7 +155,7 @@ export class ConfigComponent implements OnInit {
                           config => {
                             this.job.id = config["id"]
                             this.job.name = config["name"]
-                            this.job.description=""
+                            this.job.description=config["description"]
                             this.fields = config["parent_case"]["fields"]
                             this.job.status = "Draft"
 
@@ -163,7 +163,7 @@ export class ConfigComponent implements OnInit {
                             this.jobAbout.author="Myong"
 
                             this.case.name = config["parent_case"]["name"]
-                            this.case.description = "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
+                            this.case.description = config["parent_case"]["description"]
 
                             this.serializeFieldsToFamilies();
                             this.serializeValuesToFamilies(config["values"]);
@@ -185,7 +185,8 @@ export class ConfigComponent implements OnInit {
       this.configDataService.getTemplate(template_id)
                         .subscribe(
                           template => {
-                            this.job = template
+                            console.log(template);
+                            // this.job = template
                             this.job.name=""
                             this.job.description=""
                             this.fields = template['fields']
@@ -196,8 +197,7 @@ export class ConfigComponent implements OnInit {
                             this.jobAbout.author="Myong"
 
                             this.case.name = template["fields"][0]["name"]
-                            this.case.description = "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
-
+                            this.case.description = template['description']
                             this.serializeFieldsToFamilies();
                           },
                           error => {
@@ -250,12 +250,13 @@ export class ConfigComponent implements OnInit {
     else {
       let jobValues = new JobValues
       jobValues.id = this.job['id']
+      jobValues.description = this.job.description;
       jobValues.values = [];
       for (let family of this.families){
         var parameters = family['parameters'].map(this.serializeParameterToValue)
         jobValues.values = jobValues.values.concat(parameters);
       }
-      console.log(jobValues.values);
+      console.log(jobValues);
       
       let url = this.configDataService.getSaveJobURL(this.job['id'])
       this.configDataService.saveJob(jobValues, url)
