@@ -26,12 +26,12 @@ describe('ComponentUnderTestSlider', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(SliderComponent);
         component = fixture.componentInstance;
-        component.data = new InputComponent ("name", "type", "label", "units", "0", "10", "5", "help", "prefix");;
+        component.data = new InputComponent ("name", "type", "label", "units", "0", "10", "1", "5", "help", "prefix");;
         inputDe = fixture.debugElement.query(By.css("div > form > section > div > div > input"));
     });
 
     it('should show input with id values from @Input', () => {
-        component.data = new InputComponent ("name", "type", "label", "units", "0", "10", "5", "help", "prefix");;
+        component.data = new InputComponent ("name", "type", "label", "units", "0", "10", "1", "5", "help", "prefix");;
         expect(component.data.value).toBe("5")
         fixture.detectChanges();
         inputDe = fixture.debugElement.query(By.css("div > form > section > div > div > input"));

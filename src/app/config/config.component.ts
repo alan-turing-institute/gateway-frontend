@@ -111,10 +111,11 @@ export class ConfigComponent implements OnInit {
       let units = this.getComponentProperty(child_field, "units");
       let min =  this.getComponentProperty(child_field, "min");
       let max =  this.getComponentProperty(child_field, "max");
+      let step =  this.getComponentProperty(child_field, "step");
       let value = this.getComponentProperty(child_field, "default");
       let help = "help me"
       let prefix =this.getComponentProperty(child_field, "prefix");
-      let aComponent = new InputComponent (name, type, label, units, min, max, value, help, prefix);
+      let aComponent = new InputComponent (name, type, label, units, min, max, step,value, help, prefix);
       components.push(aComponent);
     }
     var aFamily = {
