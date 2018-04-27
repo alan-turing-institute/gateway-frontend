@@ -201,7 +201,7 @@ export class ConfigComponent implements OnInit {
                             this.jobAbout.case_id=template['id']
                             this.jobAbout.author="Myong"
 
-                            this.case.name = template["fields"][0]["name"]
+                            this.case.name = template["name"]
                             this.case.description = template['description']
                             this.serializeFieldsToFamilies();
                           },
