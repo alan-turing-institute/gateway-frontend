@@ -169,6 +169,7 @@ export class ConfigComponent implements OnInit {
 
                             this.case.name = config["parent_case"]["name"]
                             this.case.description = config["parent_case"]["description"]
+                            this.case.description = config["parent_case"]["thumbnail"]
 
                             this.serializeFieldsToFamilies();
                             this.serializeValuesToFamilies(config["values"]);
@@ -203,6 +204,7 @@ export class ConfigComponent implements OnInit {
 
                             this.case.name = template["name"]
                             this.case.description = template['description']
+                            this.case.thumbnail = template['thumbnail']
                             this.serializeFieldsToFamilies();
                           },
                           error => {
