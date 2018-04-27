@@ -28,8 +28,10 @@ export class ConfigComponent implements OnInit {
   errorMessage: string;
   jobExistsOnServer:boolean;
   minimalJobInfoCollected:boolean;
+  submittingJob:boolean;
   alertAvailable: boolean;
   alertText: string;
+  alertType: string;
   basic:boolean
 
   constructor(
@@ -42,7 +44,9 @@ export class ConfigComponent implements OnInit {
     this.families = []
     this.alertAvailable = false;
     this.alertText="";
+    this.alertType="alert-success"
     this.minimalJobInfoCollected = false
+    this.submittingJob = false
     this.jobExistsOnServer = false
     this.job = new JobInfo
     this.jobAbout= new JobAbout
@@ -270,37 +274,6 @@ export class ConfigComponent implements OnInit {
     }
   }
 
-  // saveJob() {
-  //   this.alertAvailable = true
-  //   if (this.jobExistsOnServer) {
-  //     this.job.status = "Draft"
-  //     let url = this.configDataService.getSaveJobURL(this.job['id'])
-  //     this.configDataService.saveJob(this.job, url)
-  //                       .subscribe(
-  //                         saveJob => {
-  //                           this.alertText = "Changes Saved"
-  //                         },
-  //                         error => {
-  //                           this.errorMessage = <any> error
-  //                         });
-  //   }
-  //   else {
-  //     this.job.status = "Draft"
-  //     let url = this.configDataService.getCreateJobURL(this.jobAbout)
-  //     // this.configDataService.createJob(this.jobAbout, url)
-  //     this.jobAbout.name=this.job.name
-  //     this.configDataService.createJob(this.jobAbout, url)
-  //                     .subscribe(
-  //                       createJob => {
-  //                         this.jobExistsOnServer = true
-  //                         this.alertText = "Changes Saved"
-  //                       },
-  //                       error => {
-  //                         this.errorMessage = <any> error
-  //                       });
-  //   }
-  // }
-
   runJob () {
     localStorage.setItem('job_id', this.job.id);
     let jobValues = new JobValues
@@ -310,7 +283,7 @@ export class ConfigComponent implements OnInit {
         var parameters = family['parameters'].map(this.serializeParameterToValue)
         jobValues.values = jobValues.values.concat(parameters);
       }
-      console.log(jobValues.values);
+      // console.log(jobValues.values);
       
       let url = this.configDataService.getSaveJobURL(this.job['id'])
       console.log("Save job url: "+url);
@@ -318,12 +291,18 @@ export class ConfigComponent implements OnInit {
                         .subscribe(
                           saveJob => {
                             this.alertText = "Changes Saved";
+                            this.submittingJob = true;
                             this.configDataService.runJob(this.job).subscribe(
                               ranJob => {
                                 this.basic = true;
+                                this.alertText = this.alertText + "\nJob submitted"
                               },
                               error => {
                                 this.errorMessage = <any> error
+                                this.alertType="alert-danger"
+                                console.log(this.alertType)
+                                this.alertText = this.alertText + "\nJob not submitted";
+                                this.submittingJob = false;
                               });
                           },
                           error => {
