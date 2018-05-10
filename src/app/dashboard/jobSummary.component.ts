@@ -52,7 +52,7 @@ export class JobSummaryComponent implements OnInit{
             text = "View"
         if (this.jobInfo.status.toLowerCase() == "new")
             text = "Edit"
-        if (this.jobInfo.status.toLowerCase() == "complete")
+        if (this.jobInfo.status.toLowerCase() == "completed")
             text ="View"
         if (this.jobInfo.status.toLowerCase() == "error")
             text ="Error"
@@ -78,7 +78,8 @@ export class JobSummaryComponent implements OnInit{
         // return this.jobInfo.description.slice(0,200);
         if ((this.jobInfo.description != null)&&(this.jobInfo.description.length >= 40))
             return this.jobInfo.description.slice(0,40)+"..";
-        // return this.jobInfo.description
+        if ((this.jobInfo.description != null)&&(this.jobInfo.description.length < 40))
+            return this.jobInfo.description;
         return "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...";
     }
 
@@ -115,7 +116,7 @@ export class JobSummaryComponent implements OnInit{
 
     drawRouteToOutput() : boolean  {
         switch (this.jobInfo.status.toLowerCase()) {
-            case "complete": return true;
+            case "completed": return true;
             case "running": return true;
             case "queued": return true;
             default: return false;
@@ -130,7 +131,7 @@ export class JobSummaryComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        // console.log(this.jobInfo)
+        console.log(this.jobInfo)
         // console.log(this.jobInfo.links.case);
         this.jobHoverHidden = true
         this.actionButtonText = this.getActionText()
