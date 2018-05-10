@@ -37,6 +37,11 @@ export class DownloadComponent implements OnInit {
           this.buttonLabel = 'Video (.mp4)'
           break;
         }
+        case 'zip': {
+          this.downloadFilename = 'zip.mp4'
+          this.buttonLabel = 'Zip (.zip)'
+          break;
+        }
         default: {
           this.downloadFilename = "Unknown file type"
         }

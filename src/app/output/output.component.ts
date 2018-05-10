@@ -63,7 +63,18 @@ export class OutputComponent implements OnInit {
                         this.status = this.job.status
                         this.temporalDistanceFromCreation()
                         this.haveData = true
-                        this.flattenFamiliesStructure()
+                        // this.flattenFamiliesStructure()
+                        this.job.outputs = [
+                          {
+                              "type": "zip",
+                              "destination_path": "https://sgmiddleware.blob.core.windows.net/dambreakoutput/12/output.zip"
+                          },
+                          {
+                            "type": "csv",
+                            "destination_path": "https://sgmiddleware.blob.core.windows.net/blue/prerun_stratified_flow/output.csv"
+                        },
+                        ]
+                        console.log(this.job);
                       },
                       error => {
                         this.errorMessage = <any> error

@@ -22,6 +22,6 @@ export class JobInfo {
     inputs: Array<any>;
     scripts: Array<any>;
     templates: Array<any>;
-    outputs: Array<string>;
+    outputs: Array<any>;
     backend_identifier: string;
 }
