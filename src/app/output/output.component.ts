@@ -68,11 +68,7 @@ export class OutputComponent implements OnInit {
                           {
                               "type": "zip",
                               "destination_path": "https://sgmiddleware.blob.core.windows.net/dambreakoutput/12/output.zip"
-                          },
-                          {
-                            "type": "csv",
-                            "destination_path": "https://sgmiddleware.blob.core.windows.net/blue/prerun_stratified_flow/output.csv"
-                        },
+                          }
                         ]
                         console.log(this.job);
                       },
