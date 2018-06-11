@@ -299,6 +299,7 @@ export class ConfigComponent implements OnInit {
                               ranJob => {
                                 this.basic = true;
                                 this.alertText = this.alertText + "\nJob submitted"
+                                this.navigateToDashboard();
                               },
                               error => {
                                 this.errorMessage = <any> error

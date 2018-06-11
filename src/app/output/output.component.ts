@@ -3,8 +3,9 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JobInfo } from '../types/jobInfo'
 import { OutputService } from './output.service';
-
+import { FieldsTemplate } from '../types/fieldsInfo';
 import { ChartComponent } from './chart/chart.component';
+import { InputComponent } from '../components/input/inputComponent';
 
 import * as FileSaver from 'file-saver';
 import * as moment from 'moment';
@@ -19,6 +20,8 @@ import * as moment from 'moment';
 export class OutputComponent implements OnInit {
   job: JobInfo;
   job_id: string;
+  fields:FieldsTemplate[]
+  families:{name: string, label: string, collapse: boolean, parameters: InputComponent[]} []
   chart:{} = {collapse:false}
   config:{} = {collapse:false}
   errorMessage: string;
@@ -36,12 +39,14 @@ export class OutputComponent implements OnInit {
     ) {}
 
   ngOnInit() {
+    this.families = []
     this.flatParametersList=[]
     this.getData();
   }
 
   flattenFamiliesStructure() {
-    this.job.families.forEach(family => {
+    console.log(this.families);
+    this.families.forEach(family => {
       family.parameters.forEach(parameter => {
         let parameterList = {"family":family.label, 
           "name":parameter.label, 
@@ -52,7 +57,65 @@ export class OutputComponent implements OnInit {
         this.flatParametersList.push(parameterList);
       })
     })
-    console.log(this.flatParametersList)
+  }
+
+  getComponentProperty(childField, property:string) {
+    for (let spec of childField['specs']) {
+      if (spec['name'] == property) {
+        return spec['value']
+      }
+    }
+    return "";
+  }
+
+  serializeFieldToFamily(aField) {
+    var child_fields = aField['child_fields'];
+    var components = [];
+    for (let child_field of child_fields) {
+      let name = child_field['name'];
+      let type = "slider";
+      let label = child_field['name'];
+      let units = this.getComponentProperty(child_field, "units");
+      let min =  this.getComponentProperty(child_field, "min");
+      let max =  this.getComponentProperty(child_field, "max");
+      let step =  this.getComponentProperty(child_field, "step");
+      let value = this.getComponentProperty(child_field, "default");
+      let help = "help me"
+      let prefix =this.getComponentProperty(child_field, "prefix");
+      let aComponent = new InputComponent (name, type, label, units, min, max, step,value, help, prefix);
+      components.push(aComponent);
+    }
+    var aFamily = {
+      name: aField.name, 
+      label: aField.name, 
+      collapse: false, 
+      parameters: components
+    }  
+    return aFamily
+  }
+
+  serializeFieldsToFamilies() {    
+    for (let field of this.fields) {
+      this.families.push(this.serializeFieldToFamily(field));
+    }
+    console.log(this.families);
+  }
+
+  findValueWithName(values:any, name) {
+    for (let value of values) {
+      if (value["name"] == name) {
+        return value["value"]
+      }
+    }
+    return ""
+  }
+
+  serializeValuesToFamilies(values:any) {    
+    for (let family of this.families) {
+      for (let parameter of family['parameters']){
+        parameter["value"] = this.findValueWithName(values, parameter["name"])
+      }  
+    }
   }
 
   getData(){
@@ -63,17 +126,19 @@ export class OutputComponent implements OnInit {
                         this.status = this.job.status
                         this.temporalDistanceFromCreation()
                         this.haveData = true
-                        // this.flattenFamiliesStructure()
-                        
-                        console.log("test again")
+                        this.fields = allJobsInfo["parent_case"]["fields"]
+                        this.serializeFieldsToFamilies();
+                        this.serializeValuesToFamilies(allJobsInfo["values"]);
+                        this.flattenFamiliesStructure()
+                        this.job.outputs = allJobsInfo.outputs;
                         // this.job.outputs = [
                         //   {
                         //       "type": "zip",
                         //       "destination_path": "https://sgmiddleware.blob.core.windows.net/dambreakoutput/12/output.zip"
                         //   }
                         // ]
-                        console.log(this.job);
-                        console.log(allJobsInfo);
+                        // console.log(this.job.families);
+                        // console.log(allJobsInfo);
                       },
                       error => {
                         this.errorMessage = <any> error
