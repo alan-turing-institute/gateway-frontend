@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
+    console.log("test 25")
     this.numRunningJobs = 0;
     this.numCompleteJobs = 0;
     this.numDraftJobs = 0;
@@ -52,6 +53,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getJobsData() {
+    // console.log("getting jobs");
     // this.dashboardService.getMockData()
     this.dashboardService.getJobsData()
       .subscribe(allJobs => {

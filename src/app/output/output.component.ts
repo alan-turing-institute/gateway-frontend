@@ -64,13 +64,16 @@ export class OutputComponent implements OnInit {
                         this.temporalDistanceFromCreation()
                         this.haveData = true
                         // this.flattenFamiliesStructure()
-                        this.job.outputs = [
-                          {
-                              "type": "zip",
-                              "destination_path": "https://sgmiddleware.blob.core.windows.net/dambreakoutput/12/output.zip"
-                          }
-                        ]
+                        
+                        console.log("test again")
+                        // this.job.outputs = [
+                        //   {
+                        //       "type": "zip",
+                        //       "destination_path": "https://sgmiddleware.blob.core.windows.net/dambreakoutput/12/output.zip"
+                        //   }
+                        // ]
                         console.log(this.job);
+                        console.log(allJobsInfo);
                       },
                       error => {
                         this.errorMessage = <any> error
