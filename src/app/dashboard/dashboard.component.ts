@@ -32,7 +32,6 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
-    console.log("test 25")
     this.numRunningJobs = 0;
     this.numCompleteJobs = 0;
     this.numDraftJobs = 0;

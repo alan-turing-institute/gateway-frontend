@@ -12,6 +12,7 @@ export class MainComponent {
   constructor(private router: Router, private auth: AuthService) {}
 
   logout() {
+    console.log("logging out")
 
     const token = localStorage.getItem('token');
     if (token) {
