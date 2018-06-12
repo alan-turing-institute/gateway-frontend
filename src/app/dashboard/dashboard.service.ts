@@ -6,7 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { JOBS } from './mock-jobs';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/throw';
+// import 'rxjs/add/operator/map';
 
 import { JobInfo } from '../types/jobInfo';
 import { ProgressInfo } from '../types/progressInfo';

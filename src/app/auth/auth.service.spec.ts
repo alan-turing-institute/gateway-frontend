@@ -1,8 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
-
+import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth.service';
 import { HttpClientModule } from '@angular/common/http';
-// import { HttpModule } from '@angular/http';
 
 describe('AuthService', () => {
   beforeEach(() => {

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Response, RequestOptions, ResponseContentType } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 import { JobInfo } from '../types/jobInfo';
 import { environment } from '../../environments/environment';
 
