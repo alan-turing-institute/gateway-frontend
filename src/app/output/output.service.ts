@@ -13,7 +13,7 @@ import * as urljoin from 'url-join';
 @Injectable()
 export class OutputService {
   //url for getting job information
-  private jobUrl = urljoin(environment.apiRoot, "jobs")
+  private jobUrl = urljoin(environment.apiRoot, "job")
 
   //url for getting job data used to plot the graph
   // private dataUrl = urljoin(environment.apiRoot, 'data')

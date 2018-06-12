@@ -16,7 +16,7 @@ import * as urljoin from 'url-join';
 @Injectable()
 export class DashboardService {
   
-  private jobsUrl = urljoin(environment.apiRoot, "jobs")
+  private jobsUrl = urljoin(environment.apiRoot, "job")
   private progressUrl = urljoin(environment.apiRoot, "progress")
   private cancelUrl = urljoin(environment.apiRoot, "cancel")
 
@@ -55,7 +55,7 @@ export class DashboardService {
 
   private extractData(res: Response){
     let body = res.json();
-    return body.jobs || { };
+    return body || { };
   }
 
 private extractJsonData(res: Response){

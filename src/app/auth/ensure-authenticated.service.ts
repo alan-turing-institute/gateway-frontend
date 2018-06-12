@@ -14,9 +14,7 @@ export class EnsureAuthenticated implements CanActivate, CanLoad {
     console.log("checking with canLoad");
 
     if (localStorage.getItem('token')) {
-      console.log('Found token');
-      console.log(localStorage.getItem('token'));
-      console.log("canLoad");
+      console.log('Found token: \n'+localStorage.getItem('token'));
       return true;
     }
     else {
@@ -29,12 +27,10 @@ export class EnsureAuthenticated implements CanActivate, CanLoad {
 
   canActivate(): boolean {
 
-    console.log("checking with canLoad");
+    console.log("checking with canActivate");
 
     if (localStorage.getItem('token')) {
-      console.log('Found token');
-      console.log(localStorage.getItem('token'));
-      console.log("canLoad");
+      console.log('Found token: \n'+localStorage.getItem('token'));
       return true;
     }
     else {

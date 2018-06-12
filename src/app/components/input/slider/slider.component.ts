@@ -6,9 +6,6 @@ import { InputComponent } from '../inputComponent';
   selector: 'sliderInput',
   templateUrl: 'slider.component.html',
 //   styleUrls: ['slider.css']
-  styles:[require('../../../../../node_modules/ion-rangeslider/css/ion.rangeSlider.css').toString(),
-  require('../../../../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinFlat.css').toString(),
-  require('./slider.css').toString()]
 })
 
 export class SliderComponent implements OnInit{
@@ -18,7 +15,9 @@ export class SliderComponent implements OnInit{
   
   ngOnInit () {
     this.defaultValue = this.data.value
-    // console.log("changing value: "+this.defaultValue)
+    // console.log(this.data);
+    // console.log("Label: "+this.data.label);
+    // console.log(this.data["value"]);
   }
 
   valueValidated(newValue):boolean {

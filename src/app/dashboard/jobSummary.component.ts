@@ -38,7 +38,7 @@ export class JobSummaryComponent implements OnInit{
         badgeClass = 'badge-success'
         if (this.jobInfo.status.toLowerCase() == 'queued')
         badgeClass = 'badge-warning'
-        if (this.jobInfo.status.toLowerCase() == 'draft')
+        if (this.jobInfo.status.toLowerCase() == 'not started')
         badgeClass = 'badge-info'
         if (this.jobInfo.status.toLowerCase() == 'error')
         badgeClass = 'badge-danger'
@@ -52,11 +52,11 @@ export class JobSummaryComponent implements OnInit{
             text = "View"
         if (this.jobInfo.status.toLowerCase() == "new")
             text = "Edit"
-        if (this.jobInfo.status.toLowerCase() == "complete")
+        if (this.jobInfo.status.toLowerCase() == "completed")
             text ="View"
         if (this.jobInfo.status.toLowerCase() == "error")
             text ="Error"
-        if (this.jobInfo.status.toLowerCase() == "draft")
+        if (this.jobInfo.status.toLowerCase() == "not started")
             text ="Edit"
         if (this.jobInfo.status.toLowerCase() == "queued")
             text ="View"
@@ -68,7 +68,7 @@ export class JobSummaryComponent implements OnInit{
             case "complete": return "['/output/output']";
             case "running": return "['/output/output']";
             case "queued": return "['/output/output']";
-            case "draft": return "['/config/config']";
+            case "not started": return "['/config/config']";
             case "new": return "['/config/config']";
             default: return "['/output/output']";
         }
@@ -76,9 +76,11 @@ export class JobSummaryComponent implements OnInit{
 
     getShortDescription(): string {
         // return this.jobInfo.description.slice(0,200);
-        if (this.jobInfo.description.length >= 40)
+        if ((this.jobInfo.description != null)&&(this.jobInfo.description.length >= 40))
             return this.jobInfo.description.slice(0,40)+"..";
-        return this.jobInfo.description
+        if ((this.jobInfo.description != null)&&(this.jobInfo.description.length < 40))
+            return this.jobInfo.description;
+        return "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...";
     }
 
     getRelativeCreationTime() : string {
@@ -106,14 +108,15 @@ export class JobSummaryComponent implements OnInit{
 
     drawRouteToConfig() : boolean  {
         switch (this.jobInfo.status.toLowerCase()) {
-            case "draft": return true;
+            case "not started": return true;
+            // case "draft": return true;
             default: return false;
         }
     }
 
     drawRouteToOutput() : boolean  {
         switch (this.jobInfo.status.toLowerCase()) {
-            case "complete": return true;
+            case "completed": return true;
             case "running": return true;
             case "queued": return true;
             default: return false;
@@ -129,6 +132,7 @@ export class JobSummaryComponent implements OnInit{
 
     ngOnInit(): void {
         // console.log(this.jobInfo)
+        // console.log(this.jobInfo.links.case);
         this.jobHoverHidden = true
         this.actionButtonText = this.getActionText()
         this.jobShortDescription = this.getShortDescription()

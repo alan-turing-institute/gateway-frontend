@@ -1,25 +1,14 @@
 
-/* .card.card-family {
-    margin:20px;
+  .job-image {
+    max-width:5rem;
+    width:5rem;
+    max-height:5rem;
+    height:5rem;
 }
 
-.card-header.config:hover {
-  background-color: hsla(198,36%,75%,1);
+.card-block {
+    padding:1rem;
 }
-
-.card-header.config {
-  background-color: #cfd8dc;
-}
-
-.invalidValue {
-    color:red
-}
-
-.btn.btn-primary.btn-action {
-    width: 7em;
-    margin:0.25em;
-} */
-
 .category-header{
     background-color:#edeff1; 
     border-bottom: 1px solid #cfd8dc;

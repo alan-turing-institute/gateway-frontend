@@ -14,16 +14,9 @@ import {MockBackend, MockConnection} from '@angular/http/testing';
 import {InputComponent} from '../components/input/inputComponent';
 import { ConfigDataService } from './configData.service';
 
-describe('Job Service', () => {
+describe('Case Service', () => {
   let mockBackend: MockBackend;
 
-  // All heed this block - it is required so that the test injector
-  // is properly set up. Without doing this, you won't get the
-  // fake backend injected into Http.
-
-  // Also, you need to inject MockBackend as a provider before you wire
-  // it to replace XHRBackend with the provide function!  So this is all
-  // extremely important to set up right.
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -46,101 +39,147 @@ describe('Job Service', () => {
     mockBackend = getTestBed().get(MockBackend);
   }));
 
-    // it('should run a test that finishes eventually', done => {
-    // // kick off an asynchronous call in the background
-    // setTimeout(() => {
-    //     console.log('now we are done');
-    //     done();
-    // }, 500);
-    // })
+//   it('should run a test that finishes eventually', done => {
+//   // kick off an asynchronous call in the background
+//   setTimeout(() => {
+//       done();
+//   }, 500);
+//   })
 
 
-  // it('should get jobs', done => {
-  //   let jobService: ConfigDataService;
+  it('should get a case by case id', done => {
+    let caseService: ConfigDataService;
+    getTestBed().compileComponents().then(() => {
+      mockBackend.connections.subscribe(
+        (connection: MockConnection) => {
+          connection.mockRespond(new Response(
+            new ResponseOptions({
+              body: {
+                "name": "MyCase",
+                "fields": [
+                    {
+                        "name": "tankA",
+                        "child_fields": [
+                            {
+                                "name": "width",
+                                "child_fields": [],
+                                "specs": [
+                                    {
+                                        "name": "min",
+                                        "id": 21,
+                                        "value": "0.1"
+                                    },
+                                    {
+                                        "name": "max",
+                                        "id": 22,
+                                        "value": "40"
+                                    },
+                                    {
+                                        "name": "default",
+                                        "id": 23,
+                                        "value": "3"
+                                    },
+                                    {
+                                        "name": "units",
+                                        "id": 24,
+                                        "value": "m"
+                                    }
+                                ]
+                            }
+                        ],
+                        "specs": []
+                    },
+                ],
+                "id": 3
+            }
+            })));
+        });
 
-  //   getTestBed().compileComponents().then(() => {
-  //     mockBackend.connections.subscribe(
-  //       (connection: MockConnection) => {
-  //         connection.mockRespond(new Response(
-  //           new ResponseOptions({
-  //             body: {  
-  //               "families": [{
-  //                   "label": "Viscosity information",
-  //                   "name": "viscosity_properties",
-  //                   "collapse": true,
-  //                   "parameters": [{
-  //                       "name": "viscosity_phase_1",
-  //                       "type": "slider",
-  //                       "label": "Viscosity: Phase 1",
-  //                       "units": "Pa s",
-  //                       "type_value": "float",
-  //                       "min_value": "10",
-  //                       "max_value": "20",
-  //                       "value": "13",
-  //                       "options": [],
-  //                       "help": "",
-  //                       "disabled":false
-  //                     },
-  //                     {
-  //                       "name": "viscosity_phase_2",
-  //                       "type": "slider",
-  //                       "label": "Viscosity: Phase 2",
-  //                       "units": "Pa s",
-  //                       "type_value": "float",
-  //                       "min_value": "10",
-  //                       "max_value": "20",
-  //                       "value": "17",
-  //                       "options": ["17"],
-  //                       "help": "A description of surface tension?",
-  //                       "disabled":false
-  //                     }
-  //                   ]
-  //                 }
-  //               ],
-  //               "inputs": [{
-  //                 "destination_path": "project/case/",
-  //                 "source_uri": "https://science-gate-way-middleware.azurewebstes.net/resources/case/Changeover/inputs/mesh_file.stl"
-  //               }],
-  //               "scripts": [{
-  //                 "destination_path": "project/case/",
-  //                 "source_uri": "https://science-gate-way-middleware.azurewebstes.net/resources/case/Changeover/scripts/run_job.sh",
-  //                 "action": "RUN"
-  //               }],
-  //               "user": "lrmason",
-  //               "templates": [{
-  //                 "destination_path": "project/case/",
-  //                 "source_uri": "https://science-gate-way-middleware.azurewebstes.net/resources/case/Changeover/templates/Blue.nml"
-  //               }],
-  //               "id": "d769843b-6f37-4939-96c7-c382c3e74b46",
-  //               "name": "Talcum powder to flour",
-  //               "description": "Job description",
-  //               "creation_datetime": null,
-  //               "start_datetime": null,
-  //               "end_datetime": null,
-  //               "status": "Draft",
-  //               "case": {
-  //                 "id": "yy69843b-4939-6f37-96c7-c382c3e74b46",
-  //                 "uri": "https://science-gate-way-middleware.azurewebstes.net/case/d769843b-6f37-4939-96c7-c382c3e74b46",
-  //                 "thumbnail": "./src/assets/img/product_changeover.png",
-  //                 "label": "Changeover",
-  //                 "description": "Spicy jalapeno bacon ipsum dolor amet burgdoggen tenderloin cow ribeye kielbasa boudin. Kevin salami bacon venison landjaeger capicola frankfurter jerky ham hock hamburger tenderloin kielbasa rump porchetta. Tenderloin cow short loin, jowl brisket alcatra meatball burgdoggen doner ground round. Short ribs pancetta corned beef shankle, alcatra pastrami chicken biltong meatloaf t-bone ground round sausage bresaola ham. Drumstick chuck pork burgdoggen."
-  //               }
-  //             }
-  //           }
-  //           )));
-  //       });
+        caseService = getTestBed().get(ConfigDataService);
+        expect(caseService).toBeDefined();
 
-  //       jobService = getTestBed().get(ConfigDataService);
-  //       expect(jobService).toBeDefined();
+        caseService.getTemplate("3").subscribe((template: any) => {
+            expect(template).toBeDefined();
+            expect(template['name']=="MyCase")
+            expect(template['id']=="3");
+            expect(template['fields'].length == 1);
+            done();
+        });
+    });
+  });
 
-  //       jobService.getTemplateData().subscribe((components: any) => {
-  //           // expect(components.length).toBeDefined();
-  //           // expect(blogs.length).toEqual(1);
-  //           // expect(blogs[0].id).toEqual(26);
-  //           done();
-  //       });
-  //   });
-  // });
+  it('should get a single job by job id', done => {
+    let caseService: ConfigDataService;
+    getTestBed().compileComponents().then(() => {
+      mockBackend.connections.subscribe(
+        (connection: MockConnection) => {
+          connection.mockRespond(new Response(
+            new ResponseOptions({
+              body: {
+                "name": "TESTMINT",
+                "user": "nbarlow",
+                "status": "Not Started",
+                "id": 1,
+                "parent_case": {
+                    "name": "MyCase",
+                    "fields": [
+                        {
+                            "name": "tankA",
+                            "child_fields": [
+                                {
+                                    "name": "width",
+                                    "child_fields": [],
+                                    "specs": [
+                                        {
+                                            "name": "min",
+                                            "id": 21,
+                                            "value": "0.1"
+                                        },
+                                        {
+                                            "name": "max",
+                                            "id": 22,
+                                            "value": "40"
+                                        },
+                                        {
+                                            "name": "default",
+                                            "id": 23,
+                                            "value": "3"
+                                        },
+                                        {
+                                            "name": "units",
+                                            "id": 24,
+                                            "value": "m"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "specs": []
+                        },
+                    ],
+                    "id": 3
+                },
+                "values": [
+                    {
+                        "name": "width",
+                        "parent_template": null,
+                        "id": 1,
+                        "value": "3.35"
+                    },
+                ]
+            }
+          })));
+        });
+
+        caseService = getTestBed().get(ConfigDataService);
+        expect(caseService).toBeDefined();
+
+        caseService.getJob("1").subscribe((job: any) => {
+            expect(job).toBeDefined();
+            expect(job.id).toEqual(1);
+            done();
+        });
+    });
+  });
 
 //   it('should get blogs async',
 //     async(inject([BlogService], (blogService) => {

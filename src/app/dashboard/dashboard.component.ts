@@ -52,35 +52,18 @@ export class DashboardComponent implements OnInit {
   }
 
   getJobsData() {
+    // console.log("getting jobs");
     // this.dashboardService.getMockData()
     this.dashboardService.getJobsData()
       .subscribe(allJobs => {
-        // console.log(allJobs);
         allJobs.map(job => {
-          if (job.status.toLowerCase() == "running") {
-            this.dashboardService.getProgressInfo(job.id)
-                            .subscribe(
-                              progress => {
-                                  this.jobs.push({"info": job, "progress":progress})
-                              },
-                              error => {
-                                this.errorMessage = <any> error
-                              });
-          }
-          else {
-            var progressPlaceHolder:ProgressInfo = {"value": 0, "units": "%", "range_min":0, "range_max":100}
-            this.jobs.push({"info": job, "progress":progressPlaceHolder})
-            this.filteredJobs.push({"info": job, "progress":progressPlaceHolder})
-          }
-
-          switch (job.status.toLowerCase()) {
-            case "running": this.numRunningJobs++; break;
-            case "queued": this.numRunningJobs++; break;
-            case "draft": this.numDraftJobs++; break;
-            case "complete": this.numCompleteJobs++; break;
-          }
-          this.jobsStillLoading = false;
+          // console.log(job)
+          job.case = {links: {self:job['links']['case']},name: job['parent_case'],thumbnail: "string",description: "string"}
+          var progressPlaceHolder:ProgressInfo = {"value": 0, "units": "%", "range_min":0, "range_max":100}
+          this.jobs.push({"info": job, "progress":progressPlaceHolder})
+          this.filteredJobs.push({"info": job, "progress":progressPlaceHolder})
         })
+        this.jobsStillLoading = false;
       }
     )
   }
@@ -157,7 +140,7 @@ export class DashboardComponent implements OnInit {
 
   toggleStatus(status:string) {
     switch (status) {
-      case 'Draft': {
+      case 'Not Started': {
         this.includeDraftJobs = !this.includeDraftJobs
         break;
       }
@@ -175,14 +158,10 @@ export class DashboardComponent implements OnInit {
 
   filterJobs() {
     this.filteredJobs = []
-    // this.jobs.map(job => {
-    //   if (job.info.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0) {
-    //     this.filteredJobs.push(job)  
-    //   }
-    // })
+    
     this.jobs.map(job => {
       if (this.includeDraftJobs) {
-        if ((job.info.status.toLowerCase().indexOf('draft') >= 0)
+        if ((job.info.status.toLowerCase().indexOf('not started') >= 0)
             &&(job.info.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0)) {
           this.filteredJobs.push(job)  
         }

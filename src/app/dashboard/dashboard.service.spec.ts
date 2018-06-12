@@ -12,10 +12,9 @@ import {
 
 import {ResponseOptions} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
-import { JobInfo } from '../types/jobInfo';
 import { DashboardService } from './dashboard.service';
 
-describe('Dashboard Service', () => {
+describe('Config Service', () => {
   let mockBackend: MockBackend;
 
   beforeEach(async(() => {
@@ -40,7 +39,7 @@ describe('Dashboard Service', () => {
   mockBackend = getTestBed().get(MockBackend);
 }));
 
-it('should get job info', done => {
+it('should get jobs', done => {
   let dashboardService: DashboardService;
 
   getTestBed().compileComponents().then(() => {
@@ -48,45 +47,28 @@ it('should get job info', done => {
       (connection: MockConnection) => {
         connection.mockRespond(new Response(
           new ResponseOptions({
-            body: {
-              "data":{
-                  "1" : {
-                    "id" : "1",
-                    "job_type": "Changeover",
-                    "start_date" : "1 Jan 2017",
-                    "end_date" : "2 Jan 2017",
-                    "status" : "Complete",
-                    "output" : "./src/assets/img/generic_graph.png"
+            body: [
+              {
+                  "name": "TESTMINT",
+                  "user": "nbarlow",
+                  "status": "Not Started",
+                  "links": {
+                      "self": "/job/1",
+                      "case": "/case/3"
                   },
-                  "2" : {
-                    "id" : "2",
-                    "job_type": "Changeover",
-                    "start_date" : "2 Jan 2017",
-                    "end_date" : "3 Jan 2017",
-                    "status" : "Complete",
-                    "output" : "./src/assets/img/generic_graph.png"
-                  },
-                  "3" : {
-                    "id" : "3",
-                    "job_type": "Stirred Tank",
-                    "start_date" : "3 Jan 2017",
-                    "end_date" : "4 Jan 2017",
-                    "status" : "Complete",
-                    "output" : "./src/assets/img/generic_graph.png"
-                  }
-                }
-            }
+                  "id": 1
+              }
+            ]
           })));
         });
 
         dashboardService = getTestBed().get(DashboardService);
         expect(dashboardService).toBeDefined();
 
-        dashboardService.getJobsData().subscribe((components: JobInfo []) => {
-            expect(components).toBeDefined();
-            // expect(blogs.length).toEqual(1);
-            // expect(blogs[0].id).toEqual(26);
-            //console.log(components)
+        dashboardService.getJobsData().subscribe((jobs: any []) => {
+            expect(jobs).toBeDefined();
+            expect(jobs.length).toBe(1);
+            expect(jobs[0].id).toBe(1);
             done();
       });
     });
