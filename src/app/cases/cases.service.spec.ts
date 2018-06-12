@@ -5,9 +5,12 @@ import {
     inject
   } from '@angular/core/testing';
   import {
-    Headers, BaseRequestOptions,
-    Response, HttpModule, Http, XHRBackend, RequestMethod
+    BaseRequestOptions,
+    Response, XHRBackend, RequestMethod
   } from '@angular/http';
+  import {
+    HttpHeaders, HttpClientModule, HttpClient
+  } from '@angular/common/http';
   
   import {ResponseOptions} from '@angular/http';
   import {MockBackend, MockConnection} from '@angular/http/testing';
@@ -22,18 +25,18 @@ import {
         providers: [
             CasesService,
           MockBackend,
-          BaseRequestOptions,
-          {
-            provide: Http,
-            deps: [MockBackend, BaseRequestOptions],
-            useFactory:
-              (backend: XHRBackend, defaultOptions: BaseRequestOptions) => {
-                return new Http(backend, defaultOptions);
-              }
-         }
+        //   BaseRequestOptions,
+        //   {
+        //     provide: Http,
+        //     deps: [MockBackend, BaseRequestOptions],
+        //     useFactory:
+        //       (backend: XHRBackend, defaultOptions: BaseRequestOptions) => {
+        //         return new Http(backend, defaultOptions);
+        //       }
+        //  }
         ],
         imports: [
-          HttpModule
+          HttpClientModule
         ]
       });
       mockBackend = getTestBed().get(MockBackend);

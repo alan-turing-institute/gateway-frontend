@@ -6,12 +6,14 @@ import { ClarityModule } from "clarity-angular";
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartComponent } from './chart/chart.component';
 import { AccountService } from './account.service';
+// import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     AccountRoutingModule,
     ClarityModule.forRoot(),
     NgxChartsModule,
+    // HttpClientModule
   ],
   providers: [
     AccountService

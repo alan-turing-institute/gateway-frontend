@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { User } from './user';
 import 'rxjs/add/operator/toPromise';
 
@@ -10,8 +10,8 @@ export class AuthService {
   // private COUNTER_BASE_URL: string = 'http://localhost:5000/api';
   private COUNTER_BASE_URL: string = 'https://science-gateway-count.azurewebsites.net/api';
 
-  private headers: Headers = new Headers({'Content-Type': 'application/json'});
-  constructor(private http: Http) {}
+  private headers = new HttpHeaders({'Content-Type': 'application/json'});
+  constructor(private http: HttpClient) {}
 
   login(user: User): Promise<any> {
     console.log("Hit AuthService login")
@@ -31,8 +31,9 @@ export class AuthService {
   }
 
   ensureAuthenticated(token): Promise<any> {
+    console.log(token)
     let url: string = `${this.USER_BASE_URL}/status`;
-    let headers: Headers = new Headers({
+    let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     });
@@ -41,7 +42,7 @@ export class AuthService {
 
   countSimulation(token): Promise<any> {
     let url: string = `${this.COUNTER_BASE_URL}/count`;
-    let headers: Headers = new Headers({
+    let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     });
@@ -50,7 +51,7 @@ export class AuthService {
 
   logout(token): Promise<any> {
     let url: string = `${this.USER_BASE_URL}/logout`;
-    let headers: Headers = new Headers({
+    let headers = new HttpHeaders({
       'Content-Type': 'apfplication/json',
       Authorization: `Bearer ${token}`
     });

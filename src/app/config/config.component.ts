@@ -64,7 +64,7 @@ export class ConfigComponent implements OnInit {
   }
 
   setMinimalJobInfoCollected () {
-    if ((this.job.description.length > 0) && (this.job.name.length > 0)){
+    if ((this.job.description)&& (this.job.description.length > 0) && (this.job.name.length > 0)){
       this.alertAvailable = true
       this.alertText = "There are unsaved changes"
       this.minimalJobInfoCollected = true
@@ -160,7 +160,10 @@ export class ConfigComponent implements OnInit {
                           config => {
                             this.job.id = config["id"]
                             this.job.name = config["name"]
-                            this.job.description=config["description"]
+                            if (config["description"])
+                              this.job.description=config["description"]
+                            else
+                              this.job.description=""
                             this.fields = config["parent_case"]["fields"]
                             this.job.status = "Draft"
 
@@ -239,7 +242,7 @@ export class ConfigComponent implements OnInit {
                             var parameters = family['parameters'].map(this.serializeParameterToValue)
                             jobValues.values = jobValues.values.concat(parameters);
                           }
-                          console.log(jobValues);
+                          // console.log(jobValues);
                           let url = this.configDataService.getSaveJobURL(this.job['id'])
                           this.configDataService.saveJob(jobValues, url)
                                             .subscribe(
@@ -263,7 +266,7 @@ export class ConfigComponent implements OnInit {
         var parameters = family['parameters'].map(this.serializeParameterToValue)
         jobValues.values = jobValues.values.concat(parameters);
       }
-      console.log(jobValues);
+      // console.log(jobValues);
       
       let url = this.configDataService.getSaveJobURL(this.job['id'])
       this.configDataService.saveJob(jobValues, url)
@@ -297,9 +300,11 @@ export class ConfigComponent implements OnInit {
                             this.submittingJob = true;
                             this.configDataService.runJob(this.job).subscribe(
                               ranJob => {
+                                // console.log("Submitted run job");
                                 this.basic = true;
                                 this.alertText = this.alertText + "\nJob submitted"
                                 this.navigateToDashboard();
+                                // console.log("Navigated to dashboard");
                               },
                               error => {
                                 this.errorMessage = <any> error
@@ -312,39 +317,6 @@ export class ConfigComponent implements OnInit {
                           error => {
                           this.errorMessage = <any> error
                           });
-
-    // const token = localStorage.getItem('token');
-    // if (token) {
-    //   console.log("counting simulation")
-    //   this.auth.countSimulation(token)
-    //   .then((response) => {
-    //     console.log(response.json());
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    // }
-
-    // let url = this.configDataService.getSaveJobURL(this.job['id'])
-    // console.log("Submitting job to: "+ url)
-    // this.alertText = "Submitting Job.."
-    
-    // this.configDataService.saveJob(jobValues, url).subscribe(
-    //                     saveJob => {
-    //                       this.configDataService.runJob(this.job)
-    //                         .subscribe(
-    //                           ranJob => {
-    //                             this.basic = true;
-                                
-    //                           },
-    //                           error => {
-    //                             this.errorMessage = <any> error
-    //                           });
-    //                     },
-    //                     error => {
-    //                       this.errorMessage = <any> error
-    //                   });
-
   }
 
   navigateToDashboard() {

@@ -10,7 +10,7 @@
 					<a *ngIf = "routeToOutput" 
 						routerLinkActive="active" 
 						[routerLink]="['/output/output']" 
-						(click)="storeJobId('Output')" 
+						(click)="storeJobId('Output')"
 						class="nav-link">
 							<span class="nav-text">{{jobInfo?.name}} </span>
 					</a>
@@ -48,25 +48,29 @@
 						  *ngIf = "routeToOutput"
 							type="button" class="btn btn-outline btn-sm"
 							(click)="storeJobId('Output')"
-							[routerLink]="['/output/output']" routerLinkActive="active">
+							[routerLink]="['/output/output']" routerLinkActive="active"
+							[disabled]="actionButtonDisabled">
 							<span class="actionText">{{actionButtonText}}</span>
 						</button>
 						<button style="float:right"
 								*ngIf = "routeToConfig" 
 										type="button" class="btn btn-outline btn-sm" 
 										(click)="storeJobId('Edit')"
-										[routerLink]="['/config/config']" routerLinkActive="active">
+										[routerLink]="['/config/config']" routerLinkActive="active"
+										[disabled]="actionButtonDisabled">
 							<span class="actionText">{{actionButtonText}}</span>
 						</button>
 						<button style="float:right"
 							*ngIf ="stopJobOption" 
 										[hidden]=hideOptions
 										type="button" class="btn btn-outline btn-sm"
+										[disabled]="actionButtonDisabled"
 										(click)="stopJob()">Stop</button>
 				
 						<button style="float:right"
 						type="button" 
 						class="btn btn-outline btn-hover btn-sm" 
+						[disabled]="actionButtonDisabled"
 											(click)="deleteJob()">Delete</button>
 					</div>
 				</div>

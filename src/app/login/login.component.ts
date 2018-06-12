@@ -20,12 +20,13 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(): void {
-    console.log("Form submitted");
-    console.log(this.user)
+    console.log("Login Form submitted");
+    //console.log(this.user)
 
     this.auth.login(this.user)
     .then((user) => {
-      localStorage.setItem('token', user.json().auth_token);
+      console.log(user.auth_token);
+      localStorage.setItem('token', user.auth_token);
       this.router.navigateByUrl('/dashboard');
     })
     .catch((err) => {
