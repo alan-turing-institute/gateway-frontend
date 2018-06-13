@@ -18,26 +18,40 @@ describe('dashboard get jobs', () => {
   it('should get jobs', () => {
     let testUrl = "/job";
     let response = [ {
-                        "name": "TESTMINT",
-                        "user": "nbarlow",
-                        "status": "Not Started",
-                        "links": {
-                            "self": "/job/1",
-                            "case": "/case/3"
-                        },
-                        "id": 1
-                      }]
+      "id": 1,
+      "name": "TESTMINT",
+      "description": "sasa",
+      "status": "Not Started",
+      "links": {
+          "self": "/job/1",
+          "case": "/case/3"
+      },
+      "parent_case": {
+          "id": 3,
+          "name": "MyCase",
+          "description": null,
+          "links": {
+              "self": "/case/3"
+          },
+          "thumbnail": null
+      },
+      "user": "testuser"
+  }]
 
     httpClient.get(testUrl)
       .subscribe(data =>     
         expect(data).toEqual(response)
-        // expect(data).toBeDefined()
-        //  expect(jobs.length).toBe(1);
-        //  expect(jobs[0].id).toBe(1);
       );
 
     const req = httpTestingController.expectOne(testUrl);
     expect(req.request.method).toEqual('GET');
+    expect(response.length).toBe(1);
+    expect(response[0].parent_case).toBeDefined();
+    expect(response[0].description.length).toBeGreaterThan(0);
+
     req.flush(response);
+  });
+  afterEach(() => {
+    httpTestingController.verify();
   });
 });

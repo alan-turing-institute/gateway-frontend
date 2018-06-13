@@ -35,7 +35,7 @@ describe('Cases Service', () => {
     const req = httpTestingController.expectOne(testUrl);
     expect(req.request.method).toEqual('GET');
     req.flush(response);
-
+    
     expect(response.length).toBe(1);
     expect(response[0].id).toBe(3);
   });

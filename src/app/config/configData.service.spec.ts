@@ -18,56 +18,79 @@ describe('config get template', () => {
   it('should get template', () => {
     let testUrl = "/case/1";
     let response = {
-                        "name": "MyCase",
-                        "fields": [
+        "id": 5,
+        "name": "damBreak",
+        "description": "OpenFOAM simulation of breaking dam",
+        "thumbnail": "https://sgmiddleware.blob.core.windows.net/openfoam/thumbnails/damBreak.png",
+        "fields": [
+            {
+                "child_fields": [
+                    {
+                        "child_fields": [],
+                        "name": "density",
+                        "specs": [
                             {
-                                "name": "tankA",
-                                "child_fields": [
-                                    {
-                                        "name": "width",
-                                        "child_fields": [],
-                                        "specs": [
-                                            {
-                                                "name": "min",
-                                                "id": 21,
-                                                "value": "0.1"
-                                            },
-                                            {
-                                                "name": "max",
-                                                "id": 22,
-                                                "value": "40"
-                                            },
-                                            {
-                                                "name": "default",
-                                                "id": 23,
-                                                "value": "3"
-                                            },
-                                            {
-                                                "name": "units",
-                                                "id": 24,
-                                                "value": "m"
-                                            }
-                                        ]
-                                    }
-                                ],
-                                "specs": []
+                                "value": "1",
+                                "id": 70,
+                                "name": "min"
                             },
-                        ],
-                        "id": 3
+                            {
+                                "value": "2000",
+                                "id": 71,
+                                "name": "max"
+                            },
+                            {
+                                "value": "1000",
+                                "id": 72,
+                                "name": "default"
+                            },
+                            {
+                                "value": "kg/m^3",
+                                "id": 73,
+                                "name": "units"
+                            },
+                            {
+                                "value": "Water_",
+                                "id": 74,
+                                "name": "prefix"
+                            }
+                        ]
+                    },
+                ],
+                "name": "Water",
+                "specs": [
+                    {
+                        "value": "Water_",
+                        "id": 87,
+                        "name": "prefix"
                     }
+                ]
+            },
+        ]
+    }
+    
 
     httpClient.get(testUrl)
       .subscribe(data =>     
         expect(data).toEqual(response)
-        // expect(data).toBeDefined()
-        //  expect(jobs.length).toBe(1);
-        //  expect(jobs[0].id).toBe(1);
       );
 
     const req = httpTestingController.expectOne(testUrl);
     expect(req.request.method).toEqual('GET');
+    expect(response.description.length).toBeGreaterThan(0);
+    expect(response.fields.length).toBeGreaterThan(0);
+    expect(response.fields[0].child_fields.length).toBeGreaterThan(0);
+    expect(response.fields[0].child_fields[0].name.length).toBeGreaterThan(0);
+    expect(response.fields[0].child_fields[0].specs.length).toBe(5);
+    expect(response.fields[0].child_fields[0].specs[0].value.length).toBeGreaterThan(0);
+    expect(response.fields[0].child_fields[0].specs[0].name.length).toBeGreaterThan(0);
     req.flush(response);
   });
+
+  afterEach(() => {
+    httpTestingController.verify();
+  });
+
 });
 
 // import {
