@@ -18,6 +18,7 @@ export class JobSummaryComponent implements OnInit{
     
     jobHoverHidden: boolean;
     actionButtonText: string;
+    actionButtonDisabled: boolean;
     actionButtonRoute: string;
     jobShortDescription:string;
     jobStatusBadgeClass:string;
@@ -61,6 +62,20 @@ export class JobSummaryComponent implements OnInit{
         if (this.jobInfo.status.toLowerCase() == "queued")
             text ="View"
         return text
+    }
+
+    getActionDisabled() : boolean  {
+        var disabled = true
+        console.log(this.jobInfo.status.toLowerCase());
+        if (this.jobInfo.status.toLowerCase() == "running")
+            disabled = false
+        if (this.jobInfo.status.toLowerCase() == "not started")
+            disabled = false
+        if (this.jobInfo.status.toLowerCase() == "new")
+            disabled = false
+        if (this.jobInfo.status.toLowerCase() == "completed")
+            disabled = false
+        return disabled
     }
 
     getActionRoute() : string  {
@@ -135,6 +150,7 @@ export class JobSummaryComponent implements OnInit{
         // console.log(this.jobInfo.links.case);
         this.jobHoverHidden = true
         this.actionButtonText = this.getActionText()
+        this.actionButtonDisabled = this.getActionDisabled()
         this.jobShortDescription = this.getShortDescription()
         this.jobStatusBadgeClass = this.getBadgeClass()
         this.jobTemporalDistanceFromCreation = this.getRelativeCreationTime()

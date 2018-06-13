@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response, RequestOptions } from '@angular/http';
+import { Response, RequestOptions } from '@angular/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
+// import 'rxjs/add/operator/catch';
+// import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/throw';
 
 import { CounterData } from '../types/counterData';
 
@@ -15,13 +18,13 @@ export class AccountService {
   // private COUNTER_URL: string = 'http://localhost:5000/api/count';
   private COUNTER_URL: string = 'https://science-gateway-count.azurewebsites.net/api/count';
 
-  private headers: Headers = new Headers({'Content-Type': 'application/json'});
+  private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-  constructor (private http: Http) {}
+  constructor (private http: HttpClient) {}
 
   getCounterData(token): Observable<object>{
     let url: string = `${this.COUNTER_URL}`;
-    let headers: Headers = new Headers({
+    let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     });
@@ -33,7 +36,7 @@ export class AccountService {
 
   checkCounter(token): Promise<any> {
     let url: string = `${this.COUNTER_URL}`;
-    let headers: Headers = new Headers({
+    let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     });

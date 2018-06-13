@@ -1,76 +1,57 @@
-import {
-  TestBed,
-  getTestBed,
-  async,
-  inject
-} from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import {
-  Headers, BaseRequestOptions,
-  Response, HttpModule, Http, XHRBackend, RequestMethod
-} from '@angular/http';
-
-import {ResponseOptions} from '@angular/http';
-import {MockBackend, MockConnection} from '@angular/http/testing';
-import { DashboardService } from './dashboard.service';
-
-describe('Config Service', () => {
-  let mockBackend: MockBackend;
-
+describe('dashboard get jobs', () => {
+  let httpClient: HttpClient;
+  let httpTestingController: HttpTestingController;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-    providers: [
-      DashboardService,
-      MockBackend,
-      BaseRequestOptions,
-      {
-        provide: Http,
-        deps: [MockBackend, BaseRequestOptions],
-        useFactory:
-        (backend: XHRBackend, defaultOptions: BaseRequestOptions) => {
-          return new Http(backend, defaultOptions);
-        }
-      }
-    ],
-    imports: [
-      HttpModule
-    ]
-  });
-  mockBackend = getTestBed().get(MockBackend);
-}));
-
-it('should get jobs', done => {
-  let dashboardService: DashboardService;
-
-  getTestBed().compileComponents().then(() => {
-    mockBackend.connections.subscribe(
-      (connection: MockConnection) => {
-        connection.mockRespond(new Response(
-          new ResponseOptions({
-            body: [
-              {
-                  "name": "TESTMINT",
-                  "user": "nbarlow",
-                  "status": "Not Started",
-                  "links": {
-                      "self": "/job/1",
-                      "case": "/case/3"
-                  },
-                  "id": 1
-              }
-            ]
-          })));
-        });
-
-        dashboardService = getTestBed().get(DashboardService);
-        expect(dashboardService).toBeDefined();
-
-        dashboardService.getJobsData().subscribe((jobs: any []) => {
-            expect(jobs).toBeDefined();
-            expect(jobs.length).toBe(1);
-            expect(jobs[0].id).toBe(1);
-            done();
-      });
+      imports: [
+        HttpClientTestingModule
+      ]
     });
+    httpClient = TestBed.get(HttpClient);
+    httpTestingController = TestBed.get(HttpTestingController);
+  }));
+
+  it('should get jobs', () => {
+    let testUrl = "/job";
+    let response = [ {
+      "id": 1,
+      "name": "TESTMINT",
+      "description": "sasa",
+      "status": "Not Started",
+      "links": {
+          "self": "/job/1",
+          "case": "/case/3"
+      },
+      "parent_case": {
+          "id": 3,
+          "name": "MyCase",
+          "description": null,
+          "links": {
+              "self": "/case/3"
+          },
+          "thumbnail": null
+      },
+      "user": "testuser"
+  }]
+
+    httpClient.get(testUrl)
+      .subscribe(data =>     
+        expect(data).toEqual(response)
+      );
+
+    const req = httpTestingController.expectOne(testUrl);
+    expect(req.request.method).toEqual('GET');
+    expect(response.length).toBe(1);
+    expect(response[0].parent_case).toBeDefined();
+    expect(response[0].description.length).toBeGreaterThan(0);
+
+    req.flush(response);
+  });
+  afterEach(() => {
+    httpTestingController.verify();
   });
 });

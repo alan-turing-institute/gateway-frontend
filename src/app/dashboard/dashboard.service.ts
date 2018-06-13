@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptions } from '@angular/http';
+import { Response, RequestOptions } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { JOBS } from './mock-jobs';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/throw';
+// import 'rxjs/add/operator/map';
 
 import { JobInfo } from '../types/jobInfo';
 import { ProgressInfo } from '../types/progressInfo';
@@ -21,51 +23,52 @@ export class DashboardService {
   private cancelUrl = urljoin(environment.apiRoot, "cancel")
 
 
-  constructor (private http: Http) {}
+  constructor (private http: HttpClient) {}
 
   // data = this.getJobsData()
   // mockdata = this.getMockData()
 
   getJobsData(): Observable<JobInfo[]>{
     return this.http.get(this.jobsUrl)
-                    .map(this.extractData)
+                    // .map(this.extractData)
                     .catch(this.handleError);
   }
 
   getProgressInfo(jobId): Observable<ProgressInfo>{
     var url = urljoin(this.progressUrl, jobId)
     return this.http.get(url)
-                    .map(this.extractProgressJsonData)
+                    // .map(this.extractProgressJsonData)
                     .catch(this.handleError);
   }
 
   deleteJob(jobId): Observable<any> {
     var url = urljoin(this.jobsUrl, jobId);
     return this.http.delete(url)
-                    .map(this.extractJsonData)
+                    // .map(this.extractJsonData)
                     .catch(this.handleError);
   }
 
   cancelJob(jobId): Observable<any> {
     var url = urljoin(this.cancelUrl, jobId);
     return this.http.post(url, null, null)
-                    .map(this.extractJsonData)
+                    // .map(this.extractJsonData)
                     .catch(this.handleError);
   }
 
   private extractData(res: Response){
-    let body = res.json();
+    let body = res;
     return body || { };
   }
 
 private extractJsonData(res: Response){
-    let body = res.json();
+    let body = res;
     return body || { };
   }
 
   private extractProgressJsonData(res: Response) {
-    let body = res.json();
-    return body.stdout.progress|| { };
+    let body = res;
+    return {};
+    // return body.stdout.progress|| { };
   }
 
   private handleError (error: Response | any) {
@@ -73,9 +76,9 @@ private extractJsonData(res: Response){
     // console.log(error)
     let errMsg: string;
     if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+      // const body = error.json() || '';
+      // const err = body.error || JSON.stringify(body);
+      errMsg = `${error.status} - ${error.statusText || ''} ${error}`;
     } else {
       errMsg = error.message ? error.message : error.toString();
     }

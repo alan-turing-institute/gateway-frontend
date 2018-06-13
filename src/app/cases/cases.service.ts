@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-
+import { Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 // import 'rxjs/add/operator/catch';
-// import 'rxjs/add/operator/map';
-
+// import 'rxjs/add/operator/throw';
+import 'rxjs/add/observable/throw';
 import { CaseInfo } from '../types/caseInfo';
 import { environment } from '../../environments/environment';
-
 import * as urljoin from 'url-join';
 
 @Injectable()
 export class CasesService {
 
-  constructor (private http: Http) {}
+  constructor (private http: HttpClient) {}
 
   getCases(): Observable<CaseInfo[]>{
     let templateUrl = urljoin(environment.apiRoot, "case");
     return this.http.get(templateUrl)
-                    .map(this.extractData)
+                    // .map(this.extractData)
                     .catch(this.handleError);
   }
 
@@ -31,9 +30,9 @@ export class CasesService {
   private handleError (error: Response | any) {
     let errMsg: string;
     if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+      // const body = error.json() || '';
+      // const err = body.error || JSON.stringify(body);
+      errMsg = `${error.status} - ${error.statusText || ''} ${error}`;
     } else {
       errMsg = error.message ? error.message : error.toString();
     }
