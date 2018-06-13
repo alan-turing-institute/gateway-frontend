@@ -1,16 +1,88 @@
-import {
-  TestBed,
-  getTestBed,
-  async,
-  inject
-} from '@angular/core/testing';
-import { BaseRequestOptions,Response, XHRBackend, RequestMethod} from '@angular/http';
-import {HttpHeaders, HttpClientModule, HttpClient} from '@angular/common/http';
-import {ResponseOptions} from '@angular/http';
-import {MockBackend, MockConnection} from '@angular/http/testing';
-import {InputComponent} from '../components/input/inputComponent';
-import { ConfigDataService } from './configData.service';
-import { Observable } from 'rxjs/Observable';
+import { TestBed, async } from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+
+describe('config get template', () => {
+  let httpClient: HttpClient;
+  let httpTestingController: HttpTestingController;
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule
+      ]
+    });
+    httpClient = TestBed.get(HttpClient);
+    httpTestingController = TestBed.get(HttpTestingController);
+  }));
+
+  it('should get template', () => {
+    let testUrl = "/case/1";
+    let response = {
+                        "name": "MyCase",
+                        "fields": [
+                            {
+                                "name": "tankA",
+                                "child_fields": [
+                                    {
+                                        "name": "width",
+                                        "child_fields": [],
+                                        "specs": [
+                                            {
+                                                "name": "min",
+                                                "id": 21,
+                                                "value": "0.1"
+                                            },
+                                            {
+                                                "name": "max",
+                                                "id": 22,
+                                                "value": "40"
+                                            },
+                                            {
+                                                "name": "default",
+                                                "id": 23,
+                                                "value": "3"
+                                            },
+                                            {
+                                                "name": "units",
+                                                "id": 24,
+                                                "value": "m"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "specs": []
+                            },
+                        ],
+                        "id": 3
+                    }
+
+    httpClient.get(testUrl)
+      .subscribe(data =>     
+        expect(data).toEqual(response)
+        // expect(data).toBeDefined()
+        //  expect(jobs.length).toBe(1);
+        //  expect(jobs[0].id).toBe(1);
+      );
+
+    const req = httpTestingController.expectOne(testUrl);
+    expect(req.request.method).toEqual('GET');
+    req.flush(response);
+  });
+});
+
+// import {
+//   TestBed,
+//   getTestBed,
+//   async,
+//   inject
+// } from '@angular/core/testing';
+// import { BaseRequestOptions,Response, XHRBackend, RequestMethod} from '@angular/http';
+// import {HttpHeaders, HttpClientModule, HttpClient} from '@angular/common/http';
+// import {ResponseOptions} from '@angular/http';
+// import {MockBackend, MockConnection} from '@angular/http/testing';
+// import {InputComponent} from '../components/input/inputComponent';
+// import { ConfigDataService } from './configData.service';
+// import { Observable } from 'rxjs/Observable';
 
 // describe('Case Service', () => {
 //   let mockBackend: MockBackend;

@@ -1,65 +1,43 @@
-import {
-  TestBed,
-  getTestBed,
-  async,
-  inject
-} from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { BaseRequestOptions,Response, XHRBackend, RequestMethod} from '@angular/http';
-import {HttpHeaders, HttpClientModule, HttpClient} from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import {ResponseOptions} from '@angular/http';
-import {MockBackend, MockConnection} from '@angular/http/testing';
-import { DashboardService } from './dashboard.service';
+describe('dashboard get jobs', () => {
+  let httpClient: HttpClient;
+  let httpTestingController: HttpTestingController;
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule
+      ]
+    });
+    httpClient = TestBed.get(HttpClient);
+    httpTestingController = TestBed.get(HttpTestingController);
+  }));
 
-// describe('Config Service', () => {
-//   let mockBackend: MockBackend;
+  it('should get jobs', () => {
+    let testUrl = "/job";
+    let response = [ {
+                        "name": "TESTMINT",
+                        "user": "nbarlow",
+                        "status": "Not Started",
+                        "links": {
+                            "self": "/job/1",
+                            "case": "/case/3"
+                        },
+                        "id": 1
+                      }]
 
-//   beforeEach(async(() => {
-//     TestBed.configureTestingModule({
-//     providers: [
-//       DashboardService,
-//       MockBackend
-//     ],
-//     imports: [
-//       HttpClientModule
-//     ]
-//   });
-//   mockBackend = getTestBed().get(MockBackend);
-// }));
+    httpClient.get(testUrl)
+      .subscribe(data =>     
+        expect(data).toEqual(response)
+        // expect(data).toBeDefined()
+        //  expect(jobs.length).toBe(1);
+        //  expect(jobs[0].id).toBe(1);
+      );
 
-// it('should get jobs', done => {
-//   let dashboardService: DashboardService;
-
-//   getTestBed().compileComponents().then(() => {
-//     mockBackend.connections.subscribe(
-//       (connection: MockConnection) => {
-//         connection.mockRespond(new Response(
-//           new ResponseOptions({
-//             body: [
-//               {
-//                   "name": "TESTMINT",
-//                   "user": "nbarlow",
-//                   "status": "Not Started",
-//                   "links": {
-//                       "self": "/job/1",
-//                       "case": "/case/3"
-//                   },
-//                   "id": 1
-//               }
-//             ]
-//           })));
-//         });
-
-//         dashboardService = getTestBed().get(DashboardService);
-//         expect(dashboardService).toBeDefined();
-
-//         dashboardService.getJobsData().subscribe((jobs: any []) => {
-//             expect(jobs).toBeDefined();
-//             expect(jobs.length).toBe(1);
-//             expect(jobs[0].id).toBe(1);
-//             done();
-//       });
-//     });
-//   });
-// });
+    const req = httpTestingController.expectOne(testUrl);
+    expect(req.request.method).toEqual('GET');
+    req.flush(response);
+  });
+});
