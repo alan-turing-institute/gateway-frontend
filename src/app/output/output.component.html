@@ -1,3 +1,4 @@
+
 <div class="animated fadeIn">
   <div class='container-fluid' >
     <div class="row">
@@ -24,7 +25,7 @@
                         <div *ngFor="let output of job?.outputs">
                             <output-download [data]="output"></output-download>
                           </div>
-                        <!-- <output-download [data]="job?.outputs"></output-download> -->
+
                     </clr-dropdown-menu>
                 </clr-dropdown>
               </div>
@@ -32,7 +33,22 @@
       </div>
     </div>
 
-    <!-- <div class="row">
+    
+
+    <div class="row">  
+      <div class = "card" >
+        <div class="category-header card-header">Parameters </div>
+        <div class="card-block">
+            <job-parameters [parameters]="flatParametersList"></job-parameters>
+        </div>
+      </div>
+    </div>  
+
+  </div>
+</div>
+
+<!-- old output -->
+<!-- <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class = "card" >
           <div class="category-header card-header">Diagnostics</div>
@@ -65,16 +81,8 @@
           </div>  
         </div>
       </div>
+
+      
     </div>   -->
 
-    <div class="row">  
-      <div class = "card" >
-        <div class="category-header card-header">Parameters </div>
-        <div class="card-block">
-            <job-parameters [parameters]="flatParametersList"></job-parameters>
-        </div>
-      </div>
-    </div>  
-
-  </div>
-</div>
+                            <!-- <output-download [data]="job?.outputs"></output-download> -->

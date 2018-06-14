@@ -13,6 +13,6 @@ export class JobParametersComponent implements OnInit {
     @Input() parameters:Array<any>
     
     public ngOnInit(): void {
-        console.log(this.parameters)
+        // console.log(this.parameters)
     }
 }
