@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { User } from './user';
+import { environment } from '../../environments/environment';
 import 'rxjs/add/operator/toPromise';
+import * as urljoin from 'url-join';
 
 @Injectable()
 export class AuthService {
-  // private USER_BASE_URL: string = 'http://localhost:5000/auth';
-  private USER_BASE_URL: string = 'https://science-gateway-users.azurewebsites.net/auth';
-  // private COUNTER_BASE_URL: string = 'http://localhost:5000/api';
+  private USER_BASE_URL: string = urljoin(environment.authRoot, "auth");
   private COUNTER_BASE_URL: string = 'https://science-gateway-count.azurewebsites.net/api';
 
   private headers = new HttpHeaders({'Content-Type': 'application/json'});

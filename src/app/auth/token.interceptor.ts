@@ -15,19 +15,16 @@ export class TokenInterceptor implements HttpInterceptor {
     if (request.responseType=='blob'){
       return next.handle(request);
     }
-    else{
-    console.log(request);
-    let token = localStorage.getItem("token")
-    request = request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    let intercepted = next.handle(request);
-    console.log(next);
-    console.log(request);
-    
-    return intercepted
+    else
+    {
+      let token = localStorage.getItem("token")
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      let intercepted = next.handle(request);
+      return intercepted
     }
   }
 }
