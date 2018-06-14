@@ -64,4 +64,10 @@ export class OutputService {
           .catch(this.handleError)
   }
 
+  getFileAccess(): Observable<Blob> {
+    var url = urljoin(this.jobUrl, localStorage.getItem('job_id'))
+    url = urljoin(url, "output")
+    console.log(url)
+    return this.http.get(url).catch (this.handleError);
+  }
 }

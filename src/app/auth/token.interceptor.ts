@@ -10,7 +10,13 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   constructor() {}
+
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (request.responseType=='blob'){
+      return next.handle(request);
+    }
+    else{
+    console.log(request);
     let token = localStorage.getItem("token")
     request = request.clone({
       setHeaders: {
@@ -18,7 +24,10 @@ export class TokenInterceptor implements HttpInterceptor {
       }
     });
     let intercepted = next.handle(request);
-    console.log(intercepted);
+    console.log(next);
+    console.log(request);
+    
     return intercepted
+    }
   }
 }

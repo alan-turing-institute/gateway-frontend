@@ -21,7 +21,7 @@ export class DownloadComponent implements OnInit {
 
     public ngOnInit(): void {
       this.fileUrl = this.data.destination_path;
-      switch (this.data.type) {
+      switch (this.data.output_type) {
         case 'interface': {
           this.downloadFilename = 'interface.stl'
           this.buttonLabel = 'Interface (.stl)'
@@ -54,9 +54,21 @@ export class DownloadComponent implements OnInit {
 
     private downloadFile() {
       console.log('downloading data')
-      this.outputService.downloadFile(this.fileUrl).subscribe(blob=>{
-        FileSaver.saveAs(blob, this.downloadFilename)
-      })
+      // this.outputService.downloadFile(this.fileUrl).subscribe(blob=>{
+      //   FileSaver.saveAs(blob, this.downloadFilename)
+      // })
+      this.outputService.getFileAccess().subscribe(access=> {
+        console.log(access);
+        this.outputService.downloadFile(access[0].destination_path).subscribe(blob=> {
+          FileSaver.saveAs(blob, this.downloadFilename)
+        },
+        error => {
+          console.log ("File not downloaded.");
+        });
+      },
+      error => {
+        console.log ("No access to file");
+      });
     }
 
 }
