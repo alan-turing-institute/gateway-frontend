@@ -42,11 +42,9 @@ export class OutputComponent implements OnInit {
     this.families = []
     this.flatParametersList=[]
     this.getData();
-    // console.log("test hot load");
   }
 
   flattenFamiliesStructure() {
-    console.log(this.families);
     this.families.forEach(family => {
       family.parameters.forEach(parameter => {
         let parameterList = {"family":family.label, 
@@ -99,7 +97,6 @@ export class OutputComponent implements OnInit {
     for (let field of this.fields) {
       this.families.push(this.serializeFieldToFamily(field));
     }
-    console.log(this.families);
   }
 
   findValueWithName(values:any, name) {
@@ -123,6 +120,7 @@ export class OutputComponent implements OnInit {
     this.outputService.getJob()
                     .subscribe(
                       allJobsInfo => {
+                        console.log(allJobsInfo)
                         this.job = allJobsInfo
                         this.status = this.job.status
                         this.temporalDistanceFromCreation()

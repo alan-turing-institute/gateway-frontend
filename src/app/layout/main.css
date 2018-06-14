@@ -1,6 +1,7 @@
 .icon {
     /* color:#588ba9; */
-    color: blue;
+    transform: rotate(180deg);
+    /* color: blue; */
 }
 .flex-container {
     /* display: -webkit-flex; */
