@@ -49,6 +49,7 @@ export class DashboardComponent implements OnInit {
     this.includeRunningJobs=true;
     this.includeDraftJobs=true;
     this.getJobsData()
+    // console.log("get jobs again");
   }
 
   getJobsData() {

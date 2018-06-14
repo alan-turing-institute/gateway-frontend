@@ -9,8 +9,8 @@ import { OutputRoutingModule } from './output-routing.module';
 import { OutputService } from './output.service';
 
 // import { ChartsModule } from 'ng2-charts';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { ChartComponent } from './chart/chart.component';
+// import { NgxChartsModule } from '@swimlane/ngx-charts';
+// import { ChartComponent } from './chart/chart.component';
 
 import { DescriptionModule } from '../components/description/description.module';
 import { PipeModule } from '../components/pipe/pipe.module';
@@ -23,7 +23,7 @@ import { JobParametersComponent } from './parameters/parameters.component';
 @NgModule({
   imports: [
     OutputRoutingModule,
-    NgxChartsModule,
+    // NgxChartsModule,
     FormsModule,
     CommonModule,
     DescriptionModule,
@@ -32,7 +32,7 @@ import { JobParametersComponent } from './parameters/parameters.component';
   ],
   declarations: [
     OutputComponent,
-    ChartComponent,
+    // ChartComponent,
     VideoComponent,
     DownloadComponent,
     JobParametersComponent

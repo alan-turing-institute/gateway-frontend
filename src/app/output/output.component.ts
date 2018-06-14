@@ -42,6 +42,7 @@ export class OutputComponent implements OnInit {
     this.families = []
     this.flatParametersList=[]
     this.getData();
+    // console.log("test hot load");
   }
 
   flattenFamiliesStructure() {
