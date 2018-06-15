@@ -10,24 +10,25 @@ export class AuthService {
   private USER_BASE_URL: string = urljoin(environment.authRoot, "auth");
   private COUNTER_BASE_URL: string = 'https://science-gateway-count.azurewebsites.net/api';
 
-  private headers = new HttpHeaders({'Content-Type': 'application/json'});
+  // private headers = new HttpHeaders({'Content-Type': 'application/json'});
   constructor(private http: HttpClient) {}
 
   login(user: User): Promise<any> {
     console.log("Hit AuthService login")
     let url: string = `${this.USER_BASE_URL}/login`;
-
+    let headers = new HttpHeaders({'Content-Type': 'application/json'});
     console.log("posting with");
     console.log('url', url);
     console.log('user', user);
-    console.log('this.headers', this.headers);
+    console.log('this.headers', headers);
 
-    return this.http.post(url, user, {headers: this.headers}).toPromise();
+    return this.http.post(url, user, {headers: headers}).toPromise();
   }
 
   register(user: User): Promise<any> {
+    let headers = new HttpHeaders({'Content-Type': 'application/json'});
     let url: string = `${this.USER_BASE_URL}/register`;
-    return this.http.post(url, user, {headers: this.headers}).toPromise();
+    return this.http.post(url, user, {headers: headers}).toPromise();
   }
 
   ensureAuthenticated(token): Promise<any> {
