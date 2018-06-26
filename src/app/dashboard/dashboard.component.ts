@@ -27,14 +27,15 @@ export class DashboardComponent implements OnInit {
   includeCompletedJobs:boolean;
   includeRunningJobs:boolean;
   includeDraftJobs:boolean;
+  numJobStatus:string;
   filteredJobs:{info: JobInfo, progress:ProgressInfo} []
 
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
-    // this.numRunningJobs = 0;
-    // this.numCompleteJobs = 0;
-    // this.numDraftJobs = 0;
+    this.numRunningJobs = 0;
+    this.numCompleteJobs = 0;
+    this.numDraftJobs = 0;
     localStorage.removeItem("job_id")
     localStorage.removeItem("template_id")
     this.jobs = []
@@ -48,9 +49,8 @@ export class DashboardComponent implements OnInit {
     this.includeCompletedJobs=true;
     this.includeRunningJobs=true;
     this.includeDraftJobs=true;
-    this.getJobsData()
-    // this.filterJobs();
-    // console.log("get jobs again");
+    this.getJobsData();
+    this.numJobStatus = "";
   }
 
   getJobsData() {
@@ -64,8 +64,21 @@ export class DashboardComponent implements OnInit {
         })
         this.jobsStillLoading = false;
         this.filterJobs();
+        this.setNumJobStatus();
       }
     )
+  }
+
+  setNumJobStatus() {
+    if (this.jobs.length == 0){
+      this.numJobStatus = "No jobs found";  
+    }
+    else if (this.jobs.length == 1) {
+      this.numJobStatus = "1 job found";  
+    }
+    else {
+      this.numJobStatus = this.jobs.length + " jobs found";  
+    }
   }
 
   cancelJob(id){
@@ -168,7 +181,6 @@ export class DashboardComponent implements OnInit {
       if (this.includeDraftJobs) {
         if ((job.info.status.toLowerCase().indexOf('not started') >= 0)
             &&(job.info.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0)) {
-              
               this.numDraftJobs++;
           this.filteredJobs.push(job)  
         }
