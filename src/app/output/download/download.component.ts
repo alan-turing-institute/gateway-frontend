@@ -38,7 +38,7 @@ export class DownloadComponent implements OnInit {
           break;
         }
         case 'zip': {
-          this.downloadFilename = 'zip.mp4'
+          this.downloadFilename = 'siMulate.zip'
           this.buttonLabel = 'Zip (.zip)'
           break;
         }
