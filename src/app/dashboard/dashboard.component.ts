@@ -32,9 +32,9 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
-    this.numRunningJobs = 0;
-    this.numCompleteJobs = 0;
-    this.numDraftJobs = 0;
+    // this.numRunningJobs = 0;
+    // this.numCompleteJobs = 0;
+    // this.numDraftJobs = 0;
     localStorage.removeItem("job_id")
     localStorage.removeItem("template_id")
     this.jobs = []
@@ -49,22 +49,21 @@ export class DashboardComponent implements OnInit {
     this.includeRunningJobs=true;
     this.includeDraftJobs=true;
     this.getJobsData()
+    // this.filterJobs();
     // console.log("get jobs again");
   }
 
   getJobsData() {
-    // console.log("getting jobs");
     // this.dashboardService.getMockData()
     this.dashboardService.getJobsData()
       .subscribe(allJobs => {
         allJobs.map(job => {
-          // console.log(job)
           job.case = {links: {self:job['links']['case']},name: job['parent_case'],thumbnail: "string",description: "string"}
           var progressPlaceHolder:ProgressInfo = {"value": 0, "units": "%", "range_min":0, "range_max":100}
           this.jobs.push({"info": job, "progress":progressPlaceHolder})
-          this.filteredJobs.push({"info": job, "progress":progressPlaceHolder})
         })
         this.jobsStillLoading = false;
+        this.filterJobs();
       }
     )
   }
@@ -157,13 +156,20 @@ export class DashboardComponent implements OnInit {
     this.filterJobs();
   }
 
+
   filterJobs() {
+    this.numDraftJobs = 0;
+    this.numRunningJobs = 0;
+    this.numCompleteJobs = 0;
+
     this.filteredJobs = []
     
     this.jobs.map(job => {
       if (this.includeDraftJobs) {
         if ((job.info.status.toLowerCase().indexOf('not started') >= 0)
             &&(job.info.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0)) {
+              
+              this.numDraftJobs++;
           this.filteredJobs.push(job)  
         }
       }
@@ -172,12 +178,14 @@ export class DashboardComponent implements OnInit {
         (job.info.status.toLowerCase().indexOf('queued') >= 0))
         &&(job.info.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0))  
         {
+          this.numRunningJobs++;
           this.filteredJobs.push(job)  
         }
       }
       if (this.includeCompletedJobs) {
         if ((job.info.status.toLowerCase().indexOf('complete') >= 0)
         &&(job.info.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0)) {
+          this.numCompleteJobs++;
           this.filteredJobs.push(job)  
         }
       }

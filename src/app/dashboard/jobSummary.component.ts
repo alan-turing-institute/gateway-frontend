@@ -26,6 +26,7 @@ export class JobSummaryComponent implements OnInit{
     jobProgress:string;
     routeToConfig:boolean
     routeToOutput:boolean
+    routeToQueued: boolean
     stopJobOption:boolean
     hideOptions:boolean
     showConfirmDelete:boolean
@@ -80,9 +81,8 @@ export class JobSummaryComponent implements OnInit{
 
     getActionRoute() : string  {
         switch (this.jobInfo.status.toLowerCase()) {
-            case "complete": return "['/output/output']";
+            case "completed": return "['/output/output']";
             case "running": return "['/output/output']";
-            case "queued": return "['/output/output']";
             case "not started": return "['/config/config']";
             case "new": return "['/config/config']";
             default: return "['/output/output']";
@@ -133,6 +133,12 @@ export class JobSummaryComponent implements OnInit{
         switch (this.jobInfo.status.toLowerCase()) {
             case "completed": return true;
             case "running": return true;
+            default: return false;
+        }
+    }
+
+    drawRouteToQueued() : boolean  {
+        switch (this.jobInfo.status.toLowerCase()) {
             case "queued": return true;
             default: return false;
         }
@@ -157,6 +163,7 @@ export class JobSummaryComponent implements OnInit{
         this.jobProgress = this.getProgress()
         this.routeToConfig=this.drawRouteToConfig()
         this.routeToOutput =this.drawRouteToOutput()
+        this.routeToQueued =this.drawRouteToQueued()
         this.stopJobOption = this.drawPauseOption()
         this.actionButtonRoute = this.getActionRoute()
         this.hideOptions = true

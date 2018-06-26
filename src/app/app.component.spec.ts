@@ -23,10 +23,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it(`should have as title 'Code Blue'`, async(() => {
+  it(`should have as title 'SiMulate'`, async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('Code Blue');
+    expect(app.title).toEqual('SiMulate');
   }));
 
   // it('should render title in a h1 tag', async(() => {
