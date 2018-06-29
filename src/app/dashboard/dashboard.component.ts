@@ -58,7 +58,11 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getJobsData()
       .subscribe(allJobs => {
         allJobs.map(job => {
-          job.case = {links: {self:job['links']['case']},name: job['parent_case'],thumbnail: "string",description: "string"}
+          console.log(job['parent_case']['name'])
+          job.parent_case = {links: {self:job['links']['case']}, 
+                              name: job['parent_case']['name'], 
+                              thumbnail: job['parent_case']['thumbnail'], 
+                              description: job['parent_case']['description']}
           var progressPlaceHolder:ProgressInfo = {"value": 0, "units": "%", "range_min":0, "range_max":100}
           this.jobs.push({"info": job, "progress":progressPlaceHolder})
         })
