@@ -19,7 +19,7 @@ import 'web-animations-js/web-animations.min';
 
 // Clarity Icons
 import 'clarity-icons/clarity-icons.min.css';
-import 'clarity-icons/clarity-icons.min';
+import 'clarity-icons/clarity-icons.min.js';
 
 // Clarity UI
 import 'clarity-ui/clarity-ui.min.css';
