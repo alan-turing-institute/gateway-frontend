@@ -12,12 +12,14 @@ import { CasesService } from './cases.service';
 export class CasesComponent implements OnInit {
 	cases: CaseInfo[];
 	errorMessage: string;
+	numCasesMessage: string;
 
 	constructor(private casesService:CasesService) { }
 
 	ngOnInit():void {
 			this.cases = []
 			this.getCaseTypes()
+			this.numCasesMessage = ""
 	}
 
 	getCaseTypes() {
@@ -25,6 +27,10 @@ export class CasesComponent implements OnInit {
 				.subscribe(
 						cases => {
 							this.cases = cases
+							if (this.cases.length == 0)
+								this.numCasesMessage = "1 case found." 
+							else
+							this.numCasesMessage = this.cases.length +" cases found."
 						},
 						error => {
 							this.errorMessage = <any> error
