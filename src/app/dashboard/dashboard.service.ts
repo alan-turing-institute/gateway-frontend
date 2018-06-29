@@ -29,6 +29,7 @@ export class DashboardService {
   // mockdata = this.getMockData()
 
   getJobsData(): Observable<JobInfo[]>{
+    // console.log("getting jobs")
     return this.http.get(this.jobsUrl)
                     // .map(this.extractData)
                     .catch(this.handleError);
