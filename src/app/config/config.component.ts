@@ -172,7 +172,7 @@ export class ConfigComponent implements OnInit {
 
                             this.case.name = config["parent_case"]["name"]
                             this.case.description = config["parent_case"]["description"]
-                            this.case.description = config["parent_case"]["thumbnail"]
+                            this.case.thumbnail = config["parent_case"]["thumbnail"]
 
                             this.serializeFieldsToFamilies();
                             this.serializeValuesToFamilies(config["values"]);

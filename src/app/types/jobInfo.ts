@@ -7,7 +7,7 @@ export class JobInfo {
         self: string;
         case: string;
     };
-    case: {
+    parent_case: {
         links: {self: string};
         name: string;
         thumbnail: string;
@@ -25,3 +25,5 @@ export class JobInfo {
     outputs: Array<any>;
     backend_identifier: string;
 }
+
+//job.parent_case = {links: {self:job['links']['case']},name: job['parent_case'],thumbnail: "string",description: "string"}
