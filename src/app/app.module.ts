@@ -9,9 +9,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
-import { ClarityModule } from "clarity-angular";
+import { ClarityModule } from 'clarity-angular';
 import { FormsModule } from '@angular/forms';
-import { MainComponent } from './layout/main.component'
+import { MainComponent } from './layout/main.component';
 import { LoginComponent } from './login/login.component';
 
 import { AuthService } from './auth/auth.service';
