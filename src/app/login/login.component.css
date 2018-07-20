@@ -1,10 +1,10 @@
 .login-wrapper {
-  background-image: url(https://sgmiddleware.blob.core.windows.net/blue/background_transparent.png);
+  background-image: url(https://bempp.files.wordpress.com/2017/04/bempp_background_1.png);
   background-repeat: no-repeat;
   /*background-size: 20%;*/
-  background-size: 400px;
-  background-color: #0B2537;
-  background-position: 600px center;
+  /* background-size: 400px; */
+  background-color: #4d4b4b;
+  background-position: center;
 }
 /*.login-wrapper .login {
   min-height: 70vh;
