@@ -4,6 +4,8 @@ import { SimulationsRoutingModule } from './simulations-routing.module';
 import { SimulationsCreateComponent } from './create/create.component';
 import { SimulationsViewComponent } from './view/view.component';
 
+import { SimulationsService } from './simulations.service';
+
 const COMPONENTS = [
   SimulationsCreateComponent,
   SimulationsViewComponent];
