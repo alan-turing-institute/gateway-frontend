@@ -17,9 +17,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
 
-/**
- * 默认HTTP拦截器，其注册细节见 `app.module.ts`
- */
+
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
   constructor(private injector: Injector) {}
@@ -60,7 +58,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         //     }
         // }
         break;
-      case 401: // 未登录状态码
+      case 401:  // Unauthorized
         this.goTo('/passport/login');
         break;
       case 403:
@@ -71,7 +69,7 @@ export class DefaultInterceptor implements HttpInterceptor {
       default:
         if (event instanceof HttpErrorResponse) {
           console.warn(
-            '未可知错误，大部分是由于后端不支持CORS或无效配置引起',
+            'Generic error',
             event,
           );
           this.msg.error(event.message);
@@ -91,7 +89,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     | HttpResponse<any>
     | HttpUserEvent<any>
   > {
-    // 统一加上服务端前缀
+
     let url = req.url;
     if (!url.startsWith('https://') && !url.startsWith('http://')) {
       url = environment.SERVER_URL + url;
@@ -102,10 +100,9 @@ export class DefaultInterceptor implements HttpInterceptor {
     });
     return next.handle(newReq).pipe(
       mergeMap((event: any) => {
-        // 允许统一对请求错误处理，这是因为一个请求若是业务上错误的情况下其HTTP请求的状态是200的情况下需要
         if (event instanceof HttpResponse && event.status === 200)
           return this.handleData(event);
-        // 若一切都正常，则后续操作
+        // everything okay
         return of(event);
       }),
       catchError((err: HttpErrorResponse) => this.handleData(err)),
