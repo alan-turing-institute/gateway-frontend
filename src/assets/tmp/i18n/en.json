@@ -1,5 +1,6 @@
 {
-  "actions": "Actions",
+  "features": "Features",
+  "overview": "Overview",
   "simulations": "Simulations",
   "cases": "Cases",
   "create": "Create",
@@ -20,7 +21,7 @@
   "clear-local-storage": "Clear Local Storage",
   "language": "Language",
   "shortcut": "Shortcut",
-  "dashboard": "Dashboard JSON",
+  "dashboard": "Dashboard",
   "widgets": "Widgets",
   "main_navigation": "Main Navigation JSON",
   "component": "Component",

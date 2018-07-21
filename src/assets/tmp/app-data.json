@@ -10,11 +10,17 @@
   },
   "menu": [
     {
-      "text": "Simulations",
-      "i18n": "simulations",
+      "text": "Features",
+      "i18n": "features",
       "group": true,
       "hideInBreadcrumb": true,
       "children": [
+        {
+          "text": "Overview",
+          "i18n": "overview",
+          "link": "/overview",
+          "icon": "icon-settings"
+        },
         {
           "text": "Simulations",
           "i18n": "simulations",

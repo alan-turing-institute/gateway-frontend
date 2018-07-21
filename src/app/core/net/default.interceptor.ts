@@ -92,7 +92,7 @@ export class DefaultInterceptor implements HttpInterceptor {
 
     let url = req.url;
     if (!url.startsWith('https://') && !url.startsWith('http://')) {
-      url = environment.SERVER_URL + url;
+      url = environment.MIDDLEWARE_URL + url;
     }
 
     const newReq = req.clone({
