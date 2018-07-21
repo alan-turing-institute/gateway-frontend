@@ -1,6 +1,6 @@
 import { Injectable, Injector, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { RawHttpClient } from './vanilla.service';
 import { zip } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MenuService, SettingsService, TitleService, ALAIN_I18N_TOKEN } from '@delon/theme';
@@ -9,10 +9,7 @@ import { ACLService } from '@delon/acl';
 import { TranslateService } from '@ngx-translate/core';
 import { I18NService } from '../i18n/i18n.service';
 
-/**
- * 用于应用启动时
- * 一般用来获取应用所需要的基础数据等
- */
+
 @Injectable()
 export class StartupService {
   constructor(
@@ -23,7 +20,7 @@ export class StartupService {
     private aclService: ACLService,
     private titleService: TitleService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
-    private httpClient: HttpClient,
+    private httpClient: RawHttpClient,
     private injector: Injector
   ) { }
 

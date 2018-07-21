@@ -8,8 +8,8 @@ import { catchError, retry } from 'rxjs/operators';
 @Injectable()
 export class SimulationsService {
 
-  caseUrl = 'http://localhost:5000/case';
-  jobUrl = 'http://localhost:5000/job';
+  caseUrl = 'case';
+  jobUrl = 'job';
 
   constructor(private http: HttpClient) { }
 
