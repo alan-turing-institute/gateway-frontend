@@ -1,5 +1,6 @@
 export const environment = {
-  SERVER_URL: `./`,
+  AUTH_URL: `http://localhost:5050`,
+  MIDDLEWARE_URL: `http://localhost:5000`,
   production: true,
   useHash: true,
   hmr: false,

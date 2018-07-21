@@ -9,8 +9,8 @@ import { AppComponent } from './app.component';
 import { RoutesModule } from './routes/routes.module';
 import { LayoutModule } from './layout/layout.module';
 import { StartupService } from '@core/startup/startup.service';
-import { DefaultInterceptor } from '@core/net/default.interceptor';
 
+// import { DefaultInterceptor } from './core/net/default.interceptor';
 import { ApiRootInterceptor } from './core/net/apiroot.interceptor';
 import { SimpleInterceptor } from '@delon/auth';
 
@@ -64,7 +64,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
     { provide: LOCALE_ID, useValue: 'en-GB' },
     // { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true},  // optional auth via @delon
     // { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true},
-    { provide: HTTP_INTERCEPTORS, useClass: ApiRootInterceptor, multi: true},
+    // { provide: HTTP_INTERCEPTORS, useClass: ApiRootInterceptor, multi: true},
     { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },
     StartupService,
     {
