@@ -18,7 +18,7 @@
         {
           "text": "Simulations",
           "i18n": "simulations",
-          "icon": "icon-grid",
+          "icon": "icon-note",
           "children": [
             {
               "text": "create",
@@ -35,7 +35,7 @@
         {
           "text": "Cases",
           "i18n": "cases",
-          "icon": "icon-speedometer",
+          "icon": "icon-grid",
           "children": [
             {
               "text": "create",
@@ -53,7 +53,7 @@
           "text": "Settings",
           "i18n": "settings",
           "link": "/settings",
-          "icon": "icon-grid"
+          "icon": "icon-settings"
         }
       ]
     }
