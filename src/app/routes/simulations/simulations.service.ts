@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
@@ -16,7 +17,9 @@ export class SimulationsService {
 
   case: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   getCases() {
     return this.http.get<Case[]>(this.caseUrl);

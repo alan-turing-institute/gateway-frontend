@@ -32,6 +32,11 @@ export function I18nHttpLoaderFactory(http: HttpClient) {
 // @delon/form: JSON Schema form
 import { JsonSchemaModule } from '@shared/json-schema/json-schema.module';
 
+// application state
+// import { StoreModule } from '@ngrx/store';
+// import { reducers } from './reducers';
+
+
 export function StartupServiceFactory(startupService: StartupService): Function {
   return () => startupService.load();
 }
@@ -58,7 +63,9 @@ export function StartupServiceFactory(startupService: StartupService): Function 
       }
     }),
     // JSON-Schema form
-    JsonSchemaModule
+    JsonSchemaModule,
+    // application state
+    // StoreModule.forRoot(reducers)
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en-GB' },

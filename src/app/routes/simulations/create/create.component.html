@@ -1,5 +1,12 @@
 <page-header>
   Header space
+
+  <nz-card>
+    <button (click)="setCase()">Set</button>
+    <button (click)="resetCase()">Reset</button>
+    <div>Current case: {{ active$ | async }}</div>
+  </nz-card>
+
 </page-header>
 <nz-list [nzLoading]="loading" [nzDataSource]="cases" [nzRenderItem]="item" [nzGrid]="{gutter: 24, lg: 8, md: 12, sm: 24, xs: 24 }">
   <ng-template #item let-item>
