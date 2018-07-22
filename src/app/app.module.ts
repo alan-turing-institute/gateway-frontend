@@ -33,8 +33,10 @@ export function I18nHttpLoaderFactory(http: HttpClient) {
 import { JsonSchemaModule } from '@shared/json-schema/json-schema.module';
 
 // application state
-// import { StoreModule } from '@ngrx/store';
-// import { reducers } from './reducers';
+import { environment } from '@env/environment';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducers, metaReducers } from './reducers';
 
 
 export function StartupServiceFactory(startupService: StartupService): Function {
@@ -65,7 +67,11 @@ export function StartupServiceFactory(startupService: StartupService): Function 
     // JSON-Schema form
     JsonSchemaModule,
     // application state
-    // StoreModule.forRoot(reducers)
+    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreDevtoolsModule.instrument({
+      name: 'NgRx Store DevTools',
+      logOnly: environment.production,
+    })
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en-GB' },
