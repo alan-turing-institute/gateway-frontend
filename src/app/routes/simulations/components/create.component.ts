@@ -2,7 +2,6 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { NzMessageService } from 'ng-zorro-antd';
 
-import { SimulationsService } from '../simulations.service';
 import { Case } from '@shared/models/case.model';
 
 
@@ -16,8 +15,7 @@ import { Case } from '@shared/models/case.model';
     }
     `,
   ],
-  encapsulation: ViewEncapsulation.Emulated,
-  providers: [ SimulationsService ]
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class SimulationsCreateComponent implements OnInit {
 
@@ -26,7 +24,6 @@ export class SimulationsCreateComponent implements OnInit {
   loading: boolean;
 
   constructor(
-    private simulationsService: SimulationsService,
     public msg: NzMessageService
   ){ }
 
@@ -35,14 +32,7 @@ export class SimulationsCreateComponent implements OnInit {
   }
 
   showCases() {
-    this.simulationsService.getCases()
-      .subscribe(
-        (data: any) => {
-          this.cases = data;
-          this.loading = false;
-        }, // success path
-        error => this.error = error // error path
-     );
-   }
+
+  }
 
 }

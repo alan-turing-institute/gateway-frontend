@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 
-import { StoreModule } from '@ngrx/store';
-
 import { SharedModule } from '@shared/shared.module';
 import { SimulationsRoutingModule } from './simulations-routing.module';
-import { SimulationsCreateComponent } from './create/create.component';
-import { SimulationsViewComponent } from './view/view.component';
+import { SimulationsCreateComponent } from './components/create.component';
+import { SimulationsViewComponent } from './components/view.component';
+import { SimulationsConfigureComponent } from './components/configure.component';
 
-import { SimulationsService } from './simulations.service';
-import { SimulationsConfigureComponent } from './configure/configure.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
-// import { reducers } from './reducers';
+import { CaseEffects } from './effects/case.effects';
+// import { CollectionEffects } from './effects/collection.effects';
+// import { BookExistsGuard } from './guards/book-exists.guard';
+
+import { reducers } from './reducers';
 
 const COMPONENTS = [
   SimulationsCreateComponent,
@@ -22,7 +25,9 @@ const COMPONENTS_NOROUNT = [];
   imports: [
     SharedModule,
     SimulationsRoutingModule,
-    // StoreModule.forFeature('books', reducers)
+    StoreModule.forFeature('cases', reducers),
+    // EffectsModule.forFeature([CaseEffects, CollectionEffects]),
+    EffectsModule.forFeature([CaseEffects]),
   ],
   declarations: [
     ...COMPONENTS,

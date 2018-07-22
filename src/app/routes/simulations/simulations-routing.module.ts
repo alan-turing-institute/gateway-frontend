@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SimulationsCreateComponent } from './create/create.component';
-import { SimulationsViewComponent } from './view/view.component';
-import { SimulationsConfigureComponent } from './configure/configure.component';
+import { SimulationsCreateComponent } from './components/create.component';
+import { SimulationsViewComponent } from './components/view.component';
+import { SimulationsConfigureComponent } from './components/configure.component';
 
 const routes: Routes = [
 

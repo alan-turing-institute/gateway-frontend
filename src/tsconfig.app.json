@@ -30,7 +30,13 @@
       ],
       "@env/*": [
         "environments/*"
-      ]
+      ],
+      "@simulations": [
+        "app/routes/simulations"
+      ],
+      "@simulations/*": [
+        "app/routes/simulations/*"
+      ],
     },
     "baseUrl": "./"
   },
