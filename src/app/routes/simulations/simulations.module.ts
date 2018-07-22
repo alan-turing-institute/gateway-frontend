@@ -5,10 +5,12 @@ import { SimulationsCreateComponent } from './create/create.component';
 import { SimulationsViewComponent } from './view/view.component';
 
 import { SimulationsService } from './simulations.service';
+import { SimulationsConfigureComponent } from './configure/configure.component';
 
 const COMPONENTS = [
   SimulationsCreateComponent,
-  SimulationsViewComponent];
+  SimulationsViewComponent,
+  SimulationsConfigureComponent];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({

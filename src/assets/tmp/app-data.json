@@ -24,7 +24,7 @@
         {
           "text": "Simulations",
           "i18n": "simulations",
-          "icon": "icon-note",
+          "icon": "icon-graph",
           "children": [
             {
               "text": "create",
@@ -35,6 +35,12 @@
               "text": "view",
               "link": "/simulations/view",
               "i18n": "view"
+            },
+            {
+              "text": "configure",
+              "link": "/simulations/configure",
+              "i18n": "configure",
+              "hide": true
             }
           ]
         },
