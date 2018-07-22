@@ -47,6 +47,8 @@ export function reducer(
 ): State {
   switch (action.type) {
     case BookActionTypes.SearchComplete:
+
+
     // case CollectionActionTypes.LoadSuccess: {
     //   /**
     //    * The addMany function provided by the created adapter
@@ -61,19 +63,23 @@ export function reducer(
     //   });
     // }
 
-    // case BookActionTypes.Load: {
-    //   /**
-    //    * The addOne function provided by the created adapter
-    //    * adds one record to the entity dictionary
-    //    * and returns a new state including that records if it doesn't
-    //    * exist already. If the collection is to be sorted, the adapter will
-    //    * insert the new record into the sorted array.
-    //    */
-    //   return adapter.addOne(action.payload, {
-    //     ...state,
-    //     selectedBookId: state.selectedBookId,
-    //   });
-    // }
+
+    // addOne is expecting an object for the action.payload
+    // The error arises because it is receiving a list
+
+    case BookActionTypes.Load: {
+      /**
+       * The addOne function provided by the created adapter
+       * adds one record to the entity dictionary
+       * and returns a new state including that records if it doesn't
+       * exist already. If the collection is to be sorted, the adapter will
+       * insert the new record into the sorted array.
+       */
+      return adapter.addOne(action.payload, {
+        ...state,
+        selectedBookId: state.selectedBookId,
+      });
+    }
 
     // case BookActionTypes.Select: {
     //   return {

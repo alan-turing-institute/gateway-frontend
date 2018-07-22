@@ -5,7 +5,8 @@ import {
   ActionReducer,
   MetaReducer,
 } from '@ngrx/store';
-import { environment } from '../../environments/environment';
+import { environment } from '@env/environment';
+// import { RouterStateUrl } from '../shared/utils';
 // import * as fromRouter from '@ngrx/router-store';
 
 /**
@@ -22,7 +23,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
  * notation packages up all of the exports into a single object.
  */
 
-// import * as fromLayout from '../layout/reducers/layout.reducer';
+// import * as fromLayout from '../core/reducers/layout.reducer';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -30,7 +31,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
  */
 export interface State {
   // layout: fromLayout.State;
-  // router: fromRouter.RouterReducerState;
+  // router: fromRouter.RouterReducerState<RouterStateUrl>;
 }
 
 /**
@@ -66,8 +67,8 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
  * Layout Reducers
  */
 // export const getLayoutState = createFeatureSelector<fromLayout.State>('layout');
-//
-// export const getShowSidebar = createSelector(
+
+// export const getShowSidenav = createSelector(
 //   getLayoutState,
-//   fromLayout.getShowSidebar
+//   fromLayout.getShowSidenav
 // );

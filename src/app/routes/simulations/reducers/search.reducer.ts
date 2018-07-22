@@ -36,6 +36,7 @@ export function reducer(state = initialState, action: BookActionsUnion): State {
       };
     }
 
+    // this will update the state within state.search
     case BookActionTypes.SearchComplete: {
       return {
         ids: action.payload.map(book => book.id),
