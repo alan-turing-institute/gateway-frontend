@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from '@shared/shared.module';
 import { SimulationsRoutingModule } from './simulations-routing.module';
-import { SimulationsCreateComponent } from './components/create.component';
-import { SimulationsViewComponent } from './components/view.component';
-import { SimulationsConfigureComponent } from './components/configure.component';
+import { SimulationsCreateComponent } from './containers/create-page.component';
+import { SimulationsViewComponent } from './containers/view-page.component';
+import { SimulationsConfigureComponent } from './containers/configure-page.component';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';

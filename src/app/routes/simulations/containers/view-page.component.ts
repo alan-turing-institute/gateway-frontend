@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-simulations-view',
-  templateUrl: './view.component.html',
+  templateUrl: './view-page.component.html',
 })
 export class SimulationsViewComponent implements OnInit {
 
