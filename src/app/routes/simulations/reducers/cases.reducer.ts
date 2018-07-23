@@ -23,7 +23,7 @@ export interface State extends EntityState<Case> {
  * function if the records are to be sorted.
  */
 export const adapter: EntityAdapter<Case> = createEntityAdapter<Case>({
-  selectId: (case: Case) => case.id,
+  selectId: (case_: Case) => case_.id,
   sortComparer: false,
 })
 

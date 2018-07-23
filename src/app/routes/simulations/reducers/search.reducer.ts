@@ -38,7 +38,7 @@ export function reducer(state = initialState, action: CaseActionsUnion): State {
 
     case CaseActionTypes.SearchComplete: {
       return {
-        ids: action.payload.map(case => case.id),
+        ids: action.payload.map(case_ => case_.id),
         loading: false,
         error: '',
         query: state.query,

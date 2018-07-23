@@ -113,7 +113,7 @@ export const getSearchError = createSelector(
  */
 export const getSearchResults = createSelector(
   getCaseEntities,
-  getSearchCasesIds,
+  getSearchCaseIds,
   (cases, searchIds) => {
     return searchIds.map(id => cases[id]);
   }
