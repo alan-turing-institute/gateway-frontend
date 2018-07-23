@@ -1,4 +1,4 @@
-import { BookActionTypes, BookActionsUnion } from '../actions/book.actions';
+import { CaseActionTypes, CaseActionsUnion } from '../actions/case.actions';
 
 export interface State {
   ids: string[];
@@ -14,9 +14,9 @@ const initialState: State = {
   query: '',
 };
 
-export function reducer(state = initialState, action: BookActionsUnion): State {
+export function reducer(state = initialState, action: CaseActionsUnion): State {
   switch (action.type) {
-    case BookActionTypes.Search: {
+    case CaseActionTypes.Search: {
       const query = action.payload;
 
       if (query === '') {
@@ -36,17 +36,16 @@ export function reducer(state = initialState, action: BookActionsUnion): State {
       };
     }
 
-    // this will update the state within state.search
-    case BookActionTypes.SearchComplete: {
+    case CaseActionTypes.SearchComplete: {
       return {
-        ids: action.payload.map(book => book.id),
+        ids: action.payload.map(case => case.id),
         loading: false,
         error: '',
         query: state.query,
       };
     }
 
-    case BookActionTypes.SearchError: {
+    case CaseActionTypes.SearchError: {
       return {
         ...state,
         loading: false,

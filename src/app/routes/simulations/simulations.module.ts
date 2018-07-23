@@ -9,7 +9,7 @@ import { SimulationsConfigureComponent } from './components/configure.component'
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { BookEffects } from './effects/book.effects';
+import { CaseEffects } from './effects/case.effects';
 
 import { reducers } from './reducers';
 
@@ -23,8 +23,8 @@ const COMPONENTS_NOROUNT = [];
   imports: [
     SharedModule,
     SimulationsRoutingModule,
-    StoreModule.forFeature('books', reducers),
-    EffectsModule.forFeature([BookEffects]),
+    StoreModule.forFeature('cases', reducers),
+    EffectsModule.forFeature([CaseEffects]),
   ],
   declarations: [
     ...COMPONENTS,

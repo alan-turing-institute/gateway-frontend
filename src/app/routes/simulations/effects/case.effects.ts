@@ -11,14 +11,14 @@ import {
   takeUntil,
 } from 'rxjs/operators';
 
-import { GoogleBooksService } from '@core/services/google-books.service';
+import { MiddlewareService } from '@core/services/middleware.service';
 import {
-  BookActionTypes,
+  CaseActionTypes,
   Search,
   SearchComplete,
   SearchError,
-} from '../actions/book.actions';
-import { Book } from '../models/book';
+} from '../actions/case.actions';
+import { Case } from '../models/case';
 import { Scheduler } from 'rxjs/internal/Scheduler';
 
 export const SEARCH_DEBOUNCE = new InjectionToken<number>('Search Debounce');
@@ -38,35 +38,37 @@ export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
  */
 
 @Injectable()
-export class BookEffects {
+export class CaseEffects {
   @Effect()
   search$: Observable<Action> = this.actions$.pipe(
-    ofType<Search>(BookActionTypes.Search),
+    ofType<Search>(CaseActionTypes.Search),
     debounceTime(this.debounce || 300, this.scheduler || asyncScheduler),
     map(action => action.payload),
     switchMap(query => {
+
       if (query === '') {
         return empty();
       }
 
       const nextSearch$ = this.actions$.pipe(
-        ofType(BookActionTypes.Search),
-        skip(1)
+        ofType(CaseActionTypes.Search),
+        skip(1)  // skip the first emitted value
       );
 
-      return this.googleBooks
-        .searchBooks(query)
+      return this.middleware
+        .searchCases(query)
         .pipe(
           takeUntil(nextSearch$),
-          map((books: Book[]) => new SearchComplete(books)),
+          map((cases: Case[]) => new SearchComplete(cases)),
           catchError(err => of(new SearchError(err)))
         );
+
     })
   );
 
   constructor(
     private actions$: Actions,
-    private googleBooks: GoogleBooksService,
+    private middleware: MiddlewareService,
     @Optional()
     @Inject(SEARCH_DEBOUNCE)
     private debounce: number,

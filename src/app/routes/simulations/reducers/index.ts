@@ -4,37 +4,34 @@ import {
   ActionReducerMap,
 } from '@ngrx/store';
 import * as fromSearch from './search.reducer';
-import * as fromBooks from './books.reducer';
-// import * as fromCollection from './collection.reducer';
+import * as fromCases from './cases.reducer';
 import * as fromRoot from '../../../reducers';
 
-export interface BooksState {
+export interface CasesState {
   search: fromSearch.State;
-  books: fromBooks.State;
-  // collection: fromCollection.State;
+  cases: fromCases.State;
 }
 
 export interface State extends fromRoot.State {
-  books: BooksState;
+  cases: CasesState;
 }
 
-export const reducers: ActionReducerMap<BooksState> = {
+export const reducers: ActionReducerMap<CasesState> = {
   search: fromSearch.reducer,
-  books: fromBooks.reducer,
-  // collection: fromCollection.reducer,
+  cases: fromCases.reducer,
 };
 
 /**
  * A selector function is a map function factory. We pass it parameters and it
  * returns a function that maps from the larger state tree into a smaller
- * piece of state. This selector simply selects the `books` state.
+ * piece of state. This selector simply selects the `cases` state.
  *
  * Selectors are used with the `select` operator.
  *
  * ```ts
  * class MyComponent {
  *   constructor(state$: Observable<State>) {
- *     this.booksState$ = state$.pipe(select(getBooksState));
+ *     this.casesState$ = state$.pipe(select(getCasesState));
  *   }
  * }
  * ```
@@ -44,7 +41,7 @@ export const reducers: ActionReducerMap<BooksState> = {
  * The createFeatureSelector function selects a piece of state from the root of the state object.
  * This is used for selecting feature states that are loaded eagerly or lazily.
  */
-export const getBooksState = createFeatureSelector<BooksState>('books');
+export const getCasesState = createFeatureSelector<CasesState>('cases');
 
 /**
  * Every reducer module exports selector functions, however child reducers
@@ -55,14 +52,14 @@ export const getBooksState = createFeatureSelector<BooksState>('books');
  * only recompute when arguments change. The created selectors can also be composed
  * together to select different pieces of state.
  */
-export const getBookEntitiesState = createSelector(
-  getBooksState,
-  state => state.books
+export const getCaseEntitiesState = createSelector(
+  getCasesState,
+  state => state.cases
 );
 
-export const getSelectedBookId = createSelector(
-  getBookEntitiesState,
-  fromBooks.getSelectedId
+export const getSelectedCaseId = createSelector(
+  getCaseEntitiesState,
+  fromCases.getSelectedId
 );
 
 /**
@@ -74,30 +71,26 @@ export const getSelectedBookId = createSelector(
  * in selecting records from the entity state.
  */
 export const {
-  selectIds: getBookIds,
-  selectEntities: getBookEntities,
-  selectAll: getAllBooks,
-  selectTotal: getTotalBooks,
-} = fromBooks.adapter.getSelectors(getBookEntitiesState);
+  selectIds: getCaseIds,
+  selectEntities: getCaseEntities,
+  selectAll: getAllCases,
+  selectTotal: getTotalCases,
+} = fromCases.adapter.getSelectors(getCaseEntitiesState);
 
-export const getSelectedBook = createSelector(
-  getBookEntities,
-  getSelectedBookId,
+export const getSelectedCase = createSelector(
+  getCaseEntities,
+  getSelectedCaseId,
   (entities, selectedId) => {
     return selectedId && entities[selectedId];
   }
 );
 
-/**
- * Just like with the books selectors, we also have to compose the search
- * reducer's and collection reducer's selectors.
- */
 export const getSearchState = createSelector(
-  getBooksState,
-  (state: BooksState) => state.search
+  getCasesState,
+  (state: CasesState) => state.search
 );
 
-export const getSearchBookIds = createSelector(
+export const getSearchCaseIds = createSelector(
   getSearchState,
   fromSearch.getIds
 );
@@ -116,46 +109,12 @@ export const getSearchError = createSelector(
 
 /**
  * Some selector functions create joins across parts of state. This selector
- * composes the search result IDs to return an array of books in the store.
+ * composes the search result IDs to return an array of cases in the store.
  */
 export const getSearchResults = createSelector(
-  getBookEntities,
-  getSearchBookIds,
-  (books, searchIds) => {
-    return searchIds.map(id => books[id]);
+  getCaseEntities,
+  getSearchCasesIds,
+  (cases, searchIds) => {
+    return searchIds.map(id => cases[id]);
   }
 );
-
-// export const getCollectionState = createSelector(
-//   getBooksState,
-//   (state: BooksState) => state.collection
-// );
-//
-// export const getCollectionLoaded = createSelector(
-//   getCollectionState,
-//   fromCollection.getLoaded
-// );
-// export const getCollectionLoading = createSelector(
-//   getCollectionState,
-//   fromCollection.getLoading
-// );
-// export const getCollectionBookIds = createSelector(
-//   getCollectionState,
-//   fromCollection.getIds
-// );
-//
-// export const getBookCollection = createSelector(
-//   getBookEntities,
-//   getCollectionBookIds,
-//   (entities, ids) => {
-//     return ids.map(id => entities[id]);
-//   }
-// );
-//
-// export const isSelectedBookInCollection = createSelector(
-//   getCollectionBookIds,
-//   getSelectedBookId,
-//   (ids, selected) => {
-//     return ids.indexOf(selected) > -1;
-//   }
-// );
