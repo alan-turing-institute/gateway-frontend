@@ -17,6 +17,9 @@ import {
   Search,
   SearchComplete,
   SearchError,
+  Load,
+  LoadSuccess,
+  LoadError
 } from '../actions/case.actions';
 import { Case } from '../models/case';
 import { Scheduler } from 'rxjs/internal/Scheduler';
@@ -39,6 +42,7 @@ export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
 
 @Injectable()
 export class CaseEffects {
+
   @Effect()
   search$: Observable<Action> = this.actions$.pipe(
     ofType<Search>(CaseActionTypes.Search),
@@ -63,6 +67,20 @@ export class CaseEffects {
           catchError(err => of(new SearchError(err)))
         );
 
+    })
+  );
+
+
+  @Effect()
+  load$: Observable<Action> = this.actions$.pipe(
+    ofType<Load>(CaseActionTypes.Load),
+    switchMap(() => {
+      return this.middleware
+        .getAllCases()
+        .pipe(
+          map((cases: Case[]) => new LoadSuccess(cases)),
+          catchError(err => of(new LoadError(err)))
+        );
     })
   );
 

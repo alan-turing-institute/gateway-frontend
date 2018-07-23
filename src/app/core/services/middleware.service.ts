@@ -14,6 +14,12 @@ export class MiddlewareService {
 
   constructor(private http: HttpClient) {}
 
+  getAllCases(): Observable<Case[]> {
+    return this.http
+      .get<Case[]>(this.CASE_API_PATH)
+      .pipe(map(cases => cases || [])); // redundant
+  }
+
   searchCases(queryTitle: string): Observable<Case[]> {
     return this.http
       .get<Case[]>(this.CASE_API_PATH)

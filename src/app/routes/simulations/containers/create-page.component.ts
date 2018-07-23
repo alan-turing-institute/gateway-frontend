@@ -23,21 +23,17 @@ import { NzMessageService } from 'ng-zorro-antd';
 })
 export class SimulationsCreateComponent implements OnInit {
 
-  // cases$: Observable<Case[]>;
-  // error: any;
-  // loading: boolean;
+  cases$: Observable<Case[]>;
 
   constructor(
     private store: Store<fromCases.State>,
     public msg: NzMessageService
-  ){ }
-
-  ngOnInit() {
-    this.store.dispatch(new CaseActions.Search('test'));
+  ){
+    this.cases$ = store.pipe(select(fromCases.getAllCases));
   }
 
-  showCases() {
-
+  ngOnInit() {
+    this.store.dispatch(new CaseActions.Load());
   }
 
 }

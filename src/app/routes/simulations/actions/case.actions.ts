@@ -5,7 +5,9 @@ export enum CaseActionTypes {
   Search = '[Case] Search',
   SearchComplete = '[Case] Search Complete',
   SearchError = '[Case] Search Error',
-  LoadSuccess = '[Case] Load Success',
+  Load = '[Case] Load',
+  LoadSuccess = '[Case] Load Complete',
+  LoadError = '[Case] Load Error',
 }
 
 /**
@@ -16,28 +18,39 @@ export enum CaseActionTypes {
  * See Discriminated Unions: https://www.typescriptlang.org/docs/handbook/advanced-types.html#discriminated-unions
  */
 
-export class Search implements Action {
- readonly type = CaseActionTypes.Search;
 
- constructor(public payload: string) {}
+export class Load implements Action {
+  readonly type = CaseActionTypes.Load;
+}
+
+export class LoadSuccess implements Action {
+  readonly type = CaseActionTypes.LoadSuccess;
+
+  constructor(public payload: Case[]) {}
+}
+
+export class LoadError implements Action {
+  readonly type = CaseActionTypes.LoadError;
+
+  constructor(public payload: string) {}
+}
+
+export class Search implements Action {
+  readonly type = CaseActionTypes.Search;
+
+  constructor(public payload: string) {}
 }
 
 export class SearchComplete implements Action {
- readonly type = CaseActionTypes.SearchComplete;
+  readonly type = CaseActionTypes.SearchComplete;
 
- constructor(public payload: Case[]) {}
+  constructor(public payload: Case[]) {}
 }
 
 export class SearchError implements Action {
   readonly type = CaseActionTypes.SearchError;
 
   constructor(public payload: string) {}
-}
-
-export class LoadSuccess implements Action {
- readonly type = CaseActionTypes.LoadSuccess;
-
- constructor(public payload: Case[]) {}
 }
 
 /**
@@ -48,4 +61,6 @@ export type CaseActionsUnion =
   | Search
   | SearchComplete
   | SearchError
-  | LoadSuccess;
+  | Load
+  | LoadSuccess
+  | LoadError;
