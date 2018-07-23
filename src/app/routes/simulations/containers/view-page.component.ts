@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   selector: 'app-simulations-view',
   templateUrl: './view-page.component.html',
 })
-export class SimulationsViewComponent implements OnInit {
+export class ViewPageComponent implements OnInit {
 
   jobs: any[];
   error: any;

@@ -38,9 +38,10 @@
             },
             {
               "text": "configure",
-              "link": "/simulations/configure",
+              "link": "/simulations/configure/2",
               "i18n": "configure",
-              "hide": true
+              "hide": true,
+              "hideInBreadcrumb": true
             }
           ]
         },

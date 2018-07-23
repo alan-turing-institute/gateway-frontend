@@ -10,7 +10,13 @@ import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-simulations-create',
-  templateUrl: './create-page.component.html',
+  template: `
+    <page-header>
+    CREATE
+    </page-header>
+
+    <sim-case-preview-list [loading]=loading [cases]="cases$ | async"></sim-case-preview-list>
+  `,
   styles: [
     `
     :host ::ng-deep .ant-card-meta-title {
@@ -18,12 +24,13 @@ import { NzMessageService } from 'ng-zorro-antd';
     }
     `,
   ],
-  encapsulation: ViewEncapsulation.Emulated,  // TODO
+  // encapsulation: ViewEncapsulation.Emulated,
   changeDetection: ChangeDetectionStrategy.OnPush  // TODO
 })
-export class SimulationsCreateComponent implements OnInit {
+export class CreatePageComponent implements OnInit {
 
   cases$: Observable<Case[]>;
+  loading: boolean = false;
 
   constructor(
     private store: Store<fromCases.State>,

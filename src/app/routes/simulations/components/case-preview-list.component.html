@@ -1,24 +1,18 @@
-<page-header>
-  Header space
+<nz-list [nzLoading]="false" [nzDataSource]="cases" [nzRenderItem]="item" [nzGrid]="{gutter: 24, lg: 8, md: 12, sm: 24, xs: 24 }">
 
-  <nz-card>
-    <button (click)="setCase()">Set</button>
-    <button (click)="resetCase()">Reset</button>
-    <div>Current case: {{ active$ | async }}</div>
-  </nz-card>
-
-</page-header>
-<nz-list [nzLoading]="loading" [nzDataSource]="cases" [nzRenderItem]="item" [nzGrid]="{gutter: 24, lg: 8, md: 12, sm: 24, xs: 24 }">
   <ng-template #item let-item>
+
     <nz-list-item>
-      <button *ngIf="item === null" nz-button (click)="msg.success('add')" [nzType]="'dashed'" style="width: 100%; height: 183px;">
+
+      <!-- <button *ngIf="item === null" nz-button (click)="msg.success('add')" [nzType]="'dashed'" style="width: 100%; height: 183px;">
         <i class="anticon anticon-plus"></i>
         <span>Create new case</span>
-      </button>
-      <nz-card [nzBordered]="true" nzHoverable *ngIf="item !== null" [nzActions]="[op1]" [routerLink]="['/simulations/configure']" routerLinkActive="active">
+      </button> -->
+
+      <nz-card [nzBordered]="true" nzHoverable *ngIf="item !== null" [nzActions]="[op1]" [routerLink]="['/simulations/configure', item.id]" routerLinkActive="active">
         <ng-template #op1>
           <a
-            [routerLink]="['/simulations/configure']"
+            [routerLink]="['/simulations/configure', item.id]"
             routerLinkActive="active"
             (click)="msg.success('Name (from button A)：' + item.name);"
             ><i class="anticon anticon-form"></i> Create</a>
@@ -31,13 +25,16 @@
             <nz-avatar nzSize="large" [nzSrc]="item.thumbnail"></nz-avatar>
           </ng-template>
           <ng-template #nzTitle>
-            <a (click)="msg.success('Name (from name)：' + item.name);">{{item.name}}</a>
+            <a (click)="msg.success('Name (from name)：' + item.name);" [routerLink]="['/simulations/configure', item.id]" routerLinkActive="active">{{item.name}}</a>
           </ng-template>
           <ng-template #nzDescription>
             <ellipsis>{{item.description}} Lot's of overflow text to go here.</ellipsis>
           </ng-template>
         </nz-card-meta>
       </nz-card>
+
     </nz-list-item>
   </ng-template>
+
+
 </nz-list>
