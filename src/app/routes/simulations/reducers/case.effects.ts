@@ -20,7 +20,7 @@ import {
   Load,
   LoadSuccess,
   LoadError
-} from '../actions/case.actions';
+} from './case.actions';
 import { Case } from '../models/case';
 import { Scheduler } from 'rxjs/internal/Scheduler';
 

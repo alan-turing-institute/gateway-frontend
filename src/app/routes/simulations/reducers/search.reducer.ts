@@ -1,4 +1,4 @@
-import { CaseActionTypes, CaseActionsUnion } from '../actions/case.actions';
+import { CaseActionTypes, CaseActionsUnion } from './case.actions';
 
 export interface State {
   ids: string[];

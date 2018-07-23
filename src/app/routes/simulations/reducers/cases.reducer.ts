@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Case } from '../models/case';
-import { CaseActionsUnion, CaseActionTypes } from '../actions/case.actions';
+import { CaseActionsUnion, CaseActionTypes } from './case.actions';
 
 /**
  * @ngrx/entity provides a predefined interface for handling

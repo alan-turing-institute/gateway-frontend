@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as CaseActions from '../actions/case.actions';
 import { Case } from '../models/case';
+import * as CaseActions from '../reducers/case.actions';
 import * as fromCases from '../reducers';
 
 import { NzMessageService } from 'ng-zorro-antd';

@@ -9,7 +9,7 @@ import { SimulationsConfigureComponent } from './containers/configure-page.compo
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { CaseEffects } from './effects/case.effects';
+import { CaseEffects } from './reducers/case.effects';
 
 import { reducers } from './reducers';
 
