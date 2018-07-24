@@ -9,6 +9,7 @@ export enum CaseActionTypes {
   LoadSuccess = '[Case] Load Complete',
   LoadError = '[Case] Load Error',
   Select = '[Case] Select',
+  Update = '[Case] Update',
 }
 
 /**
@@ -60,6 +61,12 @@ export class Select implements Action {
   constructor(public payload: string) {}
 }
 
+export class Update implements Action {
+  readonly type = CaseActionTypes.Update;
+
+  constructor(public payload: Case) {}
+}
+
 
 /**
  * Export a type alias of all actions in this action group
@@ -72,4 +79,5 @@ export type CaseActionsUnion =
   | Load
   | LoadSuccess
   | LoadError
-  | Select;
+  | Select
+  | Update;

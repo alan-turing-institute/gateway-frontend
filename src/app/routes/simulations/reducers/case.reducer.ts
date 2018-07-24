@@ -71,6 +71,12 @@ export function reducer(
       }
     }
 
+    case CaseActionTypes.Update: {
+      console.log('DEBUG(case.reducer.ts): CaseActionTypes.Update');
+      console.log(action.payload);
+
+    }
+
     default: {
       return state;
     }

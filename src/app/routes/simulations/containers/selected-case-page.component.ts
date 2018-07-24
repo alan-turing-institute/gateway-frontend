@@ -11,7 +11,8 @@ import { Case } from '../models/case';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <sim-case-configure
-    [case]="case$ | async">
+    [case_]="case$ | async"
+    (update)=updateCase($event)>
   </sim-case-configure>
   `
 })
@@ -20,6 +21,10 @@ export class SelectedCasePageComponent {
 
   constructor(private store: Store<fromCases.State>) {
     this.case$ = store.pipe(select(fromCases.getSelectedCase)) as Observable<Case>;
+  }
+
+  updateCase(case_: Case) {
+    this.store.dispatch(new CaseActions.Update(case_));
   }
 
 }

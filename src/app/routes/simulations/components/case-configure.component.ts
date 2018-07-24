@@ -3,29 +3,28 @@ import { Case } from '../models/case';
 
 @Component({
   selector: 'sim-case-configure',
-  template: `
-  DETAIL: {{ name }}
-  `
+  templateUrl: './case-configure.component.html'
 })
 export class CaseConfigureComponent {
-  @Input() case: Case;
+  @Input() case_: Case;
+  @Output() update = new EventEmitter<Case>();
+
+  value1 = 1;
 
   get id() {
-    return this.case.id;
+    return this.case_.id;
   }
 
   get name() {
-    return this.case.name;
+    return this.case_.name;
   }
 
   get description() {
-    return this.case.description;
+    return this.case_.description;
   }
 
   get thumbnail() {
-    return this.case.thumbnail;
+    return this.case_.thumbnail;
   }
-
-
 
 }
