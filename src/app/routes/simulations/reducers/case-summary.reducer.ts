@@ -2,8 +2,8 @@ import { createSelector } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 
 
-import { Case } from '../models/case';
-import { CaseActionsUnion, CaseActionTypes } from './case.actions';
+import { CaseSummary } from '../models/case-summary';
+import { CaseSummaryActionsUnion, CaseSummaryActionTypes } from './case-summary.actions';
 
 /**
  * @ngrx/entity provides a predefined interface for handling
@@ -12,8 +12,8 @@ import { CaseActionsUnion, CaseActionTypes } from './case.actions';
  * model type by id. This interface is extended to include
  * any additional interface properties.
  */
-export interface State extends EntityState<Case> {
-  selectedCaseId: string | null;
+export interface State extends EntityState<CaseSummary> {
+  selectedCaseSummaryId: string | null;
 }
 
 /**
@@ -24,8 +24,8 @@ export interface State extends EntityState<Case> {
  * a sortComparer option which is set to a compare
  * function if the records are to be sorted.
  */
-export const adapter: EntityAdapter<Case> = createEntityAdapter<Case>({
-  selectId: (case_: Case) => case_.id,
+export const adapter: EntityAdapter<CaseSummary> = createEntityAdapter<CaseSummary>({
+  selectId: (caseSummary: CaseSummary) => caseSummary.id,
   sortComparer: false,
 })
 
@@ -35,7 +35,7 @@ export const adapter: EntityAdapter<Case> = createEntityAdapter<Case>({
  * additional properties can also be defined.
  */
 export const initialState: State = adapter.getInitialState({
-  selectedCaseId: null,
+  selectedCaseSummaryId: null,
 });
 
 
@@ -43,14 +43,14 @@ export const initialState: State = adapter.getInitialState({
 // action is saying that the action type must be wihin the union
 export function reducer(
   state = initialState,
-  action: CaseActionsUnion
+  action: CaseSummaryActionsUnion
 ): State {
 
 
   switch (action.type) {
 
-    case CaseActionTypes.SearchComplete:
-    case CaseActionTypes.LoadSuccess: {
+    case CaseSummaryActionTypes.SearchComplete:
+    case CaseSummaryActionTypes.LoadSuccess: {
       /**
        * The addMany function provided by the created adapter
        * adds many records to the entity dictionary
@@ -62,21 +62,21 @@ export function reducer(
       // All reducers contain a state change
       return adapter.addMany(action.payload, {
         ...state,
-        selectedCaseId: state.selectedCaseId,
+        selectedCaseSummaryId: state.selectedCaseSummaryId,
       });
     }
 
-    case CaseActionTypes.Select: {
+    case CaseSummaryActionTypes.Select: {
       return {
         ...state,
-        selectedCaseId: action.payload,
+        selectedCaseSummaryId: action.payload,
       }
     }
 
-    case CaseActionTypes.UpdateOne: {
-      console.log('DEBUG(case.reducer.ts): action:', action);
-      console.log('DEBUG(case.reducer.ts): action.id:', action.id);
-      console.log('DEBUG(case.reducer.ts): action.changes:', action.changes);
+    case CaseSummaryActionTypes.UpdateOne: {
+      console.log('DEBUG(case-summary.reducer.ts): action:', action);
+      console.log('DEBUG(case-summary.reducer.ts): action.id:', action.id);
+      console.log('DEBUG(case-summary.reducer.ts): action.changes:', action.changes);
 
       return adapter.updateOne({
         id: action.id,
@@ -101,4 +101,4 @@ export function reducer(
  * use-case.
  */
 
-export const getSelectedId = (state: State) => state.selectedCaseId;
+export const getSelectedId = (state: State) => state.selectedCaseSummaryId;

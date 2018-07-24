@@ -13,15 +13,15 @@ import {
 
 import { MiddlewareService } from '@core/services/middleware.service';
 import {
-  CaseActionTypes,
+  CaseSummaryActionTypes,
   Search,
   SearchComplete,
   SearchError,
   Load,
   LoadSuccess,
   LoadError
-} from './case.actions';
-import { Case } from '../models/case';
+} from './case-summary.actions';
+import { CaseSummary } from '../models/case-summary';
 import { Scheduler } from 'rxjs/internal/Scheduler';
 
 export const SEARCH_DEBOUNCE = new InjectionToken<number>('Search Debounce');
@@ -41,11 +41,11 @@ export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
  */
 
 @Injectable()
-export class CaseEffects {
+export class CaseSummaryEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$.pipe(
-    ofType<Search>(CaseActionTypes.Search),
+    ofType<Search>(CaseSummaryActionTypes.Search),
     debounceTime(this.debounce || 300, this.scheduler || asyncScheduler),
     map(action => action.payload),
     switchMap(query => {
@@ -55,15 +55,15 @@ export class CaseEffects {
       }
 
       const nextSearch$ = this.actions$.pipe(
-        ofType(CaseActionTypes.Search),
+        ofType(CaseSummaryActionTypes.Search),
         skip(1)  // skip the first emitted value
       );
 
       return this.middleware
-        .searchCases(query)
+        .searchCaseSummaries(query)
         .pipe(
           takeUntil(nextSearch$),
-          map((cases: Case[]) => new SearchComplete(cases)),
+          map((caseSummaries: CaseSummary[]) => new SearchComplete(caseSummaries)),
           catchError(err => of(new SearchError(err)))
         );
 
@@ -73,12 +73,12 @@ export class CaseEffects {
 
   @Effect()
   load$: Observable<Action> = this.actions$.pipe(
-    ofType<Load>(CaseActionTypes.Load),
+    ofType<Load>(CaseSummaryActionTypes.Load),
     switchMap(() => {
       return this.middleware
-        .getAllCases()
+        .getAllCaseSummaries()
         .pipe(
-          map((cases: Case[]) => new LoadSuccess(cases)),
+          map((caseSummaries: CaseSummary[]) => new LoadSuccess(caseSummaries)),
           catchError(err => of(new LoadError(err)))
         );
     })

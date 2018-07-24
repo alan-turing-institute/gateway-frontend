@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Case } from '@simulations/models/case';
+import { CaseSummary } from '@simulations/models/case-summary';
 import { environment } from '@env/environment';
 
 @Injectable()
@@ -14,16 +14,16 @@ export class MiddlewareService {
 
   constructor(private http: HttpClient) {}
 
-  getAllCases(): Observable<Case[]> {
+  getAllCaseSummaries(): Observable<CaseSummary[]> {
     return this.http
-      .get<Case[]>(this.CASE_API_PATH)
-      .pipe(map(cases => cases || [])); // redundant
+      .get<CaseSummary[]>(this.CASE_API_PATH)
+      .pipe(map(caseSummaries => caseSummaries || [])); // redundant
   }
 
-  searchCases(queryTitle: string): Observable<Case[]> {
+  searchCaseSummaries(queryTitle: string): Observable<CaseSummary[]> {
     return this.http
-      .get<Case[]>(this.CASE_API_PATH)
-      .pipe(map(cases => cases || [])); // redundant
+      .get<CaseSummary[]>(this.CASE_API_PATH)
+      .pipe(map(caseSummaries => caseSummaries || [])); // redundant
   }
 
 }

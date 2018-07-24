@@ -4,12 +4,12 @@ import {
   ActionReducerMap,
 } from '@ngrx/store';
 import * as fromSearch from './search.reducer';
-import * as fromCases from './case.reducer';
+import * as fromCaseSummaries from './case-summary.reducer';
 import * as fromRoot from '../../../reducers';
 
 export interface CasesState {
   search: fromSearch.State;
-  cases: fromCases.State;
+  summaries: fromCaseSummaries.State;
 }
 
 export interface State extends fromRoot.State {
@@ -18,7 +18,7 @@ export interface State extends fromRoot.State {
 
 export const reducers: ActionReducerMap<CasesState> = {
   search: fromSearch.reducer,
-  cases: fromCases.reducer,
+  summaries: fromCaseSummaries.reducer,
 };
 
 /**
@@ -52,14 +52,14 @@ export const getCasesState = createFeatureSelector<CasesState>('cases');
  * only recompute when arguments change. The created selectors can also be composed
  * together to select different pieces of state.
  */
-export const getCaseEntitiesState = createSelector(
+export const getCaseSummaryEntitiesState = createSelector(
   getCasesState,
-  state => state.cases
+  state => state.summaries
 );
 
-export const getSelectedCaseId = createSelector(
-  getCaseEntitiesState,
-  fromCases.getSelectedId
+export const getSelectedCaseSummaryId = createSelector(
+  getCaseSummaryEntitiesState,
+  fromCaseSummaries.getSelectedId
 );
 
 /**
@@ -71,15 +71,15 @@ export const getSelectedCaseId = createSelector(
  * in selecting records from the entity state.
  */
 export const {
-  selectIds: getCaseIds,
-  selectEntities: getCaseEntities,
-  selectAll: getAllCases,
-  selectTotal: getTotalCases,
-} = fromCases.adapter.getSelectors(getCaseEntitiesState);
+  selectIds: getCaseSummaryIds,
+  selectEntities: getCaseSummaryEntities,
+  selectAll: getAllCaseSummaries,
+  selectTotal: getTotalCaseSummaries,
+} = fromCaseSummaries.adapter.getSelectors(getCaseSummaryEntitiesState);
 
-export const getSelectedCase = createSelector(
-  getCaseEntities,
-  getSelectedCaseId,
+export const getSelectedCaseSummary = createSelector(
+  getCaseSummaryEntities,
+  getSelectedCaseSummaryId,
   (entities, selectedId) => {
     return selectedId && entities[selectedId];
   }
@@ -90,7 +90,7 @@ export const getSearchState = createSelector(
   (state: CasesState) => state.search
 );
 
-export const getSearchCaseIds = createSelector(
+export const getSearchCaseSummaryIds = createSelector(
   getSearchState,
   fromSearch.getIds
 );
@@ -112,9 +112,9 @@ export const getSearchError = createSelector(
  * composes the search result IDs to return an array of cases in the store.
  */
 export const getSearchResults = createSelector(
-  getCaseEntities,
-  getSearchCaseIds,
-  (cases, searchIds) => {
-    return searchIds.map(id => cases[id]);
+  getCaseSummaryEntities,
+  getSearchCaseSummaryIds,
+  (caseSummaries, searchIds) => {
+    return searchIds.map(id => caseSummaries[id]);
   }
 );

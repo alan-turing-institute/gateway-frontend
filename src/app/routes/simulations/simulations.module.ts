@@ -15,7 +15,7 @@ import { SelectedCasePageComponent } from './containers/selected-case-page.compo
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { CaseEffects } from './reducers/case.effects';
+import { CaseSummaryEffects } from './reducers/case-summary.effects';
 
 import { reducers } from './reducers';
 
@@ -30,8 +30,8 @@ const PAGECOMPONENTS = [
     SharedModule,
     SimulationsRoutingModule,
     ComponentsModule,
-    StoreModule.forFeature('cases', reducers),
-    EffectsModule.forFeature([CaseEffects]),
+    StoreModule.forFeature('cases', reducers), // TODO check setting
+    EffectsModule.forFeature([CaseSummaryEffects]),
   ],
   declarations: [
     ...PAGECOMPONENTS,

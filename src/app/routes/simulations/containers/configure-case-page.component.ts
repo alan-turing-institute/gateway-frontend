@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import * as fromCases from '../reducers';
-import * as CaseActions from '../reducers/case.actions';
+import * as fromCaseSummaries from '../reducers';
+import * as CaseSummaryActions from '../reducers/case-summary.actions';
 
 @Component({
   selector: 'app-simulations-configure',
@@ -18,9 +18,9 @@ export class ConfigureCasePageComponent implements OnDestroy {
 
   actionsSubscription: Subscription;
 
-  constructor(store: Store<fromCases.State>, route: ActivatedRoute) {
+  constructor(store: Store<fromCaseSummaries.State>, route: ActivatedRoute) {
     this.actionsSubscription = route.params  // subsribe to route.params (corresponds to case.id)
-      .pipe(map(params => new CaseActions.Select(params.id)))
+      .pipe(map(params => new CaseSummaryActions.Select(params.id)))
       .subscribe(store);
   }
 

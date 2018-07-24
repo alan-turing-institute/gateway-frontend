@@ -1,4 +1,4 @@
-import { CaseActionTypes, CaseActionsUnion } from './case.actions';
+import { CaseSummaryActionTypes, CaseSummaryActionsUnion } from './case-summary.actions';
 
 export interface State {
   ids: string[];
@@ -14,9 +14,9 @@ const initialState: State = {
   query: '',
 };
 
-export function reducer(state = initialState, action: CaseActionsUnion): State {
+export function reducer(state = initialState, action: CaseSummaryActionsUnion): State {
   switch (action.type) {
-    case CaseActionTypes.Search: {
+    case CaseSummaryActionTypes.Search: {
       const query = action.payload;
 
       if (query === '') {
@@ -36,16 +36,16 @@ export function reducer(state = initialState, action: CaseActionsUnion): State {
       };
     }
 
-    case CaseActionTypes.SearchComplete: {
+    case CaseSummaryActionTypes.SearchComplete: {
       return {
-        ids: action.payload.map(case_ => case_.id),
+        ids: action.payload.map(caseSummary => caseSummary.id),
         loading: false,
         error: '',
         query: state.query,
       };
     }
 
-    case CaseActionTypes.SearchError: {
+    case CaseSummaryActionTypes.SearchError: {
       return {
         ...state,
         loading: false,

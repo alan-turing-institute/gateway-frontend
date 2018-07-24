@@ -1,15 +1,15 @@
 import { Action } from '@ngrx/store';
-import { Case } from '../models/case';
+import { CaseSummary } from '../models/case-summary';
 
-export enum CaseActionTypes {
-  Search = '[Case] Search',
-  SearchComplete = '[Case] Search Complete',
-  SearchError = '[Case] Search Error',
-  Load = '[Case] Load',
-  LoadSuccess = '[Case] Load Complete',
-  LoadError = '[Case] Load Error',
-  Select = '[Case] Select',
-  UpdateOne = '[Case] Update One',
+export enum CaseSummaryActionTypes {
+  Search = '[CaseSummary] Search',
+  SearchComplete = '[CaseSummary] Search Complete',
+  SearchError = '[CaseSummary] Search Error',
+  Load = '[CaseSummary] Load',
+  LoadSuccess = '[CaseSummary] Load Complete',
+  LoadError = '[CaseSummary] Load Error',
+  Select = '[CaseSummary] Select',
+  UpdateOne = '[CaseSummary] Update One',
 }
 
 /**
@@ -22,51 +22,51 @@ export enum CaseActionTypes {
 
 
 export class Load implements Action {
-  readonly type = CaseActionTypes.Load;
+  readonly type = CaseSummaryActionTypes.Load;
 }
 
 export class LoadSuccess implements Action {
-  readonly type = CaseActionTypes.LoadSuccess;
+  readonly type = CaseSummaryActionTypes.LoadSuccess;
 
-  constructor(public payload: Case[]) {}
+  constructor(public payload: CaseSummary[]) {}
 }
 
 export class LoadError implements Action {
-  readonly type = CaseActionTypes.LoadError;
+  readonly type = CaseSummaryActionTypes.LoadError;
 
   constructor(public payload: string) {}
 }
 
 export class Search implements Action {
-  readonly type = CaseActionTypes.Search;
+  readonly type = CaseSummaryActionTypes.Search;
 
   constructor(public payload: string) {}
 }
 
 export class SearchComplete implements Action {
-  readonly type = CaseActionTypes.SearchComplete;
+  readonly type = CaseSummaryActionTypes.SearchComplete;
 
-  constructor(public payload: Case[]) {}
+  constructor(public payload: CaseSummary[]) {}
 }
 
 export class SearchError implements Action {
-  readonly type = CaseActionTypes.SearchError;
+  readonly type = CaseSummaryActionTypes.SearchError;
 
   constructor(public payload: string) {}
 }
 
 export class Select implements Action {
-  readonly type = CaseActionTypes.Select;
+  readonly type = CaseSummaryActionTypes.Select;
 
   constructor(public payload: string) {}
 }
 
 export class UpdateOne implements Action {
-  readonly type = CaseActionTypes.UpdateOne;
+  readonly type = CaseSummaryActionTypes.UpdateOne;
 
   constructor(
     public id: string,
-    public changes: Partial<Case>,
+    public changes: Partial<CaseSummary>,
   ) {}
 }
 
@@ -75,7 +75,7 @@ export class UpdateOne implements Action {
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
  */
-export type CaseActionsUnion =
+export type CaseSummaryActionsUnion =
   | Search
   | SearchComplete
   | SearchError

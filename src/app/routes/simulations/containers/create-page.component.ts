@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { Case } from '../models/case';
-import * as CaseActions from '../reducers/case.actions';
-import * as fromCases from '../reducers';
+import { CaseSummary } from '../models/case-summary';
+import * as CaseSummaryActions from '../reducers/case-summary.actions';
+import * as fromCaseSummaries from '../reducers';
 
 import { NzMessageService } from 'ng-zorro-antd';
 
@@ -15,7 +15,7 @@ import { NzMessageService } from 'ng-zorro-antd';
     CREATE
     </page-header>
 
-    <sim-case-preview-list [loading]=loading [cases]="cases$ | async"></sim-case-preview-list>
+    <sim-case-preview-list [loading]=loading [caseSummaries]="caseSummaries$ | async"></sim-case-preview-list>
   `,
   styles: [
     `
@@ -29,18 +29,18 @@ import { NzMessageService } from 'ng-zorro-antd';
 })
 export class CreatePageComponent implements OnInit {
 
-  cases$: Observable<Case[]>;
+  caseSummaries$: Observable<CaseSummary[]>;
   loading: boolean = false;
 
   constructor(
-    private store: Store<fromCases.State>,
+    private store: Store<fromCaseSummaries.State>,
     public msg: NzMessageService
   ){
-    this.cases$ = store.pipe(select(fromCases.getAllCases));
+    this.caseSummaries$ = store.pipe(select(fromCaseSummaries.getAllCaseSummaries));
   }
 
   ngOnInit() {
-    this.store.dispatch(new CaseActions.Load());
+    this.store.dispatch(new CaseSummaryActions.Load());
   }
 
 }

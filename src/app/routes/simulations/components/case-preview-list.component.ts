@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 
-import { Case } from '../models/case';
+import { CaseSummary } from '../models/case-summary';
 
 @Component({
   selector: 'sim-case-preview-list',
@@ -18,6 +18,6 @@ export class CasePreviewListComponent {
 
   constructor(public msg: NzMessageService) { }
 
-  @Input() cases: Case[];
+  @Input() caseSummaries: CaseSummary[];
   @Input() loading: boolean;
 }

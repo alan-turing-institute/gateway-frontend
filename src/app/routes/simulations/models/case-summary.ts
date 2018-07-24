@@ -1,4 +1,4 @@
-export interface Case {
+export interface CaseSummary {
   id: string;
   name: string;
   description: string;
@@ -7,7 +7,7 @@ export interface Case {
   value: string;
 }
 
-export function generateMockCase(): Case {
+export function generateMockCaseSummary(): CaseSummary {
   return {
     id: '1',
     name: 'Case name',
