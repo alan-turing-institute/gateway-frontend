@@ -24,7 +24,10 @@ export class SelectedCasePageComponent {
   }
 
   updateCase(value: string) {
-    this.store.dispatch(new CaseActions.Update(value));
+    console.log('DEBUG(selected-case-page.component.ts) value:', value);
+    console.log('DEBUG(selected-case-page.component.ts) fromCases.getSelectedCaseId():', fromCases.getSelectedCaseId());
+
+    this.store.dispatch(new CaseActions.UpdateOne(fromCases.getSelectedCaseId(), {'value': value});
   }
 
 }

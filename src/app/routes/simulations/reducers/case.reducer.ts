@@ -73,14 +73,16 @@ export function reducer(
       }
     }
 
-    case CaseActionTypes.Update: {
-      console.log('DEBUG(case.reducer.ts): action.payload:', action.payload);
-      console.log('DEBUG(case.reducer.ts) state.selectedCaseId:', state.selectedCaseId)
+    case CaseActionTypes.UpdateOne: {
+      console.log('DEBUG(case.reducer.ts): action:', action);
+      console.log('DEBUG(case.reducer.ts): action.id:', action.id);
+      console.log('DEBUG(case.reducer.ts): action.changes:', action.changes);
 
+      return adapter.updateOne({
+        id: action.id,
+        changes: action.changes
+      }, state);
 
-       // use a selector here to get the current
-       // the pass this to updateOne()
-       // return adapter.updateOne(action.payload.user, state);
     }
 
     default: {
