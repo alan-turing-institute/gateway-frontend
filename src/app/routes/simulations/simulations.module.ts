@@ -4,9 +4,13 @@ import { SharedModule } from '@shared/shared.module';
 import { SimulationsRoutingModule } from './simulations-routing.module';
 
 import { ComponentsModule } from './components';
+
 import { CreatePageComponent } from './containers/create-page.component';
 import { ViewPageComponent } from './containers/view-page.component';
-import { ConfigurePageComponent } from './containers/configure-page.component';
+
+import { ConfigureCasePageComponent } from './containers/configure-case-page.component';
+import { SelectedCasePageComponent } from './containers/selected-case-page.component';
+
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -18,7 +22,8 @@ import { reducers } from './reducers';
 const PAGECOMPONENTS = [
   CreatePageComponent,
   ViewPageComponent,
-  ConfigurePageComponent];
+  ConfigureCasePageComponent,
+  SelectedCasePageComponent];
 
 @NgModule({
   imports: [

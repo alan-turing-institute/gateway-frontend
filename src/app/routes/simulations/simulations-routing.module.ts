@@ -3,13 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { CreatePageComponent } from './containers/create-page.component';
 import { ViewPageComponent } from './containers/view-page.component';
-import { ConfigurePageComponent } from './containers/configure-page.component';
+
+import { ConfigureCasePageComponent } from './containers/configure-case-page.component';
 
 const routes: Routes = [
 
   { path: 'create', component: CreatePageComponent },
   { path: 'view', component: ViewPageComponent },
-  { path: 'configure/:id', component: ConfigurePageComponent, data: { title: 'Configure' } }];
+  { path: 'configure/:id', component: ConfigureCasePageComponent, data: { title: 'Configure' } }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -46,6 +46,7 @@ export function reducer(
 
 
   switch (action.type) {
+
     case CaseActionTypes.SearchComplete:
     case CaseActionTypes.LoadSuccess: {
       /**
@@ -63,9 +64,17 @@ export function reducer(
       });
     }
 
+    case CaseActionTypes.Select: {
+      return {
+        ...state,
+        selectedCaseId: action.payload,
+      }
+    }
+
     default: {
       return state;
     }
+
   }
 }
 

@@ -4,7 +4,7 @@ import {
   ActionReducerMap,
 } from '@ngrx/store';
 import * as fromSearch from './search.reducer';
-import * as fromCases from './cases.reducer';
+import * as fromCases from './case.reducer';
 import * as fromRoot from '../../../reducers';
 
 export interface CasesState {

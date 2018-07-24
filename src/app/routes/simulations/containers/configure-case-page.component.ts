@@ -10,14 +10,16 @@ import * as CaseActions from '../reducers/case.actions';
 @Component({
   selector: 'app-simulations-configure',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './configure-page.component.html',
+  template: `
+  <sim-selected-case-page></sim-selected-case-page>
+  `
 })
-export class ConfigurePageComponent {
+export class ConfigureCasePageComponent implements OnDestroy {
 
   actionsSubscription: Subscription;
 
   constructor(store: Store<fromCases.State>, route: ActivatedRoute) {
-    this.actionsSubscription = route.params
+    this.actionsSubscription = route.params  // subsribe to route.params (corresponds to case.id)
       .pipe(map(params => new CaseActions.Select(params.id)))
       .subscribe(store);
   }
