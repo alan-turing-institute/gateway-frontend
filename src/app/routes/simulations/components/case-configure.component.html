@@ -11,6 +11,9 @@ CONFIGURE
     </div>
   </nz-row> -->
 
-  <button nz-button nzType="primary" (click)=update.emit(case_)>Primary</button>
+  <!-- <button nz-button nzType="primary" (click)=update.emit(case_)>Primary</button> -->
+
+  <!-- <input nz-input placeholder="Basic usage" [(ngModel)]="value" (keyup)="update.emit($event.target.value)"> -->
+  <input nz-input placeholder="Basic usage" (keyup)="update.emit($event.target.value)">
 
 </nz-card>

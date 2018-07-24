@@ -23,8 +23,8 @@ export class SelectedCasePageComponent {
     this.case$ = store.pipe(select(fromCases.getSelectedCase)) as Observable<Case>;
   }
 
-  updateCase(case_: Case) {
-    this.store.dispatch(new CaseActions.Update(case_));
+  updateCase(value: string) {
+    this.store.dispatch(new CaseActions.Update(value));
   }
 
 }

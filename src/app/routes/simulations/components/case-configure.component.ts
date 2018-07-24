@@ -7,9 +7,9 @@ import { Case } from '../models/case';
 })
 export class CaseConfigureComponent {
   @Input() case_: Case;
-  @Output() update = new EventEmitter<Case>();
+  @Output() update = new EventEmitter<string>();
 
-  value1 = 1;
+  value = 1;
 
   get id() {
     return this.case_.id;

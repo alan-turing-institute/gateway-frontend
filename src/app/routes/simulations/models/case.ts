@@ -4,7 +4,7 @@ export interface Case {
   description: string;
   thumbnail: string;
   links: object;
-  value: number;
+  value: string;
 }
 
 export function generateMockCase(): Case {
@@ -14,6 +14,6 @@ export function generateMockCase(): Case {
     description: 'Case description',
     thumbnail: 'https://simulate.blob.core.windows.net/openfoam-thumbnails/damBreak.png',
     links: {'self': '/case/1'},
-    value: 1
+    value: 'Case value'
   };
 }

@@ -64,7 +64,7 @@ export class Select implements Action {
 export class Update implements Action {
   readonly type = CaseActionTypes.Update;
 
-  constructor(public payload: Case) {}
+  constructor(public payload: string) {}
 }
 
 

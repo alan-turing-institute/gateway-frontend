@@ -1,5 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
+
+
 import { Case } from '../models/case';
 import { CaseActionsUnion, CaseActionTypes } from './case.actions';
 
@@ -72,9 +74,13 @@ export function reducer(
     }
 
     case CaseActionTypes.Update: {
-      console.log('DEBUG(case.reducer.ts): CaseActionTypes.Update');
-      console.log(action.payload);
+      console.log('DEBUG(case.reducer.ts): action.payload:', action.payload);
+      console.log('DEBUG(case.reducer.ts) state.selectedCaseId:', state.selectedCaseId)
 
+
+       // use a selector here to get the current
+       // the pass this to updateOne()
+       // return adapter.updateOne(action.payload.user, state);
     }
 
     default: {
