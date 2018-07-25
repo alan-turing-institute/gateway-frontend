@@ -1,9 +1,11 @@
 import { createSelector } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 
-
 import { CaseSummary } from '../models/case-summary';
-import { CaseSummaryActionsUnion, CaseSummaryActionTypes } from './case-summary.actions';
+import {
+  CaseSummaryActionsUnion,
+  CaseSummaryActionTypes,
+} from './case-summary.actions';
 
 /**
  * @ngrx/entity provides a predefined interface for handling
@@ -24,10 +26,12 @@ export interface State extends EntityState<CaseSummary> {
  * a sortComparer option which is set to a compare
  * function if the records are to be sorted.
  */
-export const adapter: EntityAdapter<CaseSummary> = createEntityAdapter<CaseSummary>({
+export const adapter: EntityAdapter<CaseSummary> = createEntityAdapter<
+  CaseSummary
+>({
   selectId: (caseSummary: CaseSummary) => caseSummary.id,
   sortComparer: false,
-})
+});
 
 /**
  * getInitialState returns the default initial state
@@ -38,17 +42,12 @@ export const initialState: State = adapter.getInitialState({
   selectedCaseSummaryId: null,
 });
 
-
-
 // action is saying that the action type must be wihin the union
 export function reducer(
   state = initialState,
-  action: CaseSummaryActionsUnion
+  action: CaseSummaryActionsUnion,
 ): State {
-
-
   switch (action.type) {
-
     case CaseSummaryActionTypes.SearchComplete:
     case CaseSummaryActionTypes.LoadSuccess: {
       /**
@@ -70,25 +69,22 @@ export function reducer(
       return {
         ...state,
         selectedCaseSummaryId: action.payload,
-      }
+      };
     }
 
     case CaseSummaryActionTypes.UpdateOne: {
-      console.log('DEBUG(case-summary.reducer.ts): action:', action);
-      console.log('DEBUG(case-summary.reducer.ts): action.id:', action.id);
-      console.log('DEBUG(case-summary.reducer.ts): action.changes:', action.changes);
-
-      return adapter.updateOne({
-        id: action.id,
-        changes: action.changes
-      }, state);
-
+      return adapter.updateOne(
+        {
+          id: state.selectedCaseSummaryId,
+          changes: action.changes,
+        },
+        state,
+      );
     }
 
     default: {
       return state;
     }
-
   }
 }
 

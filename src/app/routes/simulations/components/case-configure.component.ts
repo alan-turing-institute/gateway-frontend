@@ -3,7 +3,7 @@ import { CaseSummary } from '../models/case-summary';
 
 @Component({
   selector: 'sim-case-configure',
-  templateUrl: './case-configure.component.html'
+  templateUrl: './case-configure.component.html',
 })
 export class CaseConfigureComponent {
   @Input() caseSummary: CaseSummary;
@@ -26,5 +26,4 @@ export class CaseConfigureComponent {
   get thumbnail() {
     return this.caseSummary.thumbnail;
   }
-
 }

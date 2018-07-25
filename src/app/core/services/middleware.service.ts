@@ -8,7 +8,6 @@ import { environment } from '@env/environment';
 
 @Injectable()
 export class MiddlewareService {
-
   private CASE_API_PATH = `${environment.MIDDLEWARE_URL}/case`;
   private JOB_API_PATH = `${environment.MIDDLEWARE_URL}/job`;
 
@@ -25,9 +24,7 @@ export class MiddlewareService {
       .get<CaseSummary[]>(this.CASE_API_PATH)
       .pipe(map(caseSummaries => caseSummaries || [])); // redundant
   }
-
 }
-
 
 // reference construct
 // searchBooks(queryTitle: string): Observable<Book[]> {

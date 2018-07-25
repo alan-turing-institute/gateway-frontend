@@ -11,25 +11,21 @@ import { CaseSummary } from '../models/case-summary';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <sim-case-configure
-    [caseSummary]="caseSummary$ | async"
+    [caseSummary]="caseSummary$ | async" 
     (update)=updateCaseSummary($event)>
   </sim-case-configure>
-  `
+  `,
 })
 export class SelectedCasePageComponent {
-
   caseSummary$: Observable<CaseSummary>;
 
   constructor(private store: Store<fromCaseSummaries.State>) {
-    this.caseSummary$ = store.pipe(select(fromCaseSummaries.getSelectedCaseSummary)) as Observable<CaseSummary>;
+    this.caseSummary$ = store.pipe(
+      select(fromCaseSummaries.getSelectedCaseSummary),
+    ) as Observable<CaseSummary>;
   }
 
   updateCaseSummary(value: string) {
-    // console.log('DEBUG(selected-case-page.component.ts) value:', value);
-    // console.log('DEBUG(selected-case-page.component.ts) fromCaseSummaries.getSelectedCaseSummaryId():', fromCaseSummaries.getSelectedCaseSummaryId());
-    console.log(fromCaseSummaries.getSelectedCaseSummaryId());
-
-    this.store.dispatch(new CaseSummaryActions.UpdateOne(fromCaseSummaries.getSelectedCaseSummaryId(), {'value': value}));
+    this.store.dispatch(new CaseSummaryActions.UpdateOne({ value: value }));
   }
-
 }

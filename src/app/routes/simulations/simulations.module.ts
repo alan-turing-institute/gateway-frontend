@@ -11,7 +11,6 @@ import { ViewPageComponent } from './containers/view-page.component';
 import { ConfigureCasePageComponent } from './containers/configure-case-page.component';
 import { SelectedCasePageComponent } from './containers/selected-case-page.component';
 
-
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
@@ -23,7 +22,8 @@ const PAGECOMPONENTS = [
   CreatePageComponent,
   ViewPageComponent,
   ConfigureCasePageComponent,
-  SelectedCasePageComponent];
+  SelectedCasePageComponent,
+];
 
 @NgModule({
   imports: [
@@ -33,8 +33,6 @@ const PAGECOMPONENTS = [
     StoreModule.forFeature('cases', reducers), // TODO check setting
     EffectsModule.forFeature([CaseSummaryEffects]),
   ],
-  declarations: [
-    ...PAGECOMPONENTS,
-  ]
+  declarations: [...PAGECOMPONENTS],
 })
-export class SimulationsModule { }
+export class SimulationsModule {}

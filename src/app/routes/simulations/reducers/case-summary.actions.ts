@@ -20,7 +20,6 @@ export enum CaseSummaryActionTypes {
  * See Discriminated Unions: https://www.typescriptlang.org/docs/handbook/advanced-types.html#discriminated-unions
  */
 
-
 export class Load implements Action {
   readonly type = CaseSummaryActionTypes.Load;
 }
@@ -54,7 +53,7 @@ export class SearchError implements Action {
 
   constructor(public payload: string) {}
 }
-
+1;
 export class Select implements Action {
   readonly type = CaseSummaryActionTypes.Select;
 
@@ -64,12 +63,8 @@ export class Select implements Action {
 export class UpdateOne implements Action {
   readonly type = CaseSummaryActionTypes.UpdateOne;
 
-  constructor(
-    public id: string,
-    public changes: Partial<CaseSummary>,
-  ) {}
+  constructor(public changes: Partial<CaseSummary>) {}
 }
-
 
 /**
  * Export a type alias of all actions in this action group
