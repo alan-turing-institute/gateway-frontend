@@ -13,15 +13,15 @@ import {
 
 import { MiddlewareService } from '@core/services/middleware.service';
 import {
-  CaseSummaryActionTypes,
+  CaseDetailActionTypes,
   Search,
   SearchComplete,
   SearchError,
   Load,
   LoadSuccess,
   LoadError,
-} from './case-summary.actions';
-import { CaseSummary } from '../models/case-summary';
+} from './case-detail.actions';
+import { CaseDetail } from '../models/case-detail';
 import { Scheduler } from 'rxjs/internal/Scheduler';
 
 export const SEARCH_DEBOUNCE = new InjectionToken<number>('Search Debounce');
@@ -41,10 +41,10 @@ export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
  */
 
 @Injectable()
-export class CaseSummaryEffects {
+export class CaseDetailEffects {
   @Effect()
   search$: Observable<Action> = this.actions$.pipe(
-    ofType<Search>(CaseSummaryActionTypes.Search),
+    ofType<Search>(CaseDetailActionTypes.Search),
     debounceTime(this.debounce || 300, this.scheduler || asyncScheduler),
     map(action => action.payload),
     switchMap(query => {
@@ -53,15 +53,13 @@ export class CaseSummaryEffects {
       }
 
       const nextSearch$ = this.actions$.pipe(
-        ofType(CaseSummaryActionTypes.Search),
+        ofType(CaseDetailActionTypes.Search),
         skip(1), // skip the first emitted value
       );
 
-      return this.middleware.searchCaseSummaries(query).pipe(
+      return this.middleware.searchCaseDetails(query).pipe(
         takeUntil(nextSearch$),
-        map(
-          (caseSummaries: CaseSummary[]) => new SearchComplete(caseSummaries),
-        ),
+        map((caseDetails: CaseDetail[]) => new SearchComplete(caseDetails)),
         catchError(err => of(new SearchError(err))),
       );
     }),
@@ -69,10 +67,10 @@ export class CaseSummaryEffects {
 
   @Effect()
   load$: Observable<Action> = this.actions$.pipe(
-    ofType<Load>(CaseSummaryActionTypes.Load),
+    ofType<Load>(CaseDetailActionTypes.Load),
     switchMap(() => {
       return this.middleware.getAllCaseSummaries().pipe(
-        map((caseSummaries: CaseSummary[]) => new LoadSuccess(caseSummaries)),
+        map((caseDetails: CaseDetail[]) => new LoadSuccess(caseDetails)),
         catchError(err => of(new LoadError(err))),
       );
     }),
