@@ -3,7 +3,7 @@ import { Case } from '../models/case';
 
 export enum CaseActionTypes {
   LoadOne = '[Case] Load One',
-  LoadOneSuccess = '[Case] Load One Complete',
+  LoadOneSuccess = '[Case] Load One Success',
   LoadOneError = '[Case] Load One Error',
   Select = '[Case] Select',
   UpdateOne = '[Case] Update One',

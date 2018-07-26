@@ -19,20 +19,28 @@ export const initialState: State = adapter.getInitialState({
 
 export function reducer(state = initialState, action: CaseActionsUnion): State {
   switch (action.type) {
+    case CaseActionTypes.LoadOne: {
+      console.log('DEBUG(case.reducer.ts) LoadOne');
+      return state;
+    }
+    case CaseActionTypes.LoadOneError: {
+      console.log('DEBUG(case.reducer.ts) LoadOneError');
+      return state;
+    }
     case CaseActionTypes.LoadOneSuccess: {
       console.log('DEBUG(case.reducer.ts) LoadOneSuccess');
-      // return adapter.addOne(action.payload, {
-      //   ...state,
-      //   selectedCaseId: state.selectedCaseId,
-      // });
+      return adapter.addOne(action.payload, {
+        ...state,
+        selectedCaseId: state.selectedCaseId,
+      });
     }
 
-    // case CaseActionTypes.Select: {
-    //   return {
-    //     ...state,
-    //     selectedCaseId: action.payload,
-    //   };
-    // }
+    case CaseActionTypes.Select: {
+      return {
+        ...state,
+        selectedCaseId: action.payload,
+      };
+    }
 
     // case CaseActionTypes.UpdateOne: {
     //   return adapter.updateOne(

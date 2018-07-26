@@ -15,6 +15,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { CaseSummaryEffects } from './reducers/case-summary.effects';
+import { CaseEffects } from './reducers/case.effects';
 
 import { reducers } from './reducers';
 
@@ -31,7 +32,7 @@ const PAGECOMPONENTS = [
     SimulationsRoutingModule,
     ComponentsModule,
     StoreModule.forFeature('cases', reducers), // TODO check setting
-    EffectsModule.forFeature([CaseSummaryEffects]),
+    EffectsModule.forFeature([CaseSummaryEffects, CaseEffects]),
   ],
   declarations: [...PAGECOMPONENTS],
 })

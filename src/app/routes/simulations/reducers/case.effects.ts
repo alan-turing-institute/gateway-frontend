@@ -5,6 +5,7 @@ import { asyncScheduler, empty, Observable, of } from 'rxjs';
 import {
   catchError,
   debounceTime,
+  tap,
   map,
   skip,
   switchMap,
@@ -28,17 +29,17 @@ export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
 
 @Injectable()
 export class CaseEffects {
-  // @Effect()
-  // loadOne$: Observable<Action> = this.actions$.pipe(
-  //   ofType<LoadOne>(CaseActionTypes.LoadOne),
-  //   map(action => action.id),
-  //   switchMap(caseId => {
-  //     return this.middleware.getCase(caseId).pipe(
-  //       map((caseObject: Case) => new LoadOneSuccess(caseObject)),
-  //       catchError(err => of(new LoadOneError(err))),
-  //     );
-  //   }),
-  // );
+  @Effect()
+  loadOne$: Observable<Action> = this.actions$.pipe(
+    ofType<LoadOne>(CaseActionTypes.LoadOne),
+    map(action => action.id),
+    switchMap(caseId => {
+      return this.middleware.getCase(caseId).pipe(
+        map((caseObject: Case) => new LoadOneSuccess(caseObject)),
+        catchError(err => of(new LoadOneError(err))),
+      );
+    }),
+  );
 
   constructor(
     private actions$: Actions,

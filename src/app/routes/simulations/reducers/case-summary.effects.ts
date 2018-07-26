@@ -9,6 +9,7 @@ import {
   skip,
   switchMap,
   takeUntil,
+  tap,
 } from 'rxjs/operators';
 
 import { MiddlewareService } from '@core/services/middleware.service';
@@ -69,6 +70,9 @@ export class CaseSummaryEffects {
 
   @Effect()
   load$: Observable<Action> = this.actions$.pipe(
+    tap(action =>
+      console.log(`(case-summary.effects.ts) Received: ${action.type}`),
+    ),
     ofType<Load>(CaseSummaryActionTypes.Load),
     switchMap(() => {
       return this.middleware.getAllCaseSummaries().pipe(

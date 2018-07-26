@@ -4,7 +4,7 @@ import {
   OnInit,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -23,27 +23,28 @@ import { CaseActionTypes } from '../reducers/case.actions';
   <sim-selected-case-page></sim-selected-case-page>
   `,
 })
-export class ConfigureCasePageComponent implements OnInit, OnDestroy {
-  actionsSubscription: Subscription;
+export class ConfigureCasePageComponent implements OnDestroy {
+  selectCase: Subscription;
+  loadCase: Subscription;
   cases$: Observable<Case[]>;
 
   constructor(
     private store: Store<fromCase.State>,
     private route: ActivatedRoute,
   ) {
-    this.actionsSubscription = route.params // subsribe to route.params (corresponds to case.id)
+    this.selectCase = route.params
       .pipe(map(params => new CaseSummaryActions.Select(params.id)))
+      .subscribe(store);
+
+    this.loadCase = route.params
+      .pipe(map(params => new CaseActions.LoadOne(params.id)))
       .subscribe(store);
 
     this.cases$ = store.pipe(select(fromCase.getAllCases));
   }
 
-  ngOnInit() {
-    console.log('DEBUG(configure-case-page.component.ts):', this.route.params);
-    this.store.dispatch(new CaseActions.LoadOne('test'));
-  }
-
   ngOnDestroy() {
-    this.actionsSubscription.unsubscribe();
+    this.loadCase.unsubscribe();
+    this.selectCase.unsubscribe();
   }
 }
