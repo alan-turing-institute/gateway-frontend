@@ -5,13 +5,13 @@ import {
 } from '@ngrx/store';
 import * as fromSearch from './search.reducer';
 import * as fromCaseSummaries from './case-summary.reducer';
-import * as fromCaseDetails from './case-detail.reducer';
+import * as fromCases from './case.reducer';
 import * as fromRoot from '../../../reducers';
 
 export interface CasesState {
   search: fromSearch.State;
   summaries: fromCaseSummaries.State;
-  details: fromCaseDetails.State;
+  details: fromCases.State;
 }
 
 export interface State extends fromRoot.State {
@@ -21,10 +21,8 @@ export interface State extends fromRoot.State {
 export const reducers: ActionReducerMap<CasesState> = {
   search: fromSearch.reducer,
   summaries: fromCaseSummaries.reducer,
-  details: fromCaseDetails.reducer,
+  details: fromCases.reducer,
 };
-
-// [wip] editing below
 
 export const getCasesState = createFeatureSelector<CasesState>('cases');
 
@@ -48,6 +46,31 @@ export const {
 export const getSelectedCaseSummary = createSelector(
   getCaseSummaryEntities,
   getSelectedCaseSummaryId,
+  (entities, selectedId) => {
+    return selectedId && entities[selectedId];
+  },
+);
+
+export const getCaseEntitiesState = createSelector(
+  getCasesState,
+  state => state.details,
+);
+
+export const getSelectedCaseId = createSelector(
+  getCaseEntitiesState,
+  fromCases.getSelectedId,
+);
+
+export const {
+  selectIds: getCaseIds,
+  selectEntities: getCaseEntities,
+  selectAll: getAllCases,
+  selectTotal: getTotalCases,
+} = fromCases.adapter.getSelectors(getCaseEntitiesState);
+
+export const getSelectedCase = createSelector(
+  getCaseSummaryEntities,
+  getSelectedCaseId,
   (entities, selectedId) => {
     return selectedId && entities[selectedId];
   },

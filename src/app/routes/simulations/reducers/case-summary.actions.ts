@@ -53,7 +53,7 @@ export class SearchError implements Action {
 
   constructor(public payload: string) {}
 }
-1;
+
 export class Select implements Action {
   readonly type = CaseSummaryActionTypes.Select;
 
