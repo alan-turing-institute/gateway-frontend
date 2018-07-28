@@ -76,7 +76,7 @@ export function reducer(
       return adapter.updateOne(
         {
           id: state.selectedCaseSummaryId,
-          changes: action.changes,
+          changes: action.payload,
         },
         state,
       );

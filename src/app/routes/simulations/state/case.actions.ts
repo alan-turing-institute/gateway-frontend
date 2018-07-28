@@ -12,7 +12,7 @@ export enum CaseActionTypes {
 export class LoadOne implements Action {
   readonly type = CaseActionTypes.LoadOne;
 
-  constructor(public id: string) {}
+  constructor(public payload: string) {}
 }
 
 export class LoadOneSuccess implements Action {
@@ -36,7 +36,7 @@ export class Select implements Action {
 export class UpdateOne implements Action {
   readonly type = CaseActionTypes.UpdateOne;
 
-  constructor(public changes: Partial<Case>) {}
+  constructor(public payload: Partial<Case>) {}
 }
 
 export type CaseActionsUnion =

@@ -32,7 +32,8 @@ export class CaseEffects {
   @Effect()
   loadOne$: Observable<Action> = this.actions$.pipe(
     ofType<LoadOne>(CaseActionTypes.LoadOne),
-    map(action => action.id),
+    map(action => action.payload),
+    // TODO switchMap() no longer most appropriate here
     switchMap(caseId => {
       return this.middleware.getCase(caseId).pipe(
         map((caseObject: Case) => new LoadOneSuccess(caseObject)),

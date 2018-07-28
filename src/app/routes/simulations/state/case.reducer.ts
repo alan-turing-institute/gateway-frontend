@@ -46,7 +46,7 @@ export function reducer(state = initialState, action: CaseActionsUnion): State {
     //   return adapter.updateOne(
     //     {
     //       id: state.selectedCaseId,
-    //       changes: action.changes,
+    //       changes: action.payload,
     //     },
     //     state,
     //   );

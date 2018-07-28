@@ -1,4 +1,7 @@
-import { CaseSummaryActionTypes, CaseSummaryActionsUnion } from './case-summary.actions';
+import {
+  CaseSummaryActionTypes,
+  CaseSummaryActionsUnion,
+} from './case-summary.actions';
 
 export interface State {
   ids: string[];
@@ -14,7 +17,10 @@ const initialState: State = {
   query: '',
 };
 
-export function reducer(state = initialState, action: CaseSummaryActionsUnion): State {
+export function reducer(
+  state = initialState,
+  action: CaseSummaryActionsUnion,
+): State {
   switch (action.type) {
     case CaseSummaryActionTypes.Search: {
       const query = action.payload;

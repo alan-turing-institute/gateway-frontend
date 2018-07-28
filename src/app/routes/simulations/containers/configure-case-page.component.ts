@@ -18,7 +18,7 @@ import { CaseActionTypes } from '../state/case.actions';
 
 @Component({
   selector: 'app-simulations-configure',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <sim-selected-case-page></sim-selected-case-page>
   `,
