@@ -8,15 +8,14 @@ import { CaseSummary } from '../models/case-summary';
   templateUrl: 'case-preview-list.component.html',
   styles: [
     `
-    :host ::ng-deep .ant-card-meta-title {
-      margin-bottom: 12px;
-    }
-  `,
+      :host ::ng-deep .ant-card-meta-title {
+        margin-bottom: 12px;
+      }
+    `,
   ],
 })
 export class CasePreviewListComponent {
-
-  constructor(public msg: NzMessageService) { }
+  constructor(public msg: NzMessageService) {}
 
   @Input() caseSummaries: CaseSummary[];
   @Input() loading: boolean;

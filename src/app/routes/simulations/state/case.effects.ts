@@ -34,6 +34,7 @@ export class CaseEffects {
     ofType<LoadOne>(CaseActionTypes.LoadOne),
     map(action => action.payload),
     // TODO switchMap() no longer most appropriate here
+    // as the inner observable won't need to be switched/reset
     switchMap(caseId => {
       return this.middleware.getCase(caseId).pipe(
         map((caseObject: Case) => new LoadOneSuccess(caseObject)),

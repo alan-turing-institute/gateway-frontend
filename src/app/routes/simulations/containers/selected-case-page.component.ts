@@ -8,7 +8,7 @@ import { CaseSummary } from '../models/case-summary';
 
 @Component({
   selector: 'sim-selected-case-page',
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <sim-case-configure
     [caseSummary]="caseSummary$ | async" 

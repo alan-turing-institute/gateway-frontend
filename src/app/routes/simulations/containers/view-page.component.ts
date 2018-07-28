@@ -5,18 +5,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   templateUrl: './view-page.component.html',
 })
 export class ViewPageComponent implements OnInit {
-
   jobs: any[];
   error: any;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.showJobs();
   }
 
-  showJobs() {
-
-  }
-
+  showJobs() {}
 }
