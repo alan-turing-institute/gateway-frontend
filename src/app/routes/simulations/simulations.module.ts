@@ -14,10 +14,10 @@ import { SelectedCasePageComponent } from './containers/selected-case-page.compo
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { CaseSummaryEffects } from './reducers/case-summary.effects';
-import { CaseEffects } from './reducers/case.effects';
+import { CaseSummaryEffects } from './state/case-summary.effects';
+import { CaseEffects } from './state/case.effects';
 
-import { reducers } from './reducers';
+import { reducers } from './state';
 
 const PAGECOMPONENTS = [
   CreatePageComponent,

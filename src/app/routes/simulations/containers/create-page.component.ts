@@ -8,8 +8,8 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { CaseSummary } from '../models/case-summary';
-import * as CaseSummaryActions from '../reducers/case-summary.actions';
-import * as fromCase from '../reducers';
+import * as CaseSummaryActions from '../state/case-summary.actions';
+import * as fromCase from '../state';
 
 import { NzMessageService } from 'ng-zorro-antd';
 

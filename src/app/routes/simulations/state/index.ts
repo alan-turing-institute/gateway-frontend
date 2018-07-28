@@ -6,7 +6,7 @@ import {
 import * as fromSearch from './search.reducer';
 import * as fromCaseSummaries from './case-summary.reducer';
 import * as fromCases from './case.reducer';
-import * as fromRoot from '../../../reducers';
+import * as fromRoot from '../../../state';
 
 export interface CasesState {
   search: fromSearch.State;

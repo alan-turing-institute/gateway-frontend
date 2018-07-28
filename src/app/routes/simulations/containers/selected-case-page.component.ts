@@ -2,8 +2,8 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as fromCaseSummaries from '../reducers';
-import * as CaseSummaryActions from '../reducers/case-summary.actions';
+import * as fromCaseSummaries from '../state';
+import * as CaseSummaryActions from '../state/case-summary.actions';
 import { CaseSummary } from '../models/case-summary';
 
 @Component({

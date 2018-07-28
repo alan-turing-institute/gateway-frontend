@@ -52,6 +52,7 @@
     "ng-alain": "^1.1.4",
     "ng-zorro-antd": "^1.0.0",
     "ngrx-store-freeze": "^0.2.2",
+    "normalizr": "^3.2.4",
     "prettier": "^1.12.1",
     "prettier-stylelint": "^0.4.2",
     "rxjs": "^6.2.2",

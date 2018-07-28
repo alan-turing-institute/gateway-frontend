@@ -10,11 +10,11 @@ import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Case } from '../models/case';
-import * as fromCase from '../reducers';
-import * as CaseSummaryActions from '../reducers/case-summary.actions';
-import * as CaseActions from '../reducers/case.actions';
+import * as fromCase from '../state';
+import * as CaseSummaryActions from '../state/case-summary.actions';
+import * as CaseActions from '../state/case.actions';
 
-import { CaseActionTypes } from '../reducers/case.actions';
+import { CaseActionTypes } from '../state/case.actions';
 
 @Component({
   selector: 'app-simulations-configure',
