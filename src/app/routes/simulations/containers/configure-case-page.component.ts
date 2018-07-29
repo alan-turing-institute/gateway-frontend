@@ -34,9 +34,9 @@ export class ConfigureCasePageComponent implements OnDestroy {
     this.load = route.params
       .pipe(
         concatMap(params => [
-          new CaseSummaryActions.Select(params.id),
-          new CaseActions.Select(params.id),
-          new CaseActions.LoadOne(params.id),
+          new CaseSummaryActions.Select(params.id), // TODO temporary
+          new CaseActions.SelectCase(params.id),
+          new CaseActions.GetOneCase(params.id),
         ]),
       )
       .subscribe(store);

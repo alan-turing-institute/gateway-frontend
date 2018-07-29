@@ -1,47 +1,56 @@
 import { Action } from '@ngrx/store';
 import { Case } from '../models/case';
+import { Spec } from '../models/spec';
 
 export enum CaseActionTypes {
-  LoadOne = '[Case] Load One',
-  LoadOneSuccess = '[Case] Load One Success',
-  LoadOneError = '[Case] Load One Error',
-  Select = '[Case] Select',
-  UpdateOne = '[Case] Update One',
+  GetOneCase = '[Case] Get One Case',
+  GetOneCaseSuccess = '[Case] Get One Case Success',
+  GetOneCaseError = '[Case] Get One Case Error',
+  SelectCase = '[Case] Select Case',
+  UpdateOneCase = '[Case] Update One Case',
+  UpdateManySpec = '[Case] Update Many Spec',
 }
 
-export class LoadOne implements Action {
-  readonly type = CaseActionTypes.LoadOne;
+export class GetOneCase implements Action {
+  readonly type = CaseActionTypes.GetOneCase;
 
   constructor(public payload: string) {}
 }
 
-export class LoadOneSuccess implements Action {
-  readonly type = CaseActionTypes.LoadOneSuccess;
+export class GetOneCaseSuccess implements Action {
+  readonly type = CaseActionTypes.GetOneCaseSuccess;
 
   constructor(public payload: Case) {}
 }
 
-export class LoadOneError implements Action {
-  readonly type = CaseActionTypes.LoadOneError;
+export class GetOneCaseError implements Action {
+  readonly type = CaseActionTypes.GetOneCaseError;
 
   constructor(public payload: string) {}
 }
 
-export class Select implements Action {
-  readonly type = CaseActionTypes.Select;
+export class SelectCase implements Action {
+  readonly type = CaseActionTypes.SelectCase;
 
   constructor(public payload: string) {}
 }
 
-export class UpdateOne implements Action {
-  readonly type = CaseActionTypes.UpdateOne;
+export class UpdateOneCase implements Action {
+  readonly type = CaseActionTypes.UpdateOneCase;
 
   constructor(public payload: Partial<Case>) {}
 }
 
+export class UpdateManySpec implements Action {
+  readonly type = CaseActionTypes.UpdateManySpec;
+  // constructor(public payload: Spec[]) {}
+  constructor(public payload: string) {}
+}
+
 export type CaseActionsUnion =
-  | LoadOne
-  | LoadOneSuccess
-  | LoadOneError
-  | Select
-  | UpdateOne;
+  | GetOneCase
+  | GetOneCaseSuccess
+  | GetOneCaseError
+  | SelectCase
+  | UpdateOneCase
+  | UpdateManySpec;

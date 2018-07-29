@@ -4,6 +4,7 @@ import { Action } from '@ngrx/store';
 import { asyncScheduler, empty, Observable, of } from 'rxjs';
 import {
   catchError,
+  concatMap,
   debounceTime,
   tap,
   map,
@@ -15,9 +16,10 @@ import {
 import { MiddlewareService } from '@core/services/middleware.service';
 import {
   CaseActionTypes,
-  LoadOne,
-  LoadOneSuccess,
-  LoadOneError,
+  GetOneCase,
+  GetOneCaseSuccess,
+  GetOneCaseError,
+  UpdateManySpec,
 } from './case.actions';
 import { Case } from '../models/case';
 import { Scheduler } from 'rxjs/internal/Scheduler';
@@ -31,14 +33,15 @@ export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
 export class CaseEffects {
   @Effect()
   loadOne$: Observable<Action> = this.actions$.pipe(
-    ofType<LoadOne>(CaseActionTypes.LoadOne),
+    ofType<GetOneCase>(CaseActionTypes.GetOneCase),
     map(action => action.payload),
-    // TODO switchMap() no longer most appropriate here
-    // as the inner observable won't need to be switched/reset
     switchMap(caseId => {
       return this.middleware.getCase(caseId).pipe(
-        map((caseObject: Case) => new LoadOneSuccess(caseObject)),
-        catchError(err => of(new LoadOneError(err))),
+        catchError(err => of(new GetOneCaseError(err))),
+        concatMap((caseObject: Case) => [
+          new GetOneCaseSuccess(caseObject),
+          new UpdateManySpec(caseObject.description),
+        ]),
       );
     }),
   );

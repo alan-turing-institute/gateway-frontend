@@ -16,13 +16,13 @@ export class MiddlewareService {
   getAllCaseSummaries(): Observable<CaseSummary[]> {
     return this.http
       .get<CaseSummary[]>(this.CASE_API_PATH)
-      .pipe(map(caseSummaries => caseSummaries || [])); // TODO redundant
+      .pipe(map(caseSummaries => caseSummaries || [])); // TODO redundant (?)
   }
 
   searchCaseSummaries(queryTitle: string): Observable<CaseSummary[]> {
     return this.http
       .get<CaseSummary[]>(this.CASE_API_PATH)
-      .pipe(map(caseSummaries => caseSummaries || [])); // TODO redundant
+      .pipe(map(caseSummaries => caseSummaries || [])); // TODO redundant (?)
   }
 
   getCase(id: string): Observable<Case> {
@@ -31,10 +31,3 @@ export class MiddlewareService {
       .pipe(map(caseObject => caseObject));
   }
 }
-
-// reference construct
-// searchBooks(queryTitle: string): Observable<Book[]> {
-//   return this.http
-//     .get<{ items: Book[] }>(`${this.CASE_API_PATH}?q=${queryTitle}`)
-//     .pipe(map(books => books.items || []));
-// }
