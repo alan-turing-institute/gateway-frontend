@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SimulationsCreateComponent } from './create/create.component';
-import { SimulationsViewComponent } from './view/view.component';
-import { SimulationsConfigureComponent } from './configure/configure.component';
+
+import { CreatePageComponent } from './containers/create-page.component';
+import { ViewPageComponent } from './containers/view-page.component';
+
+import { ConfigureCasePageComponent } from './containers/configure-case-page.component';
 
 const routes: Routes = [
 
-  { path: 'create', component: SimulationsCreateComponent },
-  { path: 'view', component: SimulationsViewComponent },
-  { path: 'configure', component: SimulationsConfigureComponent }];
+  { path: 'create', component: CreatePageComponent },
+  { path: 'view', component: ViewPageComponent },
+  { path: 'configure/:id', component: ConfigureCasePageComponent, data: { title: 'Configure' } }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

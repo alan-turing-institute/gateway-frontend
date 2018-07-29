@@ -1,0 +1,19 @@
+<page-header>
+CONFIGURE
+</page-header>
+<nz-card>
+  <!-- <nz-row>
+    <nz-col nzSpan="12">
+      <nz-slider [nzMin]="1" [nzMax]="20" [(ngModel)]="value1"></nz-slider>
+    </nz-col>
+    <div nz-col nzSpan="4">
+      <nz-input-number [nzMin]="1" [nzMax]="20" [ngStyle]="{ 'marginLeft': '16px' }" [(ngModel)]="value1"></nz-input-number>
+    </div>
+  </nz-row> -->
+
+  <!-- <button nz-button nzType="primary" (click)=update.emit(case_)>Primary</button> -->
+
+  <!-- <input nz-input placeholder="Basic usage" [(ngModel)]="value" (keyup)="update.emit($event.target.value)"> -->
+  <input nz-input placeholder="Basic usage" (keyup)="update.emit($event.target.value)">
+
+</nz-card>

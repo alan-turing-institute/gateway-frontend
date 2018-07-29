@@ -1,5 +1,9 @@
 import { NgModule, LOCALE_ID, APP_INITIALIZER, Injector } from '@angular/core';
-import { HttpClient, HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import {
+  HttpClient,
+  HTTP_INTERCEPTORS,
+  HttpClientModule,
+} from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DelonModule } from './delon.module';
@@ -32,14 +36,21 @@ export function I18nHttpLoaderFactory(http: HttpClient) {
 // @delon/form: JSON Schema form
 import { JsonSchemaModule } from '@shared/json-schema/json-schema.module';
 
-export function StartupServiceFactory(startupService: StartupService): Function {
+// application state
+import { environment } from '@env/environment';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { reducers, metaReducers } from './state';
+
+export function StartupServiceFactory(
+  startupService: StartupService,
+): Function {
   return () => startupService.load();
 }
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -54,11 +65,18 @@ export function StartupServiceFactory(startupService: StartupService): Function 
       loader: {
         provide: TranslateLoader,
         useFactory: I18nHttpLoaderFactory,
-        deps: [HttpClient]
-      }
+        deps: [HttpClient],
+      },
     }),
     // JSON-Schema form
-    JsonSchemaModule
+    JsonSchemaModule,
+    // application state
+    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreDevtoolsModule.instrument({
+      name: 'NgRx Store DevTools',
+      logOnly: environment.production,
+    }),
+    EffectsModule.forRoot([]),
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en-GB' },
@@ -71,9 +89,9 @@ export function StartupServiceFactory(startupService: StartupService): Function 
       provide: APP_INITIALIZER,
       useFactory: StartupServiceFactory,
       deps: [StartupService],
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
