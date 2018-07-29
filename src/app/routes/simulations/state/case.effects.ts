@@ -19,7 +19,6 @@ import {
   GetOneCase,
   GetOneCaseSuccess,
   GetOneCaseError,
-  UpdateManySpec,
 } from './case.actions';
 import { Case } from '../models/case';
 import { Scheduler } from 'rxjs/internal/Scheduler';
@@ -40,7 +39,7 @@ export class CaseEffects {
         catchError(err => of(new GetOneCaseError(err))),
         concatMap((caseObject: Case) => [
           new GetOneCaseSuccess(caseObject),
-          new UpdateManySpec(caseObject.description),
+          // new UpdateManySpec(caseObject.description),
         ]),
       );
     }),

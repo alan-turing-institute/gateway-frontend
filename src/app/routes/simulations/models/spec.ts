@@ -5,9 +5,5 @@ export interface Spec {
 }
 
 export function generateMockSpec(): Spec {
-  return {
-    id: '10',
-    name: 'max',
-    value: '1',
-  };
+  return { id: '10', name: 'max', value: '1' };
 }

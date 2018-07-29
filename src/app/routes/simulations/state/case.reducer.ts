@@ -49,11 +49,6 @@ export function reducer(state = initialState, action: CaseActionsUnion): State {
       };
     }
 
-    case CaseActionTypes.UpdateManySpec: {
-      console.log('DEBUG(case.reducer.ts)', action.payload);
-      return state;
-    }
-
     // case CaseActionTypes.UpdateOne: {
     //   return adapter.updateOne(
     //     {
