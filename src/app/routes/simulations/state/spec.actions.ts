@@ -1,9 +1,10 @@
 import { Action } from '@ngrx/store';
+import { Case } from '../models/case';
 import { Spec } from '../models/spec';
 
 export enum SpecActionTypes {
   SelectSpec = '[Spec] Select Spec',
-  UpdateOneSpec = '[Spec] Update One Spec',
+  UpsertManySpecs = '[Spec] Upsert Many Specs',
 }
 
 export class SelectSpec implements Action {
@@ -12,10 +13,10 @@ export class SelectSpec implements Action {
   constructor(public payload: string) {}
 }
 
-export class UpdateOneSpec implements Action {
-  readonly type = SpecActionTypes.UpdateOneSpec;
+export class UpsertManySpecs implements Action {
+  readonly type = SpecActionTypes.UpsertManySpecs;
 
-  constructor(public payload: Partial<Spec>) {}
+  constructor(public payload: Spec[]) {}
 }
 
-export type SpecActionsUnion = SelectSpec | UpdateOneSpec;
+export type SpecActionsUnion = SelectSpec | UpsertManySpecs;

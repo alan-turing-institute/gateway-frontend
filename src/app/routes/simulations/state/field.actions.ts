@@ -3,7 +3,7 @@ import { Field } from '../models/field';
 
 export enum FieldActionTypes {
   SelectField = '[Field] Select Field',
-  AddField = '[Field] Add Field',
+  UpsertManyFields = '[Field] Upsert Many Fields',
 }
 
 export class SelectField implements Action {
@@ -12,10 +12,10 @@ export class SelectField implements Action {
   constructor(public payload: string) {}
 }
 
-export class AddField implements Action {
-  readonly type = FieldActionTypes.AddField;
+export class UpsertManyFields implements Action {
+  readonly type = FieldActionTypes.UpsertManyFields;
 
-  constructor(public payload: object) {}
+  constructor(public payload: Field[]) {}
 }
 
-export type FieldActionsUnion = SelectField | AddField;
+export type FieldActionsUnion = SelectField | UpsertManyFields;

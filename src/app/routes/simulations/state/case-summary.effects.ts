@@ -22,7 +22,7 @@ import {
   LoadSuccess,
   LoadError,
 } from './case-summary.actions';
-import { CaseSummary } from '../models/case-summary';
+import { CaseSummary } from '../models/case';
 import { Scheduler } from 'rxjs/internal/Scheduler';
 
 export const SEARCH_DEBOUNCE = new InjectionToken<number>('Search Debounce');

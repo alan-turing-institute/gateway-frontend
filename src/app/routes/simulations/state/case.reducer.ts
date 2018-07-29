@@ -27,18 +27,15 @@ export function reducer(state = initialState, action: CaseActionsUnion): State {
       return state;
     }
     case CaseActionTypes.GetOneCaseSuccess: {
-      // this logic should be in an effect as it changes both Case and Spec state
-      // const normalizedCase = normalize(action.payload.fields, fieldListSchema);
-
-      return adapter.addOne(action.payload, state); // TODO store normalizedCase.result (refactor Type)
+      return adapter.addOne(action.payload, state);
     }
 
-    case CaseActionTypes.SelectCase: {
-      return {
-        ...state,
-        selectedCaseId: action.payload,
-      };
-    }
+    // case CaseActionTypes.SelectCase: {
+    //   return {
+    //     ...state,
+    //     selectedCaseId: action.payload,
+    //   };
+    // }
 
     // case CaseActionTypes.UpdateOne: {
     //   return adapter.updateOne(

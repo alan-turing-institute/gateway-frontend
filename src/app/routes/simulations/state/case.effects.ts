@@ -24,22 +24,18 @@ import {
   GetOneCaseError,
 } from './case.actions';
 
-import { FieldActionTypes, AddField } from './field.actions';
+import { UpsertManySpecs } from './spec.actions';
 
-import { Case } from '../models/case';
+import { FieldActionTypes, UpsertManyFields } from './field.actions';
+
+import { Case, FlattenedCase } from '../models/case';
+import { ApiCase } from '../models/case';
 import { Scheduler } from 'rxjs/internal/Scheduler';
 
 export const SEARCH_DEBOUNCE = new InjectionToken<number>('Search Debounce');
 export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
   'Search Scheduler',
 );
-
-// Field[] schema definition
-// specSchema = new schema.Entity('specs');
-// specListSchema = new schema.Array(specSchema);
-// fieldSchema = new schema.Entity('fields');
-// fieldListSchema = new schema.Array(fieldSchema);
-// fieldSchema.define({ fields: fieldListSchema, specs: specListSchema }); // allow recursion
 
 @Injectable()
 export class CaseEffects {
@@ -52,7 +48,17 @@ export class CaseEffects {
     mergeMap(caseId =>
       this.middleware.getCase(caseId).pipe(
         catchError(err => of(new GetOneCaseError(err))),
-        map(returnObject => new AddField(returnObject)),
+        mergeMap((apiCase: ApiCase) =>
+          this.normaliser
+            .flattenCase(apiCase)
+            .pipe(
+              concatMap((flatCase: FlattenedCase) => [
+                new GetOneCaseSuccess(flatCase.case),
+                new UpsertManySpecs(flatCase.specs),
+                new UpsertManyFields(flatCase.fields),
+              ]),
+            ),
+        ),
       ),
     ),
   );

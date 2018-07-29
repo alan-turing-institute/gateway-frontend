@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CaseSummary } from '../models/case-summary';
+import { CaseSummary } from '../models/case';
 
 @Component({
   selector: 'sim-case-configure',

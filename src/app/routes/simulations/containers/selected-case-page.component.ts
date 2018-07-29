@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import * as fromCaseSummaries from '../state';
 import * as CaseSummaryActions from '../state/case-summary.actions';
-import { CaseSummary } from '../models/case-summary';
+import { CaseSummary } from '../models/case';
 
 @Component({
   selector: 'sim-selected-case-page',

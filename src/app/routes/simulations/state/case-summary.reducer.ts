@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 
-import { CaseSummary } from '../models/case-summary';
+import { CaseSummary } from '../models/case';
 import {
   CaseSummaryActionsUnion,
   CaseSummaryActionTypes,

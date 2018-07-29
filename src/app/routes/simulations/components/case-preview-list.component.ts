@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 
-import { CaseSummary } from '../models/case-summary';
+import { CaseSummary } from '../models/case';
 
 @Component({
   selector: 'sim-case-preview-list',

@@ -7,7 +7,7 @@ import {
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { CaseSummary } from '../models/case-summary';
+import { CaseSummary } from '../models/case';
 import * as CaseSummaryActions from '../state/case-summary.actions';
 import * as fromCase from '../state';
 

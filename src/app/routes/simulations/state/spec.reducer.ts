@@ -19,21 +19,16 @@ export const initialState: State = adapter.getInitialState({
 
 export function reducer(state = initialState, action: SpecActionsUnion): State {
   switch (action.type) {
-    case SpecActionTypes.SelectSpec: {
-      return {
-        ...state,
-        selectedSpecId: action.payload,
-      };
-    }
+    // case SpecActionTypes.SelectSpec: {
+    //   return {
+    //     ...state,
+    //     selectedSpecId: action.payload,
+    //   };
+    // }
 
-    case SpecActionTypes.UpdateOneSpec: {
-      return adapter.updateOne(
-        {
-          id: state.selectedSpecId,
-          changes: action.payload,
-        },
-        state,
-      );
+    case SpecActionTypes.UpsertManySpecs: {
+      console.log('DEBUG(spec.reducer.ts):', action.payload);
+      return adapter.upsertMany(action.payload, state);
     }
 
     default: {

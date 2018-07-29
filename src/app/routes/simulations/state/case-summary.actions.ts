@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { CaseSummary } from '../models/case-summary';
+import { CaseSummary } from '../models/case';
 
 export enum CaseSummaryActionTypes {
   Search = '[CaseSummary] Search',

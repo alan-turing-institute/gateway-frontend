@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { CaseSummary } from '@simulations/models/case-summary';
-import { Case } from '@simulations/models/case';
+import { Case, CaseSummary } from '@simulations/models/case';
 import { environment } from '@env/environment';
 
 @Injectable()

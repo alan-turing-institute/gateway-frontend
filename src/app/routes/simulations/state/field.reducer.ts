@@ -22,15 +22,15 @@ export function reducer(
   action: FieldActionsUnion,
 ): State {
   switch (action.type) {
-    case FieldActionTypes.SelectField: {
-      return {
-        ...state,
-        selectedFieldId: action.payload,
-      };
-    }
+    // case FieldActionTypes.SelectField: {
+    //   return {
+    //     ...state,
+    //     selectedFieldId: action.payload,
+    //   };
+    // }
 
-    case FieldActionTypes.AddField: {
-      console.log('DEBUG(field.reducer.ts)', action.payload);
+    case FieldActionTypes.UpsertManyFields: {
+      return adapter.upsertMany(action.payload, state);
     }
 
     default: {
