@@ -15,7 +15,7 @@ export class SelectField implements Action {
 export class AddField implements Action {
   readonly type = FieldActionTypes.AddField;
 
-  constructor(public payload: string) {}
+  constructor(public payload: object) {}
 }
 
 export type FieldActionsUnion = SelectField | AddField;

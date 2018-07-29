@@ -8,6 +8,7 @@ import {
   debounceTime,
   tap,
   map,
+  mergeMap,
   skip,
   switchMap,
   takeUntil,
@@ -16,14 +17,15 @@ import {
 import { MiddlewareService } from '@core/services/middleware.service';
 import { NormaliserService } from '@core/services/normaliser.service';
 
-import { normalize, denormalize, schema } from 'normalizr';
-
 import {
   CaseActionTypes,
   GetOneCase,
   GetOneCaseSuccess,
   GetOneCaseError,
 } from './case.actions';
+
+import { FieldActionTypes, AddField } from './field.actions';
+
 import { Case } from '../models/case';
 import { Scheduler } from 'rxjs/internal/Scheduler';
 
@@ -47,15 +49,12 @@ export class CaseEffects {
   loadOne$: Observable<Action> = this.actions$.pipe(
     ofType<GetOneCase>(CaseActionTypes.GetOneCase),
     map(action => action.payload),
-    switchMap(caseId => {
-      return this.middleware.getCase(caseId).pipe(
+    mergeMap(caseId =>
+      this.middleware.getCase(caseId).pipe(
         catchError(err => of(new GetOneCaseError(err))),
-        concatMap((caseObject: Case) => [
-          new GetOneCaseSuccess(caseObject),
-          // new UpdateManySpec(caseObject.description),
-        ]),
-      );
-    }),
+        map(returnObject => new AddField(returnObject)),
+      ),
+    ),
   );
 
   constructor(

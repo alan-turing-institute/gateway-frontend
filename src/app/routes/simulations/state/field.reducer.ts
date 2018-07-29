@@ -30,6 +30,7 @@ export function reducer(
     }
 
     case FieldActionTypes.AddField: {
+      console.log('DEBUG(field.reducer.ts)', action.payload);
     }
 
     default: {

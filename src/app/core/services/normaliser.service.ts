@@ -9,7 +9,7 @@ import { environment } from '@env/environment';
 export class NormaliserService {
   constructor() {}
 
-  normaliseCase(): Observable<object> {
-    return of({ foo: 'bar' });
+  normaliseCase(caseObject): Observable<object> {
+    return of({ description: caseObject.description });
   }
 }
