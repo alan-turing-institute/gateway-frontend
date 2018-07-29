@@ -1,47 +1,21 @@
 import { Action } from '@ngrx/store';
-import { Case } from '../models/case';
+import { Spec } from '../models/spec';
 
-export enum CaseActionTypes {
-  GetOneCase = '[Case] Get One Case',
-  GetOneCaseSuccess = '[Case] Get One Case Success',
-  GetOneCaseError = '[Case] Get One Case Error',
-  SelectCase = '[Case] Select Case',
-  UpdateOneCase = '[Case] Update One Case',
+export enum SpecActionTypes {
+  SelectSpec = '[Spec] Select Spec',
+  UpdateOneSpec = '[Spec] Update One Spec',
 }
 
-export class GetOneCase implements Action {
-  readonly type = CaseActionTypes.GetOneCase;
+export class SelectSpec implements Action {
+  readonly type = SpecActionTypes.SelectSpec;
 
   constructor(public payload: string) {}
 }
 
-export class GetOneCaseSuccess implements Action {
-  readonly type = CaseActionTypes.GetOneCaseSuccess;
+export class UpdateOneSpec implements Action {
+  readonly type = SpecActionTypes.UpdateOneSpec;
 
-  constructor(public payload: Case) {}
+  constructor(public payload: Partial<Spec>) {}
 }
 
-export class GetOneCaseError implements Action {
-  readonly type = CaseActionTypes.GetOneCaseError;
-
-  constructor(public payload: string) {}
-}
-
-export class SelectCase implements Action {
-  readonly type = CaseActionTypes.SelectCase;
-
-  constructor(public payload: string) {}
-}
-
-export class UpdateOneCase implements Action {
-  readonly type = CaseActionTypes.UpdateOneCase;
-
-  constructor(public payload: Partial<Case>) {}
-}
-
-export type CaseActionsUnion =
-  | GetOneCase
-  | GetOneCaseSuccess
-  | GetOneCaseError
-  | SelectCase
-  | UpdateOneCase;
+export type SpecActionsUnion = SelectSpec | UpdateOneSpec;

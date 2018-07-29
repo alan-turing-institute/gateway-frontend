@@ -1,47 +1,21 @@
 import { Action } from '@ngrx/store';
-import { Case } from '../models/case';
+import { Field } from '../models/field';
 
-export enum CaseActionTypes {
-  GetOneCase = '[Case] Get One Case',
-  GetOneCaseSuccess = '[Case] Get One Case Success',
-  GetOneCaseError = '[Case] Get One Case Error',
-  SelectCase = '[Case] Select Case',
-  UpdateOneCase = '[Case] Update One Case',
+export enum FieldActionTypes {
+  SelectField = '[Field] Select Field',
+  AddField = '[Field] Add Field',
 }
 
-export class GetOneCase implements Action {
-  readonly type = CaseActionTypes.GetOneCase;
+export class SelectField implements Action {
+  readonly type = FieldActionTypes.SelectField;
 
   constructor(public payload: string) {}
 }
 
-export class GetOneCaseSuccess implements Action {
-  readonly type = CaseActionTypes.GetOneCaseSuccess;
-
-  constructor(public payload: Case) {}
-}
-
-export class GetOneCaseError implements Action {
-  readonly type = CaseActionTypes.GetOneCaseError;
+export class AddField implements Action {
+  readonly type = FieldActionTypes.AddField;
 
   constructor(public payload: string) {}
 }
 
-export class SelectCase implements Action {
-  readonly type = CaseActionTypes.SelectCase;
-
-  constructor(public payload: string) {}
-}
-
-export class UpdateOneCase implements Action {
-  readonly type = CaseActionTypes.UpdateOneCase;
-
-  constructor(public payload: Partial<Case>) {}
-}
-
-export type CaseActionsUnion =
-  | GetOneCase
-  | GetOneCaseSuccess
-  | GetOneCaseError
-  | SelectCase
-  | UpdateOneCase;
+export type FieldActionsUnion = SelectField | AddField;

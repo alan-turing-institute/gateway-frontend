@@ -14,6 +14,10 @@ import {
 } from 'rxjs/operators';
 
 import { MiddlewareService } from '@core/services/middleware.service';
+import { NormaliserService } from '@core/services/normaliser.service';
+
+import { normalize, denormalize, schema } from 'normalizr';
+
 import {
   CaseActionTypes,
   GetOneCase,
@@ -28,8 +32,17 @@ export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
   'Search Scheduler',
 );
 
+// Field[] schema definition
+// specSchema = new schema.Entity('specs');
+// specListSchema = new schema.Array(specSchema);
+// fieldSchema = new schema.Entity('fields');
+// fieldListSchema = new schema.Array(fieldSchema);
+// fieldSchema.define({ fields: fieldListSchema, specs: specListSchema }); // allow recursion
+
 @Injectable()
 export class CaseEffects {
+  // normalize$: Observable;
+
   @Effect()
   loadOne$: Observable<Action> = this.actions$.pipe(
     ofType<GetOneCase>(CaseActionTypes.GetOneCase),
@@ -48,5 +61,6 @@ export class CaseEffects {
   constructor(
     private actions$: Actions,
     private middleware: MiddlewareService,
+    private normaliser: NormaliserService,
   ) {}
 }
