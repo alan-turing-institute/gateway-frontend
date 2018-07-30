@@ -5,8 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
-// import 'rxjs/add/operator/catch';
-// import 'rxjs/add/operator/map';
+
 
 import { JobInfo } from '../types/jobInfo';
 import { JobAbout } from '../types/jobAbout';
@@ -19,63 +18,63 @@ import * as urljoin from 'url-join';
 export class ConfigDataService {
 
   private jobData;
-  private templateUrl = urljoin(environment.apiRoot, "");
-  private jobsUrl = urljoin(environment.apiRoot, "job");
-  private response = {}
+  private templateUrl = urljoin(environment.apiRoot, '');
+  private jobsUrl = urljoin(environment.apiRoot, 'job');
+  private response = {};
+
   constructor (private http: HttpClient) {}
 
-  getTemplate(template_id): Observable<JobInfo> {
-    var url = urljoin(this.templateUrl, template_id)
-    this.jobData = this.http.get(url)
-                    .catch(this.handleError);
+  public getTemplate(template_id): Observable<JobInfo> {
+    const url = urljoin(this.templateUrl, template_id);
+    this.jobData = this.http.get(url).catch(this.handleError);
 
     return this.jobData;
   }
 
-  getJob(job_id): Observable<JobInfo> {
-    var url = urljoin(this.jobsUrl, job_id)
-    this.jobData = this.http.get(url)
-                    .catch(this.handleError);
+  public getJob(job_id): Observable<JobInfo> {
+    const url = this.getJobUrl(job_id);
+    this.jobData = this.http.get(url).catch(this.handleError);
+
     return this.jobData;
   }
 
-  getJobUrl(job_id): string {
-    var url = urljoin(this.jobsUrl, job_id)
-    return url
+  public getCreateJobURL(jobAbout): string {
+    return this.jobsUrl;
   }
 
-  getCreateJobURL(jobAbout): string {
-    return this.jobsUrl
+  public getSaveJobURL(job_id): string {
+    return urljoin(this.jobsUrl, job_id);
   }
 
-  getSaveJobURL(job_id): string {
-    return urljoin(this.jobsUrl, job_id)
-  }
 
-  createJob(jobAbout:JobAbout, newJobUrl):Observable<any> {
-    let body = JSON.stringify(jobAbout)
+  public createJob(jobAbout: JobAbout, newJobUrl): Observable<any> {
+    let body = JSON.stringify(jobAbout);
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let response = this.http.post(newJobUrl, body, {headers: headers})
                     // .map(this.extractJsonData)
                     .catch(this.handleError);
-    return response
+    return response;
   }
 
-  saveJob(jobValues:JobValues, newJobUrl): Observable<InputComponent[]> {
-    console.log("in save")
+  public saveJob(jobValues: JobValues, newJobUrl): Observable<InputComponent[]> {
+    console.log("In save");
     let response = this.http.patch(newJobUrl, jobValues)
                     .catch(this.handleError);
-    return response
+    return response;
   }
 
-  runJob(jobData:any): Observable<any> {
+  public runJob(jobData: any): Observable<any> {
     let url = urljoin(this.jobsUrl, jobData['id']);
-    console.log("Running job at: " +url);
+    console.log('Running job at: ' + url);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     // let options = new RequestOptions({ headers: headers });
-    let response = this.http.post(url, { headers: headers })//, options)
+    let response = this.http.post(url, { headers: headers }) // , options)
                     .catch(this.handleError);
-    return response
+    return response;
+  }
+
+  private getJobUrl(job_id): string {
+    return urljoin(this.jobsUrl, job_id);
   }
 
   private extractJsonData(res: Response) {
@@ -84,7 +83,7 @@ export class ConfigDataService {
     return body || { };
   }
 
-  private extractDescription():string {
+  private extractDescription(): string {
     return this.response['case'].description;
   }
 

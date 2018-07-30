@@ -1,10 +1,10 @@
 export class FieldTemplate {
-    property_name:string;
-    parameterspec_id:string;
-    property_value:string;
+    property_name: string;
+    parameterspec_id: string;
+    property_value: string;
 }
 
-export class FieldsTemplate{
+export class FieldsTemplate {
     specs: Array<any>;
     name: string;
     child_fields: {
