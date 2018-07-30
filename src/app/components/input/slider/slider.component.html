@@ -16,12 +16,12 @@
                     </ion-range-slider>
                 </div>
                 <div class="col-lg-2 col-med-3 col-sm-3 col-xs-12">
-                    <input type="number" class="form-control" name={{data.name}} 
-                        placeholder={{data.value}} size="5" 
+                    <input type="number" class="form-control" name={{data.name}}
+                        placeholder={{data.value}} size="5"
                         min={{data.min_value}} max={{data.max_value}}  step={{data.step}}
                         [(ngModel)]="data.value"
                         [attr.id]="data.name"
-                        (blur)="updateText(data.value)">    
+                        (blur)="updateText(data.value)">
                 </div>
                 <div class="col-lg-2 col-med-3 col-sm-3 col-xs-12">
                     <div class="select form-control">
@@ -30,8 +30,7 @@
                         </select>
                     </div>
                 </div>
-            </div>                 
+            </div>
         </section>
     </form>
 </div>
-      
