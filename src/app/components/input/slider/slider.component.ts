@@ -1,60 +1,77 @@
-import { Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { InputComponent } from '../inputComponent';
 
+/**
+ * The slider is a component to allow users to select numeric
+ * values within a specified range.
+ */
 @Component({
   selector: 'sliderInput',
   templateUrl: 'slider.component.html',
-//   styleUrls: ['slider.css']
+  styleUrls: ['slider.css']
 })
-
-export class SliderComponent implements OnInit{
-  @Input() data: InputComponent; 
+export class SliderComponent implements OnInit {
+  @Input() data: InputComponent;
   @Output() onUpdated = new EventEmitter<string>();
-  defaultValue:string
-  
-  ngOnInit () {
-    this.defaultValue = this.data.value
-    // console.log(this.data);
-    // console.log("Label: "+this.data.label);
-    // console.log(this.data["value"]);
+  private defaultValue: string;
+
+  public ngOnInit() {
+    if (!this.valueValidated(this.data.value)) {
+      this.data.value = this.data.min_value;
+    }
+    this.defaultValue = this.data.value;
   }
 
-  valueValidated(newValue):boolean {
-    if ((newValue) && (Number(newValue)!=NaN) && (Number(this.data.value) >= Number(this.data.min_value)) 
-      && (Number(this.data.value) <= Number(this.data.max_value))) {
-        console.log (newValue + " is valid")
-        return true
-    }
-    else {
-      console.log (newValue + " is invalid")
-      return false
-    }
+  /**
+   * Handle the slider being updated by dragging the slider
+   *
+   * @param event The slider move event.
+   */
+  public updateSlider(event: {from: number}) {
+    this.updateValue(event.from.toString());
   }
 
-  updateSlider (event) {
-    let newValue = event.from;
-    if (this.valueValidated(newValue)) {
-      // this.defaultValue = newValue
-      this.onUpdated.emit(newValue.toString())
-      console.log("Child Emiting change: " +newValue)
-    }  
-    else {
-      console.log("resetting to "+this.defaultValue)
-      this.data.value = this.defaultValue
-    }
+  /**
+   * Handle the slider value being entered directly into the text
+   * field.
+   *
+   * @param value The new value set of the slider
+   */
+  public updateText(value: string) {
+    this.updateValue(value);
   }
 
-  updateText (value) {
-    let newValue = value;
-    if (this.valueValidated(newValue)) {
-      // this.defaultValue = newValue
-      this.onUpdated.emit(newValue.toString())
-      console.log("Child Emiting change: " +newValue)
-    }  
-    else {
-      console.log("resetting to "+this.defaultValue)
-      this.data.value = this.defaultValue
+  /**
+   * Set the slider to a new specified value.
+   * If this value is not supported by the slider, then set
+   * the slider to it's default.
+   *
+   * @param newValue The new value to attempt to assign to the slider
+   */
+  private updateValue(newValue: string) {
+    if (!this.valueValidated(newValue)) {
+      newValue = this.defaultValue;
+    }
+    this.data.value = newValue;
+    this.onUpdated.emit(this.data.value);
+  }
+
+  /**
+   * Ensure that the value being passed in is a valid number.
+   *
+   * @param newValue The new value that the slider should be set to
+   * @returns True if the new value is within the slider range. Otherwise false.
+   */
+  private valueValidated(newValue: string): boolean {
+    if (newValue &&
+        Number(newValue) !== NaN &&
+        Number(this.data.value) >= Number(this.data.min_value) &&
+        Number(this.data.value) <= Number(this.data.max_value)) {
+      console.log(newValue + ' is valid');
+      return true;
+    } else {
+      console.log(newValue + ' is invalid');
+      return false;
     }
   }
 }
