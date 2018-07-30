@@ -1,23 +1,20 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { AccountComponent } from './account.component';
 import { AccountRoutingModule } from './account-routing.module';
-import { ClarityModule } from 'clarity-angular';
 
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { ChartComponent } from './chart/chart.component';
 import { AccountService } from './account.service';
-// import { HttpClientModule } from '@angular/common/http';
+ import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     AccountRoutingModule,
-    ClarityModule.forRoot(),
-    NgxChartsModule,
-    // HttpClientModule
+    HttpClientModule,
+    CommonModule
   ],
   providers: [
     AccountService
   ],
-  declarations: [AccountComponent, ChartComponent]
+  declarations: [AccountComponent]
 })
 export class AccountModule { }

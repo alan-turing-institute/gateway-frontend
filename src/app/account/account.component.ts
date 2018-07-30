@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ChartComponent } from './chart/chart.component';
 
 import { CounterData } from '../types/counterData';
 
@@ -53,7 +51,7 @@ export class AccountComponent implements OnInit {
                 this.dataLoaded = true;
             },
             error => {
-              this.errorMessage = <any> error
+              this.errorMessage = <any> error;
             });
     }
 
