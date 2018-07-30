@@ -1,0 +1,10 @@
+.dragTarget {
+    border-width: 2px;
+    border-color: darkslategrey;
+    border-style: dashed;
+    padding: 4ex 3em;
+}
+
+.inputBox {
+    margin-bottom: 1ex;
+}
