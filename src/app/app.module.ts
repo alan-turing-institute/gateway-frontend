@@ -1,6 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
@@ -19,10 +18,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { EnsureAuthenticated } from './auth/ensure-authenticated.service';
 import { LoginRedirect } from './auth/login-redirect.service';
+// import { AccountModule } from './account/account.module'
 
 
 @NgModule({
   imports: [
+    // AccountModule,
     BrowserModule,
     RouterModule,
     HttpClientModule,
