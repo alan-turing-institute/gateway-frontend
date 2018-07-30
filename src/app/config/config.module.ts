@@ -7,8 +7,11 @@ import { DescriptionModule } from '../components/description/description.module'
 import { ConfigDataService } from './configData.service';
 import { InputModule } from '../components/input/input.module';
 import { PipeModule} from '../components/pipe/pipe.module';
-import { ClarityModule } from "clarity-angular";
+import { ClarityModule } from 'clarity-angular';
 import { FeedbackComponent } from '../components/feedback/feedback.component';
+
+import { FileUploadComponent } from '../components/file-upload/file-upload.component';
+import { PreviewComponent } from '../components/preview/preview.component';
 
 import { AuthService } from '../auth/auth.service';
 
@@ -29,7 +32,9 @@ import { AuthService } from '../auth/auth.service';
     ConfigComponent,
     // TextInputComponent,
     // SliderInputComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    FileUploadComponent,
+    PreviewComponent
   ],
   providers: [
     ConfigDataService,
@@ -39,6 +44,8 @@ import { AuthService } from '../auth/auth.service';
   exports: [
     // ConfigComponent,
     // CaseDescriptionComponent
+    FileUploadComponent,
+    PreviewComponent
   ],
   entryComponents: [
   //  FeedbackComponent
