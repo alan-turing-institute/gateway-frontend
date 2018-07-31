@@ -1,16 +1,15 @@
-
 <div class="app-body main-container">
     <header class="header-6">
         <div class="branding">
-            <span class="title">Si
-            <!-- <span class="icon">
-                <clr-icon shape="line-chart" style="transform: rotate(180deg);"></clr-icon></span>ulate -->
-                <img class ="icon" src="../../assets/img/line-chart-line.svg">
-            ulate</span>
+            <span class="title">BEMPP</span>
         </div>
         <div class="header-nav">
-            <a routerLinkActive="active" [routerLink]="['/dashboard']" class="nav-link"><span class="nav-text">Dashboard</span></a>
-            <a routerLinkActive="active" [routerLink]="['/cases']" class="nav-link"><span class="nav-text">New</span></a>
+            <a routerLinkActive="active" [routerLink]="['/dashboard']" class="nav-link">
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a routerLinkActive="active" [routerLink]="['/cases']" class="nav-link">
+                <span class="nav-text">New</span>
+            </a>
         </div>
         <div class="header-actions">
             <clr-dropdown>
@@ -20,15 +19,10 @@
                 </button>
                 <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
                     <a routerLinkActive="active" [routerLink]="['/account']" clrDropdownItem>Account</a>
-                    <!-- <a href="..." clrDropdownItem>Preferences</a> -->
                     <a clrDropdownItem (click)="logout()">Log out</a>
                 </clr-dropdown-menu>
             </clr-dropdown>
         </div>
     </header>
-    <!-- <div class="content-container">
-        <div class="content-area"> -->
-          <router-outlet></router-outlet>
-        <!-- </div>
-    </div> -->
+    <router-outlet></router-outlet>
 </div>
