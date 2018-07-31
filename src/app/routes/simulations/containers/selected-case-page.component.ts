@@ -2,30 +2,30 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as fromCaseSummaries from '../state';
-import * as CaseSummaryActions from '../state/case-summary.actions';
-import { CaseSummary } from '../models/case';
+import * as fromCase from '../state';
+import * as CaseActions from '../state/case.actions';
+import { Case } from '../models/case';
 
 @Component({
   selector: 'sim-selected-case-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <sim-case-configure
-    [caseSummary]="caseSummary$ | async" 
-    (update)=updateCaseSummary($event)>
+    [caseObject]="caseObject$ | async" 
+    (update)=updateCase($event)>
   </sim-case-configure>
   `,
 })
 export class SelectedCasePageComponent {
-  caseSummary$: Observable<CaseSummary>;
+  caseObject$: Observable<Case>;
 
-  constructor(private store: Store<fromCaseSummaries.State>) {
-    this.caseSummary$ = store.pipe(
-      select(fromCaseSummaries.getSelectedCaseSummary),
-    ) as Observable<CaseSummary>;
+  constructor(private store: Store<fromCase.State>) {
+    this.caseObject$ = store.pipe(
+      select(fromCase.getSelectedCase),
+    ) as Observable<Case>;
   }
 
-  updateCaseSummary(value: string) {
-    this.store.dispatch(new CaseSummaryActions.UpdateOne({ value: value }));
+  updateCase(value: string) {
+    this.store.dispatch(new CaseActions.UpdateCase({ value: value }));
   }
 }

@@ -13,7 +13,7 @@ import * as fromRoot from '../../../state';
 export interface CasesState {
   search: fromSearch.State;
   summaries: fromCaseSummaries.State;
-  details: fromCases.State;
+  cases: fromCases.State;
   specs: fromSpecs.State;
   fields: fromFields.State;
 }
@@ -25,7 +25,7 @@ export interface State extends fromRoot.State {
 export const reducers: ActionReducerMap<CasesState> = {
   search: fromSearch.reducer,
   summaries: fromCaseSummaries.reducer,
-  details: fromCases.reducer,
+  cases: fromCases.reducer,
   fields: fromFields.reducer,
   specs: fromSpecs.reducer,
 };
@@ -40,7 +40,7 @@ export const getCaseSummaryEntitiesState = createSelector(
 
 export const getCaseEntitiesState = createSelector(
   getCasesState,
-  state => state.details,
+  state => state.cases,
 );
 
 export const getFieldEntitiesState = createSelector(
@@ -113,7 +113,7 @@ export const getSelectedCaseSummary = createSelector(
 );
 
 export const getSelectedCase = createSelector(
-  getCaseSummaryEntities,
+  getCaseEntities,
   getSelectedCaseId,
   (entities, selectedId) => {
     return selectedId && entities[selectedId];

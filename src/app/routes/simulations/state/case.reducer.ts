@@ -20,33 +20,32 @@ export const initialState: State = adapter.getInitialState({
 
 export function reducer(state = initialState, action: CaseActionsUnion): State {
   switch (action.type) {
-    case CaseActionTypes.GetOneCase: {
+    case CaseActionTypes.GetCase: {
       return state;
     }
-    case CaseActionTypes.GetOneCaseError: {
+    case CaseActionTypes.GetCaseError: {
       return state;
     }
-    case CaseActionTypes.GetOneCaseSuccess: {
-      console.log(action.payload);
-      // return adapter.addOne(action.payload, state);
+    case CaseActionTypes.GetCaseSuccess: {
+      return adapter.addOne(action.payload, state);
     }
 
-    // case CaseActionTypes.SelectCase: {
-    //   return {
-    //     ...state,
-    //     selectedCaseId: action.payload,
-    //   };
-    // }
+    case CaseActionTypes.SelectCase: {
+      return {
+        ...state,
+        selectedCaseId: action.payload,
+      };
+    }
 
-    // case CaseActionTypes.UpdateOne: {
-    //   return adapter.updateOne(
-    //     {
-    //       id: state.selectedCaseId,
-    //       changes: action.payload,
-    //     },
-    //     state,
-    //   );
-    // }
+    case CaseActionTypes.UpdateCase: {
+      return adapter.updateOne(
+        {
+          id: state.selectedCaseId,
+          changes: action.payload,
+        },
+        state,
+      );
+    }
 
     default: {
       return state;

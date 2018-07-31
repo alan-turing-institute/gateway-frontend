@@ -1,29 +1,29 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CaseSummary } from '../models/case';
+import { Case } from '../models/case';
 
 @Component({
   selector: 'sim-case-configure',
   templateUrl: './case-configure.component.html',
 })
 export class CaseConfigureComponent {
-  @Input() caseSummary: CaseSummary;
+  @Input() caseObject: Case;
   @Output() update = new EventEmitter<string>();
 
   value = 1;
 
   get id() {
-    return this.caseSummary.id;
+    return this.caseObject.id;
   }
 
   get name() {
-    return this.caseSummary.name;
+    return this.caseObject.name;
   }
 
   get description() {
-    return this.caseSummary.description;
+    return this.caseObject.description;
   }
 
   get thumbnail() {
-    return this.caseSummary.thumbnail;
+    return this.caseObject.thumbnail;
   }
 }

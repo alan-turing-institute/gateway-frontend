@@ -36,7 +36,7 @@ export class ConfigureCasePageComponent implements OnDestroy {
         concatMap(params => [
           new CaseSummaryActions.Select(params.id), // TODO temporary
           new CaseActions.SelectCase(params.id),
-          new CaseActions.GetOneCase(params.id),
+          new CaseActions.GetCase(params.id),
         ]),
       )
       .subscribe(store);

@@ -2,27 +2,27 @@ import { Action } from '@ngrx/store';
 import { Case } from '../models/case';
 
 export enum CaseActionTypes {
-  GetOneCase = '[Case] Get One Case',
-  GetOneCaseSuccess = '[Case] Get One Case Success',
-  GetOneCaseError = '[Case] Get One Case Error',
+  GetCase = '[Case] Get Case',
+  GetCaseSuccess = '[Case] Get Case Success',
+  GetCaseError = '[Case] Get Case Error',
   SelectCase = '[Case] Select Case',
-  UpdateOneCase = '[Case] Update One Case',
+  UpdateCase = '[Case] Update Case',
 }
 
-export class GetOneCase implements Action {
-  readonly type = CaseActionTypes.GetOneCase;
+export class GetCase implements Action {
+  readonly type = CaseActionTypes.GetCase;
 
   constructor(public payload: string) {}
 }
 
-export class GetOneCaseSuccess implements Action {
-  readonly type = CaseActionTypes.GetOneCaseSuccess;
+export class GetCaseSuccess implements Action {
+  readonly type = CaseActionTypes.GetCaseSuccess;
 
-  constructor(public payload: object) {} // TODO type
+  constructor(public payload: Case) {} // TODO type
 }
 
-export class GetOneCaseError implements Action {
-  readonly type = CaseActionTypes.GetOneCaseError;
+export class GetCaseError implements Action {
+  readonly type = CaseActionTypes.GetCaseError;
 
   constructor(public payload: string) {}
 }
@@ -33,15 +33,15 @@ export class SelectCase implements Action {
   constructor(public payload: string) {}
 }
 
-export class UpdateOneCase implements Action {
-  readonly type = CaseActionTypes.UpdateOneCase;
+export class UpdateCase implements Action {
+  readonly type = CaseActionTypes.UpdateCase;
 
   constructor(public payload: Partial<Case>) {}
 }
 
 export type CaseActionsUnion =
-  | GetOneCase
-  | GetOneCaseSuccess
-  | GetOneCaseError
+  | GetCase
+  | GetCaseSuccess
+  | GetCaseError
   | SelectCase
-  | UpdateOneCase;
+  | UpdateCase;

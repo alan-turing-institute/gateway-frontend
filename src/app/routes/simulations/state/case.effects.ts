@@ -19,9 +19,9 @@ import { NormalizerService } from '@core/services/normalizer.service';
 
 import {
   CaseActionTypes,
-  GetOneCase,
-  GetOneCaseSuccess,
-  GetOneCaseError,
+  GetCase,
+  GetCaseSuccess,
+  GetCaseError,
 } from './case.actions';
 
 import { UpsertManySpecs } from './spec.actions';
@@ -43,19 +43,19 @@ export class CaseEffects {
 
   @Effect()
   loadOne$: Observable<Action> = this.actions$.pipe(
-    ofType<GetOneCase>(CaseActionTypes.GetOneCase),
+    ofType<GetCase>(CaseActionTypes.GetCase),
     map(action => action.payload),
     mergeMap(caseId =>
       this.middleware.getCase(caseId).pipe(
-        catchError(err => of(new GetOneCaseError(err))),
+        catchError(err => of(new GetCaseError(err))),
         mergeMap((apiCase: ApiCase) =>
           this.normalizer
             .normalizeCase(apiCase)
             .pipe(
-              concatMap((flatCase: NormalizedCase) => [
-                new GetOneCaseSuccess(flatCase.case),
-                new UpsertManySpecs(flatCase.specs),
-                new UpsertManyFields(flatCase.fields),
+              concatMap((normalizedCase: NormalizedCase) => [
+                new GetCaseSuccess(normalizedCase.case),
+                new UpsertManySpecs(normalizedCase.specs),
+                new UpsertManyFields(normalizedCase.fields),
               ]),
             ),
         ),
