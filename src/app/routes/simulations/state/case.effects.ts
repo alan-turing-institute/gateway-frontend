@@ -15,7 +15,7 @@ import {
 } from 'rxjs/operators';
 
 import { MiddlewareService } from '@core/services/middleware.service';
-import { NormaliserService } from '@core/services/normaliser.service';
+import { NormalizerService } from '@core/services/normalizer.service';
 
 import {
   CaseActionTypes,
@@ -28,7 +28,7 @@ import { UpsertManySpecs } from './spec.actions';
 
 import { FieldActionTypes, UpsertManyFields } from './field.actions';
 
-import { Case, FlattenedCase } from '../models/case';
+import { Case, NormalizedCase } from '../models/case';
 import { ApiCase } from '../models/case';
 import { Scheduler } from 'rxjs/internal/Scheduler';
 
@@ -49,10 +49,10 @@ export class CaseEffects {
       this.middleware.getCase(caseId).pipe(
         catchError(err => of(new GetOneCaseError(err))),
         mergeMap((apiCase: ApiCase) =>
-          this.normaliser
-            .flattenCase(apiCase)
+          this.normalizer
+            .normalizeCase(apiCase)
             .pipe(
-              concatMap((flatCase: FlattenedCase) => [
+              concatMap((flatCase: NormalizedCase) => [
                 new GetOneCaseSuccess(flatCase.case),
                 new UpsertManySpecs(flatCase.specs),
                 new UpsertManyFields(flatCase.fields),
@@ -66,6 +66,6 @@ export class CaseEffects {
   constructor(
     private actions$: Actions,
     private middleware: MiddlewareService,
-    private normaliser: NormaliserService,
+    private normalizer: NormalizerService,
   ) {}
 }

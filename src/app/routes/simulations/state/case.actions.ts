@@ -18,7 +18,7 @@ export class GetOneCase implements Action {
 export class GetOneCaseSuccess implements Action {
   readonly type = CaseActionTypes.GetOneCaseSuccess;
 
-  constructor(public payload: Case) {} // TODO type
+  constructor(public payload: object) {} // TODO type
 }
 
 export class GetOneCaseError implements Action {

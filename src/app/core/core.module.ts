@@ -4,10 +4,10 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
 import { I18NService } from './i18n/i18n.service';
 import { RawHttpClient } from './startup/vanilla.service';
 import { MiddlewareService } from './services/middleware.service';
-import { NormaliserService } from './services/normaliser.service';
+import { NormalizerService } from './services/normalizer.service';
 
 @NgModule({
-  providers: [I18NService, RawHttpClient, MiddlewareService, NormaliserService],
+  providers: [I18NService, RawHttpClient, MiddlewareService, NormalizerService],
 })
 export class CoreModule {
   constructor(

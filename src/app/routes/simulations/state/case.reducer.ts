@@ -27,7 +27,8 @@ export function reducer(state = initialState, action: CaseActionsUnion): State {
       return state;
     }
     case CaseActionTypes.GetOneCaseSuccess: {
-      return adapter.addOne(action.payload, state);
+      console.log(action.payload);
+      // return adapter.addOne(action.payload, state);
     }
 
     // case CaseActionTypes.SelectCase: {

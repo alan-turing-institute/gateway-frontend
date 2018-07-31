@@ -63,18 +63,17 @@ export function generateMockCase(): Case {
   return mockCase;
 }
 
-export interface NormalisedEntities {
+export interface NormalizerEntities {
   cases: { [key: string]: Case };
   fields: { [key: string]: Field };
   specs: { [key: string]: Spec };
 }
-
-export interface NormalisedCase {
+export interface NormalizerOutput {
   result: number | string;
-  entities: NormalisedEntities;
+  entities: NormalizerEntities;
 }
 
-export function generateMockNormalisedCase(): NormalisedCase {
+export function generateMockNormalizerOutput(): NormalizerOutput {
   return {
     result: '1',
     entities: {
@@ -92,13 +91,13 @@ export function generateMockNormalisedCase(): NormalisedCase {
   };
 }
 
-export interface FlattenedCase {
+export interface NormalizedCase {
   case: Case;
   fields: Field[];
   specs: Spec[];
 }
 
-export function generateMockFlattenedCase(): FlattenedCase {
+export function generateMock(): NormalizedCase {
   return {
     case: generateMockCase(),
     fields: [generateMockField()],

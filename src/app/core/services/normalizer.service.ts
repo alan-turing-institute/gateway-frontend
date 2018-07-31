@@ -7,8 +7,8 @@ import { normalize, denormalize, schema } from 'normalizr';
 import {
   Case,
   ApiCase,
-  NormalisedCase,
-  FlattenedCase,
+  NormalizerOutput,
+  NormalizedCase,
 } from '@simulations/models/case';
 import { Field } from '@simulations/models/field';
 import { Spec } from '@simulations/models/spec';
@@ -23,27 +23,24 @@ fieldSchema.define({ fields: fieldListSchema, specs: specListSchema }); // allow
 const caseSchema = new schema.Entity('cases', { fields: fieldListSchema });
 
 @Injectable()
-export class NormaliserService {
-  flattenCase(apiCase: ApiCase): Observable<object> {
-    const normalisedCase: NormalisedCase = normalize(apiCase, caseSchema);
-    const flattenedCase: FlattenedCase = this.flatten(normalisedCase);
-    return of(flattenedCase);
-  }
-
-  flatten(normalisedCase: NormalisedCase): FlattenedCase {
-    const caseId = normalisedCase.result;
+export class NormalizerService {
+  normalizeCase(apiCase: ApiCase): Observable<object> {
+    const normalizerOutput: NormalizerOutput = normalize(apiCase, caseSchema);
+    const caseId = normalizerOutput.result;
 
     const fields: Field[] = (<any>Object).values(
-      normalisedCase.entities.fields,
+      normalizerOutput.entities.fields,
     );
-    const specs: Spec[] = (<any>Object).values(normalisedCase.entities.specs);
-    const caseObject: Case = normalisedCase.entities.cases[caseId];
-    const flatCase: FlattenedCase = {
+    const specs: Spec[] = (<any>Object).values(normalizerOutput.entities.specs);
+
+    const caseObject: Case = normalizerOutput.entities.cases[caseId];
+
+    const normalizedCase: NormalizedCase = {
       case: caseObject,
       specs: specs,
       fields: fields,
     };
 
-    return flatCase;
+    return of(normalizedCase);
   }
 }
