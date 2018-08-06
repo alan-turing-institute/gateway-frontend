@@ -8,9 +8,14 @@ import { MiddlewareService } from '@core/services/middleware.service';
 
 @Injectable()
 export class CaseService {
-  public summaries$: Observable<CaseSummary[]>;
+  public caseSummaries$: Observable<CaseSummary[]>;
+  public cases: Case[];
 
   constructor(private middlewareService: MiddlewareService) {
-    this.summaries$ = this.middlewareService.getAllCaseSummaries();
+    this.caseSummaries$ = this.middlewareService.getAllCaseSummaries();
+  }
+
+  getCase(id: string): Observable<Case> {
+    return this.middlewareService.getCase(id);
   }
 }

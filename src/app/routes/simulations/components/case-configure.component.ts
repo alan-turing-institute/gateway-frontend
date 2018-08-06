@@ -9,8 +9,6 @@ export class CaseConfigureComponent {
   @Input() caseObject: Case;
   @Output() update = new EventEmitter<string>();
 
-  value = 1;
-
   get id() {
     return this.caseObject.id;
   }

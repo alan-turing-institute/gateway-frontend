@@ -31,7 +31,7 @@ import { NzMessageService } from 'ng-zorro-antd';
     `,
   ],
   // encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreatePageComponent implements OnInit {
   caseSummaries$: Observable<CaseSummary[]>;
@@ -43,11 +43,8 @@ export class CreatePageComponent implements OnInit {
     public msg: NzMessageService,
     private caseService: CaseService,
   ) {
-    // this.caseSummaries$ = store.pipe(select(fromCase.getAllCaseSummaries));
-    this.caseSummaries$ = caseService.summaries$;
+    this.caseSummaries$ = caseService.caseSummaries$;
   }
 
-  ngOnInit() {
-    // this.store.dispatch(new CaseSummaryActions.Load());
-  }
+  ngOnInit() {}
 }

@@ -1,50 +1,24 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { select, Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { map, concatMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Case } from '../models/case';
-import * as fromCase from '../state';
-import * as CaseSummaryActions from '../state/case-summary.actions';
-import * as CaseActions from '../state/case.actions';
-
-import { CaseActionTypes } from '../state/case.actions';
+import { CaseService } from '../services/case.service';
 
 @Component({
   selector: 'app-simulations-configure',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <sim-selected-case-page></sim-selected-case-page>
+  <sim-case-configure [caseObject]="caseObject$ | async"></sim-case-configure>
   `,
 })
-export class ConfigureCasePageComponent implements OnDestroy {
-  load: Subscription;
-  cases$: Observable<Case[]>;
+export class ConfigureCasePageComponent {
+  caseObject$: Observable<Case>;
 
-  constructor(
-    private store: Store<fromCase.State>,
-    private route: ActivatedRoute,
-  ) {
-    this.load = route.params
-      .pipe(
-        concatMap(params => [
-          new CaseSummaryActions.Select(params.id), // TODO temporary
-          new CaseActions.SelectCase(params.id),
-          new CaseActions.GetCase(params.id),
-        ]),
-      )
-      .subscribe(store);
-
-    this.cases$ = store.pipe(select(fromCase.getAllCases));
-  }
-
-  ngOnDestroy() {
-    this.load.unsubscribe();
+  constructor(private caseService: CaseService, private route: ActivatedRoute) {
+    // load the required Case observable
+    route.params.pipe(map(params => params.id)).subscribe(id => {
+      this.caseObject$ = caseService.getCase(id);
+    });
   }
 }
