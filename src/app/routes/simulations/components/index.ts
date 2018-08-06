@@ -4,19 +4,13 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { SimulationsRoutingModule } from '../simulations-routing.module';
 
-import { CasePreviewListComponent } from './case-preview-list.component';
+import { CaseSummaryListComponent } from './case-summary-list-component';
 import { CaseConfigureComponent } from './case-configure.component';
 
-export const COMPONENTS = [
-  CasePreviewListComponent,
-  CaseConfigureComponent
-];
+export const COMPONENTS = [CaseSummaryListComponent, CaseConfigureComponent];
 
 @NgModule({
-  imports: [
-    SimulationsRoutingModule,
-    SharedModule
-  ],
+  imports: [SimulationsRoutingModule, SharedModule],
   declarations: COMPONENTS,
   exports: COMPONENTS,
 })

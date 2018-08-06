@@ -8,6 +8,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { CaseSummary } from '../models/case';
+import { CaseService } from '../services/case.service';
 import * as CaseSummaryActions from '../state/case-summary.actions';
 import * as fromCase from '../state';
 
@@ -20,7 +21,7 @@ import { NzMessageService } from 'ng-zorro-antd';
     CREATE
     </page-header>
 
-    <sim-case-preview-list [loading]=loading [caseSummaries]="caseSummaries$ | async"></sim-case-preview-list>
+    <sim-case-summary-list [loading]=loading [caseSummaries]="caseSummaries$ | async"></sim-case-summary-list>
   `,
   styles: [
     `
@@ -34,16 +35,19 @@ import { NzMessageService } from 'ng-zorro-antd';
 })
 export class CreatePageComponent implements OnInit {
   caseSummaries$: Observable<CaseSummary[]>;
+
   loading: boolean = false;
 
   constructor(
     private store: Store<fromCase.State>,
     public msg: NzMessageService,
+    private caseService: CaseService,
   ) {
-    this.caseSummaries$ = store.pipe(select(fromCase.getAllCaseSummaries));
+    // this.caseSummaries$ = store.pipe(select(fromCase.getAllCaseSummaries));
+    this.caseSummaries$ = caseService.summaries$;
   }
 
   ngOnInit() {
-    this.store.dispatch(new CaseSummaryActions.Load());
+    // this.store.dispatch(new CaseSummaryActions.Load());
   }
 }

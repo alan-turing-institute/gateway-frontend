@@ -4,8 +4,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { CaseSummary } from '../models/case';
 
 @Component({
-  selector: 'sim-case-preview-list',
-  templateUrl: 'case-preview-list.component.html',
+  selector: 'sim-case-summary-list',
+  templateUrl: 'case-summary-list.component.html',
   styles: [
     `
       :host ::ng-deep .ant-card-meta-title {
@@ -14,7 +14,7 @@ import { CaseSummary } from '../models/case';
     `,
   ],
 })
-export class CasePreviewListComponent {
+export class CaseSummaryListComponent {
   constructor(public msg: NzMessageService) {}
 
   @Input() caseSummaries: CaseSummary[];

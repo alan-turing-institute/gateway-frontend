@@ -32,11 +32,11 @@
         "environments/*"
       ],
       "@simulations": [
-        "app/routes/simulations"
+        "app/routes/simulationss"
       ],
       "@simulations/*": [
         "app/routes/simulations/*"
-      ],
+      ]
     },
     "baseUrl": "./"
   },

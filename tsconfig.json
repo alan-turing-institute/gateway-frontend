@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "src/",
+    "baseUrl": "./src/",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -40,6 +40,12 @@
       ],
       "@env/*": [
         "environments/*"
+      ],
+      "@simulations": [
+        "app/routes/simulations"
+      ],
+      "@simulations/*": [
+        "app/routes/simulations/*"
       ]
     }
   }
