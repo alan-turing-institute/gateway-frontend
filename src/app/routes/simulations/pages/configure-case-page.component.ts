@@ -9,7 +9,10 @@ import { CaseService } from '../services/case.service';
 @Component({
   selector: 'app-simulations-configure',
   template: `
-  <sim-case-configure [caseObject]="caseObject$ | async"></sim-case-configure>
+  <sim-case-configure 
+    [caseObject]="caseObject$ | async"
+    (update)=updateDescription($event)>
+  </sim-case-configure>
   `,
 })
 export class ConfigureCasePageComponent {
@@ -20,5 +23,11 @@ export class ConfigureCasePageComponent {
     route.params.pipe(map(params => params.id)).subscribe(id => {
       this.caseObject$ = caseService.getCase(id);
     });
+  }
+
+  updateDescription(value: string) {
+    console.log(value);
+    // caseService.updateCase(patch);
+    // caseService.updateSelectedCase(patch);
   }
 }
