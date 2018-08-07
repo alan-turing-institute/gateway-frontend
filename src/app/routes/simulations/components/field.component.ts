@@ -3,12 +3,7 @@ import { Field } from '../models/field';
 
 @Component({
   selector: 'sim-field',
-  template: `
-
-    <div>
-      {{field | json}}
-    </div>
-
+  template: `  
     <div>
       <input placeholder="Edit field" (keyup)="updateName($event.target.value)">
     </div>    

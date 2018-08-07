@@ -9,14 +9,6 @@ import { CreatePageComponent } from './pages/create-page.component';
 import { ViewPageComponent } from './pages/view-page.component';
 import { ConfigureCasePageComponent } from './pages/configure-case-page.component';
 
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-
-import { CaseSummaryEffects } from './state/case-summary.effects';
-import { CaseEffects } from './state/case.effects';
-
-import { reducers } from './state';
-
 import { CaseService } from './services/case.service';
 
 const PAGECOMPONENTS = [
@@ -26,13 +18,7 @@ const PAGECOMPONENTS = [
 ];
 
 @NgModule({
-  imports: [
-    SharedModule,
-    SimulationsRoutingModule,
-    ComponentsModule,
-    StoreModule.forFeature('cases', reducers), // TODO check setting
-    EffectsModule.forFeature([CaseSummaryEffects, CaseEffects]),
-  ],
+  imports: [SharedModule, SimulationsRoutingModule, ComponentsModule],
   providers: [CaseService],
   declarations: [...PAGECOMPONENTS],
 })

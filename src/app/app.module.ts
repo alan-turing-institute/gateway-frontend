@@ -38,10 +38,6 @@ import { JsonSchemaModule } from '@shared/json-schema/json-schema.module';
 
 // application state
 import { environment } from '@env/environment';
-import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { EffectsModule } from '@ngrx/effects';
-import { reducers, metaReducers } from './state';
 
 export function StartupServiceFactory(
   startupService: StartupService,
@@ -71,12 +67,6 @@ export function StartupServiceFactory(
     // JSON-Schema form
     JsonSchemaModule,
     // application state
-    StoreModule.forRoot(reducers, { metaReducers }),
-    StoreDevtoolsModule.instrument({
-      name: 'NgRx Store DevTools',
-      logOnly: environment.production,
-    }),
-    EffectsModule.forRoot([]),
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en-GB' },

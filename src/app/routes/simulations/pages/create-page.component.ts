@@ -1,16 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  ViewEncapsulation,
-} from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { CaseSummary } from '../models/case';
 import { CaseService } from '../services/case.service';
-import * as CaseSummaryActions from '../state/case-summary.actions';
-import * as fromCase from '../state';
 
 import { NzMessageService } from 'ng-zorro-antd';
 
@@ -38,11 +30,7 @@ export class CreatePageComponent implements OnInit {
 
   loading: boolean = false;
 
-  constructor(
-    private store: Store<fromCase.State>,
-    public msg: NzMessageService,
-    private caseService: CaseService,
-  ) {
+  constructor(public msg: NzMessageService, private caseService: CaseService) {
     this.caseSummaries$ = caseService.caseSummaries$;
   }
 
