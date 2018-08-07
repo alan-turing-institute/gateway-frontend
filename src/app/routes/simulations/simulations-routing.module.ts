@@ -4,14 +4,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { CreatePageComponent } from './pages/create-page.component';
 import { ViewPageComponent } from './pages/view-page.component';
 
-import { ConfigureCasePageComponent } from './pages/configure-case-page.component';
+import { CreateSimulationPageComponent } from './pages/create-simulation-page.component';
 
 const routes: Routes = [
   { path: 'create', component: CreatePageComponent },
   { path: 'view', component: ViewPageComponent },
   {
-    path: 'configure/:id',
-    component: ConfigureCasePageComponent,
+    path: 'create/:id',
+    component: CreateSimulationPageComponent,
     data: { title: 'Configure' },
   },
 ];

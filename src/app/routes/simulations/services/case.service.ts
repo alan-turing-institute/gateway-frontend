@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Case, CaseSummary } from '../models/case';
+import { Case, CaseSummary, CaseSelection } from '../models/case';
+
 import { environment } from '@env/environment';
 import { MiddlewareService } from '@core/services/middleware.service';
 
@@ -17,5 +18,9 @@ export class CaseService {
 
   getCase(id: string): Observable<Case> {
     return this.middlewareService.getCase(id);
+  }
+
+  createJob(caseSelection: CaseSelection): Observable<Case> {
+    return this.middlewareService.createJob(caseSelection);
   }
 }

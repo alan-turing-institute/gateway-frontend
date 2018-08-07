@@ -9,10 +9,10 @@
         <span>Create new case</span>
       </button> -->
 
-      <nz-card [nzBordered]="true" nzHoverable *ngIf="item !== null" [nzActions]="[op1]" [routerLink]="['/simulations/configure', item.id]" routerLinkActive="active">
+      <nz-card [nzBordered]="true" nzHoverable *ngIf="item !== null" [nzActions]="[op1]" [routerLink]="['/simulations/create', item.id]" routerLinkActive="active">
         <ng-template #op1>
           <a
-            [routerLink]="['/simulations/configure', item.id]"
+            [routerLink]="['/simulations/create', item.id]"
             routerLinkActive="active"
             (click)="msg.success('Name (from button A)：' + item.name);"
             ><i class="anticon anticon-form"></i> Create</a>
@@ -25,7 +25,7 @@
             <nz-avatar nzSize="large" [nzSrc]="item.thumbnail"></nz-avatar>
           </ng-template>
           <ng-template #nzTitle>
-            <a (click)="msg.success('Name (from name)：' + item.name);" [routerLink]="['/simulations/configure', item.id]" routerLinkActive="active">{{item.name}}</a>
+            <a (click)="msg.success('Name (from name)：' + item.name);" [routerLink]="['/simulations/create', item.id]" routerLinkActive="active">{{item.name}}</a>
           </ng-template>
           <ng-template #nzDescription>
             <ellipsis>{{item.description}} Lot's of overflow text to go here.</ellipsis>

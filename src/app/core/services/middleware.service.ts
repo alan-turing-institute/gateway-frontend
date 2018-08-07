@@ -1,14 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Case, CaseSummary } from '@simulations/models/case';
+import { Case, CaseSummary, CaseSelection } from '@simulations/models/case';
 import { environment } from '@env/environment';
 
 @Injectable()
 export class MiddlewareService {
   private CASE_API_PATH = `${environment.MIDDLEWARE_URL}/case`;
+  private JOB_API_PATH = `${environment.MIDDLEWARE_URL}/job`;
 
   constructor(private http: HttpClient) {}
 
@@ -28,5 +29,16 @@ export class MiddlewareService {
     return this.http
       .get<Case>(`${this.CASE_API_PATH}/${id}`)
       .pipe(map(caseObject => caseObject));
+  }
+
+  createJob(caseSelection: CaseSelection): Observable<Case> {
+    let body = JSON.stringify(caseSelection);
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    return this.http.post<Case>(`${this.JOB_API_PATH}`, body, httpOptions);
   }
 }

@@ -37,9 +37,9 @@
               "i18n": "view"
             },
             {
-              "text": "configure",
-              "link": "/simulations/configure/2",
-              "i18n": "configure",
+              "text": "create",
+              "link": "/simulations/create/2",
+              "i18n": "create",
               "hide": true,
               "hideInBreadcrumb": true
             }

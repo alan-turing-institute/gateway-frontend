@@ -5,7 +5,7 @@ import { Case } from '../models/case';
   selector: 'sim-case',
   template: `
   <div>
-    <input placeholder="Edit case description" (keyup)="updateDescription($event.target.value)">
+    <input placeholder="{{caseObject?.name}}" (keyup)="updateName($event.target.value)">
   </div>
   
   <div *ngFor="let field of caseObject?.fields">
@@ -22,19 +22,7 @@ export class CaseComponent implements OnInit {
 
   ngOnInit() {}
 
-  updateDescription(value: string) {
-    console.log(value);
-    this.caseObject.description = value;
+  updateName(value: string) {
+    this.caseObject.name = value;
   }
 }
-
-// <h4>case.component.ts</h4>
-
-//   <div *ngFor="let field of caseObject?.fields">
-//     <sim-field [field]="field"></sim-field>
-
-//     <div *ngFor="let field of field?.fields">
-//       <sim-field [field]="field"></sim-field>
-//     </div>
-
-//   </div>
