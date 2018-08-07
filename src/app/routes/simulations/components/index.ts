@@ -7,7 +7,15 @@ import { SimulationsRoutingModule } from '../simulations-routing.module';
 import { CaseSummaryListComponent } from './case-summary-list-component';
 import { CaseConfigureComponent } from './case-configure.component';
 
-export const COMPONENTS = [CaseSummaryListComponent, CaseConfigureComponent];
+import { CaseComponent } from './case.component';
+import { FieldComponent } from './field.component';
+
+export const COMPONENTS = [
+  CaseSummaryListComponent,
+  CaseConfigureComponent,
+  CaseComponent,
+  FieldComponent,
+];
 
 @NgModule({
   imports: [SimulationsRoutingModule, SharedModule],

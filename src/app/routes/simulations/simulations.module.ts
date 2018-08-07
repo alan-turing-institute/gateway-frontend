@@ -7,7 +7,6 @@ import { ComponentsModule } from './components';
 
 import { CreatePageComponent } from './pages/create-page.component';
 import { ViewPageComponent } from './pages/view-page.component';
-
 import { ConfigureCasePageComponent } from './pages/configure-case-page.component';
 
 import { StoreModule } from '@ngrx/store';

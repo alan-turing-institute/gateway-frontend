@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 import { Case } from '../models/case';
@@ -9,25 +8,21 @@ import { CaseService } from '../services/case.service';
 @Component({
   selector: 'app-simulations-configure',
   template: `
-  <sim-case-configure 
-    [caseObject]="caseObject$ | async"
-    (update)=updateDescription($event)>
-  </sim-case-configure>
+  <sim-case [caseObject]="caseObject"></sim-case>
+
+  <code>
+    {{caseObject | json}}
+  </code>
   `,
 })
 export class ConfigureCasePageComponent {
-  caseObject$: Observable<Case>;
+  caseObject: Case;
 
   constructor(private caseService: CaseService, private route: ActivatedRoute) {
-    // load the required Case observable
     route.params.pipe(map(params => params.id)).subscribe(id => {
-      this.caseObject$ = caseService.getCase(id);
+      this.caseService.getCase(id).subscribe(caseObject => {
+        this.caseObject = caseObject;
+      });
     });
-  }
-
-  updateDescription(value: string) {
-    console.log(value);
-    // caseService.updateCase(patch);
-    // caseService.updateSelectedCase(patch);
   }
 }
