@@ -31,7 +31,7 @@ export class MiddlewareService {
       .pipe(map(caseObject => caseObject));
   }
 
-  createJob(caseSelection: CaseSelection): Observable<Case> {
+  createJob(caseSelection: CaseSelection): Observable<object> {
     let body = JSON.stringify(caseSelection);
 
     const httpOptions = {
@@ -39,6 +39,6 @@ export class MiddlewareService {
         'Content-Type': 'application/json',
       }),
     };
-    return this.http.post<Case>(`${this.JOB_API_PATH}`, body, httpOptions);
+    return this.http.post<object>(`${this.JOB_API_PATH}`, body, httpOptions);
   }
 }

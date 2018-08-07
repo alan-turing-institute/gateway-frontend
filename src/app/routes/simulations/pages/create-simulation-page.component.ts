@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 import { Case, CaseSelection } from '../models/case';
@@ -7,7 +7,7 @@ import { CaseService } from '../services/case.service';
 import { MiddlewareService } from '@core/services/middleware.service';
 
 @Component({
-  selector: 'app-simulations-configure',
+  selector: 'app-simulations-create',
   template: `
   <sim-case [caseObject]="caseObject"></sim-case>
 
@@ -23,7 +23,11 @@ export class CreateSimulationPageComponent {
   caseObject: Case;
   caseSelection: CaseSelection;
 
-  constructor(private caseService: CaseService, private route: ActivatedRoute) {
+  constructor(
+    private router: Router,
+    private caseService: CaseService,
+    private route: ActivatedRoute,
+  ) {
     this.caseSelection = new CaseSelection();
     this.caseSelection.author = 'example-author'; // mock placeholder for auth service
 
@@ -40,6 +44,7 @@ export class CreateSimulationPageComponent {
     console.log(this.caseObject, this.caseSelection);
     this.caseService.createJob(this.caseSelection).subscribe(response => {
       console.log(response);
+      this.router.navigateByUrl(`/simulations/configure/${response['job_id']}`);
     });
   }
 }

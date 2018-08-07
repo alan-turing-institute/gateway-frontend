@@ -20,7 +20,7 @@ export class CaseService {
     return this.middlewareService.getCase(id);
   }
 
-  createJob(caseSelection: CaseSelection): Observable<Case> {
+  createJob(caseSelection: CaseSelection): Observable<object> {
     return this.middlewareService.createJob(caseSelection);
   }
 }
