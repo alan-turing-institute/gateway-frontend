@@ -1,15 +1,17 @@
+import { Spec, generateMockSpec } from './spec';
+
 export interface Field {
   id: string;
   name: string;
-  specs: string[];
-  fields: string[];
+  specs: Spec[];
+  fields: Field[];
 }
 
 export function generateMockField(): Field {
   return {
     id: '700',
     name: 'water',
-    specs: ['1', '2'],
-    fields: ['58', '59'],
+    specs: [generateMockSpec()],
+    fields: [generateMockField()],
   };
 }

@@ -1,30 +1,75 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Field } from '../models/field';
+import { Spec } from '../models/Spec';
+import { Value } from '../models/value';
+import { getInputValues } from '@angularclass/hmr';
 
 @Component({
   selector: 'sim-field',
-  template: `  
+  template: `
+    
     <div>
-      <input placeholder="{{field?.name}}: Edit field name" (keyup)="updateName($event.target.value)">
+     <strong>Field</strong> <input placeholder="Emit {{value}}" (keyup)="updateValue(field, $event.target.value)"> Value: {{value}}
     </div>
-
-    <div *ngFor="let spec of field?.specs">
-      <sim-spec [spec]="spec"></sim-spec>
-    </div>
-
+    
     <div *ngFor="let field of field?.fields">
-      <sim-field [field]=field></sim-field>
+      <sim-field [field]=field (update)="updateValueFromChild($event)"></sim-field>
     </div>
+
+    
   `,
 })
 export class FieldComponent implements OnInit {
   @Input() field: Field;
+  @Output() update = new EventEmitter<object>();
+
+  value: string; // current field value (for sliders, textboxes)
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.setDefaultValue();
+  }
 
-  updateName(value: string) {
-    this.field.name = value;
+  setDefaultValue() {
+    // find "default" spec given by the following example structure:
+    // {id: "32", value: "0.00001", name: "default"}
+
+    let defaultSpec = this.field.specs.find(obj => {
+      return obj['name'] === 'default';
+    });
+
+    // if this field has a "default" spec we set the field component value
+    if (defaultSpec) {
+      this.value = defaultSpec['value'];
+    }
+  }
+
+  updateValue(field: Field, value: string) {
+    this.value = value;
+
+    let prefix = this.specValue('prefix');
+    let suffix = this.specValue('suffix');
+
+    // use Array.prototype.join to ignore undefined and null
+    let name = [prefix, this.field.name, suffix].join('');
+
+    this.update.emit({ name: name, value: value });
+  }
+
+  updateValueFromChild(value: object) {
+    // bubble the child-emitted event up to its parent
+    this.update.emit(value);
+  }
+
+  specValue(name: string) {
+    let value = null;
+    let spec = this.field.specs.find(obj => {
+      return obj['name'] === name;
+    });
+    if (spec) {
+      value = spec.value;
+    }
+    return value;
   }
 }

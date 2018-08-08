@@ -10,7 +10,7 @@ import { CaseService } from '../services/case.service';
   template: `
 
   <code>
-    In configure-simulation.component.ts
+    configure-simulation.component.ts
   </code>
 
 
@@ -18,11 +18,15 @@ import { CaseService } from '../services/case.service';
 
   <div>
     <code>
-      {{job | json}}
+      {{job?.values | json}}
     </code>
   </div>
 
-
+  <div>
+    <code>
+      {{job | json}}
+    </code>
+  </div>
 
   <button type="button" (click)="onSave()">Save</button>
 

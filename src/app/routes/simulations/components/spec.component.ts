@@ -5,16 +5,17 @@ import { Spec } from '../models/spec';
   selector: 'sim-spec',
   template: `  
     <div>
+      <h6>Spec</h6>
 
-    <div>
-      <input placeholder="{{spec?.name}}: Edit spec value" (keyup)="updateValue($event.target.value)">
-    </div>
+      <div>
+        <input placeholder="{{spec?.value}}" (keyup)="updateValue(spec, $event.target.value)">
+      </div>
 
-    <div>
-      <code>
-        spec {{spec.name}}: {{spec | json}}
-      </code>
-    </div>
+      <div>
+        <code>
+          spec {{spec.name}}: {{spec | json}}
+        </code>
+      </div>
 
 
 
@@ -28,7 +29,8 @@ export class SpecComponent implements OnInit {
 
   ngOnInit() {}
 
-  updateValue(value: string) {
-    this.spec.value = value;
+  updateValue(spec: Spec, value: string) {
+    console.log(spec, value);
+    // this.spec.value = value;  // inplace edit
   }
 }
