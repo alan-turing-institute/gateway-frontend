@@ -5,8 +5,16 @@ import { Field } from '../models/field';
   selector: 'sim-field',
   template: `  
     <div>
-      <input placeholder="Edit field" (keyup)="updateName($event.target.value)">
-    </div>    
+      <input placeholder="{{field?.name}}: Edit field name" (keyup)="updateName($event.target.value)">
+    </div>
+
+    <div *ngFor="let spec of field?.specs">
+      <sim-spec [spec]="spec"></sim-spec>
+    </div>
+
+    <div *ngFor="let field of field?.fields">
+      <sim-field [field]=field></sim-field>
+    </div>
   `,
 })
 export class FieldComponent implements OnInit {

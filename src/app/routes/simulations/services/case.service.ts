@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Case, CaseSummary, CaseSelection } from '../models/case';
+import { Job } from '../models/job';
 
 import { environment } from '@env/environment';
 import { MiddlewareService } from '@core/services/middleware.service';
@@ -22,5 +23,9 @@ export class CaseService {
 
   createJob(caseSelection: CaseSelection): Observable<object> {
     return this.middlewareService.createJob(caseSelection);
+  }
+
+  getJob(id: string): Observable<Job> {
+    return this.middlewareService.getJob(id);
   }
 }

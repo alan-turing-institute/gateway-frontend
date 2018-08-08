@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 
-import { Case, CaseSelection } from '../models/case';
+import { Job } from '../models/job';
 import { CaseService } from '../services/case.service';
-import { MiddlewareService } from '@core/services/middleware.service';
 
 @Component({
   selector: 'app-simulations-configure',
@@ -14,25 +13,37 @@ import { MiddlewareService } from '@core/services/middleware.service';
     In configure-simulation.component.ts
   </code>
 
+
+  <sim-job [job]="job"></sim-job>
+
+  <div>
+    <code>
+      {{job | json}}
+    </code>
+  </div>
+
+
+
   <button type="button" (click)="onSave()">Save</button>
 
   `,
 })
 export class ConfigureSimulationComponent {
-  // job: Job;
+  job: Job;
 
   constructor(
-    private router: Router,
     private caseService: CaseService,
+    private router: Router,
     private route: ActivatedRoute,
   ) {
-    // route.params.pipe(map(params => params.id)).subscribe(id => {
-    //   this.caseService.getCase(id).subscribe(caseObject => {
-    //     this.caseObject = caseObject;
-    //     this.caseSelection.case_id = id;
-    //   });
-    // });
+    route.params.pipe(map(params => params.id)).subscribe(id => {
+      this.caseService.getJob(id).subscribe(job => {
+        this.job = job;
+      });
+    });
   }
 
-  onSave() {}
+  onSave() {
+    console.log(this.job);
+  }
 }

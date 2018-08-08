@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Case, CaseSummary, CaseSelection } from '@simulations/models/case';
+import { Job } from '@simulations/models/job';
 import { environment } from '@env/environment';
 
 @Injectable()
@@ -29,6 +30,12 @@ export class MiddlewareService {
     return this.http
       .get<Case>(`${this.CASE_API_PATH}/${id}`)
       .pipe(map(caseObject => caseObject));
+  }
+
+  getJob(id: string): Observable<Job> {
+    return this.http
+      .get<Job>(`${this.JOB_API_PATH}/${id}`)
+      .pipe(map(jobObject => jobObject));
   }
 
   createJob(caseSelection: CaseSelection): Observable<object> {

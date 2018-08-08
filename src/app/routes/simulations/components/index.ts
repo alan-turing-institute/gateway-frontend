@@ -9,12 +9,16 @@ import { CaseConfigureComponent } from './case-configure.component';
 
 import { CaseComponent } from './case.component';
 import { FieldComponent } from './field.component';
+import { SpecComponent } from './spec.component';
+import { JobComponent } from './job.component';
 
 export const COMPONENTS = [
   CaseSummaryListComponent,
   CaseConfigureComponent,
   CaseComponent,
   FieldComponent,
+  SpecComponent,
+  JobComponent,
 ];
 
 @NgModule({
