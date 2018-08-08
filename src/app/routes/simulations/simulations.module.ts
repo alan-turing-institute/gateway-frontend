@@ -5,18 +5,18 @@ import { SimulationsRoutingModule } from './simulations-routing.module';
 
 import { ComponentsModule } from './components';
 
-import { CreatePageComponent } from './pages/create-page.component';
-import { ViewPageComponent } from './pages/view-page.component';
-import { CreateSimulationPageComponent } from './pages/create-simulation-page.component';
-import { ConfigureSimulationPageComponent } from './pages/configure-simulation-page.component';
+import { CreateComponent } from './pages/create.component';
+import { ViewComponent } from './pages/view.component';
+import { CreateSimulationComponent } from './pages/create-simulation.component';
+import { ConfigureSimulationComponent } from './pages/configure-simulation.component';
 
 import { CaseService } from './services/case.service';
 
 const PAGECOMPONENTS = [
-  CreatePageComponent,
-  ViewPageComponent,
-  CreateSimulationPageComponent,
-  ConfigureSimulationPageComponent,
+  CreateComponent,
+  ViewComponent,
+  CreateSimulationComponent,
+  ConfigureSimulationComponent,
 ];
 
 @NgModule({

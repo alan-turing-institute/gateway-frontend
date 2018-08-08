@@ -19,7 +19,7 @@ import { MiddlewareService } from '@core/services/middleware.service';
 
   `,
 })
-export class CreateSimulationPageComponent {
+export class CreateSimulationComponent {
   caseObject: Case;
   caseSelection: CaseSelection;
 
@@ -43,7 +43,7 @@ export class CreateSimulationPageComponent {
     this.caseSelection.name = this.caseObject.name;
     console.log(this.caseObject, this.caseSelection);
     this.caseService.createJob(this.caseSelection).subscribe(response => {
-      console.log(response);
+      console.log('DEBUG(create-simulation) onCreate()', response);
       this.router.navigateByUrl(`/simulations/configure/${response['job_id']}`);
     });
   }

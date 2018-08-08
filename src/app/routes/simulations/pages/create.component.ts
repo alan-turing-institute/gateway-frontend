@@ -25,7 +25,7 @@ import { NzMessageService } from 'ng-zorro-antd';
   // encapsulation: ViewEncapsulation.Emulated,
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreatePageComponent implements OnInit {
+export class CreateComponent implements OnInit {
   caseSummaries$: Observable<CaseSummary[]>;
 
   loading: boolean = false;

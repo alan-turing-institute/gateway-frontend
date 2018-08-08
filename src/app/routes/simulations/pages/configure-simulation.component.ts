@@ -11,14 +11,14 @@ import { MiddlewareService } from '@core/services/middleware.service';
   template: `
 
   <code>
-    In configure-simulation-page.component.ts
+    In configure-simulation.component.ts
   </code>
 
   <button type="button" (click)="onSave()">Save</button>
 
   `,
 })
-export class ConfigureSimulationPageComponent {
+export class ConfigureSimulationComponent {
   // job: Job;
 
   constructor(

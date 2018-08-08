@@ -1,23 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CreatePageComponent } from './pages/create-page.component';
-import { ViewPageComponent } from './pages/view-page.component';
+import { CreateComponent } from './pages/create.component';
+import { ViewComponent } from './pages/view.component';
 
-import { CreateSimulationPageComponent } from './pages/create-simulation-page.component';
-import { ConfigureSimulationPageComponent } from './pages/configure-simulation-page.component';
+import { CreateSimulationComponent } from './pages/create-simulation.component';
+import { ConfigureSimulationComponent } from './pages/configure-simulation.component';
 
 const routes: Routes = [
-  { path: 'create', component: CreatePageComponent },
-  { path: 'view', component: ViewPageComponent },
+  { path: 'create', component: CreateComponent },
+  { path: 'view', component: ViewComponent },
   {
     path: 'create/:id',
-    component: CreateSimulationPageComponent,
+    component: CreateSimulationComponent,
     data: { title: 'Create' },
   },
   {
     path: 'configure/:id',
-    component: ConfigureSimulationPageComponent,
+    component: ConfigureSimulationComponent,
     data: { title: 'Configure' },
   },
 ];
