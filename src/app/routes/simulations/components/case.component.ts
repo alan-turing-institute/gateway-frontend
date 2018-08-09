@@ -1,22 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Case } from '../models/case';
+import { Value } from '../models/value';
 
 @Component({
   selector: 'sim-case',
-  template: `
-  <div>
-    <input placeholder="{{caseObject?.name}}" (keyup)="updateName($event.target.value)">
-  </div>
-  
-  <div *ngFor="let field of caseObject?.fields">
-    <sim-field [field]=field></sim-field>
-  </div>
-  
-  
-  `,
+  templateUrl: './case.component.html',
 })
 export class CaseComponent implements OnInit {
   @Input() caseObject: Case;
+  values: Value[] = [];
 
   constructor() {}
 
@@ -24,5 +16,9 @@ export class CaseComponent implements OnInit {
 
   updateName(value: string) {
     this.caseObject.name = value;
+  }
+
+  updateValue(valueObject: Value) {
+    Value.updateValueArray(this.values, valueObject);
   }
 }

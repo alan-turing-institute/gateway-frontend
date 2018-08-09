@@ -6,15 +6,20 @@ import { Case, CaseSelection } from '../models/case';
 import { CaseService } from '../services/case.service';
 import { MiddlewareService } from '@core/services/middleware.service';
 
+// <code>
+//   {{caseObject | json}}
+// </code>
+
 @Component({
   selector: 'app-simulations-create',
   template: `
-  <sim-case [caseObject]="caseObject"></sim-case>
 
   <code>
-    {{caseObject | json}}
+  create-simulation.component.ts
   </code>
 
+  <sim-case [caseObject]="caseObject"></sim-case>
+  
   <button type="button" (click)="onCreate()">Create</button>
 
   `,

@@ -19,16 +19,6 @@ export class JobComponent implements OnInit {
   }
 
   updateValue(valueObject: Value) {
-    let valueIndex = this.job.values.findIndex(
-      obj => obj['name'] === valueObject.name,
-    );
-    // maintain an array of Value objects in job.values
-    if (valueIndex > -1) {
-      // replace the value if it exsists
-      this.job.values[valueIndex] = valueObject;
-    } else {
-      // push the value if it doesn't
-      this.job.values.push(valueObject);
-    }
+    Value.updateValueArray(this.job.values, valueObject);
   }
 }
