@@ -5,18 +5,7 @@ import { valueFunctionProp } from 'ng-zorro-antd/src/core/util/convert';
 
 @Component({
   selector: 'sim-job',
-  template: `
-  <div>
-    <input placeholder="{{job?.name}}: Edit job name" (keyup)="updateName($event.target.value)">
-  </div>
-
-  <div *ngFor="let field of job?.parent_case?.fields">
-    <sim-field 
-      [field]=field
-      (update)="updateValue($event)">
-      </sim-field>
-  </div>
-  `,
+  templateUrl: './job.component.html',
 })
 export class JobComponent implements OnInit {
   @Input() job: Job;

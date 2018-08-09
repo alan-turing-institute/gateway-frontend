@@ -7,43 +7,24 @@ import { ValueTransformer } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'sim-field',
-  template: `
-    
-    <div>
-     <strong>Field</strong> <input placeholder="Emit {{value}}" (keyup)="updateValue(field, $event.target.value)"> Value: {{value}}
-    </div>
-    
-    <div *ngFor="let field of field?.fields">
-      <sim-field [field]=field (update)="updateValueFromChild($event)"></sim-field>
-    </div>
-
-    
-  `,
+  templateUrl: './field.component.html',
 })
 export class FieldComponent implements OnInit {
   @Input() field: Field;
   @Output() update = new EventEmitter<object>();
 
-  value: string; // current field value (for sliders, textboxes)
+  private value: string; // current field value (for sliders, textboxes)
+  private min: number;
+  private max: number;
+  private step: number;
 
   constructor() {}
 
   ngOnInit() {
-    this.setDefaultValue();
-  }
-
-  setDefaultValue() {
-    // find "default" spec given by the following example structure:
-    // {id: "32", value: "0.00001", name: "default"}
-
-    let defaultSpec = this.field.specs.find(obj => {
-      return obj['name'] === 'default';
-    });
-
-    // if this field has a "default" spec we set the field component value
-    if (defaultSpec) {
-      this.value = defaultSpec['value'];
-    }
+    this.value = this.specValue('default');
+    this.min = Number(this.specValue('min'));
+    this.max = Number(this.specValue('max'));
+    this.step = Number(this.specValue('step')) || 1;
   }
 
   updateValue(field: Field, value: string) {

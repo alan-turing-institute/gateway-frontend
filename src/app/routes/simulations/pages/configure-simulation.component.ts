@@ -13,10 +13,7 @@ import { CaseService } from '../services/case.service';
     configure-simulation.component.ts
   </code>
 
-
   <sim-job [job]="job"></sim-job>
-
-  
 
   <div>
     <code>
