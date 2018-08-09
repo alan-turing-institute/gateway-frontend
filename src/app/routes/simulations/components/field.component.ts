@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Field } from '../models/field';
-import { Spec } from '../models/Spec';
+import { Spec } from '../models/spec';
 import { Value } from '../models/value';
 import { getInputValues } from '@angularclass/hmr';
+import { ValueTransformer } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'sim-field',
@@ -53,8 +54,8 @@ export class FieldComponent implements OnInit {
 
     // use Array.prototype.join to ignore undefined and null
     let name = [prefix, this.field.name, suffix].join('');
-
-    this.update.emit({ name: name, value: value });
+    let valueObject: Value = { name: name, value: value };
+    this.update.emit(valueObject);
   }
 
   updateValueFromChild(value: object) {

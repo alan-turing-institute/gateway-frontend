@@ -10,7 +10,7 @@ export interface Job {
   parent_case: Case;
   status: string;
   user: string;
-  values: string[];
+  values: Value[];
 }
 
 const mockJob = {

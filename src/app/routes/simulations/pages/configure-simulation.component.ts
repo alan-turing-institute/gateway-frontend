@@ -16,15 +16,11 @@ import { CaseService } from '../services/case.service';
 
   <sim-job [job]="job"></sim-job>
 
-  <div>
-    <code>
-      {{job?.values | json}}
-    </code>
-  </div>
+  
 
   <div>
     <code>
-      {{job | json}}
+      {{job?.values | json}}
     </code>
   </div>
 
