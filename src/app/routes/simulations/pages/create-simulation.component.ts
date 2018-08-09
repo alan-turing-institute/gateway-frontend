@@ -1,7 +1,7 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { of, empty } from 'rxjs';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 
 import { Case, CaseSelection } from '../models/case';
 import { JobPatch } from '../models/job';
@@ -86,15 +86,19 @@ export class CreateSimulationComponent {
 
     let patch = this.createPatch();
 
-    this.caseService.createJob(this.caseSelection).subscribe(
-      res => {
-        // TODO send to message service
-        console.log('DEBUG(create-simulation) res', res);
-      },
-      err => {
-        console.log('DEBUG(create-simulation) err', err);
-      },
-    );
+    this.caseService.createJob(this.caseSelection).subscribe(res => {
+      console.log(res);
+    });
+
+    // subscribe(
+    //   res => {
+    //     // TODO send to message service
+    //     console.log('DEBUG(create-simulation) res', res);
+    //   },
+    //   err => {
+    //     console.log('DEBUG(create-simulation) err', err);
+    //   },
+    // );
 
     // .pipe(
     //   map(res => res['job_id']),

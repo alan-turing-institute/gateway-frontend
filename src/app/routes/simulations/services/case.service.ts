@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, empty } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { Case, CaseSummary, CaseSelection } from '../models/case';
@@ -23,7 +23,14 @@ export class CaseService {
   }
 
   createJob(caseSelection: CaseSelection): Observable<object> {
-    return this.middlewareService.createJob(caseSelection);
+    return this.middlewareService.createJob(caseSelection).pipe(
+      catchError(
+        (err): any => {
+          console.log(err);
+          return empty();
+        },
+      ),
+    );
   }
 
   updateJob(id: string, patch: JobPatch) {

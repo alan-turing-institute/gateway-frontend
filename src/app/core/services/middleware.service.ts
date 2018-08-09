@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
-import 'rxjs/add/observable/throw';
+// import 'rxjs/add/observable/throw';
 
 import { Case, CaseSummary, CaseSelection } from '@simulations/models/case';
 import { Job, JobPatch } from '@simulations/models/job';
@@ -75,7 +75,8 @@ export class MiddlewareService {
     return (err: any) => {
       let errMsg = `error in ${operation}: ${err.error.message}`;
       console.log('DEBUG(middleware.service)', err);
-      return Observable.throw(errMsg);
+      return throwError(errMsg);
+      // return Observable.throw(errMsg);
     };
   }
 }
