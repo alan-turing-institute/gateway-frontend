@@ -1,8 +1,9 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, concatMap } from 'rxjs/operators';
 
 import { Case, CaseSelection } from '../models/case';
+import { JobPatch } from '../models/job';
 import { CaseComponent } from '../components/case.component';
 import { Value } from '../models/value';
 import { CaseService } from '../services/case.service';
@@ -64,12 +65,33 @@ export class CreateSimulationComponent {
     });
   }
 
+  createPatch() {
+    let patch: JobPatch = {
+      name: this.caseObject.name,
+      description: this.caseObject.description,
+      values: this.values,
+    };
+    return patch;
+  }
+
   onCreate() {
     this.caseSelection.name = this.caseObject.name;
     console.log(this.caseObject, this.caseSelection);
+
+    // TODO use rxjs map
+
     this.caseService.createJob(this.caseSelection).subscribe(response => {
       console.log('DEBUG(create-simulation) onCreate()', response);
-      this.router.navigateByUrl(`/simulations/configure/${response['job_id']}`);
+
+      let job_id = response['job_id'];
+      let patch = this.createPatch();
+
+      console.log('DEBUG(create-simulation) patch', patch);
+
+      this.caseService.updateJob(job_id, patch).subscribe(response => {
+        console.log('DEBUG(create-simulation) updateJob()', response);
+      });
+      // this.router.navigateByUrl(`/simulations/configure/${response['job_id']}`);
     });
   }
 }

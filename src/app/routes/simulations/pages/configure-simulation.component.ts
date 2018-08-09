@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 
-import { Job } from '../models/job';
+import { Job, JobPatch } from '../models/job';
 import { CaseService } from '../services/case.service';
 
 @Component({
@@ -41,6 +41,18 @@ export class ConfigureSimulationComponent {
   }
 
   onSave() {
-    console.log(this.job);
+    let jobPatch: JobPatch = {
+      name: this.job.name,
+      // description: this.job.description,
+      description: 'test',
+      values: this.job.values,
+    };
+
+    console.log('DEBUG(job)', this.job);
+    console.log(jobPatch);
+
+    // this.caseService.saveJob(this.job.id, jobPatch).subscribe(response => {
+    //   console.log(response);
+    // });
   }
 }

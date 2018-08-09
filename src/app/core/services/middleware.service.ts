@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Case, CaseSummary, CaseSelection } from '@simulations/models/case';
-import { Job } from '@simulations/models/job';
+import { Job, JobPatch } from '@simulations/models/job';
 import { environment } from '@env/environment';
 
 @Injectable()
@@ -41,11 +41,27 @@ export class MiddlewareService {
   createJob(caseSelection: CaseSelection): Observable<object> {
     let body = JSON.stringify(caseSelection);
 
-    const httpOptions = {
+    let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
     };
     return this.http.post<object>(`${this.JOB_API_PATH}`, body, httpOptions);
+  }
+
+  patchJob(id: string, patch: JobPatch) {
+    let body = JSON.stringify(patch);
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+
+    return this.http.patch<object>(
+      `${this.JOB_API_PATH}/${id}`,
+      body,
+      httpOptions,
+    );
   }
 }

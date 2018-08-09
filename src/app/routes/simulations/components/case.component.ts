@@ -10,9 +10,6 @@ export class CaseComponent implements OnInit {
   @Input() caseObject: Case;
   values: Value[];
 
-  // message = 'test';
-  message: object[] = [{ foo: 'bar' }];
-
   constructor() {
     this.values = [];
   }
@@ -21,6 +18,10 @@ export class CaseComponent implements OnInit {
 
   updateName(value: string) {
     this.caseObject.name = value;
+  }
+
+  updateDescription(value: string) {
+    this.caseObject.description = value;
   }
 
   updateValue(valueObject: Value) {

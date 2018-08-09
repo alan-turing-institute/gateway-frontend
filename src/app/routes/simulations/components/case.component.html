@@ -1,5 +1,6 @@
 <div>
   <input placeholder="{{caseObject?.name}}" (keyup)="updateName($event.target.value)">
+  <input placeholder="{{caseObject?.description}}" (keyup)="updateDescription($event.target.value)">
 </div>
 
 <div *ngFor="let field of caseObject?.fields">

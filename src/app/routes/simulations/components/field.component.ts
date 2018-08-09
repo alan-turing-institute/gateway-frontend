@@ -11,7 +11,7 @@ import { ValueTransformer } from '@angular/compiler/src/util';
 })
 export class FieldComponent implements OnInit {
   @Input() field: Field;
-  @Output() update = new EventEmitter<object>();
+  @Output() update = new EventEmitter<Value>();
 
   private value: string; // current field value (for sliders, textboxes)
   private min: number;
@@ -28,7 +28,7 @@ export class FieldComponent implements OnInit {
   }
 
   updateValue(field: Field, value: string) {
-    this.value = value;
+    this.value = String(value);
 
     let prefix = this.specValue('prefix');
     let suffix = this.specValue('suffix');
@@ -39,12 +39,12 @@ export class FieldComponent implements OnInit {
     this.update.emit(valueObject);
   }
 
-  updateValueFromChild(value: object) {
+  updateValueFromChild(value: Value) {
     // bubble the child-emitted event up to its parent
     this.update.emit(value);
   }
 
-  specValue(name: string) {
+  specValue(name: string): string {
     let value = null;
     let spec = this.field.specs.find(obj => {
       return obj['name'] === name;

@@ -33,3 +33,9 @@ export interface JobSummary {
   status: string;
   user: string;
 }
+
+export interface JobPatch {
+  name: string;
+  description: string;
+  values: Value[];
+}
