@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 import { Case, CaseSummary, CaseSelection } from '../models/case';
 import { Job, JobPatch } from '../models/job';

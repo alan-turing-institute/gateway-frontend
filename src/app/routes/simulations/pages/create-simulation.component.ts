@@ -1,6 +1,7 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { map, concatMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 
 import { Case, CaseSelection } from '../models/case';
 import { JobPatch } from '../models/job';
@@ -76,22 +77,45 @@ export class CreateSimulationComponent {
 
   onCreate() {
     this.caseSelection.name = this.caseObject.name;
-    console.log(this.caseObject, this.caseSelection);
 
-    // TODO use rxjs map
+    console.log(
+      'DEBUG(create-simulation):',
+      this.caseObject,
+      this.caseSelection,
+    );
 
-    this.caseService.createJob(this.caseSelection).subscribe(response => {
-      console.log('DEBUG(create-simulation) onCreate()', response);
+    let patch = this.createPatch();
 
-      let job_id = response['job_id'];
-      let patch = this.createPatch();
+    this.caseService.createJob(this.caseSelection).subscribe(
+      res => {
+        // TODO send to message service
+        console.log('DEBUG(create-simulation) res', res);
+      },
+      err => {
+        console.log('DEBUG(create-simulation) err', err);
+      },
+    );
 
-      console.log('DEBUG(create-simulation) patch', patch);
+    // .pipe(
+    //   map(res => res['job_id']),
+    //   mergeMap(job_id => this.caseService.updateJob(job_id, patch)),
+    // )
+    // .subscribe(res => console.log(res));
 
-      this.caseService.updateJob(job_id, patch).subscribe(response => {
-        console.log('DEBUG(create-simulation) updateJob()', response);
-      });
-      // this.router.navigateByUrl(`/simulations/configure/${response['job_id']}`);
-    });
+    // this.caseService.createJob(this.caseSelection).subscribe(response => {
+    //   console.log('DEBUG(create-simulation) onCreate()', response);
+
+    //   let job_id = response['job_id'];
+    //   let patch = this.createPatch();
+
+    //   console.log('DEBUG(create-simulation) patch', patch);
+
+    //   this.caseService.updateJob(job_id, patch).subscribe(response => {
+    //     console.log('DEBUG(create-simulation) updateJob()', response);
+    //   });
+
+    //   // this.router.navigateByUrl(`/simulations/configure/${response['job_id']}`);
+
+    // });
   }
 }

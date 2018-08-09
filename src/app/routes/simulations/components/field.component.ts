@@ -35,7 +35,7 @@ export class FieldComponent implements OnInit {
 
     // use Array.prototype.join to ignore undefined and null
     let name = [prefix, this.field.name, suffix].join('');
-    let valueObject: Value = { name: name, value: value };
+    let valueObject: Value = { name: name, value: this.value };
     this.update.emit(valueObject);
   }
 

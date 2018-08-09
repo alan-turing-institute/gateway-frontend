@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, tap, catchError } from 'rxjs/operators';
+import 'rxjs/add/observable/throw';
 
 import { Case, CaseSummary, CaseSelection } from '@simulations/models/case';
 import { Job, JobPatch } from '@simulations/models/job';
@@ -14,31 +15,31 @@ export class MiddlewareService {
 
   constructor(private http: HttpClient) {}
 
-  getAllCaseSummaries(): Observable<CaseSummary[]> {
+  public getAllCaseSummaries(): Observable<CaseSummary[]> {
     return this.http
       .get<CaseSummary[]>(this.CASE_API_PATH)
       .pipe(map(caseSummaries => caseSummaries || [])); // TODO redundant (?)
   }
 
-  searchCaseSummaries(queryTitle: string): Observable<CaseSummary[]> {
+  public searchCaseSummaries(queryTitle: string): Observable<CaseSummary[]> {
     return this.http
       .get<CaseSummary[]>(this.CASE_API_PATH)
       .pipe(map(caseSummaries => caseSummaries || [])); // TODO redundant (?)
   }
 
-  getCase(id: string): Observable<Case> {
+  public getCase(id: string): Observable<Case> {
     return this.http
       .get<Case>(`${this.CASE_API_PATH}/${id}`)
       .pipe(map(caseObject => caseObject));
   }
 
-  getJob(id: string): Observable<Job> {
+  public getJob(id: string): Observable<Job> {
     return this.http
       .get<Job>(`${this.JOB_API_PATH}/${id}`)
       .pipe(map(jobObject => jobObject));
   }
 
-  createJob(caseSelection: CaseSelection): Observable<object> {
+  public createJob(caseSelection: CaseSelection): Observable<object> {
     let body = JSON.stringify(caseSelection);
 
     let httpOptions = {
@@ -46,10 +47,12 @@ export class MiddlewareService {
         'Content-Type': 'application/json',
       }),
     };
-    return this.http.post<object>(`${this.JOB_API_PATH}`, body, httpOptions);
+    return this.http
+      .post<object>(`${this.JOB_API_PATH}`, body, httpOptions)
+      .pipe(catchError(this.handleError('createJob')));
   }
 
-  patchJob(id: string, patch: JobPatch) {
+  public patchJob(id: string, patch: JobPatch) {
     let body = JSON.stringify(patch);
 
     let httpOptions = {
@@ -57,11 +60,22 @@ export class MiddlewareService {
         'Content-Type': 'application/json',
       }),
     };
+    return this.http
+      .patch<object>(`${this.JOB_API_PATH}/${id}`, body, httpOptions)
+      .pipe(this.handleError('patchJob'));
+  }
 
-    return this.http.patch<object>(
-      `${this.JOB_API_PATH}/${id}`,
-      body,
-      httpOptions,
-    );
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError(operation: string) {
+    return (err: any) => {
+      let errMsg = `error in ${operation}: ${err.error.message}`;
+      console.log('DEBUG(middleware.service)', err);
+      return Observable.throw(errMsg);
+    };
   }
 }
