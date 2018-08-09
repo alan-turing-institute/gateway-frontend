@@ -1,7 +1,7 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of, empty } from 'rxjs';
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { map, mergeMap, catchError, tap } from 'rxjs/operators';
 
 import { Case, CaseSelection } from '../models/case';
 import { JobPatch } from '../models/job';
@@ -85,41 +85,20 @@ export class CreateSimulationComponent {
     );
 
     let patch = this.createPatch();
+    let database_job_id: string = null;
 
-    this.caseService.createJob(this.caseSelection).subscribe(res => {
-      console.log(res);
-    });
-
-    // subscribe(
-    //   res => {
-    //     // TODO send to message service
-    //     console.log('DEBUG(create-simulation) res', res);
-    //   },
-    //   err => {
-    //     console.log('DEBUG(create-simulation) err', err);
-    //   },
-    // );
-
-    // .pipe(
-    //   map(res => res['job_id']),
-    //   mergeMap(job_id => this.caseService.updateJob(job_id, patch)),
-    // )
-    // .subscribe(res => console.log(res));
-
-    // this.caseService.createJob(this.caseSelection).subscribe(response => {
-    //   console.log('DEBUG(create-simulation) onCreate()', response);
-
-    //   let job_id = response['job_id'];
-    //   let patch = this.createPatch();
-
-    //   console.log('DEBUG(create-simulation) patch', patch);
-
-    //   this.caseService.updateJob(job_id, patch).subscribe(response => {
-    //     console.log('DEBUG(create-simulation) updateJob()', response);
-    //   });
-
-    //   // this.router.navigateByUrl(`/simulations/configure/${response['job_id']}`);
-
-    // });
+    this.caseService
+      .createJob(this.caseSelection)
+      .pipe(
+        map(res => res['job_id']),
+        mergeMap(job_id => {
+          database_job_id = job_id; // cache database job id for downstream navigation
+          return this.caseService.updateJob(job_id, patch);
+        }),
+      )
+      .subscribe(res => {
+        console.log(res);
+        this.router.navigateByUrl(`/simulations/configure/${database_job_id}`);
+      });
   }
 }

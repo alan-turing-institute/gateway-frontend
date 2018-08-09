@@ -34,7 +34,14 @@ export class CaseService {
   }
 
   updateJob(id: string, patch: JobPatch) {
-    return this.middlewareService.patchJob(id, patch);
+    return this.middlewareService.patchJob(id, patch).pipe(
+      catchError(
+        (err): any => {
+          console.log(err);
+          return empty();
+        },
+      ),
+    );
   }
 
   getJob(id: string): Observable<Job> {

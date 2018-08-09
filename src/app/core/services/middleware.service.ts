@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
-// import 'rxjs/add/observable/throw';
 
 import { Case, CaseSummary, CaseSelection } from '@simulations/models/case';
 import { Job, JobPatch } from '@simulations/models/job';
@@ -62,7 +61,7 @@ export class MiddlewareService {
     };
     return this.http
       .patch<object>(`${this.JOB_API_PATH}/${id}`, body, httpOptions)
-      .pipe(this.handleError('patchJob'));
+      .pipe(catchError(this.handleError('patchJob')));
   }
 
   /**
@@ -73,10 +72,10 @@ export class MiddlewareService {
    */
   private handleError(operation: string) {
     return (err: any) => {
-      let errMsg = `error in ${operation}: ${err.error.message}`;
+      // let errMsg = `error in ${operation}: ${err.error.message}`;
+      let errMsg = `error in ${operation}: ${err}`;
       console.log('DEBUG(middleware.service)', err);
       return throwError(errMsg);
-      // return Observable.throw(errMsg);
     };
   }
 }
