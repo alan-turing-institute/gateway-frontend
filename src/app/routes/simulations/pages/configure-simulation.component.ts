@@ -13,16 +13,16 @@ import { CaseService } from '../services/case.service';
     configure-simulation.component.ts
   </code>
 
-  <sim-job [job]="job"></sim-job>
+  <nz-card>
+    <sim-job [job]="job"></sim-job>
+    <button type="button" (click)="onSave()">Save</button>
+  </nz-card>
 
   <div>
     <code>
       {{job?.values | json}}
     </code>
   </div>
-
-  <button type="button" (click)="onSave()">Save</button>
-
   `,
 })
 export class ConfigureSimulationComponent {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { Case } from '../models/case';
 import { Value } from '../models/value';
 
@@ -8,9 +8,14 @@ import { Value } from '../models/value';
 })
 export class CaseComponent implements OnInit {
   @Input() caseObject: Case;
-  values: Value[] = [];
+  values: Value[];
 
-  constructor() {}
+  // message = 'test';
+  message: object[] = [{ foo: 'bar' }];
+
+  constructor() {
+    this.values = [];
+  }
 
   ngOnInit() {}
 

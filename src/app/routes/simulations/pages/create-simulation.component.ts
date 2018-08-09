@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 import { Case, CaseSelection } from '../models/case';
+import { CaseComponent } from '../components/case.component';
+import { Value } from '../models/value';
 import { CaseService } from '../services/case.service';
 import { MiddlewareService } from '@core/services/middleware.service';
 
@@ -18,15 +20,27 @@ import { MiddlewareService } from '@core/services/middleware.service';
   create-simulation.component.ts
   </code>
 
-  <sim-case [caseObject]="caseObject"></sim-case>
-  
-  <button type="button" (click)="onCreate()">Create</button>
+  <nz-card>
+    <sim-case [caseObject]="caseObject"></sim-case>
+    <button type="button" (click)="onCreate()">Create</button>
+  </nz-card>
 
+  <div>
+    <code>
+      {{values | json}}
+    </code>
+  </div>
   `,
 })
 export class CreateSimulationComponent {
+  // inject the currently visible case, so that we can access any modified values
+  @ViewChild(CaseComponent) private caseComponent: CaseComponent;
+
   caseObject: Case;
   caseSelection: CaseSelection;
+
+  values: Value[];
+  message: object[];
 
   constructor(
     private router: Router,
@@ -41,6 +55,12 @@ export class CreateSimulationComponent {
         this.caseObject = caseObject;
         this.caseSelection.case_id = id;
       });
+    });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.values = this.caseComponent.values;
     });
   }
 

@@ -1,16 +1,8 @@
-<nz-card>
-  <div>
-    <input placeholder="{{caseObject?.name}}" (keyup)="updateName($event.target.value)">
-  </div>
-
-  <div *ngFor="let field of caseObject?.fields">
-    <sim-field [field]=field (update)="updateValue($event)">
-    </sim-field>
-  </div>
-</nz-card>
-
 <div>
-  <code>
-    {{values | json}}
-  </code>
+  <input placeholder="{{caseObject?.name}}" (keyup)="updateName($event.target.value)">
+</div>
+
+<div *ngFor="let field of caseObject?.fields">
+  <sim-field [field]=field (update)="updateValue($event)">
+  </sim-field>
 </div>
