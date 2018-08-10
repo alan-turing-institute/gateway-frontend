@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 import { Job, JobPatch } from '../models/job';
+import { Value } from '../models/value';
+import { JobComponent } from '../components/job.component';
 import { CaseService } from '../services/case.service';
 
 @Component({
@@ -20,13 +22,21 @@ import { CaseService } from '../services/case.service';
 
   <div>
     <code>
-      {{job?.values | json}}
+      Name: {{job?.name}} Description: {{job?.description}}
+    </code>
+  </div>
+
+  <div>
+    <code>
+      {{values | json}}
     </code>
   </div>
   `,
 })
 export class ConfigureSimulationComponent {
+  @ViewChild(JobComponent) private jobComponent: JobComponent;
   job: Job;
+  values: Value[]; // TODO refactor to dirtyValues
 
   constructor(
     private caseService: CaseService,
@@ -40,18 +50,25 @@ export class ConfigureSimulationComponent {
     });
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.values = this.jobComponent.values;
+    });
+  }
+
   onSave() {
+    // TODO refactor to JobPatch public member
+
     let jobPatch: JobPatch = {
       name: this.job.name,
-      // description: this.job.description,
-      description: 'test',
-      values: this.job.values,
+      description: this.job.description,
+      values: this.values,
     };
 
     console.log('DEBUG(job)', this.job);
 
-    // this.caseService.saveJob(this.job.id, jobPatch).subscribe(response => {
-    //   console.log(response);
-    // });
+    this.caseService.updateJob(this.job.id, jobPatch).subscribe(response => {
+      console.log(response);
+    });
   }
 }

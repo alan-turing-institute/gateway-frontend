@@ -30,6 +30,12 @@ import { identifierModuleUrl } from '@angular/compiler';
 
   <div>
     <code>
+      Name: {{caseObject?.name}} Description: {{caseObject?.description}}
+    </code>
+  </div>
+
+  <div>
+    <code>
       {{values | json}}
     </code>
   </div>

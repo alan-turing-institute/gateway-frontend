@@ -9,16 +9,23 @@ import { valueFunctionProp } from 'ng-zorro-antd/src/core/util/convert';
 })
 export class JobComponent implements OnInit {
   @Input() job: Job;
+  values: Value[];
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.values = [];
+  }
 
   updateName(value: string) {
     this.job.name = value;
   }
 
+  updateDescription(value: string) {
+    this.job.description = value;
+  }
+
   updateValue(valueObject: Value) {
-    Value.updateValueArray(this.job.values, valueObject);
+    Value.updateValueArray(this.values, valueObject);
   }
 }
