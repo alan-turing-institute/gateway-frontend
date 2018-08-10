@@ -1,7 +1,7 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of, empty } from 'rxjs';
-import { map, mergeMap, catchError, tap } from 'rxjs/operators';
+import { map, mergeMap, switchMap, catchError, tap } from 'rxjs/operators';
 
 import { Case, CaseSelection } from '../models/case';
 import { JobPatch } from '../models/job';
@@ -9,6 +9,7 @@ import { CaseComponent } from '../components/case.component';
 import { Value } from '../models/value';
 import { CaseService } from '../services/case.service';
 import { MiddlewareService } from '@core/services/middleware.service';
+import { identifierModuleUrl } from '@angular/compiler';
 
 // <code>
 //   {{caseObject | json}}
@@ -49,15 +50,15 @@ export class CreateSimulationComponent {
     private caseService: CaseService,
     private route: ActivatedRoute,
   ) {
-    this.caseSelection = new CaseSelection();
-    this.caseSelection.author = 'example-author'; // mock placeholder for auth service
-
-    route.params.pipe(map(params => params.id)).subscribe(id => {
-      this.caseService.getCase(id).subscribe(caseObject => {
+    route.params
+      .pipe(
+        map(params => params.id),
+        switchMap(id => this.caseService.getCase(id)),
+      )
+      .subscribe(caseObject => {
         this.caseObject = caseObject;
-        this.caseSelection.case_id = id;
+        this.caseSelection = this.selectCase(caseObject.id);
       });
-    });
   }
 
   ngAfterViewInit() {
@@ -66,7 +67,14 @@ export class CreateSimulationComponent {
     });
   }
 
-  createPatch() {
+  selectCase(id: string) {
+    let selection = new CaseSelection();
+    selection.author = 'example-author'; // mock placeholder for auth service
+    selection.case_id = id;
+    return selection;
+  }
+
+  jobPatch() {
     let patch: JobPatch = {
       name: this.caseObject.name,
       description: this.caseObject.description,
@@ -78,13 +86,7 @@ export class CreateSimulationComponent {
   onCreate() {
     this.caseSelection.name = this.caseObject.name;
 
-    console.log(
-      'DEBUG(create-simulation):',
-      this.caseObject,
-      this.caseSelection,
-    );
-
-    let patch = this.createPatch();
+    let patch = this.jobPatch();
     let database_job_id: string = null;
 
     this.caseService
@@ -97,7 +99,6 @@ export class CreateSimulationComponent {
         }),
       )
       .subscribe(res => {
-        console.log(res);
         this.router.navigateByUrl(`/simulations/configure/${database_job_id}`);
       });
   }

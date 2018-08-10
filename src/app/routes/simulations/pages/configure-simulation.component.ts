@@ -49,7 +49,6 @@ export class ConfigureSimulationComponent {
     };
 
     console.log('DEBUG(job)', this.job);
-    console.log(jobPatch);
 
     // this.caseService.saveJob(this.job.id, jobPatch).subscribe(response => {
     //   console.log(response);
