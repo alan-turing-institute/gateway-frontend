@@ -1,10 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 
 import { Case, CaseSummary, CaseSelection } from '@simulations/models/case';
-import { Job, JobPatch } from '@simulations/models/job';
+import { Job, JobSummary, JobPatch } from '@simulations/models/job';
 import { environment } from '@env/environment';
 
 @Injectable()
@@ -14,10 +14,20 @@ export class MiddlewareService {
 
   constructor(private http: HttpClient) {}
 
-  public getAllCaseSummaries(): Observable<CaseSummary[]> {
+  public getCaseSummaries(): Observable<CaseSummary[]> {
     return this.http
       .get<CaseSummary[]>(this.CASE_API_PATH)
       .pipe(map(caseSummaries => caseSummaries || [])); // TODO redundant (?)
+  }
+
+  public getJobSummaries(): Observable<JobSummary[]> {
+    let httpOptions = {
+      params: new HttpParams().set('per_page', '100'), // TODO server-side pagination
+    };
+
+    return this.http
+      .get<JobSummary[]>(this.JOB_API_PATH, httpOptions)
+      .pipe(map(jobSummaries => jobSummaries || [])); // TODO redundant (?)
   }
 
   public searchCaseSummaries(queryTitle: string): Observable<CaseSummary[]> {
@@ -62,6 +72,12 @@ export class MiddlewareService {
     return this.http
       .patch<object>(`${this.JOB_API_PATH}/${id}`, body, httpOptions)
       .pipe(catchError(this.handleError('patchJob')));
+  }
+
+  public startJob(id: string): Observable<object> {
+    return this.http
+      .post(`${this.JOB_API_PATH}/${id}`, null)
+      .pipe(catchError(this.handleError('startJob')));
   }
 
   /**

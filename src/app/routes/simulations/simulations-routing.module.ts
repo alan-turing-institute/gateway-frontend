@@ -6,6 +6,7 @@ import { ViewComponent } from './pages/view.component';
 
 import { CreateSimulationComponent } from './pages/create-simulation.component';
 import { ConfigureSimulationComponent } from './pages/configure-simulation.component';
+import { ViewSimulationComponent } from './pages/view-simulation.component';
 
 const routes: Routes = [
   { path: 'create', component: CreateComponent },
@@ -14,6 +15,11 @@ const routes: Routes = [
     path: 'create/:id',
     component: CreateSimulationComponent,
     data: { title: 'Create' },
+  },
+  {
+    path: 'view/:id',
+    component: ViewSimulationComponent,
+    data: { title: 'View' },
   },
   {
     path: 'configure/:id',

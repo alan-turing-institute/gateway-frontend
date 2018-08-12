@@ -1,7 +1,17 @@
-<div>
-  <input placeholder="{{caseObject?.name}}" (keyup)="updateName($event.target.value)">
-  <input placeholder="{{caseObject?.description}}" (keyup)="updateDescription($event.target.value)">
-</div>
+<form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Name</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input placeholder="{{caseObject?.name}}" (keyup)="updateName($event.target.value)">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Description</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input placeholder="{{caseObject?.description}}" (keyup)="updateDescription($event.target.value)">
+      </nz-form-control>
+    </nz-form-item>
+  </form>
 
 <div *ngFor="let field of caseObject?.fields">
   <sim-field [field]=field (update)="updateValue($event)">

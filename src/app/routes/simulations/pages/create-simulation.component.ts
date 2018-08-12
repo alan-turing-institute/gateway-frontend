@@ -19,20 +19,10 @@ import { identifierModuleUrl } from '@angular/compiler';
   selector: 'app-simulations-create',
   template: `
 
-  <code>
-  create-simulation.component.ts
-  </code>
-
   <nz-card>
     <sim-case [caseObject]="caseObject"></sim-case>
-    <button type="button" (click)="onCreate()">Create</button>
+    <button nz-button nzType="primary" (click)="onCreate()">Create</button>
   </nz-card>
-
-  <div>
-    <code>
-      Name: {{caseObject?.name}} Description: {{caseObject?.description}}
-    </code>
-  </div>
 
   `,
 })

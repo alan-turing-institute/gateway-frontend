@@ -10,23 +10,14 @@ import { SimulationService } from '../services/simulation.service';
 @Component({
   selector: 'app-simulations-configure',
   template: `
-
+ 
   <nz-card>
-    <sim-job [job]="job"></sim-job>
-    <button nz-button nzType="primary" (click)="onSave()">Save</button>
-    <button nz-button nzType="primary" (click)="onRun()">Run</button>
+    <sim-job-output [job]="job"></sim-job-output>
   </nz-card>
   
   `,
-  styles: [
-    `
-      :host ::ng-deep .ant-card-meta-title {
-        margin-bottom: 12px;
-      }
-    `,
-  ],
 })
-export class ConfigureSimulationComponent {
+export class ViewSimulationComponent {
   job: Job;
 
   constructor(
@@ -43,19 +34,5 @@ export class ConfigureSimulationComponent {
         this.job = jobObject;
         this.simulationService.activateJob(jobObject);
       });
-  }
-
-  onSave() {
-    this.simulationService.updateJob(this.job.id).subscribe(response => {
-      console.log(response);
-    });
-  }
-
-  onRun() {
-    // TODO check for dirty changes and prompt onSave()
-    this.simulationService.startJob(this.job.id).subscribe(response => {
-      console.log(response);
-      this.router.navigate(['/simulations/view']);
-    });
   }
 }

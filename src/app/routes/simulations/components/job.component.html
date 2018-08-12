@@ -1,10 +1,20 @@
-<div>
-  <input placeholder="{{job?.name}}" (keyup)="updateName($event.target.value)">
-</div>
-<div>
-  <input placeholder="{{job?.description}}" (keyup)="updateDescription($event.target.value)">
-</div>
+<form nz-form>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Name</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input placeholder="{{job?.name}}" (keyup)="updateName($event.target.value)">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Description</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input placeholder="{{job?.description}}" (keyup)="updateDescription($event.target.value)">
+    </nz-form-control>
+  </nz-form-item>
+</form>
 
 <div *ngFor="let field of job?.parent_case?.fields">
   <sim-field [field]=field (update)="updateValue($event)"></sim-field>
 </div>
+
+

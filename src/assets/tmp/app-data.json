@@ -42,6 +42,13 @@
               "i18n": "create",
               "hide": true,
               "hideInBreadcrumb": true
+            },
+            {
+              "text": "view",
+              "link": "/simulations/view/2",
+              "i18n": "view",
+              "hide": true,
+              "hideInBreadcrumb": true
             }
           ]
         },

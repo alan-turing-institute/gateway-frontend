@@ -9,6 +9,7 @@ import { CreateComponent } from './pages/create.component';
 import { ViewComponent } from './pages/view.component';
 import { CreateSimulationComponent } from './pages/create-simulation.component';
 import { ConfigureSimulationComponent } from './pages/configure-simulation.component';
+import { ViewSimulationComponent } from './pages/view-simulation.component';
 
 import { SimulationService } from './services/simulation.service';
 
@@ -17,6 +18,7 @@ const PAGECOMPONENTS = [
   ViewComponent,
   CreateSimulationComponent,
   ConfigureSimulationComponent,
+  ViewSimulationComponent,
 ];
 
 @NgModule({

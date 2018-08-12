@@ -24,11 +24,18 @@ const routes: Routes = [
     component: LayoutDefaultComponent,
     children: [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
-      { path: 'overview', component: OverviewComponent, data: { title: 'Overview' } },
-      { path: 'simulations', loadChildren: './simulations/simulations.module#SimulationsModule' },
+      {
+        path: 'overview',
+        component: OverviewComponent,
+        data: { title: 'Overview' },
+      },
+      {
+        path: 'simulations',
+        loadChildren: './simulations/simulations.module#SimulationsModule',
+      },
       // 业务子模块
       // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }
-    ]
+    ],
   },
   // 全屏布局
   // {
@@ -43,9 +50,17 @@ const routes: Routes = [
     component: LayoutPassportComponent,
     children: [
       { path: 'login', component: UserLoginComponent, data: { title: '登录' } },
-      { path: 'register', component: UserRegisterComponent, data: { title: '注册' } },
-      { path: 'register-result', component: UserRegisterResultComponent, data: { title: '注册结果' } }
-    ]
+      {
+        path: 'register',
+        component: UserRegisterComponent,
+        data: { title: '注册' },
+      },
+      {
+        path: 'register-result',
+        component: UserRegisterResultComponent,
+        data: { title: '注册结果' },
+      },
+    ],
   },
   // 单页不包裹Layout
   { path: 'callback/:type', component: CallbackComponent },
@@ -53,11 +68,11 @@ const routes: Routes = [
   { path: '403', component: Exception403Component },
   { path: '404', component: Exception404Component },
   { path: '500', component: Exception500Component },
-  { path: '**', redirectTo: 'overview' }
+  { path: '**', redirectTo: 'overview' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: environment.useHash })],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class RouteRoutingModule { }
+export class RouteRoutingModule {}

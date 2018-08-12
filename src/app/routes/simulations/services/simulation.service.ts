@@ -3,7 +3,7 @@ import { Observable, empty } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { Case, CaseSummary, CaseSelection } from '../models/case';
-import { Job, JobPatch } from '../models/job';
+import { Job, JobSummary, JobPatch } from '../models/job';
 import { Value } from '../models/value';
 
 import { environment } from '@env/environment';
@@ -12,6 +12,7 @@ import { MiddlewareService } from '@core/services/middleware.service';
 @Injectable()
 export class SimulationService {
   public caseSummaries$: Observable<CaseSummary[]>;
+  public jobSummaries$: Observable<JobSummary[]>;
 
   public activeJobId: string;
   public activeCaseId: string;
@@ -24,7 +25,8 @@ export class SimulationService {
   public values: Value[] = [];
 
   constructor(private middlewareService: MiddlewareService) {
-    this.caseSummaries$ = this.middlewareService.getAllCaseSummaries();
+    this.caseSummaries$ = this.middlewareService.getCaseSummaries();
+    this.jobSummaries$ = this.middlewareService.getJobSummaries();
   }
 
   public activateCase(caseObject: Case) {
@@ -60,7 +62,7 @@ export class SimulationService {
     return new JobPatch(this.name, this.description, this.values);
   }
 
-  dumpState() {
+  debugState() {
     console.log('DEBUG(simulation.service) activeCaseId', this.activeCaseId);
     console.log('DEBUG(simulation.service) activeJobId', this.activeJobId);
     console.log('DEBUG(simulation.service) name', this.name);
@@ -71,7 +73,7 @@ export class SimulationService {
 
   public upsertValue(valueObject: Value) {
     Value.updateValueArray(this.values, valueObject);
-    this.dumpState();
+    // this.debugState();
   }
 
   public getInitialValue(name: string): string {
@@ -88,12 +90,12 @@ export class SimulationService {
 
   public updateName(value: string) {
     this.name = value;
-    this.dumpState();
+    // this.debugState();
   }
 
   public updateDescription(value: string) {
     this.description = value;
-    this.dumpState();
+    // this.debugState();
   }
 
   //  middleware connection functionality
@@ -125,6 +127,17 @@ export class SimulationService {
   updateJob(id: string) {
     let patch = this.jobPatch();
     return this.middlewareService.patchJob(id, patch).pipe(
+      catchError(
+        (err): any => {
+          console.log(err);
+          return empty();
+        },
+      ),
+    );
+  }
+
+  startJob(id: string) {
+    return this.middlewareService.startJob(id).pipe(
       catchError(
         (err): any => {
           console.log(err);
