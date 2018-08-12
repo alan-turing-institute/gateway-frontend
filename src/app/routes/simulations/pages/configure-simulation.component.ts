@@ -26,16 +26,11 @@ import { SimulationService } from '../services/simulation.service';
     </code>
   </div>
 
-  <div>
-    <code>
-      {{values | json}}
-    </code>
-  </div>
+  
   `,
 })
 export class ConfigureSimulationComponent {
   job: Job;
-  values: Value[];
 
   constructor(
     private simulationService: SimulationService,
@@ -49,7 +44,7 @@ export class ConfigureSimulationComponent {
       )
       .subscribe(jobObject => {
         this.job = jobObject;
-        this.simulationService.activateJob(jobObject.id);
+        this.simulationService.activateJob(jobObject);
       });
   }
 

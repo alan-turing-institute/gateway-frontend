@@ -3,9 +3,8 @@ import { Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { en_US, zh_CN, NzI18nService } from 'ng-zorro-antd';
+import { en_US, NzI18nService } from 'ng-zorro-antd';
 import * as df_en from 'date-fns/locale/en';
-import * as df_zh_cn from 'date-fns/locale/zh_cn';
 import { TranslateService } from '@ngx-translate/core';
 import { SettingsService, AlainI18NService } from '@delon/theme';
 
@@ -14,10 +13,7 @@ export class I18NService implements AlainI18NService {
   private _default = 'en';
   private change$ = new BehaviorSubject<string>(null);
 
-  private _langs = [
-    { code: 'en', text: 'English' },
-    // { code: 'zh-CN', text: '中文' },
-  ];
+  private _langs = [{ code: 'en', text: 'English' }];
 
   constructor(
     settings: SettingsService,
@@ -33,12 +29,12 @@ export class I18NService implements AlainI18NService {
   }
 
   setZorro(lang: string): this {
-    this.nzI18nService.setLocale(lang === 'en' ? en_US : zh_CN);
+    this.nzI18nService.setLocale(en_US);
     return this;
   }
 
   setDateFns(lang: string): this {
-    (window as any).__locale__ = lang === 'en' ? df_en : df_zh_cn;
+    (window as any).__locale__ = df_en;
     return this;
   }
 
@@ -52,19 +48,18 @@ export class I18NService implements AlainI18NService {
     this.setZorro(lang).setDateFns(lang);
     this.translate.use(lang).subscribe(() => this.change$.next(lang));
   }
-  /** 获取语言列表 */
   getLangs() {
     return this._langs;
   }
-  /** 翻译 */
+
   fanyi(key: string) {
     return this.translate.instant(key);
   }
-  /** 默认语言 */
+
   get defaultLang() {
     return this._default;
   }
-  /** 当前语言 */
+
   get currentLang() {
     return (
       this.translate.currentLang ||

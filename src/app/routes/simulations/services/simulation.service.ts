@@ -16,6 +16,8 @@ export class SimulationService {
   public activeJobId: string;
   public activeCaseId: string;
 
+  public initialValues: Value[] = [];
+
   // modified state
   public name: string;
   public description: string;
@@ -25,22 +27,32 @@ export class SimulationService {
     this.caseSummaries$ = this.middlewareService.getAllCaseSummaries();
   }
 
-  public activateCase(id: string) {
-    this.activeCaseId = id;
-    this.activeJobId = null;
+  public activateCase(caseObject: Case) {
     this.clearState();
+    this.activeCaseId = caseObject.id;
+    this.activeJobId = null;
   }
 
-  public activateJob(id: string) {
-    this.activeJobId = id;
-    this.activeCaseId = null;
+  public activateJob(jobObject: Job) {
     this.clearState();
+    this.activeJobId = jobObject.id;
+    this.activeCaseId = null;
+    this.setInitialValues(jobObject);
+  }
+
+  private setInitialValues(jobObject: Job) {
+    // overwrite initial service values with those from the job
+    this.initialValues = jobObject.values.map(obj => {
+      return { name: obj.name, value: obj.value };
+    });
+    this.values = this.initialValues;
   }
 
   private clearState() {
     this.name = null;
     this.description = null;
     this.values.length = 0;
+    this.initialValues.length = 0;
   }
 
   // helper methods for generatng request bodies
@@ -60,6 +72,18 @@ export class SimulationService {
   public upsertValue(valueObject: Value) {
     Value.updateValueArray(this.values, valueObject);
     this.dumpState();
+  }
+
+  public getInitialValue(name: string): string {
+    let valueObject = this.initialValues.find(obj => {
+      return obj['name'] === name;
+    });
+
+    if (valueObject) {
+      return valueObject.value;
+    } else {
+      return null;
+    }
   }
 
   public updateName(value: string) {
@@ -87,6 +111,7 @@ export class SimulationService {
       this.name,
       this.description,
     );
+
     return this.middlewareService.createJob(caseSelection).pipe(
       catchError(
         (err): any => {

@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Field } from '../models/field';
 import { Spec } from '../models/spec';
 import { Value } from '../models/value';
+import { SimulationService } from '../services/simulation.service';
 
 @Component({
   selector: 'sim-field',
@@ -18,26 +19,31 @@ export class FieldComponent implements OnInit {
   private max: number;
   private step: number;
 
-  constructor() {}
+  constructor(private simulationService: SimulationService) {}
 
   ngOnInit() {
     this.component = this.field.component;
-    this.value = this.specValue('default');
     this.min = Number(this.specValue('min'));
     this.max = Number(this.specValue('max'));
     this.step = Number(this.specValue('step')) || 1;
+    this.setInitialValue(this.field);
+  }
+
+  private setInitialValue(field: Field) {
+    // return default value, unless a valueObject exists on the service
+    let name = this.fullName(field);
+    let defaultValue = this.specValue('default'); // default value from job object's parent case
+    let initialValue = this.simulationService.getInitialValue(name);
+    if (initialValue) {
+      this.value = initialValue;
+    } else {
+      this.value = defaultValue;
+    }
   }
 
   updateValue(field: Field, value: string) {
     this.value = String(value);
-
-    let prefix = this.specValue('prefix');
-    let suffix = this.specValue('suffix');
-
-    // use Array.prototype.join to ignore undefined and null
-    let name = [prefix, this.field.name, suffix].join('');
-    let valueObject: Value = { name: name, value: this.value };
-
+    let valueObject: Value = { name: this.fullName(field), value: this.value };
     this.update.emit(valueObject);
   }
 
@@ -46,7 +52,7 @@ export class FieldComponent implements OnInit {
     this.update.emit(value);
   }
 
-  specValue(name: string): string {
+  private specValue(name: string): string {
     let value = null;
     let spec = this.field.specs.find(obj => {
       return obj['name'] === name;
@@ -55,5 +61,13 @@ export class FieldComponent implements OnInit {
       value = spec.value;
     }
     return value;
+  }
+
+  private fullName(field: Field): string {
+    let prefix = this.specValue('prefix');
+    let suffix = this.specValue('suffix');
+    // use Array.prototype.join to ignore undefined and null
+    let name = [prefix, this.field.name, suffix].join('');
+    return name;
   }
 }

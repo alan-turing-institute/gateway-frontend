@@ -14,10 +14,6 @@ import { RoutesModule } from './routes/routes.module';
 import { LayoutModule } from './layout/layout.module';
 import { StartupService } from '@core/startup/startup.service';
 
-// import { DefaultInterceptor } from './core/net/default.interceptor';
-import { ApiRootInterceptor } from './core/net/apiroot.interceptor';
-import { SimpleInterceptor } from '@delon/auth';
-
 // angular i18n
 import { registerLocaleData } from '@angular/common';
 import localeZhHans from '@angular/common/locales/zh-Hans';
@@ -32,9 +28,6 @@ import { I18NService } from '@core/i18n/i18n.service';
 export function I18nHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, `assets/tmp/i18n/`, '.json');
 }
-
-// @delon/form: JSON Schema form
-import { JsonSchemaModule } from '@shared/json-schema/json-schema.module';
 
 // application state
 import { environment } from '@env/environment';
@@ -64,15 +57,10 @@ export function StartupServiceFactory(
         deps: [HttpClient],
       },
     }),
-    // JSON-Schema form
-    JsonSchemaModule,
     // application state
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en-GB' },
-    // { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true},  // optional auth via @delon
-    // { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true},
-    // { provide: HTTP_INTERCEPTORS, useClass: ApiRootInterceptor, multi: true},
     { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },
     StartupService,
     {

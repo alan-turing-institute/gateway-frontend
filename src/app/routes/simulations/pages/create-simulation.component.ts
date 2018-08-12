@@ -53,7 +53,7 @@ export class CreateSimulationComponent {
       )
       .subscribe(caseObject => {
         this.caseObject = caseObject;
-        this.simulationService.activateCase(caseObject.id);
+        this.simulationService.activateCase(caseObject);
       });
   }
 
