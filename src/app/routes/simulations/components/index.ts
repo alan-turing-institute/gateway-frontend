@@ -5,7 +5,6 @@ import { SharedModule } from '@shared/shared.module';
 import { SimulationsRoutingModule } from '../simulations-routing.module';
 
 import { CaseSummaryListComponent } from './case-summary-list-component';
-import { CaseConfigureComponent } from './case-configure.component';
 
 import { CaseComponent } from './case.component';
 import { FieldComponent } from './field.component';
@@ -14,7 +13,6 @@ import { JobComponent } from './job.component';
 
 export const COMPONENTS = [
   CaseSummaryListComponent,
-  CaseConfigureComponent,
   CaseComponent,
   FieldComponent,
   SpecComponent,

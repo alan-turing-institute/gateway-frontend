@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 import { Field } from '../models/field';
 import { Spec } from '../models/spec';
 import { Value } from '../models/value';
-import { getInputValues } from '@angularclass/hmr';
-import { ValueTransformer } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'sim-field',
@@ -13,6 +12,7 @@ export class FieldComponent implements OnInit {
   @Input() field: Field;
   @Output() update = new EventEmitter<Value>();
 
+  private component: string;
   private value: string; // current field value (for sliders, textboxes)
   private min: number;
   private max: number;
@@ -21,6 +21,7 @@ export class FieldComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    this.component = this.field.component;
     this.value = this.specValue('default');
     this.min = Number(this.specValue('min'));
     this.max = Number(this.specValue('max'));
@@ -36,6 +37,7 @@ export class FieldComponent implements OnInit {
     // use Array.prototype.join to ignore undefined and null
     let name = [prefix, this.field.name, suffix].join('');
     let valueObject: Value = { name: name, value: this.value };
+
     this.update.emit(valueObject);
   }
 

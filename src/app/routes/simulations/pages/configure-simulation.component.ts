@@ -1,11 +1,11 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { Job, JobPatch } from '../models/job';
 import { Value } from '../models/value';
 import { JobComponent } from '../components/job.component';
-import { CaseService } from '../services/case.service';
+import { SimulationService } from '../services/simulation.service';
 
 @Component({
   selector: 'app-simulations-configure',
@@ -34,40 +34,27 @@ import { CaseService } from '../services/case.service';
   `,
 })
 export class ConfigureSimulationComponent {
-  @ViewChild(JobComponent) private jobComponent: JobComponent;
   job: Job;
-  values: Value[]; // TODO refactor to dirtyValues
+  values: Value[];
 
   constructor(
-    private caseService: CaseService,
+    private simulationService: SimulationService,
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    route.params.pipe(map(params => params.id)).subscribe(id => {
-      this.caseService.getJob(id).subscribe(job => {
-        this.job = job;
+    route.params
+      .pipe(
+        map(params => params.id),
+        switchMap(id => this.simulationService.getJob(id)),
+      )
+      .subscribe(jobObject => {
+        this.job = jobObject;
+        this.simulationService.activateJob(jobObject.id);
       });
-    });
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.values = this.jobComponent.values;
-    });
   }
 
   onSave() {
-    // TODO refactor to JobPatch public member
-
-    let jobPatch: JobPatch = {
-      name: this.job.name,
-      description: this.job.description,
-      values: this.values,
-    };
-
-    console.log('DEBUG(job)', this.job);
-
-    this.caseService.updateJob(this.job.id, jobPatch).subscribe(response => {
+    this.simulationService.updateJob(this.job.id).subscribe(response => {
       console.log(response);
     });
   }

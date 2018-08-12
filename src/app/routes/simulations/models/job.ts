@@ -34,8 +34,14 @@ export interface JobSummary {
   user: string;
 }
 
-export interface JobPatch {
+export class JobPatch {
   name: string;
   description: string;
   values: Value[];
+
+  constructor(name: string, description: string, values: Value[]) {
+    if (name) this.name = name;
+    if (description) this.description = description;
+    if (values.length !== 0) this.values = values;
+  }
 }

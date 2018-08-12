@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Job } from '../models/job';
 import { Value } from '../models/value';
 import { valueFunctionProp } from 'ng-zorro-antd/src/core/util/convert';
+import { SimulationService } from '../services/simulation.service';
 
 @Component({
   selector: 'sim-job',
@@ -9,23 +10,22 @@ import { valueFunctionProp } from 'ng-zorro-antd/src/core/util/convert';
 })
 export class JobComponent implements OnInit {
   @Input() job: Job;
-  values: Value[];
 
-  constructor() {}
+  constructor(private simulationService: SimulationService) {}
 
-  ngOnInit() {
-    this.values = [];
-  }
+  ngOnInit() {}
 
   updateName(value: string) {
     this.job.name = value;
+    this.simulationService.updateName(value);
   }
 
   updateDescription(value: string) {
     this.job.description = value;
+    this.simulationService.updateDescription(value);
   }
 
   updateValue(valueObject: Value) {
-    Value.updateValueArray(this.values, valueObject);
+    this.simulationService.upsertValue(valueObject);
   }
 }

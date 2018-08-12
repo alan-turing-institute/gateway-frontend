@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { CaseSummary } from '../models/case';
-import { CaseService } from '../services/case.service';
+import { SimulationService } from '../services/simulation.service';
 
 import { NzMessageService } from 'ng-zorro-antd';
 
@@ -30,8 +30,11 @@ export class CreateComponent implements OnInit {
 
   loading: boolean = false;
 
-  constructor(public msg: NzMessageService, private caseService: CaseService) {
-    this.caseSummaries$ = caseService.caseSummaries$;
+  constructor(
+    public msg: NzMessageService,
+    private simulationService: SimulationService,
+  ) {
+    this.caseSummaries$ = simulationService.caseSummaries$;
   }
 
   ngOnInit() {}

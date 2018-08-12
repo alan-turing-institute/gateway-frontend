@@ -60,13 +60,27 @@ export function generateMockCaseSummary(): CaseSummary {
 export class CaseSelection {
   author: string;
   name: string;
+  description: string;
   case_id: string;
+
+  constructor(
+    case_id: string,
+    author: string,
+    name: string,
+    description: string,
+  ) {
+    this.case_id = case_id;
+    this.author = author;
+    this.name = name;
+    this.description = description;
+  }
 }
 
 export function generateMockCaseSelection(): CaseSelection {
   return {
-    author: 'simulate-user',
-    name: 'Example job name',
     case_id: '3',
+    author: 'example-user',
+    name: 'Example name',
+    description: 'Example description',
   };
 }
