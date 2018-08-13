@@ -11,12 +11,13 @@ import { timer } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
 import { Case } from '../models/case';
+import { Job } from '../models/job';
 import { Value } from '../models/value';
 import { SimulationService } from '../services/simulation.service';
 
 @Component({
-  selector: 'sim-case',
-  templateUrl: './case.component.html',
+  selector: 'sim-simulation',
+  templateUrl: './simulation.component.html',
   styles: [
     `
       [nz-form] {
@@ -28,10 +29,13 @@ import { SimulationService } from '../services/simulation.service';
     `,
   ],
 })
-export class CaseComponent {
-  @Input() caseObject: Case;
+export class SimulationComponent {
+  @Input() simulation: Case | Job;
   @Output() save: EventEmitter<void> = new EventEmitter();
   @Output() run: EventEmitter<void> = new EventEmitter();
+
+  private showCase: boolean;
+  private showJob: boolean;
 
   constructor(
     private simulationService: SimulationService,
@@ -45,14 +49,27 @@ export class CaseComponent {
   ngOnChanges(changes: any) {
     // wait until caseObject is accessible, then set both
     // name and description in the simulation service
-    if (!changes['caseObject'].isFirstChange()) {
-      this.simulationService.updateName(this.caseObject.name);
-      this.simulationService.updateDescription(this.caseObject.description);
+    if (!changes['simulation'].isFirstChange()) {
+      this.simulationService.updateName(this.simulation.name);
+      this.simulationService.updateDescription(this.simulation.description);
+      if (this.isJob(this.simulation)) {
+        // we have been given a job
+        this.showJob = true;
+        this.showCase = false;
+      } else {
+        // we have been given a case
+        this.showJob = false;
+        this.showCase = true;
+      }
     }
   }
 
+  isJob(simulation: Job | Case): simulation is Job {
+    return 'parent_case' in simulation;
+  }
+
   dumpState() {
-    console.log('DEBUG(case)', this.caseObject);
+    console.log('DEBUG(case)', this.simulation);
   }
 
   updateName(value: string) {

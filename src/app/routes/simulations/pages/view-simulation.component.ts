@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 
-import { Job, JobPatch } from '../models/job';
-import { Value } from '../models/value';
-import { JobComponent } from '../components/job.component';
+import { Job } from '../models/job';
 import { SimulationService } from '../services/simulation.service';
 
 @Component({
@@ -22,7 +20,6 @@ export class ViewSimulationComponent {
 
   constructor(
     private simulationService: SimulationService,
-    private router: Router,
     private route: ActivatedRoute,
   ) {
     route.params

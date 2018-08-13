@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 
-import { Job, JobPatch } from '../models/job';
-import { Value } from '../models/value';
-import { JobComponent } from '../components/job.component';
+import { Job } from '../models/job';
 import { SimulationService } from '../services/simulation.service';
 
 @Component({
@@ -12,11 +10,11 @@ import { SimulationService } from '../services/simulation.service';
   template: `
 
   <nz-card>
-    <sim-job 
-      [job]="job"
+    <sim-simulation 
+      [simulation]="job"
       (save)="onSave()"
       (run)="onRun()">
-    </sim-job>
+    </sim-simulation>
   </nz-card>
   
   `,

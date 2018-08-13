@@ -19,18 +19,26 @@
   <nz-form-item>
     <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>Description</nz-form-label>
     <nz-form-control [nzSpan]="12">
-      <textarea nz-input rows="2" placeholder="{{caseObject?.description}}" (keyup)="updateDescription($event.target.value)"></textarea>
+      <textarea nz-input rows="2" placeholder="{{simulation?.description}}" (keyup)="updateDescription($event.target.value)"></textarea>
     </nz-form-control>
   </nz-form-item>
 </form>
 
-<div *ngFor="let field of caseObject?.fields">
-  <sim-field [field]=field (update)="updateValue($event)">
-  </sim-field>
+<div *ngIf="showJob">
+  <div *ngFor="let field of simulation?.parent_case?.fields">
+      <sim-field [field]=field (update)="updateValue($event)">
+      </sim-field>
+    </div>
 </div>
+<div *ngIf="showCase">
+    <div *ngFor="let field of simulation?.fields">
+        <sim-field [field]=field (update)="updateValue($event)">
+        </sim-field>
+      </div>
+  </div>
 
 
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+<form nz-form [formGroup]="validateForm">
     <nz-form-item>
       <nz-form-item>
           <nz-form-control [nzOffset]="7" [nzSpan]="12">

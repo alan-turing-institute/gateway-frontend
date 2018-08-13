@@ -12,11 +12,11 @@ import { SimulationService } from '../services/simulation.service';
   template: `
 
   <nz-card>
-    <sim-case 
+    <sim-simulation 
+      [simulation]="caseObject"
       (save)="onSave()"
-      (run)="onRun()"
-      [caseObject]="caseObject">
-    </sim-case>
+      (run)="onRun()">
+    </sim-simulation>
   </nz-card>
 
   `,
@@ -60,6 +60,7 @@ export class CreateSimulationComponent {
   }
 
   onRun() {
+    debugger;
     console.log('DEBUG(create-simulation.component) Not implemented');
   }
 }
