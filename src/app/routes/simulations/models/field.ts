@@ -5,7 +5,7 @@ export interface Field {
   name: string;
   component: string;
   specs: Spec[];
-  fields: Field[];
+  child_fields: Field[];
 }
 
 export function generateMockField(): Field {
@@ -14,6 +14,6 @@ export function generateMockField(): Field {
     name: 'water',
     component: 'slider',
     specs: [generateMockSpec()],
-    fields: [generateMockField()],
+    child_fields: [generateMockField()],
   };
 }

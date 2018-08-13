@@ -20,6 +20,6 @@
 </div>
 
 <!-- Add child fields -->
-<div *ngFor="let field of field?.fields">
+<div *ngFor="let field of field?.child_fields">
   <sim-field [field]=field (update)="updateValueFromChild($event)"></sim-field>
 </div>
