@@ -53,11 +53,11 @@ export class SimulationComponent {
       this.simulationService.updateName(this.simulation.name);
       this.simulationService.updateDescription(this.simulation.description);
       if (this.isJob(this.simulation)) {
-        // we have been given a job
+        // Input simulation is job
         this.showJob = true;
         this.showCase = false;
       } else {
-        // we have been given a case
+        // Input simulation is case
         this.showJob = false;
         this.showCase = true;
       }

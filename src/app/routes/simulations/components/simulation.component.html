@@ -2,7 +2,7 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>Name</nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback>
-      <input nz-input formControlName="name" placeholder="{{caseObject?.name}}" (keyup)="updateName($event.target.value)">
+      <input nz-input formControlName="name" placeholder="{{simulation?.name}}" (keyup)="updateName($event.target.value)">
       <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors || validateForm.get('name').pending ">
         <ng-container *ngIf="validateForm.get('name').hasError('required')">
           Please input a simulation name!
@@ -24,18 +24,21 @@
   </nz-form-item>
 </form>
 
+
 <div *ngIf="showJob">
   <div *ngFor="let field of simulation?.parent_case?.fields">
+    <sim-field [field]=field (update)="updateValue($event)">
+    </sim-field>
+  </div>
+</div>
+
+<div *ngIf="showCase">
+    <div *ngFor="let field of simulation?.fields">
       <sim-field [field]=field (update)="updateValue($event)">
       </sim-field>
     </div>
-</div>
-<div *ngIf="showCase">
-    <div *ngFor="let field of simulation?.fields">
-        <sim-field [field]=field (update)="updateValue($event)">
-        </sim-field>
-      </div>
   </div>
+
 
 
 <form nz-form [formGroup]="validateForm">
