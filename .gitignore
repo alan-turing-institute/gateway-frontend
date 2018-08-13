@@ -16,9 +16,14 @@
 *.launch
 .settings/
 *.sublime-workspace
+*$
+*~
+*.swo
+*.swp
 
-# IDE - VSCode
+# vscode content
 .vscode
+
 
 # misc
 /.sass-cache
@@ -29,6 +34,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+.vs
 
 # System Files
 .DS_Store
