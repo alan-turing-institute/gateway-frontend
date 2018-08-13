@@ -1,19 +1,42 @@
-<form nz-form>
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Name</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input placeholder="{{caseObject?.name}}" (keyup)="updateName($event.target.value)">
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Description</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input placeholder="{{caseObject?.description}}" (keyup)="updateDescription($event.target.value)">
-      </nz-form-control>
-    </nz-form-item>
-  </form>
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Name</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
+      <input nz-input formControlName="name" placeholder="{{caseObject?.name}}" (keyup)="updateName($event.target.value)">
+      <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors || validateForm.get('name').pending ">
+        <ng-container *ngIf="validateForm.get('name').hasError('required')">
+          Please input a simulation name!
+        </ng-container>
+        <ng-container *ngIf="validateForm.get('name').hasError('duplicated')">
+          This simulation name is taken!
+        </ng-container>
+        <ng-container *ngIf="validateForm.get('name').pending">
+          Searching...
+        </ng-container>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>Description</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <textarea nz-input rows="2" placeholder="{{caseObject?.description}}" (keyup)="updateDescription($event.target.value)"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+</form>
 
 <div *ngFor="let field of caseObject?.fields">
   <sim-field [field]=field (update)="updateValue($event)">
   </sim-field>
 </div>
+
+
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+    <nz-form-item>
+      <nz-form-item>
+          <nz-form-control [nzOffset]="7" [nzSpan]="12">
+            <button nz-button nzType="secondary" [disabled]="!validateForm.valid" (click)=this.save.emit()>Save</button>
+            <button nz-button nzType="primary" [disabled]="!validateForm.valid" (click)=this.run.emit()>Run</button>
+          </nz-form-control>
+        </nz-form-item>
+    </nz-form-item>
+  </form>

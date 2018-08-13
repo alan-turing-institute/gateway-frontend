@@ -1,4 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
@@ -30,9 +31,13 @@ export class MiddlewareService {
       .pipe(map(jobSummaries => jobSummaries || [])); // TODO redundant (?)
   }
 
-  public searchCaseSummaries(queryTitle: string): Observable<CaseSummary[]> {
+  public searchJobSummaries(name: string): Observable<JobSummary[]> {
+    let queryParams = { name: name };
+
     return this.http
-      .get<CaseSummary[]>(this.CASE_API_PATH)
+      .get<JobSummary[]>(`${this.JOB_API_PATH}/search`, {
+        params: queryParams,
+      })
       .pipe(map(caseSummaries => caseSummaries || [])); // TODO redundant (?)
   }
 

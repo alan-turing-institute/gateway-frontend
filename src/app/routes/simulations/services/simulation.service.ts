@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable, empty } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
 
+import { Observable, empty } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { NzMessageService } from 'ng-zorro-antd';
+
+import { MiddlewareService } from '@core/services/middleware.service';
 import { Case, CaseSummary, CaseSelection } from '../models/case';
 import { Job, JobSummary, JobPatch } from '../models/job';
 import { Value } from '../models/value';
-
-import { environment } from '@env/environment';
-import { MiddlewareService } from '@core/services/middleware.service';
 
 @Injectable()
 export class SimulationService {
@@ -24,7 +24,10 @@ export class SimulationService {
   public description: string;
   public values: Value[] = [];
 
-  constructor(private middlewareService: MiddlewareService) {
+  constructor(
+    private middlewareService: MiddlewareService,
+    public message: NzMessageService,
+  ) {
     this.caseSummaries$ = this.middlewareService.getCaseSummaries();
     this.jobSummaries$ = this.middlewareService.getJobSummaries();
   }
@@ -62,18 +65,8 @@ export class SimulationService {
     return new JobPatch(this.name, this.description, this.values);
   }
 
-  debugState() {
-    console.log('DEBUG(simulation.service) activeCaseId', this.activeCaseId);
-    console.log('DEBUG(simulation.service) activeJobId', this.activeJobId);
-    console.log('DEBUG(simulation.service) name', this.name);
-    console.log('DEBUG(simulation.service) description', this.description);
-    console.log('DEBUG(simulation.service) values', this.values);
-    console.log('DEBUG(simulation.service) jobPatch', this.jobPatch());
-  }
-
   public upsertValue(valueObject: Value) {
     Value.updateValueArray(this.values, valueObject);
-    // this.debugState();
   }
 
   public getInitialValue(name: string): string {
@@ -90,15 +83,17 @@ export class SimulationService {
 
   public updateName(value: string) {
     this.name = value;
-    // this.debugState();
   }
 
   public updateDescription(value: string) {
     this.description = value;
-    // this.debugState();
   }
 
   //  middleware connection functionality
+
+  searchJobSummaries(name: string): Observable<JobSummary[]> {
+    return this.middlewareService.searchJobSummaries(name);
+  }
 
   getCase(id: string): Observable<Case> {
     return this.middlewareService.getCase(id);
@@ -118,6 +113,7 @@ export class SimulationService {
       catchError(
         (err): any => {
           console.log(err);
+          this.message.create('error', this.name);
           return empty();
         },
       ),
@@ -149,5 +145,15 @@ export class SimulationService {
 
   getJob(id: string): Observable<Job> {
     return this.middlewareService.getJob(id);
+  }
+
+  // dump state to console for debugging
+  private debugState() {
+    console.log('DEBUG(simulation.service) activeCaseId', this.activeCaseId);
+    console.log('DEBUG(simulation.service) activeJobId', this.activeJobId);
+    console.log('DEBUG(simulation.service) name', this.name);
+    console.log('DEBUG(simulation.service) description', this.description);
+    console.log('DEBUG(simulation.service) values', this.values);
+    console.log('DEBUG(simulation.service) jobPatch', this.jobPatch());
   }
 }

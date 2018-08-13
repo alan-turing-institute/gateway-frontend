@@ -7,8 +7,8 @@
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Description</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24">
-      <input nz-input placeholder="{{job?.description}}" (keyup)="updateDescription($event.target.value)">
+    <nz-form-control [nzSpan]="14" >
+      <textarea nz-input rows="2" placeholder="{{job?.description}}" (keyup)="updateDescription($event.target.value)"></textarea>
     </nz-form-control>
   </nz-form-item>
 </form>

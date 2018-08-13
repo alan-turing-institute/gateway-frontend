@@ -1,27 +1,22 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { of, empty } from 'rxjs';
-import { map, mergeMap, switchMap, catchError, tap } from 'rxjs/operators';
+
+import { map, mergeMap, switchMap } from 'rxjs/operators';
+import { NzMessageService } from 'ng-zorro-antd';
 
 import { Case } from '../models/case';
-import { JobPatch } from '../models/job';
-import { CaseComponent } from '../components/case.component';
-import { Value } from '../models/value';
 import { SimulationService } from '../services/simulation.service';
-import { MiddlewareService } from '@core/services/middleware.service';
-import { identifierModuleUrl } from '@angular/compiler';
-
-// <code>
-//   {{caseObject | json}}
-// </code>
 
 @Component({
   selector: 'app-simulations-create',
   template: `
 
   <nz-card>
-    <sim-case [caseObject]="caseObject"></sim-case>
-    <button nz-button nzType="primary" (click)="onCreate()">Create</button>
+    <sim-case 
+      (save)="onSave()"
+      (run)="onRun()"
+      [caseObject]="caseObject">
+    </sim-case>
   </nz-card>
 
   `,
@@ -35,6 +30,7 @@ export class CreateSimulationComponent {
     private router: Router,
     private simulationService: SimulationService,
     private route: ActivatedRoute,
+    public msg: NzMessageService,
   ) {
     route.params
       .pipe(
@@ -47,7 +43,7 @@ export class CreateSimulationComponent {
       });
   }
 
-  onCreate() {
+  onSave() {
     let database_job_id: string = null;
     this.simulationService
       .createJob() // create job based on default spec values in case
@@ -61,5 +57,9 @@ export class CreateSimulationComponent {
       .subscribe(res => {
         this.router.navigateByUrl(`/simulations/configure/${database_job_id}`);
       });
+  }
+
+  onRun() {
+    console.log('DEBUG(create-simulation.component) Not implemented');
   }
 }

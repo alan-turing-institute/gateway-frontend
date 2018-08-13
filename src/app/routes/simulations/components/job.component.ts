@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Job } from '../models/job';
 import { Value } from '../models/value';
 import { valueFunctionProp } from 'ng-zorro-antd/src/core/util/convert';
@@ -10,6 +10,8 @@ import { SimulationService } from '../services/simulation.service';
 })
 export class JobComponent {
   @Input() job: Job;
+  @Output() save: EventEmitter<void> = new EventEmitter();
+  @Output() run: EventEmitter<void> = new EventEmitter();
 
   constructor(private simulationService: SimulationService) {}
 

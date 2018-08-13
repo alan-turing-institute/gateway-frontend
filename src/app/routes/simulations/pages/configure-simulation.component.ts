@@ -12,9 +12,11 @@ import { SimulationService } from '../services/simulation.service';
   template: `
 
   <nz-card>
-    <sim-job [job]="job"></sim-job>
-    <button nz-button nzType="primary" (click)="onSave()">Save</button>
-    <button nz-button nzType="primary" (click)="onRun()">Run</button>
+    <sim-job 
+      [job]="job"
+      (save)="onSave()"
+      (run)="onRun()">
+    </sim-job>
   </nz-card>
   
   `,
