@@ -18,6 +18,7 @@ export class FieldComponent implements OnInit {
   private min: number;
   private max: number;
   private step: number;
+  private fullFieldName: string;
 
   constructor(private simulationService: SimulationService) {}
 
@@ -26,12 +27,16 @@ export class FieldComponent implements OnInit {
     this.min = Number(this.specValue('min'));
     this.max = Number(this.specValue('max'));
     this.step = Number(this.specValue('step')) || 1;
+    this.setFullFieldName();
     this.initialiseValue();
   }
 
   private initialiseValue() {
     let defaultValue = this.specValue('default'); // value from Case.fields OR Job.parent_case
-    let initialValue = this.simulationService.getInitialValue(name); // value from Job.values
+
+    let initialValue = this.simulationService.getInitialValue(
+      this.fullFieldName,
+    ); // value from Job.values
 
     // not all fields have values, therefore only store
     // those that have a default value
@@ -44,13 +49,13 @@ export class FieldComponent implements OnInit {
 
     // use service directly so that angular form is not dirty
     if (value) {
-      let valueObject = this.applyAffixes(value);
+      let valueObject = this.valueObject(value);
       this.simulationService.upsertValue(valueObject);
     }
   }
 
   updateValue(value: string) {
-    let valueObject = this.applyAffixes(value);
+    let valueObject = this.valueObject(value);
     this.update.emit(valueObject);
   }
 
@@ -59,15 +64,19 @@ export class FieldComponent implements OnInit {
     this.update.emit(value);
   }
 
-  applyAffixes(value: string): Value {
-    // add any prefix and suffix
-    this.value = String(value);
+  setFullFieldName() {
     let prefix = this.specValue('prefix');
     let suffix = this.specValue('suffix');
     // use Array.prototype.join to ignore undefined and null
-    let name = [prefix, this.field.name, suffix].join('');
+    this.fullFieldName = [prefix, this.field.name, suffix].join('');
+  }
+
+  valueObject(value: string): Value {
+    // add any prefix and suffix
+    this.value = String(value);
+
     let valueObject: Value = {
-      name: name,
+      name: this.fullFieldName,
       value: this.value,
     };
     return valueObject;

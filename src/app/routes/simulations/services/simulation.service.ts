@@ -100,12 +100,10 @@ export class SimulationService {
 
   public updateName(value: string) {
     this.name = value;
-    this.debugState();
   }
 
   public updateDescription(value: string) {
     this.description = value;
-    this.debugState();
   }
 
   //  middleware connection functionality
@@ -167,7 +165,7 @@ export class SimulationService {
   }
 
   // dump state to console for debugging
-  private debugState() {
+  public debugState() {
     console.log('DEBUG(simulation.service) activeCaseId', this.activeCaseId);
     console.log('DEBUG(simulation.service) activeJobId', this.activeJobId);
     console.log('DEBUG(simulation.service) name', this.name);

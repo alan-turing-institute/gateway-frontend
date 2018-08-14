@@ -58,7 +58,7 @@ export class SimulationComponent {
       if (this.simulationService.active === 'job') {
         this.showJob = true;
         this.showCase = false;
-        // this.form.controls['name'].setValue(this.simulation.name);
+        // this.form.controls['name'].setValue(this.simulation.name);  // use to access each form individually
         this.form.setValue({
           name: this.simulation.name,
           description: this.simulation.description,
@@ -75,12 +75,10 @@ export class SimulationComponent {
   }
 
   updateName(value: string) {
-    console.log(this.form);
     this.simulationService.updateName(value);
   }
 
   updateDescription(value: string) {
-    console.log(this.form);
     this.simulationService.updateDescription(value);
   }
 
