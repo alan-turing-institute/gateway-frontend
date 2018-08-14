@@ -47,8 +47,8 @@
     <nz-form-item>
       <nz-form-item>
           <nz-form-control [nzOffset]="7" [nzSpan]="12">
-            <button nz-button nzType="secondary" [disabled]="!form.touched" (click)=this.save.emit()>Save</button>
-            <button nz-button nzType="primary" [disabled]="!form.valid" (click)=this.run.emit()>Run</button>
+            <button nz-button nzType="secondary" [disabled]="!(form.dirty && form.valid)" (click)=onSave()>Save</button>
+            <button nz-button nzType="primary" [disabled]="!form.valid" (click)=onRun()>Run</button>
           </nz-form-control>
         </nz-form-item>
     </nz-form-item>

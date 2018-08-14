@@ -54,14 +54,6 @@ export class SimulationService {
     this.setInitialValues(jobObject);
   }
 
-  private setInitialValues(jobObject: Job) {
-    // overwrite initial service values with those from the job
-    this.initialValues = jobObject.values.map(obj => {
-      return { name: obj.name, value: obj.value };
-    });
-    this.values = this.initialValues;
-  }
-
   private clearState() {
     this.active = null;
     this.name = null;
@@ -79,7 +71,19 @@ export class SimulationService {
 
   public upsertValue(valueObject: Value) {
     Value.updateValueArray(this.values, valueObject);
-    this.debugState();
+  }
+
+  private isJob(simulation: Job | Case): simulation is Job {
+    return (<Job>simulation).parent_case !== undefined;
+  }
+
+  private setInitialValues(simulation: Job | Case) {
+    // extract values from Job.values
+    if (this.isJob(simulation)) {
+      this.initialValues = simulation.values.map(obj => {
+        return { name: obj.name, value: obj.value };
+      });
+    }
   }
 
   public getInitialValue(name: string): string {
@@ -96,10 +100,12 @@ export class SimulationService {
 
   public updateName(value: string) {
     this.name = value;
+    this.debugState();
   }
 
   public updateDescription(value: string) {
     this.description = value;
+    this.debugState();
   }
 
   //  middleware connection functionality
@@ -167,6 +173,7 @@ export class SimulationService {
     console.log('DEBUG(simulation.service) name', this.name);
     console.log('DEBUG(simulation.service) description', this.description);
     console.log('DEBUG(simulation.service) values', this.values);
+    console.log('DEBUG(simulation.service) initialValues', this.initialValues);
     console.log('DEBUG(simulation.service) jobPatch', this.jobPatch());
   }
 }

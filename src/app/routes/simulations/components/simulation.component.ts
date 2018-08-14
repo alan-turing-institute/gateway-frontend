@@ -75,25 +75,28 @@ export class SimulationComponent {
   }
 
   updateName(value: string) {
+    console.log(this.form);
     this.simulationService.updateName(value);
   }
 
   updateDescription(value: string) {
+    console.log(this.form);
     this.simulationService.updateDescription(value);
   }
 
   updateValue(valueObject: Value) {
+    this.form.markAsDirty();
     this.simulationService.upsertValue(valueObject);
   }
 
-  // form: FormGroup;
-  // submitForm = ($event, value) => {
-  //   $event.preventDefault();
-  //   for (const key in this.form.controls) {
-  //     this.form.controls[key].markAsDirty();
-  //     this.form.controls[key].updateValueAndValidity();
-  //   }
-  // };
+  onSave() {
+    this.save.emit();
+    this.form.markAsPristine(); // TODO implement as callback
+  }
+
+  onRun() {
+    this.run.emit();
+  }
 
   resetForm(e: MouseEvent): void {
     e.preventDefault();

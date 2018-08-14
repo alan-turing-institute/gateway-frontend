@@ -10,7 +10,6 @@ import { JobSummaryListComponent } from './job-summary-list-component';
 import { SimulationComponent } from './simulation.component';
 import { JobOutputComponent } from './job-output.component';
 import { FieldComponent } from './field.component';
-import { SpecComponent } from './spec.component';
 
 export const COMPONENTS = [
   CaseSummaryListComponent,
@@ -18,7 +17,6 @@ export const COMPONENTS = [
   SimulationComponent,
   JobOutputComponent,
   FieldComponent,
-  SpecComponent,
 ];
 
 @NgModule({

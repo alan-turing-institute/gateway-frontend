@@ -26,30 +26,51 @@ export class FieldComponent implements OnInit {
     this.min = Number(this.specValue('min'));
     this.max = Number(this.specValue('max'));
     this.step = Number(this.specValue('step')) || 1;
-    this.setInitialValue(this.field);
+    this.initialiseValue();
   }
 
-  private setInitialValue(field: Field) {
-    // return default value, unless a valueObject exists on the service
-    let name = this.fullName(field);
-    let defaultValue = this.specValue('default'); // default value from job object's parent case
-    let initialValue = this.simulationService.getInitialValue(name);
+  private initialiseValue() {
+    let defaultValue = this.specValue('default'); // value from Case.fields OR Job.parent_case
+    let initialValue = this.simulationService.getInitialValue(name); // value from Job.values
+
+    // not all fields have values, therefore only store
+    // those that have a default value
+    let value: string;
     if (initialValue) {
-      this.value = initialValue;
-    } else {
-      this.value = defaultValue;
+      value = initialValue;
+    } else if (defaultValue) {
+      value = defaultValue;
+    }
+
+    // use service directly so that angular form is not dirty
+    if (value) {
+      let valueObject = this.applyAffixes(value);
+      this.simulationService.upsertValue(valueObject);
     }
   }
 
-  updateValue(field: Field, value: string) {
-    this.value = String(value);
-    let valueObject: Value = { name: this.fullName(field), value: this.value };
+  updateValue(value: string) {
+    let valueObject = this.applyAffixes(value);
     this.update.emit(valueObject);
   }
 
   updateValueFromChild(value: Value) {
     // bubble the child-emitted event up to its parent
     this.update.emit(value);
+  }
+
+  applyAffixes(value: string): Value {
+    // add any prefix and suffix
+    this.value = String(value);
+    let prefix = this.specValue('prefix');
+    let suffix = this.specValue('suffix');
+    // use Array.prototype.join to ignore undefined and null
+    let name = [prefix, this.field.name, suffix].join('');
+    let valueObject: Value = {
+      name: name,
+      value: this.value,
+    };
+    return valueObject;
   }
 
   private specValue(name: string): string {
@@ -61,13 +82,5 @@ export class FieldComponent implements OnInit {
       value = spec.value;
     }
     return value;
-  }
-
-  private fullName(field: Field): string {
-    let prefix = this.specValue('prefix');
-    let suffix = this.specValue('suffix');
-    // use Array.prototype.join to ignore undefined and null
-    let name = [prefix, this.field.name, suffix].join('');
-    return name;
   }
 }

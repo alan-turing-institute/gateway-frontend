@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { map, mergeMap, switchMap } from 'rxjs/operators';
@@ -21,7 +21,7 @@ import { SimulationService } from '../services/simulation.service';
 
   `,
 })
-export class CreateSimulationComponent implements OnInit {
+export class CreateSimulationComponent {
   caseObject: Case;
 
   message: object[];
@@ -38,16 +38,9 @@ export class CreateSimulationComponent implements OnInit {
         switchMap(id => this.simulationService.getCase(id)),
       )
       .subscribe(caseObject => {
-        this.caseObject = caseObject;
         this.simulationService.activateCase(caseObject);
-        console.log('DEBUG(create-simulation.component)');
+        this.caseObject = caseObject;
       });
-  }
-
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      console.log(params);
-    });
   }
 
   onSave() {
