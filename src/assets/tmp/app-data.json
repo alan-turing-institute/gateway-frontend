@@ -35,20 +35,6 @@
               "text": "view",
               "link": "/simulations/view",
               "i18n": "view"
-            },
-            {
-              "text": "create",
-              "link": "/simulations/create/2",
-              "i18n": "create",
-              "hide": true,
-              "hideInBreadcrumb": true
-            },
-            {
-              "text": "view",
-              "link": "/simulations/view/2",
-              "i18n": "view",
-              "hide": true,
-              "hideInBreadcrumb": true
             }
           ]
         },
