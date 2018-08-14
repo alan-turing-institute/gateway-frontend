@@ -46,15 +46,15 @@ export class ConfigureSimulationComponent {
   }
 
   onSave() {
-    this.simulationService.updateJob(this.job.id).subscribe(response => {
-      console.log(response);
+    this.simulationService.updateJob(this.job.id).subscribe(res => {
+      console.log(res);
     });
   }
 
   onRun() {
     // TODO check for dirty changes and prompt onSave()
-    this.simulationService.startJob(this.job.id).subscribe(response => {
-      console.log(response);
+    this.simulationService.startJob(this.job.id).subscribe(res => {
+      console.log(res);
       this.router.navigate(['/simulations/view']);
     });
   }

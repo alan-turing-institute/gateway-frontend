@@ -60,6 +60,20 @@ export class CreateSimulationComponent {
   }
 
   onRun() {
-    console.log('DEBUG(create-simulation.component) Not implemented');
+    let database_job_id: string = null;
+    this.simulationService
+      .createJob() // create job based on default spec values in case
+      .pipe(
+        map(res => res['job_id']),
+        mergeMap(job_id => {
+          database_job_id = job_id; // cache database job id for downstream navigateByUrl()
+          return this.simulationService.updateJob(job_id); // patch any dirty spec values
+        }),
+        mergeMap(res => this.simulationService.startJob(database_job_id)),
+      )
+      .subscribe(res => {
+        console.log(res);
+        this.router.navigateByUrl(`/simulations/view`);
+      });
   }
 }
