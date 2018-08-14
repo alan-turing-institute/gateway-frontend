@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { timer } from 'rxjs';
+import { of, timer } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
 import { Case } from '../models/case';
@@ -36,13 +36,15 @@ export class SimulationComponent {
 
   private showCase: boolean;
   private showJob: boolean;
+  private form;
 
   constructor(
     private simulationService: SimulationService,
     private fb: FormBuilder,
   ) {
-    this.validateForm = this.fb.group({
+    this.form = fb.group({
       name: ['', [Validators.required], [this.nameAsyncValidator]],
+      description: ['', null],
     });
   }
 
@@ -52,20 +54,20 @@ export class SimulationComponent {
     if (!changes['simulation'].isFirstChange()) {
       this.simulationService.updateName(this.simulation.name);
       this.simulationService.updateDescription(this.simulation.description);
-      if (this.isJob(this.simulation)) {
-        // Input simulation is job
+
+      if (this.simulationService.active === 'job') {
         this.showJob = true;
         this.showCase = false;
-      } else {
-        // Input simulation is case
-        this.showJob = false;
+        // this.form.controls['name'].setValue(this.simulation.name);
+        this.form.setValue({
+          name: this.simulation.name,
+          description: this.simulation.description,
+        });
+      } else if (this.simulationService.active === 'case') {
         this.showCase = true;
+        this.showJob = false;
       }
     }
-  }
-
-  isJob(simulation: Job | Case): simulation is Job {
-    return 'parent_case' in simulation;
   }
 
   dumpState() {
@@ -84,36 +86,46 @@ export class SimulationComponent {
     this.simulationService.upsertValue(valueObject);
   }
 
-  validateForm: FormGroup;
-  submitForm = ($event, value) => {
-    $event.preventDefault();
-    for (const key in this.validateForm.controls) {
-      this.validateForm.controls[key].markAsDirty();
-      this.validateForm.controls[key].updateValueAndValidity();
-    }
-  };
+  // form: FormGroup;
+  // submitForm = ($event, value) => {
+  //   $event.preventDefault();
+  //   for (const key in this.form.controls) {
+  //     this.form.controls[key].markAsDirty();
+  //     this.form.controls[key].updateValueAndValidity();
+  //   }
+  // };
 
   resetForm(e: MouseEvent): void {
     e.preventDefault();
-    this.validateForm.reset();
-    for (const key in this.validateForm.controls) {
-      this.validateForm.controls[key].markAsPristine();
-      this.validateForm.controls[key].updateValueAndValidity();
+    this.form.reset();
+    for (const key in this.form.controls) {
+      this.form.controls[key].markAsPristine();
+      this.form.controls[key].updateValueAndValidity();
     }
   }
 
-  nameAsyncValidator = (control: FormControl) =>
-    timer(300).pipe(
+  nameAsyncValidator = (control: FormControl) => {
+    // the current job name is valid
+    if (this.simulationService.active === 'job') {
+      if (control.value === this.simulationService.initialName) {
+        return of(null);
+      }
+    }
+
+    // anything else already in the job summary database is invalid
+    return timer(300).pipe(
       switchMap(() =>
-        this.simulationService.searchJobSummaries(control.value).pipe(
-          // clear validator, unless we find a job summary that matches the search
-          map(
-            summaryList =>
-              summaryList.length == 0
-                ? null
-                : { error: true, duplicated: true },
+        this.simulationService
+          .searchJobSummaries(control.value)
+          .pipe(
+            map(
+              summaryList =>
+                summaryList.length == 0
+                  ? null
+                  : { error: true, duplicated: true },
+            ),
           ),
-        ),
       ),
     );
+  };
 }

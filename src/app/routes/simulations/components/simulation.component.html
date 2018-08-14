@@ -1,27 +1,29 @@
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+<form nz-form [formGroup]="form" (ngSubmit)="submitForm($event,form.value)">
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>Name</nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback>
       <input nz-input formControlName="name" placeholder="{{simulation?.name}}" (keyup)="updateName($event.target.value)">
-      <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors || validateForm.get('name').pending ">
-        <ng-container *ngIf="validateForm.get('name').hasError('required')">
+      <nz-form-explain *ngIf="form.get('name').dirty && form.get('name').errors || form.get('name').pending ">
+        <ng-container *ngIf="form.get('name').hasError('required')">
           Please input a simulation name!
         </ng-container>
-        <ng-container *ngIf="validateForm.get('name').hasError('duplicated')">
+        <ng-container *ngIf="form.get('name').hasError('duplicated')">
           This simulation name is taken!
         </ng-container>
-        <ng-container *ngIf="validateForm.get('name').pending">
+        <ng-container *ngIf="form.get('name').pending">
           Searching...
         </ng-container>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
-    <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>Description</nz-form-label>
-    <nz-form-control [nzSpan]="12">
-      <textarea nz-input rows="2" placeholder="{{simulation?.description}}" (keyup)="updateDescription($event.target.value)"></textarea>
+    <nz-form-label [nzSpan]="7">Description</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <textarea nz-input formControlName="description" rows="2" placeholder="{{simulation?.description}}" (keyup)="updateDescription($event.target.value)"></textarea>
     </nz-form-control>
   </nz-form-item>
+
 </form>
 
 
@@ -41,12 +43,12 @@
 
 
 
-<form nz-form [formGroup]="validateForm">
+<form nz-form [formGroup]="form">
     <nz-form-item>
       <nz-form-item>
           <nz-form-control [nzOffset]="7" [nzSpan]="12">
-            <button nz-button nzType="secondary" [disabled]="!validateForm.valid" (click)=this.save.emit()>Save</button>
-            <button nz-button nzType="primary" [disabled]="!validateForm.valid" (click)=this.run.emit()>Run</button>
+            <button nz-button nzType="secondary" [disabled]="!form.touched" (click)=this.save.emit()>Save</button>
+            <button nz-button nzType="primary" [disabled]="!form.valid" (click)=this.run.emit()>Run</button>
           </nz-form-control>
         </nz-form-item>
     </nz-form-item>

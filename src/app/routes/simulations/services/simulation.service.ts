@@ -14,9 +14,12 @@ export class SimulationService {
   public caseSummaries$: Observable<CaseSummary[]>;
   public jobSummaries$: Observable<JobSummary[]>;
 
+  public active: string;
   public activeJobId: string;
   public activeCaseId: string;
 
+  public initialName: string;
+  public initialDescription: string;
   public initialValues: Value[] = [];
 
   // modified state
@@ -34,14 +37,20 @@ export class SimulationService {
 
   public activateCase(caseObject: Case) {
     this.clearState();
+    this.active = 'case';
     this.activeCaseId = caseObject.id;
     this.activeJobId = null;
+    this.initialName = caseObject.name;
+    this.initialDescription = caseObject.description;
   }
 
   public activateJob(jobObject: Job) {
     this.clearState();
+    this.active = 'job';
     this.activeJobId = jobObject.id;
     this.activeCaseId = null;
+    this.initialName = jobObject.name;
+    this.initialDescription = jobObject.description;
     this.setInitialValues(jobObject);
   }
 
@@ -54,9 +63,12 @@ export class SimulationService {
   }
 
   private clearState() {
+    this.active = null;
     this.name = null;
     this.description = null;
     this.values.length = 0;
+    this.initialName = null;
+    this.initialDescription = null;
     this.initialValues.length = 0;
   }
 
@@ -67,6 +79,7 @@ export class SimulationService {
 
   public upsertValue(valueObject: Value) {
     Value.updateValueArray(this.values, valueObject);
+    this.debugState();
   }
 
   public getInitialValue(name: string): string {
