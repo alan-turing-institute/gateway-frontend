@@ -54,11 +54,11 @@ export class DelonModule {
       ngModule: DelonModule,
       providers: [
         // TIPS：If you do not need routing multiplexing, you need to remove the following code and template.`<reuse-tab></reuse-tab>`
-        {
-          provide: RouteReuseStrategy,
-          useClass: ReuseTabStrategy,
-          deps: [ReuseTabService],
-        },
+        // {
+        //   provide: RouteReuseStrategy,
+        //   useClass: ReuseTabStrategy,
+        //   deps: [ReuseTabService],
+        // },
         // TIPS：@delon/abc global configuration
         // { provide: SimpleTableConfig, useFactory: simpleTableConfig }
         { provide: AdPageHeaderConfig, useFactory: pageHeaderConfig },

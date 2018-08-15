@@ -52,7 +52,6 @@ export class ConfigureSimulationComponent {
   }
 
   onRun() {
-    // TODO check for dirty changes and prompt onSave()
     this.simulationService.startJob(this.job.id).subscribe(res => {
       console.log(res);
       this.router.navigate(['/simulations/view']);

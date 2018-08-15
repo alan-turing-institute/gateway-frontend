@@ -112,6 +112,10 @@ export class SimulationService {
     return this.middlewareService.searchJobSummaries(name);
   }
 
+  refreshJobSummaries() {
+    this.jobSummaries$ = this.middlewareService.getJobSummaries();
+  }
+
   getCase(id: string): Observable<Case> {
     return this.middlewareService.getCase(id);
   }

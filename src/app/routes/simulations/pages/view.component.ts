@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Inject, Optional } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { NzMessageService } from 'ng-zorro-antd';
+import { ReuseTabService } from '@delon/abc';
 
 import { JobSummary } from '../models/job';
 import { SimulationService } from '../services/simulation.service';
-
-import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-simulations-view',
@@ -41,7 +42,11 @@ export class ViewComponent implements OnInit {
   constructor(
     public msg: NzMessageService,
     private router: Router,
+    private route: ActivatedRoute,
     private simulationService: SimulationService,
+    @Optional()
+    @Inject(ReuseTabService)
+    private reuseTabService: ReuseTabService,
   ) {
     this.jobSummaries$ = simulationService.jobSummaries$;
   }
