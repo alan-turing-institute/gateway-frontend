@@ -22,8 +22,6 @@ import { NzMessageService } from 'ng-zorro-antd';
       }
     `,
   ],
-  // encapsulation: ViewEncapsulation.Emulated,
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateComponent implements OnInit {
   caseSummaries$: Observable<CaseSummary[]>;
