@@ -1,12 +1,7 @@
 {
   "app": {
     "name": "Simulate",
-    "description": "Run research codes in the cloud."
-  },
-  "user": {
-    "name": "Admin",
-    "avatar": "./assets/tmp/img/avatar.jpg",
-    "email": "user@domain.com"
+    "description": "Deploy R&D simulations in the cloud!"
   },
   "menu": [
     {
