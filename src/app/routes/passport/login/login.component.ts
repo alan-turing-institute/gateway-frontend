@@ -80,7 +80,7 @@ export class UserLoginComponent {
         this.settings.setUser({ name: this.userName.value });
         this.aclService.set({ role: ['user'] });
         console.log('DEBUG(login.component)', this.aclService.data);
-        this.router.navigate(['/']);
+        this.router.navigate(['/simulations/create']);
       });
   }
 

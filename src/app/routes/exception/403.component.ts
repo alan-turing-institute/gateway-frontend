@@ -7,10 +7,11 @@ import { NzModalService } from 'ng-zorro-antd';
               desc="Sorry, you are not authorized to access this page."
               style="min-height: 500px; height: 80%;"
               >
-              <button nz-button [nzType]="'primary'">回到首页</button>
+              <ng-template #actions>
+                <button nz-button [routerLink]="['/passport/login']" [nzType]="'primary'">Sign In</button>
+              </ng-template>
             </exception>
             `,
-  // templateUrl: './403.component.html',
 })
 export class Exception403Component {
   constructor(modalSrv: NzModalService) {

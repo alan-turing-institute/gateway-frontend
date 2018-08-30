@@ -24,7 +24,7 @@ const routes: Routes = [
     path: '',
     component: LayoutDefaultComponent,
     children: [
-      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: '', redirectTo: '/passport/login', pathMatch: 'full' },
       {
         path: 'overview',
         component: OverviewComponent,
@@ -67,7 +67,7 @@ const routes: Routes = [
   { path: '403', component: Exception403Component },
   { path: '404', component: Exception404Component },
   { path: '500', component: Exception500Component },
-  { path: '**', redirectTo: 'overview' },
+  { path: '**', redirectTo: '/passport/login' },
 ];
 
 @NgModule({
