@@ -50,10 +50,8 @@ export class StartupService {
           const res: any = appData;
           // Application information: including site name, description, year
           this.settingService.setApp(res.app);
-          // User information: including name, avatar, email address
-          this.settingService.setUser(res.user);
           // ACL：Set permissions to full
-          this.aclService.setFull(true);
+          // this.aclService.setFull(true);
           // Initialise menu
           this.menuService.add(res.menu);
           // Set the suffix of the page title

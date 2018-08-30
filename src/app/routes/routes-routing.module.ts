@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { environment } from '@env/environment';
+// guard
+import { ACLGuard } from '@delon/acl';
 // layout
 import { LayoutDefaultComponent } from '../layout/default/default.component';
 import { LayoutFullScreenComponent } from '../layout/fullscreen/fullscreen.component';
@@ -13,7 +15,6 @@ import { UserRegisterComponent } from './passport/register/register.component';
 import { UserRegisterResultComponent } from './passport/register-result/register-result.component';
 // single pages
 import { CallbackComponent } from './callback/callback.component';
-import { UserLockComponent } from './passport/lock/lock.component';
 import { Exception403Component } from './exception/403.component';
 import { Exception404Component } from './exception/404.component';
 import { Exception500Component } from './exception/500.component';
@@ -23,52 +24,50 @@ const routes: Routes = [
     path: '',
     component: LayoutDefaultComponent,
     children: [
-      { path: '', redirectTo: 'overview', pathMatch: 'full' },
+      { path: '', redirectTo: '/passport/login', pathMatch: 'full' },
       {
         path: 'overview',
         component: OverviewComponent,
-        data: { title: 'Overview' },
+        canActivate: [ACLGuard],
+        data: { title: 'Overview', guard: 'user' },
       },
       {
         path: 'simulations',
         loadChildren: './simulations/simulations.module#SimulationsModule',
+        canActivate: [ACLGuard],
+        data: { guard: 'user' },
       },
-      // 业务子模块
-      // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }
     ],
+    canActivate: [ACLGuard],
+    canActivateChild: [ACLGuard],
+    data: { guard: 'user' },
   },
-  // 全屏布局
-  // {
-  //     path: 'fullscreen',
-  //     component: LayoutFullScreenComponent,
-  //     children: [
-  //     ]
-  // },
-  // passport
   {
     path: 'passport',
     component: LayoutPassportComponent,
     children: [
-      { path: 'login', component: UserLoginComponent, data: { title: '登录' } },
+      {
+        path: 'login',
+        component: UserLoginComponent,
+        data: { title: 'Sign in' },
+      },
       {
         path: 'register',
         component: UserRegisterComponent,
-        data: { title: '注册' },
+        data: { title: 'Register' },
       },
       {
         path: 'register-result',
         component: UserRegisterResultComponent,
-        data: { title: '注册结果' },
+        data: { title: 'Registration result' },
       },
     ],
   },
-  // 单页不包裹Layout
   { path: 'callback/:type', component: CallbackComponent },
-  { path: 'lock', component: UserLockComponent, data: { title: '锁屏' } },
   { path: '403', component: Exception403Component },
   { path: '404', component: Exception404Component },
   { path: '500', component: Exception500Component },
-  { path: '**', redirectTo: 'overview' },
+  { path: '**', redirectTo: '/passport/login' },
 ];
 
 @NgModule({

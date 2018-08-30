@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
+import { ACLService } from '@delon/acl';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 
 @Component({
@@ -12,10 +13,10 @@ import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
       {{settings.user.name}}
     </div>
     <div nz-menu class="width-sm">
-      <div nz-menu-item [nzDisabled]="true"><i class="anticon anticon-user mr-sm"></i>个人中心</div>
-      <div nz-menu-item [nzDisabled]="true"><i class="anticon anticon-setting mr-sm"></i>设置</div>
+      <div nz-menu-item [nzDisabled]="true"><i class="anticon anticon-user mr-sm"></i>Account</div>
+      <div nz-menu-item [nzDisabled]="true"><i class="anticon anticon-setting mr-sm"></i>Settings</div>
       <li nz-menu-divider></li>
-      <div nz-menu-item (click)="logout()"><i class="anticon anticon-setting mr-sm"></i>退出登录</div>
+      <div nz-menu-item (click)="logout()"><i class="anticon anticon-setting mr-sm"></i>Sign out</div>
     </div>
   </nz-dropdown>
   `,
@@ -23,12 +24,15 @@ import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 export class HeaderUserComponent {
   constructor(
     public settings: SettingsService,
+    private aclService: ACLService,
     private router: Router,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
   ) {}
 
   logout() {
     this.tokenService.clear();
+    this.aclService.removeRole(['user']);
+    console.log('DEBUG(user.component)', this.aclService.data);
     this.router.navigateByUrl(this.tokenService.login_url);
   }
 }
