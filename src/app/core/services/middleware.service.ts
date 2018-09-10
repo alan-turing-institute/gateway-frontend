@@ -1,11 +1,13 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-
 import { Injectable } from '@angular/core';
+
 import { Observable, of, throwError } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
+import * as FileSaver from 'file-saver';
 
 import { Case, CaseSummary, CaseSelection } from '@simulations/models/case';
 import { Job, JobSummary, JobPatch } from '@simulations/models/job';
+import { Output } from '@simulations/models/output';
 import { environment } from '@env/environment';
 
 @Injectable()
@@ -14,6 +16,8 @@ export class MiddlewareService {
   private JOB_API_PATH = `${environment.MIDDLEWARE_URL}/job`;
 
   constructor(private http: HttpClient) {}
+
+  // summary content
 
   public getCaseSummaries(): Observable<CaseSummary[]> {
     return this.http
@@ -41,6 +45,8 @@ export class MiddlewareService {
       .pipe(map(caseSummaries => caseSummaries || [])); // TODO redundant (?)
   }
 
+  // detail content
+
   public getCase(id: string): Observable<Case> {
     return this.http
       .get<Case>(`${this.CASE_API_PATH}/${id}`)
@@ -52,6 +58,8 @@ export class MiddlewareService {
       .get<Job>(`${this.JOB_API_PATH}/${id}`)
       .pipe(map(jobObject => jobObject));
   }
+
+  // job actions content
 
   public createJob(caseSelection: CaseSelection): Observable<object> {
     let body = JSON.stringify(caseSelection);
@@ -83,6 +91,24 @@ export class MiddlewareService {
     return this.http
       .post(`${this.JOB_API_PATH}/${id}`, null)
       .pipe(catchError(this.handleError('startJob')));
+  }
+
+  public getOutputs(id: string): Observable<Output[]> {
+    return this.http
+      .get<Output[]>(`${this.JOB_API_PATH}/${id}/output`)
+      .pipe(catchError(this.handleError('getOutputs')));
+  }
+
+  public downloadOutput(output: Output) {
+    this.http
+      .get(output.destination, { responseType: 'blob' })
+      .subscribe(blob => {
+        FileSaver.saveAs(blob, 'test.zip');
+      });
+  }
+
+  public getMetrics(url: string): Observable<object> {
+    return this.http.get(url).pipe(catchError(this.handleError('getMetrics')));
   }
 
   /**

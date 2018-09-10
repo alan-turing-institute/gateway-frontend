@@ -1,14 +1,15 @@
 import { Component, Input } from '@angular/core';
 import { Job } from '../models/job';
 import { Value } from '../models/value';
+import { Output } from '../models/output';
 import { valueFunctionProp } from 'ng-zorro-antd/src/core/util/convert';
 import { SimulationService } from '../services/simulation.service';
 
 @Component({
-  selector: 'sim-job-output',
-  templateUrl: './job-output.component.html',
+  selector: 'sim-parameters',
+  templateUrl: 'parameters.component.html',
 })
-export class JobOutputComponent {
+export class ParametersComponent {
   @Input() job: Job;
 
   displayData: Value[];

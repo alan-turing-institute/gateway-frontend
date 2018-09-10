@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, empty } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd';
 
 import { MiddlewareService } from '@core/services/middleware.service';
 import { Case, CaseSummary, CaseSelection } from '../models/case';
 import { Job, JobSummary, JobPatch } from '../models/job';
 import { Value } from '../models/value';
+import { Output } from '../models/output';
 
 @Injectable()
 export class SimulationService {
@@ -26,6 +27,7 @@ export class SimulationService {
   public name: string;
   public description: string;
   public values: Value[] = [];
+  public metrics: object;
 
   constructor(
     private middlewareService: MiddlewareService,
@@ -62,6 +64,7 @@ export class SimulationService {
     this.initialName = null;
     this.initialDescription = null;
     this.initialValues.length = 0;
+    this.metrics = null;
   }
 
   // helper methods for generatng request bodies
@@ -168,6 +171,30 @@ export class SimulationService {
     return this.middlewareService.getJob(id);
   }
 
+  getOutputs(id: string): Observable<Output[]> {
+    return this.middlewareService.getOutputs(id);
+  }
+
+  downloadOutput(output: Output) {
+    console.log('DEBUG(simulation.service)', output);
+    this.middlewareService.downloadOutput(output);
+  }
+
+  getMetrics(id: string) {
+    return (
+      this.middlewareService
+        .getOutputs(id)
+        // assume single "metrics" output is present
+        .pipe(
+          map(outputs => outputs.find(output => output.type === 'metrics')),
+          switchMap(output =>
+            this.middlewareService.getMetrics(output.destination),
+          ),
+        )
+    );
+  }
+
+  // find(output => output.type === 'metrics')
   // dump state to console for debugging
   public debugState() {
     console.log('DEBUG(simulation.service) activeCaseId', this.activeCaseId);

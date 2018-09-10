@@ -3,20 +3,29 @@ import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 
 import { Job } from '../models/job';
+import { Output } from '../models/output';
 import { SimulationService } from '../services/simulation.service';
 
 @Component({
-  selector: 'app-simulations-configure',
+  selector: 'app-simulations-view-simulation',
   template: `
+
+  <page-header>
+    VIEW SIMULATION
+  </page-header>
  
   <nz-card>
-    <sim-job-output [job]="job"></sim-job-output>
+    <sim-downloads [outputs]="outputs"></sim-downloads>
+    <sim-metrics [metrics]="metrics"></sim-metrics>
+    <sim-parameters [job]="job"></sim-parameters>
   </nz-card>
-  
+
   `,
 })
 export class ViewSimulationComponent {
   job: Job;
+  metrics: object;
+  outputs: Output[];
 
   constructor(
     private simulationService: SimulationService,
@@ -30,6 +39,22 @@ export class ViewSimulationComponent {
       .subscribe(jobObject => {
         this.job = jobObject;
         this.simulationService.activateJob(jobObject);
+        this.getOutputs();
+        this.getMetrics();
       });
+  }
+
+  getOutputs() {
+    this.simulationService.getOutputs(this.job.id).subscribe(outputs => {
+      this.outputs = outputs;
+      console.log('DEBUG(view-simulation) getOutputs()', this.outputs);
+    });
+  }
+
+  getMetrics() {
+    this.simulationService.getMetrics(this.job.id).subscribe(metrics => {
+      this.metrics = metrics;
+      console.log('DEBUG(view-simulation) getMetrics()', this.metrics);
+    });
   }
 }
