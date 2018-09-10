@@ -176,7 +176,6 @@ export class SimulationService {
   }
 
   downloadOutput(output: Output) {
-    console.log('DEBUG(simulation.service)', output);
     this.middlewareService.downloadOutput(output);
   }
 

@@ -103,7 +103,7 @@ export class MiddlewareService {
     this.http
       .get(output.destination, { responseType: 'blob' })
       .subscribe(blob => {
-        FileSaver.saveAs(blob, 'test.zip');
+        FileSaver.saveAs(blob, output.filename);
       });
   }
 
