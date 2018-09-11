@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 
@@ -16,10 +16,15 @@ import { SimulationService } from '../services/simulation.service';
  
   <nz-card>
     <sim-downloads [outputs]="outputs"></sim-downloads>
-    <sim-metrics [metrics]="metrics"></sim-metrics>
-    <sim-parameters [job]="job"></sim-parameters>
   </nz-card>
 
+  <nz-card *ngIf="metrics">
+    <sim-metrics [metrics]="metrics"></sim-metrics>
+  </nz-card>
+
+  <nz-card>
+    <sim-parameters [job]="job"></sim-parameters>
+  </nz-card>
   `,
 })
 export class ViewSimulationComponent {
@@ -47,7 +52,7 @@ export class ViewSimulationComponent {
   getOutputs() {
     this.simulationService.getOutputs(this.job.id).subscribe(outputs => {
       this.outputs = outputs;
-      console.log('DEBUG(view-simulation) getOutputs()', this.outputs);
+      // console.log('DEBUG(view-simulation) getOutputs()', this.outputs);
     });
   }
 
