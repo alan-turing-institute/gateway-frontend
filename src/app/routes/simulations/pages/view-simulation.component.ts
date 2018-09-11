@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 
@@ -16,16 +16,60 @@ import { SimulationService } from '../services/simulation.service';
  
   <nz-card>
     <sim-downloads [outputs]="outputs"></sim-downloads>
-    <sim-metrics [metrics]="metrics"></sim-metrics>
-    <sim-parameters [job]="job"></sim-parameters>
   </nz-card>
 
+  <nz-card *ngIf="metrics">
+    <sim-metrics [metrics]="metrics"></sim-metrics>
+  </nz-card>
+
+  <nz-card>
+    <sim-parameters [job]="job"></sim-parameters>
+  </nz-card>
   `,
 })
 export class ViewSimulationComponent {
   job: Job;
   metrics: object;
   outputs: Output[];
+
+  mockData = [
+    {
+      year: '1991',
+      value: 3,
+    },
+    {
+      year: '1992',
+      value: 4,
+    },
+    {
+      year: '1993',
+      value: 3.5,
+    },
+    {
+      year: '1994',
+      value: 5,
+    },
+    {
+      year: '1995',
+      value: 4.9,
+    },
+    {
+      year: '1996',
+      value: 6,
+    },
+    {
+      year: '1997',
+      value: 7,
+    },
+    {
+      year: '1998',
+      value: 9,
+    },
+    {
+      year: '1999',
+      value: 13,
+    },
+  ];
 
   constructor(
     private simulationService: SimulationService,
@@ -47,14 +91,14 @@ export class ViewSimulationComponent {
   getOutputs() {
     this.simulationService.getOutputs(this.job.id).subscribe(outputs => {
       this.outputs = outputs;
-      console.log('DEBUG(view-simulation) getOutputs()', this.outputs);
+      // console.log('DEBUG(view-simulation) getOutputs()', this.outputs);
     });
   }
 
   getMetrics() {
     this.simulationService.getMetrics(this.job.id).subscribe(metrics => {
       this.metrics = metrics;
-      console.log('DEBUG(view-simulation) getMetrics()', this.metrics);
+      // console.log('DEBUG(view-simulation) getMetrics()', this.metrics);
     });
   }
 }
