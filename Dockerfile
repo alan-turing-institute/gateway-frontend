@@ -1,23 +1,18 @@
-FROM node:carbon
+# use a multi-stage build
 
-# Create app directory
-ADD . /app
-WORKDIR /app
+# build the angular static files
+FROM node:10-alpine as build-stage
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
-
-#RUN npm install webpack -g
-RUN npm i npm@6.1.0 -g 
+# create /app directory
+COPY . /app
+WORKDIR /app 
 RUN npm install
 
-# If you are building your code for production
-# RUN npm install --only=production
+RUN npm run build -- --output-path=./dist/out
 
-# Bundle app source
-COPY . .
-
-EXPOSE 8080
-CMD [ "npm", "start" ]
+# configure an nginx server and copy across the following:
+#   * angular static files
+#   * nginx configuration
+FROM nginx:1.15
+COPY --from=build-stage /app/dist/out /usr/share/nginx/html
+COPY --from=build-stage /app/nginx.conf /etc/nginx/conf.d/default.conf

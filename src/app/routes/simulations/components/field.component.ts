@@ -13,7 +13,7 @@ export class FieldComponent implements OnInit {
   @Input() field: Field;
   @Output() update = new EventEmitter<Value>();
 
-  private component: string;
+  public component: string;
   private value: string; // current field value (for sliders, textboxes)
   private min: number;
   private max: number;
