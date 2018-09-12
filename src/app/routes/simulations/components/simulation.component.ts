@@ -34,9 +34,10 @@ export class SimulationComponent {
   @Output() save: EventEmitter<void> = new EventEmitter();
   @Output() run: EventEmitter<void> = new EventEmitter();
 
-  private showCase: boolean;
-  private showJob: boolean;
-  private form;
+  // set public, otherwise ng build --prod --build-optimizer will break
+  public showCase: boolean;
+  public showJob: boolean;
+  public form;
 
   constructor(
     private simulationService: SimulationService,
