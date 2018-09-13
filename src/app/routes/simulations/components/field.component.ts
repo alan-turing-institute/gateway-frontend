@@ -82,6 +82,7 @@ export class FieldComponent implements OnInit {
     let valueObject: Value = {
       name: this.fullFieldName,
       value: this.value,
+      units: this.units,
     };
     return valueObject;
   }
