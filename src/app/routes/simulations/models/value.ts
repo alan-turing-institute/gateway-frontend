@@ -1,6 +1,7 @@
 export class Value {
   name: string;
   value: string;
+  units: string;
 
   public static updateValueArray(
     valueArray: Value[],
@@ -24,5 +25,6 @@ export function generateMockValue(): Value {
   return {
     name: 'Example_value',
     value: '10.3',
+    units: 'kg',
   };
 }

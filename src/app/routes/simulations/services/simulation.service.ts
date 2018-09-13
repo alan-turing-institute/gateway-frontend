@@ -86,7 +86,7 @@ export class SimulationService {
     // extract values from Job.values
     if (this.isJob(simulation)) {
       this.initialValues = simulation.values.map(obj => {
-        return { name: obj.name, value: obj.value };
+        return { name: obj.name, value: obj.value, units: obj.units };
       });
     }
   }

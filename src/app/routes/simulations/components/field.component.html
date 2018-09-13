@@ -8,13 +8,16 @@
     {{field.name}}
   </div>
   <nz-row>
-    <nz-col nzSpan="12">
+    <nz-col nzSpan="6">
       <nz-slider [nzMin]="min" [nzMax]="max" [nzStep]="step" [(ngModel)]="value" (nzOnAfterChange)="updateValue($event)">
       </nz-slider>
     </nz-col>
-    <div nz-col nzSpan="4">
+    <div nz-col nzSpan="8">
       <nz-input-number [nzMin]="min" [nzMax]="max" [nzStep]="step" [(ngModel)]="value" [ngStyle]="{ 'marginLeft': '16px' }">
       </nz-input-number>
+      <nz-select [ngModel]="units" style="width: 90px">
+        <nz-option [nzLabel]="units" [nzValue]="units"></nz-option>
+      </nz-select>
     </div>
   </nz-row>
 </div>
