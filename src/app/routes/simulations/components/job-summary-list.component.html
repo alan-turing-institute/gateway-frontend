@@ -16,8 +16,8 @@
         <td>{{data.status}}</td>
         <td>{{data.user}}</td>
         <td>
-          <a (click)=onConfigure(data.id)>Configure <nz-divider nzType="vertical"></nz-divider> </a>
-          <a (click)=onView(data.id)>View</a>
+          <a *ngIf="data.status=='Not Started'" (click)=onConfigure(data.id)>Configure</a>
+          <a *ngIf="data.status!=='Not Started'" (click)=onView(data.id)>View</a>
         </td>
       </tr>
     </tbody>
