@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, empty } from 'rxjs';
 import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd';
+import { SettingsService } from '@delon/theme';
 
 import { MiddlewareService } from '@core/services/middleware.service';
 import { Case, CaseSummary, CaseSelection } from '../models/case';
@@ -32,6 +33,7 @@ export class SimulationService {
   constructor(
     private middlewareService: MiddlewareService,
     public message: NzMessageService,
+    private settingsService: SettingsService,
   ) {
     this.caseSummaries$ = this.middlewareService.getCaseSummaries();
     this.jobSummaries$ = this.middlewareService.getJobSummaries();
@@ -124,8 +126,7 @@ export class SimulationService {
   }
 
   createJob(): Observable<object> {
-    let author = 'mock-author';
-
+    let author = this.settingsService.user.name;
     let caseSelection = new CaseSelection(
       this.activeCaseId,
       author,

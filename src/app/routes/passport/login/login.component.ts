@@ -32,7 +32,7 @@ export class UserLoginComponent {
     @Inject(ReuseTabService)
     private reuseTabService: ReuseTabService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: TokenService, // @Inject() for singleton service
-    private settings: SettingsService,
+    private settingsService: SettingsService,
     private authService: AuthService,
     private aclService: ACLService,
   ) {
@@ -77,7 +77,7 @@ export class UserLoginComponent {
           time: +new Date(),
         });
 
-        this.settings.setUser({ name: this.userName.value });
+        this.settingsService.setUser({ name: this.userName.value });
         this.aclService.set({ role: ['user'] });
         console.log('DEBUG(login.component)', this.aclService.data);
         this.router.navigate(['/simulations/create']);
