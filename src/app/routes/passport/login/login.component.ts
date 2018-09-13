@@ -20,7 +20,7 @@ import { User } from '@core/models/user';
 })
 export class UserLoginComponent {
   form: FormGroup;
-  error = '';
+  error = null;
   loading = false;
 
   constructor(

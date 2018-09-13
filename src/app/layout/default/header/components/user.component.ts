@@ -1,8 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
 import { SettingsService } from '@delon/theme';
 import { ACLService } from '@delon/acl';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'header-user',
@@ -22,17 +27,32 @@ import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
   `,
 })
 export class HeaderUserComponent {
+  error = null;
+
   constructor(
     public settings: SettingsService,
     private aclService: ACLService,
+    private authService: AuthService,
     private router: Router,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
   ) {}
 
   logout() {
-    this.tokenService.clear();
-    this.aclService.removeRole(['user']);
-    console.log('DEBUG(user.component)', this.aclService.data);
-    this.router.navigateByUrl(this.tokenService.login_url);
+    // register logout with auth service
+    this.authService
+      .logout()
+      .pipe(catchError(this.handleError()))
+      .subscribe(response => {
+        this.tokenService.clear();
+        this.aclService.removeRole(['user']);
+        this.router.navigateByUrl(this.tokenService.login_url);
+      });
+  }
+
+  private handleError() {
+    return (err: any) => {
+      this.error = 'Error logging out.';
+      return throwError(err);
+    };
   }
 }
