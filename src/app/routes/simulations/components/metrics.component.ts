@@ -1,14 +1,12 @@
 import { Component, Input, ElementRef } from '@angular/core';
 
-import { Chart } from '@antv/g2';
-import { DataSet } from '@antv/data-set';
-
 @Component({
   selector: 'sim-metrics',
   templateUrl: 'metrics.component.html',
 })
 export class MetricsComponent {
-  @Input() metrics: object;
+  @Input()
+  metrics: object;
   // data: null;
 
   render(el: ElementRef) {
@@ -25,7 +23,7 @@ export class MetricsComponent {
     // remove x variable from fields
     fields.splice(fields.indexOf(x_name), 1);
 
-    console.log(fields);
+    // console.log(fields);
 
     dv.transform({
       type: 'fold',
@@ -36,7 +34,7 @@ export class MetricsComponent {
 
     let data = dv.rows;
 
-    const chart = new Chart({
+    const chart = new G2.Chart({
       container: el.nativeElement,
       forceFit: true,
       height: 400,
