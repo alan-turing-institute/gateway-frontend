@@ -10,13 +10,16 @@ import { SimulationService } from '../services/simulation.service';
   templateUrl: './field.component.html',
 })
 export class FieldComponent implements OnInit {
-  @Input() field: Field;
-  @Output() update = new EventEmitter<Value>();
+  @Input()
+  field: Field;
+  @Output()
+  update = new EventEmitter<Value>();
 
   public component: string;
   private value: string; // current field value (for sliders, textboxes)
   private min: number;
   private max: number;
+  private units: string;
   private step: number;
   private fullFieldName: string;
 
@@ -26,6 +29,7 @@ export class FieldComponent implements OnInit {
     this.component = this.field.component;
     this.min = Number(this.specValue('min'));
     this.max = Number(this.specValue('max'));
+    this.units = String(this.specValue('units'));
     this.step = Number(this.specValue('step')) || 1;
     this.setFullFieldName();
     this.initialiseValue();
