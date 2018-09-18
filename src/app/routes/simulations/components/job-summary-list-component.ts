@@ -32,7 +32,6 @@ export class JobSummaryListComponent {
   view: EventEmitter<string> = new EventEmitter();
   @Output()
   configure: EventEmitter<string> = new EventEmitter();
-
   @Output()
   delete: EventEmitter<string> = new EventEmitter();
 
@@ -81,6 +80,8 @@ export class JobSummaryListComponent {
   onConfigure(id: string) {
     this.configure.emit(id);
   }
+
+  onCancel() {}
 
   onDelete(id: string) {
     this.delete.emit(id);

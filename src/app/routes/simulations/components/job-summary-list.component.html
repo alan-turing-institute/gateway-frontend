@@ -18,7 +18,7 @@
         <td>
           <a (click)=onConfigure(data.id)>Configure </a>
           <a (click)=onView(data.id)> <nz-divider nzType="vertical"></nz-divider> View</a>
-          <a (click)=onDelete(data.id)> <nz-divider nzType="vertical"></nz-divider> Delete</a>
+          <a nz-popconfirm nzTitle="Are you sure you want to delete this simulation?" (nzOnConfirm)="onDelete(data.id)" (nzOnCancel)="onCancel()"> <nz-divider nzType="vertical"></nz-divider> Delete</a>
         </td>
       </tr>
     </tbody>
