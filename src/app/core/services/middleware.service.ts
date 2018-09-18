@@ -93,6 +93,18 @@ export class MiddlewareService {
       .pipe(catchError(this.handleError('startJob')));
   }
 
+  public stopJob(id: string): Observable<object> {
+    return this.http
+      .post(`${this.JOB_API_PATH}/${id}/stop`, null)
+      .pipe(catchError(this.handleError('stopJob')));
+  }
+
+  public deleteJob(id: string): Observable<object> {
+    return this.http
+      .delete(`${this.JOB_API_PATH}/${id}`)
+      .pipe(catchError(this.handleError('deleteJob')));
+  }
+
   public getOutputs(id: string): Observable<Output[]> {
     return this.http
       .get<Output[]>(`${this.JOB_API_PATH}/${id}/output`)

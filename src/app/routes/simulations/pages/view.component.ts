@@ -21,7 +21,8 @@ import { SimulationService } from '../services/simulation.service';
         [loading]=loading 
         [jobSummaries]="jobSummaries$ | async"
         (configure) = onConfigure($event)
-        (view) = onView($event)>
+        (view) = onView($event)
+        (delete) = onDelete($event)>
       </sim-job-summary-list>
     </nz-card>
     
@@ -59,5 +60,15 @@ export class ViewComponent implements OnInit {
 
   onConfigure(id: string) {
     this.router.navigate(['/simulations/configure', id]);
+  }
+
+  onDelete(id: string) {
+    this.simulationService.deleteJob(id).subscribe(() => {
+      this.refreshSummaries();
+    });
+  }
+
+  refreshSummaries() {
+    this.jobSummaries$ = this.simulationService.jobSummaries$;
   }
 }

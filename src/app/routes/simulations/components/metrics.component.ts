@@ -10,8 +10,6 @@ export class MetricsComponent {
   // data: null;
 
   render(el: ElementRef) {
-    // console.log('DEBUG(metrics.component)', this.metrics);
-
     const { DataView } = DataSet;
 
     const dv = new DataView().source(this.metrics['data']);
@@ -22,8 +20,6 @@ export class MetricsComponent {
 
     // remove x variable from fields
     fields.splice(fields.indexOf(x_name), 1);
-
-    // console.log(fields);
 
     dv.transform({
       type: 'fold',
