@@ -46,14 +46,11 @@ export class ConfigureSimulationComponent {
   }
 
   onSave() {
-    this.simulationService.updateJob(this.job.id).subscribe(res => {
-      console.log(res);
-    });
+    this.simulationService.updateJob(this.job.id).subscribe(res => {});
   }
 
   onRun() {
     this.simulationService.startJob(this.job.id).subscribe(res => {
-      console.log(res);
       this.router.navigate(['/simulations/view']);
     });
   }

@@ -16,8 +16,9 @@
         <td>{{data.status}}</td>
         <td>{{data.user}}</td>
         <td>
-          <a (click)=onConfigure(data.id)>Configure <nz-divider nzType="vertical"></nz-divider> </a>
-          <a (click)=onView(data.id)>View</a>
+          <a (click)=onConfigure(data.id)>Configure </a>
+          <a (click)=onView(data.id)> <nz-divider nzType="vertical"></nz-divider> View</a>
+          <a (click)=onDelete(data.id)> <nz-divider nzType="vertical"></nz-divider> Delete</a>
         </td>
       </tr>
     </tbody>

@@ -52,14 +52,12 @@ export class ViewSimulationComponent {
   getOutputs() {
     this.simulationService.getOutputs(this.job.id).subscribe(outputs => {
       this.outputs = outputs;
-      // console.log('DEBUG(view-simulation) getOutputs()', this.outputs);
     });
   }
 
   getMetrics() {
     this.simulationService.getMetrics(this.job.id).subscribe(metrics => {
       this.metrics = metrics;
-      console.log('DEBUG(view-simulation) getMetrics()', this.metrics);
     });
   }
 }

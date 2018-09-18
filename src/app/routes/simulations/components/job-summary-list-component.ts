@@ -24,10 +24,17 @@ import { JobSummary } from '../models/job';
 export class JobSummaryListComponent {
   constructor(private router: Router, public msg: NzMessageService) {}
 
-  @Input() jobSummaries: JobSummary[];
-  @Input() loading: boolean;
-  @Output() view: EventEmitter<string> = new EventEmitter();
-  @Output() configure: EventEmitter<string> = new EventEmitter();
+  @Input()
+  jobSummaries: JobSummary[];
+  @Input()
+  loading: boolean;
+  @Output()
+  view: EventEmitter<string> = new EventEmitter();
+  @Output()
+  configure: EventEmitter<string> = new EventEmitter();
+
+  @Output()
+  delete: EventEmitter<string> = new EventEmitter();
 
   displayData = this.jobSummaries;
 
@@ -73,6 +80,10 @@ export class JobSummaryListComponent {
 
   onConfigure(id: string) {
     this.configure.emit(id);
+  }
+
+  onDelete(id: string) {
+    this.delete.emit(id);
   }
 
   dataSet = [

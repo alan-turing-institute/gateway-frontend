@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, empty } from 'rxjs';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd';
 import { SettingsService } from '@delon/theme';
 
@@ -118,6 +118,7 @@ export class SimulationService {
   }
 
   refreshJobSummaries() {
+    console.log('DEBUG(simulation.service) refresh');
     this.jobSummaries$ = this.middlewareService.getJobSummaries();
   }
 
@@ -165,6 +166,32 @@ export class SimulationService {
           return empty();
         },
       ),
+    );
+  }
+
+  stopJob(id: string) {
+    return this.middlewareService.stopJob(id).pipe(
+      catchError(
+        (err): any => {
+          console.log(err);
+          return empty();
+        },
+      ),
+    );
+  }
+
+  deleteJob(id: string) {
+    return this.middlewareService.deleteJob(id).pipe(
+      catchError(
+        (err): any => {
+          console.log(err);
+          return empty();
+        },
+      ),
+      tap(_ => {
+        console.log('DEBUG(simulation.service) in tap');
+        this.refreshJobSummaries();
+      }),
     );
   }
 
