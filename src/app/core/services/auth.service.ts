@@ -8,8 +8,8 @@ import { environment } from '@env/environment';
 
 @Injectable()
 export class AuthService {
-  private AUTH_LOGIN_PATH = `${environment.AUTH_URL}/auth/login`;
-  private AUTH_LOGOUT_PATH = `${environment.AUTH_URL}/auth/logout`;
+  private AUTH_LOGIN_PATH = `${environment.AUTH_URL}/login`;
+  private AUTH_LOGOUT_PATH = `${environment.AUTH_URL}/logout`;
 
   constructor(private http: HttpClient) {}
 
