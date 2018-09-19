@@ -9,9 +9,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-simulations-create',
   template: `
-    <page-header>
-    CREATE
-    </page-header>
+    <page-header></page-header>
 
     <sim-case-summary-list [loading]=loading [caseSummaries]="caseSummaries$ | async"></sim-case-summary-list>
   `,

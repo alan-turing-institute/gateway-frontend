@@ -2,7 +2,7 @@
   <nz-table #filterTable [nzData]="displayData" [nzBordered]="false" [nzTitle]="Simulations">
     <thead (nzSortChange)="sort($event)" nzSingleSort>
       <tr>
-        <th  nzShowSort nzSortKey="name">Name</th>
+        <th nzShowSort nzSortKey="name">Name</th>
         <th nzShowSort nzSortKey="description">Description</th>
         <th nzShowSort nzSortKey="status">Status</th>
         <th nzShowSort nzSortKey="user">User</th>

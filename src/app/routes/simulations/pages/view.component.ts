@@ -12,9 +12,7 @@ import { SimulationService } from '../services/simulation.service';
 @Component({
   selector: 'app-simulations-view',
   template: `
-    <page-header>
-    VIEW
-    </page-header>
+    <page-header></page-header>
 
     <nz-card>
       <sim-job-summary-list 

@@ -9,6 +9,8 @@ import { SimulationService } from '../services/simulation.service';
   selector: 'app-simulations-configure',
   template: `
 
+  <page-header></page-header>
+
   <nz-card>
     <sim-simulation 
       [simulation]="job"
@@ -18,13 +20,6 @@ import { SimulationService } from '../services/simulation.service';
   </nz-card>
   
   `,
-  styles: [
-    `
-      :host ::ng-deep .ant-card-meta-title {
-        margin-bottom: 12px;
-      }
-    `,
-  ],
 })
 export class ConfigureSimulationComponent {
   job: Job;

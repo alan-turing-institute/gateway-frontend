@@ -8,8 +8,9 @@ import { Case } from '../models/case';
 import { SimulationService } from '../services/simulation.service';
 
 @Component({
-  selector: 'app-simulations-create',
+  selector: 'app-simulations-create-simulation',
   template: `
+  <page-header></page-header>
 
   <nz-card>
     <sim-simulation 
