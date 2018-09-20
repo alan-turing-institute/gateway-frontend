@@ -45,7 +45,6 @@ export class HeaderUserComponent {
       .logout()
       .pipe(catchError(this.handleError()))
       .subscribe(response => {
-        this.simulationService.cancelRefresh();
         this.tokenService.clear();
         this.aclService.removeRole(['user']);
         this.router.navigateByUrl(this.tokenService.login_url);

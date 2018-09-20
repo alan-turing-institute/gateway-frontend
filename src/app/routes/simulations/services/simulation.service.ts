@@ -105,7 +105,7 @@ export class SimulationService {
     });
   }
 
-  public cancelRefresh(): void {
+  public cancelAutoRefresh(): void {
     this.timerSubscription.unsubscribe();
   }
 

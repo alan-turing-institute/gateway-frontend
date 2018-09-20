@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Optional } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, Optional } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs';
@@ -32,7 +32,7 @@ import { MiddlewareService } from '@core/services/middleware.service';
     `,
   ],
 })
-export class ViewComponent implements OnInit {
+export class ViewComponent implements OnInit, OnDestroy {
   jobSummaries$: Observable<JobSummary[]>;
 
   loading: boolean = false;
@@ -45,6 +45,10 @@ export class ViewComponent implements OnInit {
 
   ngOnInit() {
     this.simulationService.authRefresh();
+  }
+
+  ngOnDestroy() {
+    this.simulationService.cancelAutoRefresh();
   }
 
   onView(id: string) {
