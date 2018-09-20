@@ -99,7 +99,7 @@ export class SimulationService {
   }
 
   public authRefresh(): void {
-    let refreshInterval = 1000;
+    let refreshInterval = 10000;
     this.timerSubscription = timer(0, refreshInterval).subscribe(() => {
       this.refreshJobSummaries();
     });
