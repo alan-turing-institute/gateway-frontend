@@ -43,7 +43,7 @@ export class ViewComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private simulationService: SimulationService,
+    public simulationService: SimulationService,
   ) {
     this.authRefresh();
   }

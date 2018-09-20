@@ -24,7 +24,7 @@ export class CreateComponent implements OnInit {
 
   loading: boolean = false;
 
-  constructor(private simulationService: SimulationService) {
+  constructor(public simulationService: SimulationService) {
     this.caseSummaries$ = simulationService.caseSummaries$;
   }
 
