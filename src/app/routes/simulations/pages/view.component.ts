@@ -3,8 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AnonymousSubscription } from 'rxjs/Subscription';
-import { timer } from 'rxjs/observable/timer';
 
 import { JobSummary } from '../models/job';
 import { SimulationService } from '../services/simulation.service';
@@ -38,18 +36,15 @@ export class ViewComponent implements OnInit {
   jobSummaries$: Observable<JobSummary[]>;
 
   loading: boolean = false;
-  private timerSubscription: AnonymousSubscription;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     public simulationService: SimulationService,
-  ) {
-    this.authRefresh();
-  }
+  ) {}
 
   ngOnInit() {
-    this.simulationService.refreshJobSummaries();
+    this.simulationService.authRefresh();
   }
 
   onView(id: string) {
@@ -62,12 +57,5 @@ export class ViewComponent implements OnInit {
 
   onDelete(id: string) {
     this.simulationService.deleteJob(id);
-  }
-
-  private authRefresh(): void {
-    let interval = 10000;
-    this.timerSubscription = timer(0, interval).subscribe(() =>
-      this.simulationService.refreshJobSummaries(),
-    );
   }
 }

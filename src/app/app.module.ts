@@ -31,6 +31,7 @@ export function I18nHttpLoaderFactory(http: HttpClient) {
 
 // application state
 import { environment } from '@env/environment';
+import { SimulationService } from '@simulations/services/simulation.service';
 
 export function StartupServiceFactory(
   startupService: StartupService,
@@ -69,6 +70,7 @@ export function StartupServiceFactory(
       deps: [StartupService],
       multi: true,
     },
+    SimulationService,
   ],
   bootstrap: [AppComponent],
 })

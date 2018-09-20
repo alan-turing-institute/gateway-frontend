@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, empty } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { AnonymousSubscription } from 'rxjs/Subscription';
+import { timer } from 'rxjs/observable/timer';
 import { SettingsService } from '@delon/theme';
 
 import { MiddlewareService } from '@core/services/middleware.service';
@@ -18,6 +20,8 @@ export class SimulationService {
 
   private _jobSummaries$: BehaviorSubject<JobSummary[]>;
   private jobSummaries: JobSummary[];
+
+  public timerSubscription: AnonymousSubscription;
 
   public active: string;
   public activeJobId: string;
@@ -41,6 +45,7 @@ export class SimulationService {
     this.caseSummaries = [];
     this._jobSummaries$ = new BehaviorSubject([]);
     this.jobSummaries = [];
+    // this.authRefresh();
   }
 
   public activateCase(caseObject: Case) {
@@ -91,6 +96,17 @@ export class SimulationService {
     this.middlewareService
       .getJobSummaries()
       .subscribe(state => this._jobSummaries$.next(state));
+  }
+
+  public authRefresh(): void {
+    let refreshInterval = 1000;
+    this.timerSubscription = timer(0, refreshInterval).subscribe(() => {
+      this.refreshJobSummaries();
+    });
+  }
+
+  public cancelRefresh(): void {
+    this.timerSubscription.unsubscribe();
   }
 
   // helper methods for generatng request bodies
