@@ -1,0 +1,22 @@
+<page-header></page-header>
+
+<nz-card>
+  <sim-simulation [simulation]="caseObject" (save)="onSave()" (run)="onRun()">
+  </sim-simulation>
+</nz-card>
+
+<ng-template #template let-notification>
+  <div class="ant-notification-notice-content">
+    <div>
+      <div class="ant-notification-notice-message">Submitting job...</div>
+      <div class="ant-notification-notice-description">
+        <div>case: <code>{{caseObject.name}}</code></div>
+        <div>name: <code>{{simulationService.name}}</code></div>
+        <span class="ant-notification-notice-btn">
+          <button nz-button nzLoading nzShape="circle"></button>
+          <!-- <button nz-button nzType="danger" nzSize="small" (click)="onCancel()"><span>Cancel</span></button> -->
+        </span>
+      </div>
+    </div>
+  </div>
+</ng-template>

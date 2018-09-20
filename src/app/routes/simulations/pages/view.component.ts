@@ -3,11 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { NzMessageService } from 'ng-zorro-antd';
-import { ReuseTabService } from '@delon/abc';
+import { AnonymousSubscription } from 'rxjs/Subscription';
+import { timer } from 'rxjs/observable/timer';
 
 import { JobSummary } from '../models/job';
 import { SimulationService } from '../services/simulation.service';
+import { MiddlewareService } from '@core/services/middleware.service';
 
 @Component({
   selector: 'app-simulations-view',
@@ -17,7 +18,7 @@ import { SimulationService } from '../services/simulation.service';
     <nz-card>
       <sim-job-summary-list 
         [loading]=loading 
-        [jobSummaries]="jobSummaries$ | async"
+        [jobSummaries]="simulationService.jobSummaries$ | async"
         (configure) = onConfigure($event)
         (view) = onView($event)
         (delete) = onDelete($event)>
@@ -37,20 +38,19 @@ export class ViewComponent implements OnInit {
   jobSummaries$: Observable<JobSummary[]>;
 
   loading: boolean = false;
+  private timerSubscription: AnonymousSubscription;
 
   constructor(
-    public msg: NzMessageService,
     private router: Router,
     private route: ActivatedRoute,
     private simulationService: SimulationService,
-    @Optional()
-    @Inject(ReuseTabService)
-    private reuseTabService: ReuseTabService,
   ) {
-    this.jobSummaries$ = simulationService.jobSummaries$;
+    this.authRefresh();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.simulationService.refreshJobSummaries();
+  }
 
   onView(id: string) {
     this.router.navigate(['/simulations/view', id]);
@@ -61,12 +61,13 @@ export class ViewComponent implements OnInit {
   }
 
   onDelete(id: string) {
-    this.simulationService.deleteJob(id).subscribe(() => {
-      this.refreshSummaries();
-    });
+    this.simulationService.deleteJob(id);
   }
 
-  refreshSummaries() {
-    this.jobSummaries$ = this.simulationService.jobSummaries$;
+  private authRefresh(): void {
+    let interval = 10000;
+    this.timerSubscription = timer(0, interval).subscribe(() =>
+      this.simulationService.refreshJobSummaries(),
+    );
   }
 }
