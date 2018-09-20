@@ -4,14 +4,12 @@ import { Observable } from 'rxjs';
 import { CaseSummary } from '../models/case';
 import { SimulationService } from '../services/simulation.service';
 
-import { NzMessageService } from 'ng-zorro-antd';
-
 @Component({
   selector: 'app-simulations-create',
   template: `
     <page-header></page-header>
 
-    <sim-case-summary-list [loading]=loading [caseSummaries]="caseSummaries$ | async"></sim-case-summary-list>
+    <sim-case-summary-list [loading]=loading [caseSummaries]="simulationService.caseSummaries$ | async"></sim-case-summary-list>
   `,
   styles: [
     `
@@ -26,12 +24,11 @@ export class CreateComponent implements OnInit {
 
   loading: boolean = false;
 
-  constructor(
-    public msg: NzMessageService,
-    private simulationService: SimulationService,
-  ) {
+  constructor(private simulationService: SimulationService) {
     this.caseSummaries$ = simulationService.caseSummaries$;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.simulationService.refreshCaseSummaries();
+  }
 }

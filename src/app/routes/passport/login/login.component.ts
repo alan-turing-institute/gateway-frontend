@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd';
 import { ACLService } from '@delon/acl';
 import { TokenService, DA_SERVICE_TOKEN } from '@delon/auth';
 import { SettingsService } from '@delon/theme';
@@ -26,7 +26,6 @@ export class UserLoginComponent {
   constructor(
     fb: FormBuilder,
     private router: Router,
-    public msg: NzMessageService,
     private modalService: NzModalService,
     @Optional()
     @Inject(ReuseTabService)

@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { map, tap, catchError } from 'rxjs/operators';
 import * as FileSaver from 'file-saver';
 
@@ -18,7 +19,6 @@ export class MiddlewareService {
   constructor(private http: HttpClient) {}
 
   // summary content
-
   public getCaseSummaries(): Observable<CaseSummary[]> {
     return this.http
       .get<CaseSummary[]>(this.CASE_API_PATH)

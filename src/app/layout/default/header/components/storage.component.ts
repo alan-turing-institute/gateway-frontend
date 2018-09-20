@@ -6,15 +6,13 @@ import { NzModalService, NzMessageService } from 'ng-zorro-antd';
   template: `
   <i class="anticon anticon-tool"></i>
   {{ 'clear-local-storage' | translate}}
-  `
+  `,
 })
 export class HeaderStorageComponent {
-
   constructor(
-      private confirmServ: NzModalService,
-      private messageServ: NzMessageService
-  ) {
-  }
+    private confirmServ: NzModalService,
+    private messageServ: NzMessageService,
+  ) {}
 
   @HostListener('click')
   _click() {
@@ -23,7 +21,7 @@ export class HeaderStorageComponent {
       nzOnOk: () => {
         localStorage.clear();
         this.messageServ.success('Clear Finished!');
-      }
+      },
     });
   }
 }
