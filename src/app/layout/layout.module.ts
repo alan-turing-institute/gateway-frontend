@@ -18,7 +18,7 @@ const COMPONENTS = [
   LayoutDefaultComponent,
   LayoutFullScreenComponent,
   HeaderComponent,
-  SidebarComponent
+  SidebarComponent,
 ];
 
 const HEADERCOMPONENTS = [
@@ -29,26 +29,17 @@ const HEADERCOMPONENTS = [
   HeaderFullScreenComponent,
   HeaderI18nComponent,
   HeaderStorageComponent,
-  HeaderUserComponent
+  HeaderUserComponent,
 ];
 
 // passport
 import { LayoutPassportComponent } from './passport/passport.component';
-const PASSPORT = [
-  LayoutPassportComponent
-];
+const PASSPORT = [LayoutPassportComponent];
 
 @NgModule({
   imports: [SharedModule],
   providers: [],
-  declarations: [
-    ...COMPONENTS,
-    ...HEADERCOMPONENTS,
-    ...PASSPORT
-  ],
-  exports: [
-    ...COMPONENTS,
-    ...PASSPORT
-  ]
+  declarations: [...COMPONENTS, ...HEADERCOMPONENTS, ...PASSPORT],
+  exports: [...COMPONENTS, ...PASSPORT],
 })
-export class LayoutModule { }
+export class LayoutModule {}

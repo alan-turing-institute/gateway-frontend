@@ -1,36 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { map, mergeMap, switchMap } from 'rxjs/operators';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 import { Case } from '../models/case';
 import { SimulationService } from '../services/simulation.service';
 
 @Component({
-  selector: 'app-simulations-create',
-  template: `
-
-  <nz-card>
-    <sim-simulation 
-      [simulation]="caseObject"
-      (save)="onSave()"
-      (run)="onRun()">
-    </sim-simulation>
-  </nz-card>
-
-  `,
+  selector: 'app-simulations-create-simulation',
+  templateUrl: './create-simulation.component.html',
 })
 export class CreateSimulationComponent {
   caseObject: Case;
-
-  message: object[];
+  @ViewChild('template')
+  notificationTemplate: TemplateRef<{}>;
 
   constructor(
     private router: Router,
     private simulationService: SimulationService,
+    private notificationService: NzNotificationService,
     private route: ActivatedRoute,
-    public msg: NzMessageService,
   ) {
     route.params
       .pipe(
@@ -60,6 +50,14 @@ export class CreateSimulationComponent {
   }
 
   onRun() {
+    // create notification
+    let notification = this.notificationService.template(
+      this.notificationTemplate,
+      { nzDuration: 0 },
+    );
+
+    setTimeout(() => this.router.navigate(['/simulations/view'])); // navigate to table
+
     let database_job_id: string = null;
     this.simulationService
       .createJob() // create job based on default spec values in case
@@ -72,8 +70,8 @@ export class CreateSimulationComponent {
         mergeMap(res => this.simulationService.startJob(database_job_id)),
       )
       .subscribe(res => {
-        console.log(res);
-        this.router.navigateByUrl(`/simulations/view`);
+        this.notificationService.remove(notification.messageId); // remove notification
+        this.simulationService.refreshJobSummaries(); // refresh view table
       });
   }
 }

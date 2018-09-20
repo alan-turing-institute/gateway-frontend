@@ -1,36 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
+
+import { NzNotificationService } from 'ng-zorro-antd';
 
 import { Job } from '../models/job';
 import { SimulationService } from '../services/simulation.service';
 
 @Component({
   selector: 'app-simulations-configure',
-  template: `
-
-  <nz-card>
-    <sim-simulation 
-      [simulation]="job"
-      (save)="onSave()"
-      (run)="onRun()">
-    </sim-simulation>
-  </nz-card>
-  
-  `,
-  styles: [
-    `
-      :host ::ng-deep .ant-card-meta-title {
-        margin-bottom: 12px;
-      }
-    `,
-  ],
+  templateUrl: './configure-simulation.component.html',
 })
 export class ConfigureSimulationComponent {
   job: Job;
+  @ViewChild('template')
+  notificationTemplate: TemplateRef<{}>;
 
   constructor(
     private simulationService: SimulationService,
+    private notificationService: NzNotificationService,
     private router: Router,
     private route: ActivatedRoute,
   ) {
@@ -49,9 +37,23 @@ export class ConfigureSimulationComponent {
     this.simulationService.updateJob(this.job.id).subscribe(res => {});
   }
 
+  onCancel() {
+    console.log('DEBUG(configure-simulation.component)');
+    this.notificationService.remove(null);
+  }
+
   onRun() {
+    // create notification
+    let notification = this.notificationService.template(
+      this.notificationTemplate,
+      { nzDuration: 0 },
+    );
+
+    setTimeout(() => this.router.navigate(['/simulations/view'])); // navigate to table
+
     this.simulationService.startJob(this.job.id).subscribe(res => {
-      this.router.navigate(['/simulations/view']);
+      this.notificationService.remove(notification.messageId); // remove notification
+      this.simulationService.refreshJobSummaries(); // refresh view table
     });
   }
 }

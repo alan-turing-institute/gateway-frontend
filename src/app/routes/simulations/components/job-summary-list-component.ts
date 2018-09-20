@@ -6,7 +6,6 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd';
 
 import { JobSummary } from '../models/job';
 
@@ -22,7 +21,7 @@ import { JobSummary } from '../models/job';
   ],
 })
 export class JobSummaryListComponent {
-  constructor(private router: Router, public msg: NzMessageService) {}
+  constructor(private router: Router) {}
 
   @Input()
   jobSummaries: JobSummary[];

@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd';
 
 import { CaseSummary } from '../models/case';
 
@@ -15,8 +14,10 @@ import { CaseSummary } from '../models/case';
   ],
 })
 export class CaseSummaryListComponent {
-  constructor(public msg: NzMessageService) {}
+  constructor() {}
 
-  @Input() caseSummaries: CaseSummary[];
-  @Input() loading: boolean;
+  @Input()
+  caseSummaries: CaseSummary[];
+  @Input()
+  loading: boolean;
 }

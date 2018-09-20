@@ -3,23 +3,20 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { NzMessageService } from 'ng-zorro-antd';
-import { ReuseTabService } from '@delon/abc';
 
 import { JobSummary } from '../models/job';
 import { SimulationService } from '../services/simulation.service';
+import { MiddlewareService } from '@core/services/middleware.service';
 
 @Component({
   selector: 'app-simulations-view',
   template: `
-    <page-header>
-    VIEW
-    </page-header>
+    <page-header></page-header>
 
     <nz-card>
       <sim-job-summary-list 
         [loading]=loading 
-        [jobSummaries]="jobSummaries$ | async"
+        [jobSummaries]="simulationService.jobSummaries$ | async"
         (configure) = onConfigure($event)
         (view) = onView($event)
         (delete) = onDelete($event)>
@@ -41,18 +38,14 @@ export class ViewComponent implements OnInit {
   loading: boolean = false;
 
   constructor(
-    public msg: NzMessageService,
     private router: Router,
     private route: ActivatedRoute,
-    private simulationService: SimulationService,
-    @Optional()
-    @Inject(ReuseTabService)
-    private reuseTabService: ReuseTabService,
-  ) {
-    this.jobSummaries$ = simulationService.jobSummaries$;
-  }
+    public simulationService: SimulationService,
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.simulationService.authRefresh();
+  }
 
   onView(id: string) {
     this.router.navigate(['/simulations/view', id]);
@@ -63,12 +56,6 @@ export class ViewComponent implements OnInit {
   }
 
   onDelete(id: string) {
-    this.simulationService.deleteJob(id).subscribe(() => {
-      this.refreshSummaries();
-    });
-  }
-
-  refreshSummaries() {
-    this.jobSummaries$ = this.simulationService.jobSummaries$;
+    this.simulationService.deleteJob(id);
   }
 }

@@ -10,9 +10,7 @@ import { SimulationService } from '../services/simulation.service';
   selector: 'app-simulations-view-simulation',
   template: `
 
-  <page-header>
-    VIEW SIMULATION
-  </page-header>
+  <page-header></page-header>
  
   <nz-card>
     <sim-downloads [outputs]="outputs"></sim-downloads>

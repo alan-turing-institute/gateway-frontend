@@ -8,6 +8,7 @@ import { ACLService } from '@delon/acl';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 
 import { AuthService } from '@core/services/auth.service';
+import { SimulationService } from '@simulations/services/simulation.service';
 
 @Component({
   selector: 'header-user',
@@ -34,6 +35,7 @@ export class HeaderUserComponent {
     private aclService: ACLService,
     private authService: AuthService,
     private router: Router,
+    public simulationService: SimulationService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
   ) {}
 
@@ -43,6 +45,7 @@ export class HeaderUserComponent {
       .logout()
       .pipe(catchError(this.handleError()))
       .subscribe(response => {
+        this.simulationService.cancelRefresh();
         this.tokenService.clear();
         this.aclService.removeRole(['user']);
         this.router.navigateByUrl(this.tokenService.login_url);

@@ -11,8 +11,6 @@ import { CreateSimulationComponent } from './pages/create-simulation.component';
 import { ConfigureSimulationComponent } from './pages/configure-simulation.component';
 import { ViewSimulationComponent } from './pages/view-simulation.component';
 
-import { SimulationService } from './services/simulation.service';
-
 const PAGECOMPONENTS = [
   CreateComponent,
   ViewComponent,
@@ -23,7 +21,7 @@ const PAGECOMPONENTS = [
 
 @NgModule({
   imports: [SharedModule, SimulationsRoutingModule, ComponentsModule],
-  providers: [SimulationService],
+  providers: [],
   declarations: [...PAGECOMPONENTS],
 })
 export class SimulationsModule {}

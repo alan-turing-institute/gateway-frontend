@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, empty } from 'rxjs';
-import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
-import { NzMessageService } from 'ng-zorro-antd';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { AnonymousSubscription } from 'rxjs/Subscription';
+import { timer } from 'rxjs/observable/timer';
 import { SettingsService } from '@delon/theme';
 
 import { MiddlewareService } from '@core/services/middleware.service';
@@ -13,8 +15,13 @@ import { Output } from '../models/output';
 
 @Injectable()
 export class SimulationService {
-  public caseSummaries$: Observable<CaseSummary[]>;
-  public jobSummaries$: Observable<JobSummary[]>;
+  private _caseSummaries$: BehaviorSubject<CaseSummary[]>;
+  private caseSummaries: CaseSummary[];
+
+  private _jobSummaries$: BehaviorSubject<JobSummary[]>;
+  private jobSummaries: JobSummary[];
+
+  public timerSubscription: AnonymousSubscription;
 
   public active: string;
   public activeJobId: string;
@@ -32,11 +39,13 @@ export class SimulationService {
 
   constructor(
     private middlewareService: MiddlewareService,
-    public message: NzMessageService,
     private settingsService: SettingsService,
   ) {
-    this.caseSummaries$ = this.middlewareService.getCaseSummaries();
-    this.jobSummaries$ = this.middlewareService.getJobSummaries();
+    this._caseSummaries$ = new BehaviorSubject([]);
+    this.caseSummaries = [];
+    this._jobSummaries$ = new BehaviorSubject([]);
+    this.jobSummaries = [];
+    // this.authRefresh();
   }
 
   public activateCase(caseObject: Case) {
@@ -67,6 +76,37 @@ export class SimulationService {
     this.initialDescription = null;
     this.initialValues.length = 0;
     this.metrics = null;
+  }
+
+  get caseSummaries$(): Observable<CaseSummary[]> {
+    return this._caseSummaries$.asObservable();
+  }
+
+  get jobSummaries$(): Observable<JobSummary[]> {
+    return this._jobSummaries$.asObservable();
+  }
+
+  public refreshCaseSummaries() {
+    this.middlewareService
+      .getCaseSummaries()
+      .subscribe(state => this._caseSummaries$.next(state));
+  }
+
+  public refreshJobSummaries() {
+    this.middlewareService
+      .getJobSummaries()
+      .subscribe(state => this._jobSummaries$.next(state));
+  }
+
+  public authRefresh(): void {
+    let refreshInterval = 10000;
+    this.timerSubscription = timer(0, refreshInterval).subscribe(() => {
+      this.refreshJobSummaries();
+    });
+  }
+
+  public cancelRefresh(): void {
+    this.timerSubscription.unsubscribe();
   }
 
   // helper methods for generatng request bodies
@@ -117,11 +157,6 @@ export class SimulationService {
     return this.middlewareService.searchJobSummaries(name);
   }
 
-  refreshJobSummaries() {
-    console.log('DEBUG(simulation.service) refresh');
-    this.jobSummaries$ = this.middlewareService.getJobSummaries();
-  }
-
   getCase(id: string): Observable<Case> {
     return this.middlewareService.getCase(id);
   }
@@ -139,7 +174,6 @@ export class SimulationService {
       catchError(
         (err): any => {
           console.log(err);
-          this.message.create('error', this.name);
           return empty();
         },
       ),
@@ -181,18 +215,17 @@ export class SimulationService {
   }
 
   deleteJob(id: string) {
-    return this.middlewareService.deleteJob(id).pipe(
-      catchError(
-        (err): any => {
-          console.log(err);
-          return empty();
-        },
-      ),
-      tap(_ => {
-        console.log('DEBUG(simulation.service) in tap');
-        this.refreshJobSummaries();
-      }),
-    );
+    this.middlewareService
+      .deleteJob(id)
+      .pipe(
+        catchError(
+          (err): any => {
+            console.log(err);
+            return empty();
+          },
+        ),
+      )
+      .subscribe(() => this.refreshJobSummaries());
   }
 
   getJob(id: string): Observable<Job> {

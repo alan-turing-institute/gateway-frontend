@@ -14,7 +14,7 @@
           "text": "Overview",
           "i18n": "overview",
           "link": "/overview",
-          "icon": "icon-screen-desktop"
+          "icon": "icon-settings"
         },
         {
           "text": "Simulations",
@@ -32,6 +32,29 @@
               "i18n": "view"
             }
           ]
+        },
+        {
+          "text": "Cases",
+          "i18n": "cases",
+          "icon": "icon-grid",
+          "children": [
+            {
+              "text": "create",
+              "link": "/cases/create",
+              "i18n": "create"
+            },
+            {
+              "text": "view",
+              "link": "/cases/view",
+              "i18n": "view"
+            }
+          ]
+        },
+        {
+          "text": "Settings",
+          "i18n": "settings",
+          "link": "/settings",
+          "icon": "icon-settings"
         }
       ]
     }

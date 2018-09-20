@@ -1,24 +1,24 @@
 <div *ngIf="displayData">
-  <nz-table #filterTable [nzData]="displayData">
+  <nz-table #filterTable [nzData]="displayData" [nzBordered]="false" [nzTitle]="Simulations">
     <thead (nzSortChange)="sort($event)" nzSingleSort>
       <tr>
         <th nzShowSort nzSortKey="name">Name</th>
         <th nzShowSort nzSortKey="description">Description</th>
         <th nzShowSort nzSortKey="status">Status</th>
         <th nzShowSort nzSortKey="user">User</th>
-        <th>Action</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let data of filterTable.data">
-        <td>{{data.name}}</td>
+        <td nzWidth="500px" nzRight="0px">{{data.name}}</td>
         <td>{{data.description}}</td>
         <td>{{data.status}}</td>
         <td>{{data.user}}</td>
         <td>
-          <a (click)=onConfigure(data.id)>Configure </a>
-          <a (click)=onView(data.id)> <nz-divider nzType="vertical"></nz-divider> View</a>
-          <a nz-popconfirm nzTitle="Are you sure you want to delete this simulation?" (nzOnConfirm)="onDelete(data.id)" (nzOnCancel)="onCancel()"> <nz-divider nzType="vertical"></nz-divider> Delete</a>
+          <a *ngIf="data.status == 'Not Started'" (click)=onConfigure(data.id)>Configure <nz-divider nzType="vertical"></nz-divider> </a>
+          <a *ngIf="data.status != 'Not Started'" (click)=onView(data.id)>View<nz-divider nzType="vertical"></nz-divider> </a>
+          <a nz-popconfirm nzTitle="Are you sure you want to delete this simulation?" (nzOnConfirm)="onDelete(data.id)" (nzOnCancel)="onCancel()"> Delete</a>
         </td>
       </tr>
     </tbody>
