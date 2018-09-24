@@ -35,8 +35,11 @@ export class MiddlewareService {
       .pipe(map(jobSummaries => jobSummaries || [])); // TODO redundant (?)
   }
 
-  public searchJobSummaries(name: string): Observable<JobSummary[]> {
-    let queryParams = { name: name };
+  public searchJobSummaries(
+    name: string,
+    exact: boolean = false,
+  ): Observable<JobSummary[]> {
+    let queryParams = { name: name, exact: exact.toString() };
 
     return this.http
       .get<JobSummary[]>(`${this.JOB_API_PATH}/search`, {

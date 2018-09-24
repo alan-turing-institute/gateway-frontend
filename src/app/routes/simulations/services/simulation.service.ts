@@ -153,8 +153,8 @@ export class SimulationService {
 
   //  middleware connection functionality
 
-  searchJobSummaries(name: string): Observable<JobSummary[]> {
-    return this.middlewareService.searchJobSummaries(name);
+  searchJobSummaries(name: string, exact = true): Observable<JobSummary[]> {
+    return this.middlewareService.searchJobSummaries(name, exact);
   }
 
   getCase(id: string): Observable<Case> {

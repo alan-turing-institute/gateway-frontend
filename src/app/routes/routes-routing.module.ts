@@ -28,18 +28,18 @@ const routes: Routes = [
       {
         path: 'overview',
         component: OverviewComponent,
-        canActivate: [ACLGuard],
+        // canActivate: [ACLGuard],
         data: { title: 'Overview', guard: 'user' },
       },
       {
         path: 'simulations',
         loadChildren: './simulations/simulations.module#SimulationsModule',
-        canActivate: [ACLGuard],
-        data: { guard: 'user' },
+        // canActivate: [ACLGuard],
+        // data: { guard: 'user' },
       },
     ],
-    canActivate: [ACLGuard],
-    canActivateChild: [ACLGuard],
+    // canActivate: [ACLGuard],
+    // canActivateChild: [ACLGuard],
     data: { guard: 'user' },
   },
   {

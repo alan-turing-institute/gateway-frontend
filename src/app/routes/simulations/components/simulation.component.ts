@@ -30,9 +30,12 @@ import { SimulationService } from '../services/simulation.service';
   ],
 })
 export class SimulationComponent {
-  @Input() simulation: Case | Job;
-  @Output() save: EventEmitter<void> = new EventEmitter();
-  @Output() run: EventEmitter<void> = new EventEmitter();
+  @Input()
+  simulation: Case | Job;
+  @Output()
+  save: EventEmitter<void> = new EventEmitter();
+  @Output()
+  run: EventEmitter<void> = new EventEmitter();
 
   // set public, otherwise ng build --prod --build-optimizer will break
   public showCase: boolean;
@@ -118,7 +121,7 @@ export class SimulationComponent {
     return timer(300).pipe(
       switchMap(() =>
         this.simulationService
-          .searchJobSummaries(control.value)
+          .searchJobSummaries(control.value, true) // exact search
           .pipe(
             map(
               summaryList =>
