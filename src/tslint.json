@@ -6,6 +6,7 @@
       "attribute",
       [
         "app",
+        "sim",
         "passport",
         "exception",
         "layout",
@@ -18,6 +19,7 @@
       "element",
       [
         "app",
+        "sim",
         "passport",
         "exception",
         "layout",

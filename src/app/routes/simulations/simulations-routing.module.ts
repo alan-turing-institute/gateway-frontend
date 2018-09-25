@@ -7,6 +7,7 @@ import { ViewComponent } from './pages/view.component';
 import { CreateSimulationComponent } from './pages/create-simulation.component';
 import { ConfigureSimulationComponent } from './pages/configure-simulation.component';
 import { ViewSimulationComponent } from './pages/view-simulation.component';
+import { RedirectComponent } from './pages/redirect.component';
 
 const routes: Routes = [
   { path: 'create', component: CreateComponent },
@@ -17,14 +18,9 @@ const routes: Routes = [
     data: { title: 'Create' },
   },
   {
-    path: 'view/:id',
-    component: ViewSimulationComponent,
-    data: { title: 'View' },
-  },
-  {
-    path: 'configure/:id',
-    component: ConfigureSimulationComponent,
-    data: { title: 'Configure' },
+    path: ':id',
+    component: RedirectComponent,
+    data: { title: 'Simulation' },
   },
 ];
 

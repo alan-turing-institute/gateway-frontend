@@ -10,6 +10,7 @@ import { ViewComponent } from './pages/view.component';
 import { CreateSimulationComponent } from './pages/create-simulation.component';
 import { ConfigureSimulationComponent } from './pages/configure-simulation.component';
 import { ViewSimulationComponent } from './pages/view-simulation.component';
+import { RedirectComponent } from './pages/redirect.component';
 
 const PAGECOMPONENTS = [
   CreateComponent,
@@ -17,6 +18,7 @@ const PAGECOMPONENTS = [
   CreateSimulationComponent,
   ConfigureSimulationComponent,
   ViewSimulationComponent,
+  RedirectComponent,
 ];
 
 @NgModule({

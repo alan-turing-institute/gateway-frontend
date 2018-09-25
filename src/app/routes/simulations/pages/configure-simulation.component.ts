@@ -1,5 +1,11 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  Component,
+  Input,
+  ViewChild,
+  OnInit,
+  TemplateRef,
+} from '@angular/core';
+import { Router } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 
 import { NzNotificationService } from 'ng-zorro-antd';
@@ -8,10 +14,11 @@ import { Job } from '../models/job';
 import { SimulationService } from '../services/simulation.service';
 
 @Component({
-  selector: 'app-simulations-configure',
+  selector: 'app-configure-simulation',
   templateUrl: './configure-simulation.component.html',
 })
-export class ConfigureSimulationComponent {
+export class ConfigureSimulationComponent implements OnInit {
+  @Input()
   job: Job;
   @ViewChild('template')
   notificationTemplate: TemplateRef<{}>;
@@ -20,31 +27,21 @@ export class ConfigureSimulationComponent {
     private simulationService: SimulationService,
     private notificationService: NzNotificationService,
     private router: Router,
-    private route: ActivatedRoute,
-  ) {
-    route.params
-      .pipe(
-        map(params => params.id),
-        switchMap(id => this.simulationService.getJob(id)),
-      )
-      .subscribe(jobObject => {
-        this.job = jobObject;
-        this.simulationService.activateJob(jobObject);
-      });
-  }
+  ) {}
+
+  ngOnInit() {}
 
   onSave() {
     this.simulationService.updateJob(this.job.id).subscribe(res => {});
   }
 
   onCancel() {
-    console.log('DEBUG(configure-simulation.component)');
     this.notificationService.remove(null);
   }
 
   onRun() {
     // create notification
-    let notification = this.notificationService.template(
+    const notification = this.notificationService.template(
       this.notificationTemplate,
       { nzDuration: 0 },
     );

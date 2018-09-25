@@ -22,7 +22,7 @@ import { SimulationService } from '../services/simulation.service';
 export class CreateComponent implements OnInit {
   caseSummaries$: Observable<CaseSummary[]>;
 
-  loading: boolean = false;
+  loading = false;
 
   constructor(public simulationService: SimulationService) {
     this.caseSummaries$ = simulationService.caseSummaries$;

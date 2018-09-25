@@ -14,15 +14,14 @@ import { MiddlewareService } from '@core/services/middleware.service';
     <page-header></page-header>
 
     <nz-card>
-      <sim-job-summary-list 
-        [loading]=loading 
+      <sim-job-summary-list
+        [loading]=loading
         [jobSummaries]="simulationService.jobSummaries$ | async"
-        (configure) = onConfigure($event)
-        (view) = onView($event)
+        (select) = onSelect($event)
         (delete) = onDelete($event)>
       </sim-job-summary-list>
     </nz-card>
-    
+
   `,
   styles: [
     `
@@ -35,7 +34,7 @@ import { MiddlewareService } from '@core/services/middleware.service';
 export class ViewComponent implements OnInit, OnDestroy {
   jobSummaries$: Observable<JobSummary[]>;
 
-  loading: boolean = false;
+  loading = false;
 
   constructor(
     private router: Router,
@@ -51,12 +50,8 @@ export class ViewComponent implements OnInit, OnDestroy {
     this.simulationService.cancelAutoRefresh();
   }
 
-  onView(id: string) {
-    this.router.navigate(['/simulations/view', id]);
-  }
-
-  onConfigure(id: string) {
-    this.router.navigate(['/simulations/configure', id]);
+  onSelect(id: string) {
+    this.router.navigate(['/simulations', id]);
   }
 
   onDelete(id: string) {
