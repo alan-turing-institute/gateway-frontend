@@ -1,4 +1,4 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, Input, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 
@@ -7,11 +7,11 @@ import { Output } from '../models/output';
 import { SimulationService } from '../services/simulation.service';
 
 @Component({
-  selector: 'app-simulations-view-simulation',
+  selector: 'app-view-simulation',
   template: `
 
   <page-header></page-header>
- 
+
   <nz-card>
     <sim-downloads [outputs]="outputs"></sim-downloads>
   </nz-card>
@@ -25,7 +25,8 @@ import { SimulationService } from '../services/simulation.service';
   </nz-card>
   `,
 })
-export class ViewSimulationComponent {
+export class ViewSimulationComponent implements OnInit {
+  @Input()
   job: Job;
   metrics: object;
   outputs: Output[];
@@ -33,18 +34,11 @@ export class ViewSimulationComponent {
   constructor(
     private simulationService: SimulationService,
     private route: ActivatedRoute,
-  ) {
-    route.params
-      .pipe(
-        map(params => params.id),
-        switchMap(id => this.simulationService.getJob(id)),
-      )
-      .subscribe(jobObject => {
-        this.job = jobObject;
-        this.simulationService.activateJob(jobObject);
-        this.getOutputs();
-        this.getMetrics();
-      });
+  ) {}
+
+  ngOnInit() {
+    this.getOutputs();
+    this.getMetrics();
   }
 
   getOutputs() {

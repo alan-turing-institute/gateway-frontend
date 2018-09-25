@@ -1,6 +1,6 @@
 <page-header></page-header>
 
-<nz-card>
+<nz-card *ngIf="caseObject">
   <sim-simulation [simulation]="caseObject" (save)="onSave()" (run)="onRun()">
   </sim-simulation>
 </nz-card>

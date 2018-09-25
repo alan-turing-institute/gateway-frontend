@@ -16,8 +16,8 @@
         <td>{{data.status}}</td>
         <td>{{data.user}}</td>
         <td>
-          <a *ngIf="data.status == 'Not Started'" (click)=onConfigure(data.id)>Configure <nz-divider nzType="vertical"></nz-divider> </a>
-          <a *ngIf="data.status != 'Not Started'" (click)=onView(data.id)>View<nz-divider nzType="vertical"></nz-divider> </a>
+          <a (click)=onSelect(data.id)>Select</a>
+          <nz-divider nzType="vertical"></nz-divider>
           <a nz-popconfirm nzTitle="Are you sure you want to delete this simulation?" (nzOnConfirm)="onDelete(data.id)" (nzOnCancel)="onCancel()"> Delete</a>
         </td>
       </tr>

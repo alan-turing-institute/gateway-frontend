@@ -143,6 +143,7 @@
       "element",
       [
         "app",
+        "sim",
         "passport",
         "exception",
         "layout",

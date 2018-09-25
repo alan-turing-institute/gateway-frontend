@@ -3,6 +3,7 @@ import {
   Input,
   Output,
   EventEmitter,
+  OnChanges,
   SimpleChanges,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -20,7 +21,9 @@ import { JobSummary } from '../models/job';
     `,
   ],
 })
-export class JobSummaryListComponent {
+export class JobSummaryListComponent implements OnChanges {
+  private sortName = null;
+  private sortValue = null;
   constructor(private router: Router) {}
 
   @Input()
@@ -28,9 +31,7 @@ export class JobSummaryListComponent {
   @Input()
   loading: boolean;
   @Output()
-  view: EventEmitter<string> = new EventEmitter();
-  @Output()
-  configure: EventEmitter<string> = new EventEmitter();
+  select: EventEmitter<string> = new EventEmitter();
   @Output()
   delete: EventEmitter<string> = new EventEmitter();
 
@@ -41,9 +42,6 @@ export class JobSummaryListComponent {
       this.displayData = this.jobSummaries;
     }
   }
-
-  private sortName = null;
-  private sortValue = null;
 
   sort(sort: { key: string; value: string }): void {
     this.sortName = sort.key;
@@ -72,12 +70,8 @@ export class JobSummaryListComponent {
   }
 
   // let parent page component handle any required navigation
-  onView(id: string) {
-    this.view.emit(id);
-  }
-
-  onConfigure(id: string) {
-    this.configure.emit(id);
+  onSelect(id: string) {
+    this.select.emit(id);
   }
 
   onCancel() {}
@@ -85,25 +79,4 @@ export class JobSummaryListComponent {
   onDelete(id: string) {
     this.delete.emit(id);
   }
-
-  dataSet = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-    },
-  ];
 }
