@@ -38,9 +38,11 @@ export class RedirectComponent {
     switch (status) {
       case 'Not Started': {
         this.configure = true;
+        this.view = false;
         break;
       }
       default: {
+        this.configure = false;
         this.view = true;
         break;
       }
