@@ -6,8 +6,8 @@
       <ng-template #groupTitle>
         <span>Simulations</span>
       </ng-template>
-      <nz-auto-option *ngFor="let job of searchResults" [nzLabel]="job.name" [nzValue]="option" routerLink="/simulations/configure/{{job.id}}">
-        <div *ngIf="job.status=='Not Started'">
+      <nz-auto-option *ngFor="let job of searchResults" [nzLabel]="job.name" [nzValue]="option" routerLink="/simulations/{{job.id}}">
+        <div>
           {{job.name}}
           <span>
             <nz-tag>{{job.status}}</nz-tag>

@@ -59,12 +59,22 @@ export class HeaderSearchComponent implements AfterViewInit, OnInit {
   }
 
   onSelect(name: string) {
-    // find job id given job name
-    let summary: JobSummary = this.searchResults.find(job => job.name == name);
-    if (summary.status == 'Not Started') {
-      this.router.navigate([`/simulations/configure/${summary.id}`]);
-    } else {
-      this.router.navigate([`/simulations/view/${summary.id}`]);
+    // find job id given job name.
+    // search bar text may be incomplete when first option is highlighted
+    // i.e. user has not used up/down arrows to move beyond the first highlighted option
+
+    let summary: JobSummary = this.searchResults.find(job => job.name === name);
+    let id;
+    if (summary) {
+      // Use complete match
+      id = summary.id;
+    } else if (this.searchResults.length) {
+      // Fall back to first search result
+      summary = this.searchResults[0];
+      id = summary.id;
+    }
+    if (id) {
+      this.router.navigate(['/simulations', id]);
     }
   }
 
