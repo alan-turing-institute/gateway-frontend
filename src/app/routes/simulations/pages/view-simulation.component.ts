@@ -12,7 +12,7 @@ import { SimulationService } from '../services/simulation.service';
 
   <page-header></page-header>
 
-  <nz-card>
+  <nz-card *ngIf="outputs">
     <sim-downloads [outputs]="outputs"></sim-downloads>
   </nz-card>
 
@@ -20,7 +20,7 @@ import { SimulationService } from '../services/simulation.service';
     <sim-metrics [metrics]="metrics"></sim-metrics>
   </nz-card>
 
-  <nz-card>
+  <nz-card *ngIf="job">
     <sim-parameters [job]="job"></sim-parameters>
   </nz-card>
   `,
