@@ -45,7 +45,7 @@ export class CreateSimulationComponent {
         }),
       )
       .subscribe(res => {
-        this.router.navigateByUrl(`/simulations/configure/${database_job_id}`);
+        this.router.navigateByUrl(`/simulations/${database_job_id}`);
       });
   }
 
