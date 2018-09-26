@@ -1,4 +1,12 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  OnInit,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -29,7 +37,7 @@ import { SimulationService } from '../services/simulation.service';
     `,
   ],
 })
-export class SimulationComponent implements OnInit {
+export class SimulationComponent implements OnInit, OnChanges {
   @Input()
   simulation: Case | Job;
   @Output()
@@ -53,6 +61,16 @@ export class SimulationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initialiseState();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['simulation']) {
+      this.initialiseState();
+    }
+  }
+
+  initialiseState() {
     this.simulationService.updateName(this.simulation.name);
     this.simulationService.updateDescription(this.simulation.description);
 
@@ -121,7 +139,7 @@ export class SimulationComponent implements OnInit {
           .pipe(
             map(
               summaryList =>
-                summaryList.length == 0
+                summaryList.length === 0
                   ? null
                   : { error: true, duplicated: true },
             ),
