@@ -9,9 +9,6 @@ import { SimulationService } from '../services/simulation.service';
 @Component({
   selector: 'app-view-simulation',
   template: `
-
-  <page-header></page-header>
-
   <nz-card *ngIf="outputs">
     <sim-downloads [outputs]="outputs"></sim-downloads>
   </nz-card>
