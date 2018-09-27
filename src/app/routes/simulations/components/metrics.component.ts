@@ -18,7 +18,7 @@ export class MetricsComponent implements OnInit, OnChanges {
   @ViewChild('chartref', { read: ElementRef })
   chartref;
 
-  chart: object;
+  chart: any;
   x_name: string;
 
   ngOnInit() {}
