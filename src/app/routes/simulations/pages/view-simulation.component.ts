@@ -1,4 +1,11 @@
-import { Component, Input, ElementRef, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  ElementRef,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 
@@ -22,7 +29,7 @@ import { SimulationService } from '../services/simulation.service';
   </nz-card>
   `,
 })
-export class ViewSimulationComponent implements OnInit {
+export class ViewSimulationComponent implements OnInit, OnChanges {
   @Input()
   job: Job;
   metrics: object;
@@ -34,6 +41,16 @@ export class ViewSimulationComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.initialiseState();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['job']) {
+      this.initialiseState();
+    }
+  }
+
+  initialiseState() {
     this.getOutputs();
     this.getMetrics();
   }
