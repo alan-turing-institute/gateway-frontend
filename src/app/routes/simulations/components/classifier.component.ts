@@ -9,12 +9,13 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'sim-metrics',
-  template: `<g2-chart #chartref (render)="render($event)"></g2-chart>`,
+  selector: 'sim-classifier',
+  // template: `<g2-chart #chartref (render)="render($event)"></g2-chart>`,
+  template: `{{this.classifier | json}}`,
 })
-export class MetricsComponent implements OnInit, OnChanges {
+export class ClassifierComponent implements OnInit, OnChanges {
   @Input()
-  metrics: object;
+  classifier: object;
   @ViewChild('chartref', { read: ElementRef })
   chartref;
 
@@ -24,9 +25,9 @@ export class MetricsComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['metrics'] && !changes['metrics']['firstChange']) {
+    if (changes['classifier'] && !changes['classifier']['firstChange']) {
       if (this.chart) {
-        // smooth transition to new metrics
+        // smooth transition to new classifier
         // for example when a different simulation is selected via search
         this.chart.changeData(this.data()); // tslint:disable-line
       }
@@ -37,9 +38,9 @@ export class MetricsComponent implements OnInit, OnChanges {
     // data processing
     console.log('data()');
     let { DataView } = DataSet;
-    let dv = new DataView().source(this.metrics['data']);
+    let dv = new DataView().source(this.classifier['data']);
     this.x_name = 'time';
-    let fields = this.metrics['names'].concat([]); // copy fields to new array (rather than referencing)
+    let fields = this.classifier['names'].concat([]); // copy fields to new array (rather than referencing)
     fields.splice(fields.indexOf(this.x_name), 1); // remove x variable from fields
     dv.transform({
       type: 'fold',

@@ -24,6 +24,10 @@ import { SimulationService } from '../services/simulation.service';
     <sim-metrics [metrics]="metrics"></sim-metrics>
   </nz-card>
 
+  <nz-card *ngIf="classifier">
+    <sim-classifier [classifier]="classifier"></sim-classifier>
+  </nz-card>
+
   <nz-card *ngIf="job">
     <sim-parameters [job]="job"></sim-parameters>
   </nz-card>
@@ -33,6 +37,7 @@ export class ViewSimulationComponent implements OnInit, OnChanges {
   @Input()
   job: Job;
   metrics: object;
+  classifier: object;
   outputs: Output[];
 
   constructor(
@@ -52,18 +57,33 @@ export class ViewSimulationComponent implements OnInit, OnChanges {
 
   initialiseState() {
     this.getOutputs();
-    this.getMetrics();
   }
 
   getOutputs() {
     this.simulationService.getOutputs(this.job.id).subscribe(outputs => {
       this.outputs = outputs;
+
+      const m: Output = outputs.find(output => output.type === 'metrics');
+      if (m) {
+        this.getMetrics(m);
+      }
+
+      const c: Output = outputs.find(output => output.type === 'classifier');
+      if (c) {
+        this.getClassifier(c);
+      }
     });
   }
 
-  getMetrics() {
-    this.simulationService.getMetrics(this.job.id).subscribe(metrics => {
+  getMetrics(output: Output) {
+    this.simulationService.getMetrics(output).subscribe(metrics => {
       this.metrics = metrics;
+    });
+  }
+
+  getClassifier(output: Output) {
+    this.simulationService.getClassifier(output).subscribe(classifier => {
+      this.classifier = classifier;
     });
   }
 }

@@ -122,8 +122,16 @@ export class MiddlewareService {
       });
   }
 
-  public getMetrics(url: string): Observable<object> {
-    return this.http.get(url).pipe(catchError(this.handleError('getMetrics')));
+  public getMetrics(output: Output): Observable<object> {
+    return this.http
+      .get(output.destination)
+      .pipe(catchError(this.handleError('getMetrics')));
+  }
+
+  public getClassifier(output: Output): Observable<object> {
+    return this.http
+      .get(output.destination)
+      .pipe(catchError(this.handleError('getClassifier')));
   }
 
   /**

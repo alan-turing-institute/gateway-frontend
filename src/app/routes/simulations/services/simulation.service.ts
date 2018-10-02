@@ -232,12 +232,12 @@ export class SimulationService {
     return this.middlewareService.getJob(id);
   }
 
-  getOutputs(id: string): Observable<Output[]> {
-    return this.middlewareService.getOutputs(id);
-  }
-
   downloadOutput(output: Output) {
     this.middlewareService.downloadOutput(output);
+  }
+
+  getOutputs(id: string): Observable<Output[]> {
+    return this.middlewareService.getOutputs(id);
   }
 
   getMetrics(id: string) {
@@ -252,6 +252,10 @@ export class SimulationService {
           ),
         )
     );
+  }
+
+  getClassifier(output: Output) {
+    return this.middlewareService.getClassifier(output);
   }
 
   // find(output => output.type === 'metrics')
