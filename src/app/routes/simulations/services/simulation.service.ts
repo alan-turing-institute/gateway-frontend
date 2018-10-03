@@ -240,18 +240,8 @@ export class SimulationService {
     return this.middlewareService.getOutputs(id);
   }
 
-  getMetrics(id: string) {
-    return (
-      this.middlewareService
-        .getOutputs(id)
-        // assume single "metrics" output is present
-        .pipe(
-          map(outputs => outputs.find(output => output.type === 'metrics')),
-          switchMap(output =>
-            this.middlewareService.getMetrics(output.destination),
-          ),
-        )
-    );
+  getMetrics(output: Output) {
+    return this.middlewareService.getMetrics(output);
   }
 
   getClassifier(output: Output) {
