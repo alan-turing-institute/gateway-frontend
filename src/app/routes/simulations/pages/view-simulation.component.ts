@@ -7,7 +7,10 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
 import { map, switchMap } from 'rxjs/operators';
+import { View, Parse, parse, Spec } from 'vega';
+declare var vega: any;
 
 import { Job } from '../models/job';
 import { Output } from '../models/output';
@@ -24,13 +27,16 @@ import { SimulationService } from '../services/simulation.service';
     <sim-metrics [metrics]="metrics"></sim-metrics>
   </nz-card>
 
-  <nz-card *ngIf="classifier">
-    <sim-classifier [classifier]="classifier"></sim-classifier>
+  <nz-card>
+    <sim-vega></sim-vega>
   </nz-card>
 
   <nz-card *ngIf="job">
     <sim-parameters [job]="job"></sim-parameters>
   </nz-card>
+
+  
+
   `,
 })
 export class ViewSimulationComponent implements OnInit, OnChanges {

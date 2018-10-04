@@ -10,6 +10,8 @@ import { JobSummaryListComponent } from './job-summary-list-component';
 import { SimulationComponent } from './simulation.component';
 import { ParametersComponent } from './parameters.component';
 import { MetricsComponent } from './metrics.component';
+import { VegaComponent } from './vega.component';
+
 import { ClassifierComponent } from './classifier.component';
 import { DownloadsComponent } from './downloads.component';
 import { FieldComponent } from './field.component';
@@ -20,6 +22,7 @@ export const COMPONENTS = [
   SimulationComponent,
   ParametersComponent,
   MetricsComponent,
+  VegaComponent,
   ClassifierComponent,
   DownloadsComponent,
   FieldComponent,

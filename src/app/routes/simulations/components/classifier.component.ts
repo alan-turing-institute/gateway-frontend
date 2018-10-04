@@ -12,7 +12,6 @@ import {
   selector: 'sim-classifier',
   template: `
   <g2-chart #chartref (render)="render($event)"></g2-chart>
-  <div>{{this.classifier | json}}</div>
   `,
 })
 export class ClassifierComponent implements OnInit, OnChanges {
@@ -22,7 +21,6 @@ export class ClassifierComponent implements OnInit, OnChanges {
   chartref;
 
   chart: any;
-  x_name: string;
 
   ngOnInit() {}
 
@@ -48,43 +46,57 @@ export class ClassifierComponent implements OnInit, OnChanges {
       padding: [20, 120, 95],
     });
 
-    this.chart.source(this.classifier['test']);
-    this.chart
-      .point()
-      .position(`x*y`)
-      .color('type')
-      .size(8)
-      .shape('circle')
-      .style({
-        stroke: '#fff',
-        lineWidth: 1,
-      });
+    this.chart.scale({ y: { sync: true }, x: { sync: true } });
 
     let view = this.chart.view();
-    view.axis(false);
-    view.source(this.classifier['train']);
+    view.source(this.classifier['classifier']);
+
     view
-      .point()
-      .position(`x*y`)
-      .color('type')
-      .size(4)
-      .shape('circle')
-      .style({
-        stroke: '#fff',
-        lineWidth: 1,
-      });
+      .polygon()
+      .position('x*y')
+      // .opacity(0.65)
+      .color('val', 'blue-red')
+      .tooltip('val');
+
+    // this.chart.tooltip({
+    //   containerTpl:
+    //     '<div class="g2-tooltip">' +
+    //     '<p class="g2-tooltip-title">FOO</p>' +
+    //     '<table class="g2-tooltip-list"></table>' +
+    //     // '<img src="https://raw.githubusercontent.com/alan-turing-institute/simulate-damBreak/master/thumbnail.png">' +
+    //     '</div>',
+    //   itemTpl:
+    //     // '<tr class="g2-tooltip-list-item"><td style="color:{color}">{name}</td><td>{value}</td></tr>',
+    //     '<tr class="g2-tooltip-list-item">Test</tr>',
+    //   offset: 50,
+    //   'g2-tooltip': {
+    //     position: 'absolute',
+    //     visibility: 'hidden',
+    //     border: '1px solid #efefef',
+    //     backgroundColor: 'white',
+    //     color: '#000',
+    //     opacity: '0.8',
+    //     padding: '5px 15px',
+    //     transition: 'top 200ms,left 200ms',
+    //   },
+    //   'g2-tooltip-list': {
+    //     margin: '10px',
+    //   },
+    // });
 
     view = this.chart.view();
+    this.chart.tooltip({ showTitle: false });
+    this.chart.legend(false);
+
     view.axis(false);
-    view.source(this.classifier['classifier']);
-    // view
-    //   .heatmap()
-    //   .position('x*y')
-    //   .color('val', 'blue-cyan-lime-yellow-red');
+    view.source(this.classifier['train']);
+
+    // TODO hide legend for points (make custom legend that demarks testing and training)
     view
       .point()
-      .position(`x*y`)
-      .color('type')
+      .position('x*y')
+      .tooltip('val')
+      .color('val')
       .size(4)
       .shape('circle')
       .style({
@@ -92,6 +104,22 @@ export class ClassifierComponent implements OnInit, OnChanges {
         lineWidth: 1,
       });
 
+    // const view = this.chart.view();
+    // // view.axis(false);
+    // view.source(this.classifier['test']);
+    // view
+    //   .point()
+    //   .position(`x*y`)
+    //   .color('val')
+    //   .tooltip('val')
+    //   .size(8)
+    //   .shape('circle')
+    //   .style({
+    //     stroke: '#fff',
+    //     lineWidth: 1,
+    //   });
+
     this.chart.render();
+    console.log('this.classifier', this.classifier);
   }
 }

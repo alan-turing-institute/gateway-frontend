@@ -1,10 +1,15 @@
 # build the angular static files
 FROM node:10-alpine
 
+
+
 # create /app directory
 COPY . /app
 WORKDIR /app 
-RUN npm install
+
+RUN apk add --no-cache make gcc g++ python build-base cairo-dev cairo cairo-tools && \
+  npm install && \
+  apk del make gcc g++ python
 
 EXPOSE 8080
 CMD [ "npm", "start" ]
