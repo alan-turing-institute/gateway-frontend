@@ -17,8 +17,8 @@ import { ParametersComponent } from '@simulations/components/parameters.componen
 export class RedirectComponent implements OnInit {
   routeId: string;
   job: Job;
-  private configure = false;
-  private view = false;
+  public configure = false;
+  public view = false;
 
   constructor(
     private simulationService: SimulationService,

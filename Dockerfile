@@ -6,6 +6,8 @@ FROM node:10-alpine as build-stage
 # create /app directory
 COPY . /app
 WORKDIR /app 
+
+RUN apk add --no-cache make gcc g++ python build-base cairo-dev cairo cairo-tools
 RUN npm install
 
 RUN npm run build -- --output-path=./dist/out

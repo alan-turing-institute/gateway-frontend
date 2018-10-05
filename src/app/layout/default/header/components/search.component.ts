@@ -24,7 +24,7 @@ export class HeaderSearchComponent implements AfterViewInit, OnInit {
   q: string;
   qInput: HTMLInputElement;
   private search$: Subject<string> = new Subject();
-  private searchResults: JobSummary[];
+  public searchResults: JobSummary[];
 
   @HostBinding('class.header-search__focus')
   focus = false;
