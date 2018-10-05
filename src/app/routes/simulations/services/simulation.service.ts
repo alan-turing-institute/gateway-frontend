@@ -244,8 +244,8 @@ export class SimulationService {
     return this.middlewareService.getMetrics(output);
   }
 
-  getClassifier(output: Output) {
-    return this.middlewareService.getClassifier(output);
+  getVega(output: Output) {
+    return this.middlewareService.getVega(output);
   }
 
   // find(output => output.type === 'metrics')

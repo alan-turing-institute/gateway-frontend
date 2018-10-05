@@ -27,23 +27,20 @@ import { SimulationService } from '../services/simulation.service';
     <sim-metrics [metrics]="metrics"></sim-metrics>
   </nz-card>
 
-  <nz-card>
-    <sim-vega></sim-vega>
+  <nz-card *ngIf="graphic">
+    <sim-vega [graphic]="graphic"></sim-vega>
   </nz-card>
 
   <nz-card *ngIf="job">
     <sim-parameters [job]="job"></sim-parameters>
   </nz-card>
-
-  
-
   `,
 })
 export class ViewSimulationComponent implements OnInit, OnChanges {
   @Input()
   job: Job;
   metrics: object;
-  classifier: object;
+  graphic: object;
   outputs: Output[];
 
   constructor(
@@ -69,14 +66,17 @@ export class ViewSimulationComponent implements OnInit, OnChanges {
     this.simulationService.getOutputs(this.job.id).subscribe(outputs => {
       this.outputs = outputs;
 
-      const m: Output = outputs.find(output => output.type === 'metrics');
-      if (m) {
-        this.getMetrics(m);
+      const metricsOutput: Output = outputs.find(
+        output => output.type === 'metrics',
+      );
+      if (metricsOutput) {
+        this.getMetrics(metricsOutput);
       }
 
-      const c: Output = outputs.find(output => output.type === 'classifier');
-      if (c) {
-        this.getClassifier(c);
+      const graphic: Output = outputs.find(output => output.type === 'vega');
+      if (graphic) {
+        this.graphic = graphic;
+        // this.getVega(vegaOutput);
       }
     });
   }
@@ -87,9 +87,9 @@ export class ViewSimulationComponent implements OnInit, OnChanges {
     });
   }
 
-  getClassifier(output: Output) {
-    this.simulationService.getClassifier(output).subscribe(classifier => {
-      this.classifier = classifier;
-    });
-  }
+  // getGraphic(output: Output) {
+  //   this.simulationService.getVega(output).subscribe(vis => {
+  //     this.vis = vis;
+  //   });
+  // }
 }

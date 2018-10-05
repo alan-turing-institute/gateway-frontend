@@ -128,10 +128,10 @@ export class MiddlewareService {
       .pipe(catchError(this.handleError('getMetrics')));
   }
 
-  public getClassifier(output: Output): Observable<object> {
+  public getVega(output: Output): Observable<object> {
     return this.http
       .get(output.destination)
-      .pipe(catchError(this.handleError('getClassifier')));
+      .pipe(catchError(this.handleError('getVega')));
   }
 
   /**

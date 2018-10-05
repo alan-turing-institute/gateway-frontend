@@ -21,6 +21,7 @@ export class FieldComponent implements OnInit {
   private max: number;
   private units: string;
   private step: number;
+  private title: string;
   private fullFieldName: string;
 
   constructor(private simulationService: SimulationService) {}
@@ -30,6 +31,7 @@ export class FieldComponent implements OnInit {
     this.min = Number(this.specValue('min'));
     this.max = Number(this.specValue('max'));
     this.units = String(this.specValue('units'));
+    this.title = String(this.specValue('title'));
     this.step = Number(this.specValue('step')) || 1;
     this.setFullFieldName();
     this.initialiseValue();
